@@ -1,0 +1,44 @@
+name: Campeonato Estendido Scouts V3
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/benchmark_scouts_estendido.py'
+      - 'requirements-extended.txt'
+      - '.github/workflows/campeonato-estendido.yml'
+  schedule:
+    - cron: '40 10 * * 1'
+concurrency:
+  group: campeonato-estendido-scouts-v3
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  campeonato-estendido:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - name: Instalar challengers pesados
+        run: pip install -r requirements-extended.txt
+      - name: Sincronizar base somente leitura da V2
+        run: python scripts/sincronizar_base_v2.py
+      - name: Construir dataset anti-leakage
+        run: python scripts/construir_dataset.py
+      - name: Auditar corte temporal antes do campeonato
+        run: python scripts/auditar_vazamento_temporal.py
+      - name: Rodar XGBoost LightGBM CatBoost
+        run: python scripts/benchmark_scouts_estendido.py
+      - name: Commit apenas do relatório V3
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/reports/campeonato-modelos-estendido.json
+          git diff --cached --quiet || git commit -m 'data: atualizar campeonato estendido scouts v3'
+          git pull --rebase origin main
+          git push
