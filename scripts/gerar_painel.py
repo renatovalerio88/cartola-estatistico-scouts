@@ -7,7 +7,12 @@ def load(name):
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
 def main():
     SITE_DATA.parent.mkdir(parents=True,exist_ok=True)
-    payload={"auditoria":load("auditoria-scouts.json"),"campeonato":load("campeonato-modelos.json"),"backtest_pontos":load("backtest-pontos-scouts.json")}
+    payload={
+        "auditoria":load("auditoria-scouts.json"),
+        "campeonato":load("campeonato-modelos.json"),
+        "backtest_pontos":load("backtest-pontos-scouts.json"),
+        "backtest_v3s_nested":load("backtest-v3s-nested.json"),
+    }
     SITE_DATA.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
-    print("Painel atualizado.")
+    print("Painel atualizado com V3-S nested.")
 if __name__=="__main__":main()
