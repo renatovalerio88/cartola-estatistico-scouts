@@ -1,0 +1,42 @@
+name: Laboratorio Scouts V3
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/**'
+      - 'src/**'
+      - 'requirements.txt'
+      - '.github/workflows/laboratorio.yml'
+  schedule:
+    - cron: '20 9 * * *'
+permissions:
+  contents: write
+jobs:
+  laboratorio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Sincronizar historico sem escrever na V2
+        run: python scripts/sincronizar_base_v2.py
+      - name: Auditar scouts e regras
+        run: python scripts/auditar_scouts.py
+      - name: Construir dataset anti-leakage
+        run: python scripts/construir_dataset.py
+      - name: Campeonato inicial de modelos
+        run: python scripts/benchmark_scouts.py
+      - name: Gerar painel
+        run: python scripts/gerar_painel.py
+      - name: Commit dos resultados reproduziveis
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/raw data/derived data/reports site/dados.json
+          git diff --cached --quiet || git commit -m 'data: atualizar laboratorio scouts v3'
+          git push
