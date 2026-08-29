@@ -1,0 +1,84 @@
+{
+  "gerado_em": "2026-08-29T22:45:50.154432+00:00",
+  "protocolo": "comparação pareada por rodada; bootstrap em blocos de rodada para preservar dependência intra-rodada; usa somente previsões OOS já produzidas pelo backtest nested anti-leakage",
+  "bootstrap_amostras": 5000,
+  "seed": 42,
+  "linhas": 4328,
+  "rodadas": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24
+  ],
+  "mae_global": {
+    "v3s_nested": 3.050487,
+    "direta_rf_lab": 3.031489,
+    "v3h_hibrido": 2.998415,
+    "direta_ewma": 3.152536
+  },
+  "comparacoes": {
+    "v3s_nested_vs_direta_ewma": {
+      "n_rodadas": 15,
+      "diferenca_mae_a_menos_b": -0.099295,
+      "ic95_block_bootstrap": [
+        -0.131088,
+        -0.068204
+      ],
+      "a_melhor_rodadas": 14,
+      "b_melhor_rodadas": 1,
+      "empates": 0,
+      "probabilidade_bootstrap_a_melhor": 1.0,
+      "interpretacao": "evidencia_forte_a_melhor"
+    },
+    "v3s_nested_vs_direta_rf_lab": {
+      "n_rodadas": 15,
+      "diferenca_mae_a_menos_b": 0.024365,
+      "ic95_block_bootstrap": [
+        -0.022836,
+        0.069868
+      ],
+      "a_melhor_rodadas": 7,
+      "b_melhor_rodadas": 8,
+      "empates": 0,
+      "probabilidade_bootstrap_a_melhor": 0.1606,
+      "interpretacao": "inconclusivo"
+    },
+    "v3h_hibrido_vs_direta_rf_lab": {
+      "n_rodadas": 15,
+      "diferenca_mae_a_menos_b": -0.030145,
+      "ic95_block_bootstrap": [
+        -0.054373,
+        -0.005783
+      ],
+      "a_melhor_rodadas": 11,
+      "b_melhor_rodadas": 4,
+      "empates": 0,
+      "probabilidade_bootstrap_a_melhor": 0.994,
+      "interpretacao": "evidencia_forte_a_melhor"
+    },
+    "v3h_hibrido_vs_v3s_nested": {
+      "n_rodadas": 15,
+      "diferenca_mae_a_menos_b": -0.05451,
+      "ic95_block_bootstrap": [
+        -0.079642,
+        -0.028463
+      ],
+      "a_melhor_rodadas": 13,
+      "b_melhor_rodadas": 2,
+      "empates": 0,
+      "probabilidade_bootstrap_a_melhor": 1.0,
+      "interpretacao": "evidencia_forte_a_melhor"
+    }
+  }
+}
