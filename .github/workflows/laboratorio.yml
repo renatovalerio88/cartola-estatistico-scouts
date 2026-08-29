@@ -44,13 +44,15 @@ jobs:
         run: python scripts/backtest_v3s_nested.py
       - name: Significancia estatistica das arquiteturas
         run: python scripts/significancia_arquiteturas.py
+      - name: Gerar e bloquear previsao pre-rodada imutavel
+        run: python scripts/gerar_previsao_pre_rodada.py
       - name: Gerar painel
         run: python scripts/gerar_painel.py
       - name: Commit dos resultados reproduziveis
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/raw data/derived data/reports site/dados.json
+          git add data/raw data/derived data/reports predictions site/dados.json
           git diff --cached --quiet || git commit -m 'data: atualizar laboratorio scouts v3'
           git pull --rebase origin main
           git push
