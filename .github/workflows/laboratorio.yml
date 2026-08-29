@@ -10,6 +10,9 @@ on:
       - '.github/workflows/laboratorio.yml'
   schedule:
     - cron: '20 9 * * *'
+concurrency:
+  group: laboratorio-scouts-v3
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
