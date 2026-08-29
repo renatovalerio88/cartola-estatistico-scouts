@@ -32,6 +32,8 @@ jobs:
         run: python scripts/auditar_scouts.py
       - name: Construir dataset anti-leakage
         run: python scripts/construir_dataset.py
+      - name: Bloquear qualquer vazamento temporal
+        run: python scripts/auditar_vazamento_temporal.py
       - name: Ablation de mando e força de adversário
         run: python scripts/ablation_contexto.py
       - name: Campeonato ampliado de modelos
