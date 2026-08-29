@@ -1,3 +1,70 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cartola Estatístico Scouts V3</title><style>body{font-family:system-ui,-apple-system,sans-serif;max-width:1200px;margin:0 auto;padding:24px;color:#202124;background:#fafafa}h1,h2{margin:.4em 0}small{color:#666}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0}.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px}.n{font-size:1.8rem;font-weight:700}table{width:100%;border-collapse:collapse;background:#fff;margin:12px 0 28px}th,td{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left;font-size:.92rem}th{background:#f1f3f4;position:sticky;top:0}.warn{color:#b06000}.scroll{overflow:auto;max-height:620px;border:1px solid #ddd;border-radius:10px}</style></head>
-<body><h1>Cartola Estatístico — Scouts V3</h1><p>Laboratório científico independente da V2. Resultados abaixo são auditorias ou validações temporais; nada é promovido à produção automaticamente.</p><div id="cards" class="cards"></div><h2>Arquitetura de pontos — baseline</h2><p><small>Comparação sem seleção otimista: projeção direta vs soma de expected scouts usando apenas histórico anterior.</small></p><div id="points"></div><h2>Scouts observados em 2026</h2><div id="scouts" class="scroll"></div><h2>Campeonato inicial — modelo × scout × posição</h2><p><small>Estágio 1: baselines, Ridge, Poisson, Random Forest, Extra Trees e HistGradientBoosting.</small></p><div id="champ" class="scroll"></div><script>const fmt=x=>x==null?'—':typeof x==='number'?x.toLocaleString('pt-BR',{maximumFractionDigits:4}):x;fetch('dados.json?'+Date.now()).then(r=>r.json()).then(d=>{const a=d.auditoria||{},c=d.campeonato||{},b=d.backtest_pontos||{},rec=a.reconstrucao_jogadores_sem_tecnico||a.reconstrucao||{};document.querySelector('#cards').innerHTML=[['Rodadas auditadas',a.rodadas_auditadas],['Atuações',a.atletas_em_campo],['Scouts observados',Object.keys(a.scouts_observados||{}).length],['MAE regras jogadores',rec.mae],['Competições válidas',c.competicoes_validas]].map(x=>`<div class=card><div>${x[0]}</div><div class=n>${fmt(x[1])}</div></div>`).join('');const geral=b.geral||{};document.querySelector('#points').innerHTML='<table><thead><tr><th>Modelo</th><th>MAE</th><th>RMSE</th><th>Viés</th><th>N</th></tr></thead><tbody>'+(b.ranking||Object.keys(geral)).map(n=>{const m=geral[n]||{};return `<tr><td><b>${n}</b></td><td>${fmt(m.mae)}</td><td>${fmt(m.rmse)}</td><td>${fmt(m.bias)}</td><td>${fmt(m.n)}</td></tr>`}).join('')+'</tbody></table>';const scouts=Object.entries(a.scouts_observados||{}).sort((x,y)=>y[1]-x[1]);document.querySelector('#scouts').innerHTML='<table><thead><tr><th>Scout</th><th>Ocorrências</th><th>Peso</th></tr></thead><tbody>'+scouts.map(([s,n])=>`<tr><td><b>${s}</b></td><td>${fmt(n)}</td><td>${fmt((a.regras||{})[s])}</td></tr>`).join('')+'</tbody></table>';const rows=c.resultados||[];document.querySelector('#champ').innerHTML='<table><thead><tr><th>Scout</th><th>Posição</th><th>Campeão</th><th>MAE</th><th>RMSE</th><th>N</th></tr></thead><tbody>'+rows.map(r=>{const w=r.ranking[0],m=r.metricas[w];return `<tr><td>${r.scout}</td><td>${r.posicao}</td><td><b>${w}</b></td><td>${fmt(m.mae)}</td><td>${fmt(m.rmse)}</td><td>${fmt(m.n)}</td></tr>`}).join('')+'</tbody></table>'}).catch(e=>document.body.insertAdjacentHTML('beforeend',`<p class=warn>Dados ainda não gerados: ${e}</p>`));</script></body></html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cartola Estatístico Scouts V3</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:1220px;margin:0 auto;padding:24px;color:#202124;background:#fafafa}h1,h2{margin:.45em 0}h2{margin-top:30px}small,.muted{color:#666}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0}.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px}.n{font-size:1.7rem;font-weight:700}.good{color:#137333}.bad{color:#b3261e}.tag{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef3f8;font-size:.8rem}table{width:100%;border-collapse:collapse;background:#fff;margin:12px 0 28px}th,td{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left;font-size:.9rem}th{background:#f1f3f4;position:sticky;top:0}.warn{color:#b06000}.scroll{overflow:auto;max-height:620px;border:1px solid #ddd;border-radius:10px}.note{background:#fff;border-left:4px solid #5f6368;padding:12px 14px;margin:12px 0}
+</style>
+</head>
+<body>
+<h1>Cartola Estatístico — Scouts V3</h1>
+<p>Laboratório científico independente da V2. Resultados abaixo são auditorias ou validações temporais; nada é promovido à produção automaticamente.</p>
+<div id="cards" class="cards"></div>
+
+<h2>Primeiro V3-S verdadeiro — nested walk-forward</h2>
+<p><small>Para cada rodada, a escolha do modelo de cada scout usa somente rodadas anteriores. O vencedor é retreinado sem futuro e só então prevê a rodada.</small></p>
+<div id="nested"></div>
+
+<h2>Ablation de contexto</h2>
+<p><small>Mando e força histórica de time/adversário são testados separadamente. Só recebem sinal promissor se melhorarem em famílias de modelos diferentes.</small></p>
+<div id="ablation"></div>
+
+<h2>Arquitetura de pontos — baseline</h2>
+<p><small>Comparação simples de projeção direta vs soma de scouts usando médias/EWMA anteriores.</small></p>
+<div id="points"></div>
+
+<h2>Scouts observados em 2026</h2><div id="scouts" class="scroll"></div>
+
+<h2>Campeonato de modelos — modelo × scout × posição</h2>
+<p><small>O campeonato testa famílias diferentes sem escolher vencedor antecipadamente.</small></p>
+<div id="champWins"></div><div id="champ" class="scroll"></div>
+
+<script>
+const fmt=x=>x==null?'—':typeof x==='number'?x.toLocaleString('pt-BR',{maximumFractionDigits:4}):x;
+const pct=x=>x==null?'—':(x*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'%';
+const table=(heads,rows)=>'<table><thead><tr>'+heads.map(h=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>';
+fetch('dados.json?'+Date.now()).then(r=>r.json()).then(d=>{
+ const a=d.auditoria||{},c=d.campeonato||{},b=d.backtest_pontos||{},n=d.backtest_v3s_nested||{},ab=d.ablation_contexto||{};
+ const rec=a.reconstrucao_jogadores_sem_tecnico||a.reconstrucao||{};
+ const ng=n.geral||{},v3=ng.v3s_nested||{},direct=ng.direta_ewma||{};
+ const ganho=(direct.mae!=null&&v3.mae!=null)?direct.mae-v3.mae:null;
+ document.querySelector('#cards').innerHTML=[
+  ['Rodadas auditadas',a.rodadas_auditadas],['Atuações',a.atletas_em_campo],['Scouts observados',Object.keys(a.scouts_observados||{}).length],
+  ['MAE regras jogadores',rec.mae],['Competições válidas',c.competicoes_validas],['V3-S MAE',v3.mae],['Ganho vs EWMA direto',ganho]
+ ].map(x=>`<div class=card><div>${x[0]}</div><div class="n ${x[0].startsWith('Ganho')&&x[1]>0?'good':''}">${fmt(x[1])}</div></div>`).join('');
+
+ const pos=n.por_posicao||{};
+ const nestedRows=[
+  `<tr><td><b>V3-S nested</b></td><td>${fmt(v3.mae)}</td><td>${fmt(v3.rmse)}</td><td>${fmt(v3.bias)}</td><td>${fmt(v3.n)}</td></tr>`,
+  `<tr><td>Direta EWMA</td><td>${fmt(direct.mae)}</td><td>${fmt(direct.rmse)}</td><td>${fmt(direct.bias)}</td><td>${fmt(direct.n)}</td></tr>`
+ ];
+ let html=table(['Arquitetura','MAE','RMSE','Viés','N'],nestedRows);
+ html+=`<div class=note><b>Rodadas:</b> ${(n.rodadas||[]).join(', ')} · <b>V3-S venceu:</b> ${fmt(n.vitorias_rodada_v3s)} · <b>Direta venceu:</b> ${fmt(n.vitorias_rodada_direta)} · <b>Empates:</b> ${fmt(n.empates_rodada)}</div>`;
+ html+=table(['Posição','MAE V3-S','MAE direta','Δ MAE'],Object.entries(pos).map(([p,x])=>{const vm=x.v3s_nested||{},dm=x.direta_ewma||{},delta=(dm.mae??0)-(vm.mae??0);return `<tr><td><b>${p}</b></td><td>${fmt(vm.mae)}</td><td>${fmt(dm.mae)}</td><td class="${delta>0?'good':'bad'}">${fmt(delta)}</td></tr>`}));
+ document.querySelector('#nested').innerHTML=html;
+
+ const factors=ab.fatores||{};
+ document.querySelector('#ablation').innerHTML=Object.keys(factors).length?table(['Fator','Δ MAE médio vs base','Modelos com melhora','Sinal'],Object.entries(factors).map(([name,x])=>`<tr><td><b>${name}</b></td><td class="${x.delta_mae_medio<0?'good':'bad'}">${fmt(x.delta_mae_medio)}</td><td>${fmt(x.modelos_com_melhora)} / ${fmt(x.modelos_validos)}</td><td><span class=tag>${fmt(x.sinal)}</span></td></tr>`)):'<p class=muted>Aguardando execução da primeira ablation.</p>';
+
+ const geral=b.geral||{};
+ document.querySelector('#points').innerHTML=table(['Modelo','MAE','RMSE','Viés','N'],(b.ranking||Object.keys(geral)).map(name=>{const m=geral[name]||{};return `<tr><td><b>${name}</b></td><td>${fmt(m.mae)}</td><td>${fmt(m.rmse)}</td><td>${fmt(m.bias)}</td><td>${fmt(m.n)}</td></tr>`}));
+ const scouts=Object.entries(a.scouts_observados||{}).sort((x,y)=>y[1]-x[1]);
+ document.querySelector('#scouts').innerHTML=table(['Scout','Ocorrências','Peso'],scouts.map(([s,count])=>`<tr><td><b>${s}</b></td><td>${fmt(count)}</td><td>${fmt((a.regras||{})[s])}</td></tr>`));
+ const wins=c.vitorias_modelos||{};
+ document.querySelector('#champWins').innerHTML=table(['Modelo','Vitórias'],Object.entries(wins).map(([m,w])=>`<tr><td><b>${m}</b></td><td>${fmt(w)}</td></tr>`));
+ const rows=c.resultados||[];
+ document.querySelector('#champ').innerHTML=table(['Scout','Posição','Campeão','MAE','RMSE','N'],rows.map(r=>{const w=(r.ranking||[])[0],m=(r.metricas||{})[w]||{};return `<tr><td>${r.scout}</td><td>${r.posicao}</td><td><b>${w||'—'}</b></td><td>${fmt(m.mae)}</td><td>${fmt(m.rmse)}</td><td>${fmt(m.n)}</td></tr>`}));
+}).catch(e=>document.body.insertAdjacentHTML('beforeend',`<p class=warn>Dados ainda não gerados: ${e}</p>`));
+</script>
+</body></html>
