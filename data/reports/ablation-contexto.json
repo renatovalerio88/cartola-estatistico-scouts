@@ -1,0 +1,1039 @@
+{
+  "gerado_em": "2026-08-29T20:03:20.544035+00:00",
+  "protocolo": "Ablation walk-forward: mesmo alvo, mesmas janelas e mesmos modelos; muda apenas o bloco de features de contexto. Placar da rodada R só atualiza força dos times depois de congelar features de R.",
+  "modelos_fixos": [
+    "ridge",
+    "extra_trees",
+    "hist_gradient_boosting"
+  ],
+  "feature_sets": {
+    "base": [
+      "historico_jogos",
+      "pontos_media3",
+      "pontos_media5",
+      "pontos_ewma"
+    ],
+    "base_mando": [
+      "historico_jogos",
+      "pontos_media3",
+      "pontos_media5",
+      "pontos_ewma",
+      "mando"
+    ],
+    "base_forca": [
+      "historico_jogos",
+      "pontos_media3",
+      "pontos_media5",
+      "pontos_ewma",
+      "time_jogos",
+      "time_gf_media5",
+      "time_ga_media5",
+      "time_gf_ewma",
+      "time_ga_ewma",
+      "adversario_jogos",
+      "adversario_gf_media5",
+      "adversario_ga_media5",
+      "adversario_gf_ewma",
+      "adversario_ga_ewma"
+    ],
+    "base_mando_forca": [
+      "historico_jogos",
+      "pontos_media3",
+      "pontos_media5",
+      "pontos_ewma",
+      "mando",
+      "time_jogos",
+      "time_gf_media5",
+      "time_ga_media5",
+      "time_gf_ewma",
+      "time_ga_ewma",
+      "adversario_jogos",
+      "adversario_gf_media5",
+      "adversario_ga_media5",
+      "adversario_gf_ewma",
+      "adversario_ga_ewma"
+    ]
+  },
+  "agregado": {
+    "ridge": {
+      "base": {
+        "n": 5239,
+        "mae": 2.976325,
+        "rmse": 3.884182,
+        "bias": 0.09176
+      },
+      "base_mando": {
+        "n": 5239,
+        "mae": 2.963469,
+        "rmse": 3.874731,
+        "bias": 0.080256
+      },
+      "base_forca": {
+        "n": 5239,
+        "mae": 2.945789,
+        "rmse": 3.980891,
+        "bias": -0.334179
+      },
+      "base_mando_forca": {
+        "n": 5239,
+        "mae": 2.934626,
+        "rmse": 3.970304,
+        "bias": -0.325039
+      }
+    },
+    "extra_trees": {
+      "base": {
+        "n": 5239,
+        "mae": 2.993763,
+        "rmse": 3.936656,
+        "bias": 0.061568
+      },
+      "base_mando": {
+        "n": 5239,
+        "mae": 2.994715,
+        "rmse": 3.932804,
+        "bias": 0.06012
+      },
+      "base_forca": {
+        "n": 5239,
+        "mae": 2.968471,
+        "rmse": 3.917632,
+        "bias": 0.039047
+      },
+      "base_mando_forca": {
+        "n": 5239,
+        "mae": 2.973903,
+        "rmse": 3.924048,
+        "bias": 0.014269
+      }
+    },
+    "hist_gradient_boosting": {
+      "base": {
+        "n": 5239,
+        "mae": 3.169268,
+        "rmse": 4.166295,
+        "bias": 0.146424
+      },
+      "base_mando": {
+        "n": 5239,
+        "mae": 3.168671,
+        "rmse": 4.16654,
+        "bias": 0.149112
+      },
+      "base_forca": {
+        "n": 5239,
+        "mae": 3.180178,
+        "rmse": 4.178413,
+        "bias": 0.115159
+      },
+      "base_mando_forca": {
+        "n": 5239,
+        "mae": 3.156281,
+        "rmse": 4.163928,
+        "bias": 0.077888
+      }
+    }
+  },
+  "fatores": {
+    "mando": {
+      "delta_mae_vs_base_por_modelo": {
+        "ridge": -0.012856,
+        "extra_trees": 0.000952,
+        "hist_gradient_boosting": -0.000597
+      },
+      "delta_mae_medio": -0.004167,
+      "modelos_com_melhora": 2,
+      "modelos_validos": 3,
+      "sinal": "PROMISSORIO"
+    },
+    "forca_time_adversario": {
+      "delta_mae_vs_base_por_modelo": {
+        "ridge": -0.030536,
+        "extra_trees": -0.025292,
+        "hist_gradient_boosting": 0.01091
+      },
+      "delta_mae_medio": -0.014973,
+      "modelos_com_melhora": 2,
+      "modelos_validos": 3,
+      "sinal": "PROMISSORIO"
+    },
+    "mando_mais_forca": {
+      "delta_mae_vs_base_por_modelo": {
+        "ridge": -0.041699,
+        "extra_trees": -0.01986,
+        "hist_gradient_boosting": -0.012987
+      },
+      "delta_mae_medio": -0.024849,
+      "modelos_com_melhora": 3,
+      "modelos_validos": 3,
+      "sinal": "PROMISSORIO"
+    }
+  },
+  "detalhado": {
+    "ridge": {
+      "base": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.976325,
+          "rmse": 3.884182,
+          "bias": 0.09176
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.34321,
+            "rmse": 4.077702,
+            "bias": 0.026836
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.288034,
+            "rmse": 4.026009,
+            "bias": 0.313757
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.753977,
+            "rmse": 3.461229,
+            "bias": -0.247233
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.598153,
+            "rmse": 3.56537,
+            "bias": -0.001903
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.308807,
+            "rmse": 4.328632,
+            "bias": 0.280532
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma"
+        ]
+      },
+      "base_mando": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.963469,
+          "rmse": 3.874731,
+          "bias": 0.080256
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.362049,
+            "rmse": 4.089059,
+            "bias": 0.031257
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.257112,
+            "rmse": 4.013367,
+            "bias": 0.259674
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.735405,
+            "rmse": 3.451669,
+            "bias": -0.226141
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.590226,
+            "rmse": 3.558787,
+            "bias": -0.016426
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.295898,
+            "rmse": 4.313392,
+            "bias": 0.275608
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "mando"
+        ]
+      },
+      "base_forca": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.945789,
+          "rmse": 3.980891,
+          "bias": -0.334179
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.493137,
+            "rmse": 4.205989,
+            "bias": 0.541605
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.424431,
+            "rmse": 4.185334,
+            "bias": 0.431416
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.757349,
+            "rmse": 3.562846,
+            "bias": -0.627438
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.55257,
+            "rmse": 3.639816,
+            "bias": -0.563539
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.144178,
+            "rmse": 4.407493,
+            "bias": -0.518962
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "time_jogos",
+          "time_gf_media5",
+          "time_ga_media5",
+          "time_gf_ewma",
+          "time_ga_ewma",
+          "adversario_jogos",
+          "adversario_gf_media5",
+          "adversario_ga_media5",
+          "adversario_gf_ewma",
+          "adversario_ga_ewma"
+        ]
+      },
+      "base_mando_forca": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.934626,
+          "rmse": 3.970304,
+          "bias": -0.325039
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.488748,
+            "rmse": 4.209398,
+            "bias": 0.547959
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.399678,
+            "rmse": 4.176331,
+            "bias": 0.446376
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.741822,
+            "rmse": 3.551602,
+            "bias": -0.592691
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.545121,
+            "rmse": 3.63499,
+            "bias": -0.584871
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.136853,
+            "rmse": 4.387253,
+            "bias": -0.488291
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "mando",
+          "time_jogos",
+          "time_gf_media5",
+          "time_ga_media5",
+          "time_gf_ewma",
+          "time_ga_ewma",
+          "adversario_jogos",
+          "adversario_gf_media5",
+          "adversario_ga_media5",
+          "adversario_gf_ewma",
+          "adversario_ga_ewma"
+        ]
+      }
+    },
+    "extra_trees": {
+      "base": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.993763,
+          "rmse": 3.936656,
+          "bias": 0.061568
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.431135,
+            "rmse": 4.18296,
+            "bias": 0.066125
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.324025,
+            "rmse": 4.117105,
+            "bias": 0.336224
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.755534,
+            "rmse": 3.488887,
+            "bias": -0.326858
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.63733,
+            "rmse": 3.596411,
+            "bias": 0.032589
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.281376,
+            "rmse": 4.382811,
+            "bias": 0.151079
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma"
+        ]
+      },
+      "base_mando": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.994715,
+          "rmse": 3.932804,
+          "bias": 0.06012
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.415511,
+            "rmse": 4.157233,
+            "bias": -0.069451
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.284354,
+            "rmse": 4.080586,
+            "bias": 0.286876
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.803107,
+            "rmse": 3.554342,
+            "bias": -0.261709
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.644119,
+            "rmse": 3.601199,
+            "bias": 0.035015
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.276572,
+            "rmse": 4.361961,
+            "bias": 0.166191
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "mando"
+        ]
+      },
+      "base_forca": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.968471,
+          "rmse": 3.917632,
+          "bias": 0.039047
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.405947,
+            "rmse": 4.158272,
+            "bias": 0.056651
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.346673,
+            "rmse": 4.137119,
+            "bias": 0.336688
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.73253,
+            "rmse": 3.466573,
+            "bias": -0.21919
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.594893,
+            "rmse": 3.574704,
+            "bias": -0.073244
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.249222,
+            "rmse": 4.348141,
+            "bias": 0.146425
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "time_jogos",
+          "time_gf_media5",
+          "time_ga_media5",
+          "time_gf_ewma",
+          "time_ga_ewma",
+          "adversario_jogos",
+          "adversario_gf_media5",
+          "adversario_ga_media5",
+          "adversario_gf_ewma",
+          "adversario_ga_ewma"
+        ]
+      },
+      "base_mando_forca": {
+        "geral": {
+          "n": 5239,
+          "mae": 2.973903,
+          "rmse": 3.924048,
+          "bias": 0.014269
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.382344,
+            "rmse": 4.13115,
+            "bias": -0.125642
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.341012,
+            "rmse": 4.116587,
+            "bias": 0.313116
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.783956,
+            "rmse": 3.537819,
+            "bias": -0.273902
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.601757,
+            "rmse": 3.58356,
+            "bias": -0.057415
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.240925,
+            "rmse": 4.345651,
+            "bias": 0.122036
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "mando",
+          "time_jogos",
+          "time_gf_media5",
+          "time_ga_media5",
+          "time_gf_ewma",
+          "time_ga_ewma",
+          "adversario_jogos",
+          "adversario_gf_media5",
+          "adversario_ga_media5",
+          "adversario_gf_ewma",
+          "adversario_ga_ewma"
+        ]
+      }
+    },
+    "hist_gradient_boosting": {
+      "base": {
+        "geral": {
+          "n": 5239,
+          "mae": 3.169268,
+          "rmse": 4.166295,
+          "bias": 0.146424
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.601515,
+            "rmse": 4.347885,
+            "bias": 0.280506
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.457919,
+            "rmse": 4.359569,
+            "bias": 0.443325
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.948033,
+            "rmse": 3.721985,
+            "bias": -0.276803
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.78832,
+            "rmse": 3.79554,
+            "bias": 0.022968
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.50283,
+            "rmse": 4.652287,
+            "bias": 0.330579
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma"
+        ]
+      },
+      "base_mando": {
+        "geral": {
+          "n": 5239,
+          "mae": 3.168671,
+          "rmse": 4.16654,
+          "bias": 0.149112
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.633615,
+            "rmse": 4.402812,
+            "bias": 0.251676
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.425499,
+            "rmse": 4.347093,
+            "bias": 0.395481
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.961437,
+            "rmse": 3.750255,
+            "bias": -0.286087
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.78143,
+            "rmse": 3.779692,
+            "bias": 0.040875
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.513058,
+            "rmse": 4.651838,
+            "bias": 0.356282
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "mando"
+        ]
+      },
+      "base_forca": {
+        "geral": {
+          "n": 5239,
+          "mae": 3.180178,
+          "rmse": 4.178413,
+          "bias": 0.115159
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.669491,
+            "rmse": 4.444407,
+            "bias": 0.293154
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.55779,
+            "rmse": 4.40699,
+            "bias": 0.377857
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.944015,
+            "rmse": 3.779757,
+            "bias": -0.338775
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.743769,
+            "rmse": 3.766956,
+            "bias": -0.049916
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.527936,
+            "rmse": 4.649276,
+            "bias": 0.376987
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "time_jogos",
+          "time_gf_media5",
+          "time_ga_media5",
+          "time_gf_ewma",
+          "time_ga_ewma",
+          "adversario_jogos",
+          "adversario_gf_media5",
+          "adversario_ga_media5",
+          "adversario_gf_ewma",
+          "adversario_ga_ewma"
+        ]
+      },
+      "base_mando_forca": {
+        "geral": {
+          "n": 5239,
+          "mae": 3.156281,
+          "rmse": 4.163928,
+          "bias": 0.077888
+        },
+        "por_posicao": {
+          "GOL": {
+            "n": 331,
+            "mae": 3.648209,
+            "rmse": 4.4121,
+            "bias": 0.167414
+          },
+          "LAT": {
+            "n": 825,
+            "mae": 3.54345,
+            "rmse": 4.388971,
+            "bias": 0.337602
+          },
+          "ZAG": {
+            "n": 789,
+            "mae": 2.911016,
+            "rmse": 3.756721,
+            "bias": -0.369156
+          },
+          "MEI": {
+            "n": 1827,
+            "mae": 2.729784,
+            "rmse": 3.757053,
+            "bias": -0.02565
+          },
+          "ATA": {
+            "n": 1467,
+            "mae": 3.490626,
+            "rmse": 4.639405,
+            "bias": 0.281012
+          }
+        },
+        "rodadas": [
+          7,
+          8,
+          9,
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          21,
+          22,
+          23,
+          24
+        ],
+        "features": [
+          "historico_jogos",
+          "pontos_media3",
+          "pontos_media5",
+          "pontos_ewma",
+          "mando",
+          "time_jogos",
+          "time_gf_media5",
+          "time_ga_media5",
+          "time_gf_ewma",
+          "time_ga_ewma",
+          "adversario_jogos",
+          "adversario_gf_media5",
+          "adversario_ga_media5",
+          "adversario_gf_ewma",
+          "adversario_ga_ewma"
+        ]
+      }
+    }
+  },
+  "regra_exploratoria": "Contexto só recebe sinal PROMISSORIO se reduzir MAE em pelo menos 2 de 3 famílias fixas e também no delta médio. Isso ainda não promove feature ao modelo oficial."
+}
