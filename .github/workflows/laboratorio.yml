@@ -32,10 +32,12 @@ jobs:
         run: python scripts/auditar_scouts.py
       - name: Construir dataset anti-leakage
         run: python scripts/construir_dataset.py
-      - name: Campeonato inicial de modelos
+      - name: Campeonato ampliado de modelos
         run: python scripts/benchmark_scouts.py
       - name: Backtest arquitetural de pontos por scouts
         run: python scripts/backtest_pontos_scouts.py
+      - name: Backtest nested V3 Scouts
+        run: python scripts/backtest_v3s_nested.py
       - name: Gerar painel
         run: python scripts/gerar_painel.py
       - name: Commit dos resultados reproduziveis
