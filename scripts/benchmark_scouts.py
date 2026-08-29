@@ -75,6 +75,22 @@ def shrinkage_predict(train, test, scout):
     return np.clip((n * recent + SHRINK_K * prior) / (n + SHRINK_K), 0, None)
 
 
+def sanitize_predictions(pred, y_train, n_test):
+    """Impede que instabilidade numérica de um challenger derrube o campeonato.
+
+    Qualquer NaN/inf invalida a predição daquele fold e força fallback para a média
+    estritamente histórica. Valores finitos são limitados a uma faixa plausível derivada
+    exclusivamente do treino, nunca do teste.
+    """
+    pred = np.asarray(pred, float)
+    fallback = float(np.mean(y_train)) if len(y_train) else 0.0
+    if pred.shape != (n_test,) or not np.all(np.isfinite(pred)):
+        return np.repeat(fallback, n_test), True
+    observed_max = float(np.max(y_train)) if len(y_train) else 0.0
+    upper = max(5.0, observed_max * 3.0 + 1.0)
+    return np.clip(pred, 0, upper), False
+
+
 def negative_binomial_predict(train, test, scout):
     """GLM Negative Binomial para contagens; treino estritamente anterior ao bloco de teste."""
     ycol = f"target_{scout}"
@@ -91,7 +107,8 @@ def negative_binomial_predict(train, test, scout):
         warnings.simplefilter("ignore")
         model = sm.GLM(y, xtr, family=sm.families.NegativeBinomial(alpha=1.0))
         fit = model.fit(maxiter=60, disp=0)
-    return np.clip(np.asarray(fit.predict(xte), float), 0, None)
+        pred = np.asarray(fit.predict(xte), float)
+    return pred
 
 
 def evaluate(df, scout, pos):
@@ -105,6 +122,7 @@ def evaluate(df, scout, pos):
         "media3", "ewma", "shrinkage_eb", "negative_binomial", *sklearn_models().keys()
     ]
     pred_store = {name: [] for name in model_names}
+    fallback_counts = {name: 0 for name in model_names}
     actuals = []
     rounds_used = []
     fold_proofs = []
@@ -124,24 +142,38 @@ def evaluate(df, scout, pos):
         Xte = test[feats].fillna(0).to_numpy(float)
         yte = test[ycol].fillna(0).to_numpy(float)
 
-        pred_store["media3"].extend(np.clip(test[f"{scout}_media3"].fillna(0).to_numpy(float), 0, None))
-        pred_store["ewma"].extend(np.clip(test[f"{scout}_ewma"].fillna(0).to_numpy(float), 0, None))
-        pred_store["shrinkage_eb"].extend(shrinkage_predict(train, test, scout))
+        baseline_preds = {
+            "media3": np.clip(test[f"{scout}_media3"].fillna(0).to_numpy(float), 0, None),
+            "ewma": np.clip(test[f"{scout}_ewma"].fillna(0).to_numpy(float), 0, None),
+            "shrinkage_eb": shrinkage_predict(train, test, scout),
+        }
+        for name, raw_pred in baseline_preds.items():
+            pred, used_fallback = sanitize_predictions(raw_pred, ytr, len(yte))
+            fallback_counts[name] += int(used_fallback)
+            pred_store[name].extend(pred)
+
         try:
-            pred_store["negative_binomial"].extend(negative_binomial_predict(train, test, scout))
+            raw_pred = negative_binomial_predict(train, test, scout)
+            pred, used_fallback = sanitize_predictions(raw_pred, ytr, len(yte))
         except Exception:
-            pred_store["negative_binomial"].extend(np.repeat(float(np.mean(ytr)), len(yte)))
+            pred = np.repeat(float(np.mean(ytr)), len(yte))
+            used_fallback = True
+        fallback_counts["negative_binomial"] += int(used_fallback)
+        pred_store["negative_binomial"].extend(pred)
 
         for name, factory in sklearn_models().items():
             if float(np.sum(ytr)) == 0:
-                pred = np.zeros(len(yte))
+                raw_pred = np.zeros(len(yte))
             else:
                 try:
                     model = factory()
                     model.fit(Xtr, ytr)
-                    pred = np.clip(model.predict(Xte), 0, None)
+                    raw_pred = model.predict(Xte)
                 except Exception:
-                    pred = np.repeat(float(np.mean(ytr)), len(yte))
+                    raw_pred = np.repeat(float(np.mean(ytr)), len(yte))
+                    fallback_counts[name] += 1
+            pred, used_fallback = sanitize_predictions(raw_pred, ytr, len(yte))
+            fallback_counts[name] += int(used_fallback)
             pred_store[name].extend(pred)
 
         actuals.extend(yte)
@@ -160,11 +192,14 @@ def evaluate(df, scout, pos):
     metrics = {}
     for name, preds in pred_store.items():
         p = np.asarray(preds, float)
+        if len(p) != len(actual) or not np.all(np.isfinite(p)):
+            raise RuntimeError(f"Predições inválidas após sanitização em {scout}/{pos}/{name}")
         metrics[name] = {
             "mae": round(float(mean_absolute_error(actual, p)), 6),
             "rmse": round(float(mean_squared_error(actual, p) ** .5), 6),
             "bias": round(float(np.mean(p - actual)), 6),
             "n": int(len(actual)),
+            "fallbacks_numericos": int(fallback_counts[name]),
         }
     ranking = sorted(metrics, key=lambda n: (metrics[n]["mae"], metrics[n]["rmse"]))
     return {
@@ -199,6 +234,10 @@ def main():
         for result in results
         for fold in result["prova_temporal_folds"]
     )
+    numerical_fallbacks = {
+        name: sum(r["metricas"][name]["fallbacks_numericos"] for r in results)
+        for name in ["media3", "ewma", "shrinkage_eb", "negative_binomial", *sklearn_models().keys()]
+    }
     payload = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "protocolo": "walk-forward em blocos temporais; todo treino termina antes da primeira rodada do respectivo teste",
@@ -209,6 +248,10 @@ def main():
             "shrinkage_eb": "média5 do atleta encolhida ao prior da posição calculado somente no treino",
             "negative_binomial": "GLM Negative Binomial para contagens, usando somente o bloco de treino anterior",
         },
+        "seguranca_numerica": {
+            "regra": "NaN/inf ou shape inválido usa média do treino; valores finitos são limitados por faixa derivada somente do treino",
+            "fallbacks_por_modelo": numerical_fallbacks,
+        },
         "scouts_testados": SCOUTS,
         "competicoes_validas": len(results),
         "vitorias_modelos": dict(sorted(wins.items(), key=lambda x: (-x[1], x[0]))),
@@ -216,7 +259,7 @@ def main():
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Campeonato concluído: {len(results)} scout×posição válidos; anti-leakage={all_temporal_ok}.")
+    print(f"Campeonato concluído: {len(results)} scout×posição válidos; anti-leakage={all_temporal_ok}; fallbacks={numerical_fallbacks}.")
 
 
 if __name__ == "__main__":
