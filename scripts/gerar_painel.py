@@ -12,7 +12,8 @@ def main():
         "campeonato":load("campeonato-modelos.json"),
         "backtest_pontos":load("backtest-pontos-scouts.json"),
         "backtest_v3s_nested":load("backtest-v3s-nested.json"),
+        "ablation_contexto":load("ablation-contexto.json"),
     }
     SITE_DATA.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding="utf-8")
-    print("Painel atualizado com V3-S nested.")
+    print("Painel atualizado com V3-S nested e ablation de contexto.")
 if __name__=="__main__":main()
