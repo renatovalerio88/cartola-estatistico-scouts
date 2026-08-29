@@ -8,8 +8,11 @@ ROOT=Path(__file__).resolve().parents[1]; sys.path.insert(0,str(ROOT))
 from src.cartola_scoring import POSITION_NAMES, SCOUT_WEIGHTS, score_from_scouts
 RAW=ROOT/"data"/"raw"; REPORT=ROOT/"data"/"reports"/"auditoria-scouts.json"
 def load(path): return json.loads(path.read_text(encoding="utf-8"))
+def resumo_erros(values):
+    if not values:return {"n":0,"mae":None,"taxa_ate_0_05":None,"divergencias_maiores_0_05":0}
+    return {"n":len(values),"mae":round(sum(abs(v) for v in values)/len(values),6),"taxa_ate_0_05":round(sum(abs(v)<=.051 for v in values)/len(values),6),"divergencias_maiores_0_05":sum(abs(v)>.051 for v in values)}
 def main():
-    scout_counts=Counter(); by_pos=defaultdict(Counter); unknown=Counter(); discrepancies=[]; n_players=n_on_field=0; abs_errors=[]; rounds=[]
+    scout_counts=Counter(); by_pos=defaultdict(Counter); unknown=Counter(); unknown_field=Counter(); discrepancies=[]; discrepancies_field=[]; n_players=n_on_field=0; errors=[]; errors_field=[]; errors_by_pos=defaultdict(list); rounds=[]
     for folder in sorted(RAW.glob("rodada-*")):
         p=folder/"pontuados.json"
         if not p.exists(): continue
@@ -24,16 +27,21 @@ def main():
                 except (TypeError,ValueError): continue
                 scout_counts[code]+=count; by_pos[pos][code]+=count
             reconstructed,unknown_codes=score_from_scouts(scouts)
-            for code in unknown_codes: unknown[code]+=1
+            for code in unknown_codes:
+                unknown[code]+=1
+                if pos!="TEC": unknown_field[code]+=1
             official=atleta.get("pontuacao")
             if official is None: continue
-            err=round(float(official)-reconstructed,4); abs_errors.append(abs(err))
-            if abs(err)>0.051:
-                discrepancies.append({"rodada":rodada,"atleta_id":str(aid),"apelido":atleta.get("apelido"),"posicao":pos,"oficial":official,"reconstruida":reconstructed,"erro":err,"scouts":scouts})
+            err=round(float(official)-reconstructed,4); errors.append(err); errors_by_pos[pos].append(err)
+            if pos!="TEC": errors_field.append(err)
+            item={"rodada":rodada,"atleta_id":str(aid),"apelido":atleta.get("apelido"),"posicao":pos,"oficial":official,"reconstruida":reconstructed,"erro":err,"scouts":scouts}
+            if abs(err)>.051:
+                discrepancies.append(item)
+                if pos!="TEC": discrepancies_field.append(item)
         rounds.append({"rodada":rodada,"atletas_em_campo":used})
-    mae=sum(abs_errors)/len(abs_errors) if abs_errors else None; exact=sum(e<=0.051 for e in abs_errors)
-    report={"gerado_em":datetime.now(timezone.utc).isoformat(),"rodadas_auditadas":len(rounds),"atletas_registrados":n_players,"atletas_em_campo":n_on_field,"regras":SCOUT_WEIGHTS,"scouts_observados":dict(sorted(scout_counts.items())),"scouts_por_posicao":{p:dict(sorted(c.items())) for p,c in sorted(by_pos.items())},"codigos_desconhecidos":dict(unknown),"reconstrucao":{"n":len(abs_errors),"mae":round(mae,6) if mae is not None else None,"taxa_ate_0_05":round(exact/len(abs_errors),6) if abs_errors else None,"divergencias_maiores_0_05":len(discrepancies),"amostra_divergencias":discrepancies[:50]},"rodadas":rounds}
+    report={"gerado_em":datetime.now(timezone.utc).isoformat(),"rodadas_auditadas":len(rounds),"atletas_registrados":n_players,"atletas_em_campo":n_on_field,"regras":SCOUT_WEIGHTS,"scouts_observados":dict(sorted(scout_counts.items())),"scouts_por_posicao":{p:dict(sorted(c.items())) for p,c in sorted(by_pos.items())},"codigos_desconhecidos":dict(unknown),"codigos_desconhecidos_jogadores":dict(unknown_field),"reconstrucao":resumo_erros(errors),"reconstrucao_jogadores_sem_tecnico":resumo_erros(errors_field),"reconstrucao_por_posicao":{p:resumo_erros(v) for p,v in sorted(errors_by_pos.items())},"amostra_divergencias":discrepancies[:30],"amostra_divergencias_jogadores":discrepancies_field[:50],"rodadas":rounds}
     REPORT.parent.mkdir(parents=True,exist_ok=True); REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+    f=report["reconstrucao_jogadores_sem_tecnico"]
     print(f"Auditoria: {len(rounds)} rodadas; {n_on_field} atuações; {len(scout_counts)} scouts observados.")
-    print(f"Reconstrução: MAE={mae:.4f}; divergências >0,05={len(discrepancies)}; desconhecidos={dict(unknown)}")
+    print(f"Jogadores (sem TEC): MAE={f['mae']}; divergências >0,05={f['divergencias_maiores_0_05']}; desconhecidos={dict(unknown_field)}")
 if __name__=="__main__": main()
