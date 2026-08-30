@@ -6,6 +6,8 @@ on:
     paths:
       - 'scripts/benchmark_scouts_estendido.py'
       - 'scripts/backtest_v3s_catboost_nested.py'
+      - 'scripts/ablation_contexto.py'
+      - 'scripts/validar_gate_contexto_catboost.py'
       - 'scripts/resumir_catboost_nested.py'
       - 'scripts/calibrar_catboost_nested_temporal.py'
       - 'scripts/seletor_nested_calibracao_catboost.py'
@@ -37,6 +39,10 @@ jobs:
         run: python scripts/construir_dataset.py
       - name: Auditar corte temporal antes do campeonato
         run: python scripts/auditar_vazamento_temporal.py
+      - name: Revalidar contexto em walk-forward estrito
+        run: python scripts/ablation_contexto.py
+      - name: Aplicar gate cientifico de contexto no CatBoost
+        run: python scripts/validar_gate_contexto_catboost.py
       - name: Rodar XGBoost LightGBM CatBoost
         run: python scripts/benchmark_scouts_estendido.py
       - name: Rodar CatBoost em nested walk-forward estrito
@@ -53,7 +59,7 @@ jobs:
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/reports/campeonato-modelos-estendido.json data/reports/backtest-v3s-catboost-nested.json data/reports/resumo-catboost-nested.json data/reports/calibracao-catboost-nested-temporal.json data/reports/calibracao-catboost-nested-resumo.json data/reports/seletor-nested-calibracao-catboost.json data/reports/meta-seletor-final-temporal.json
+          git add data/reports/ablation-contexto.json data/reports/gate-contexto-catboost.json data/reports/campeonato-modelos-estendido.json data/reports/backtest-v3s-catboost-nested.json data/reports/resumo-catboost-nested.json data/reports/calibracao-catboost-nested-temporal.json data/reports/calibracao-catboost-nested-resumo.json data/reports/seletor-nested-calibracao-catboost.json data/reports/meta-seletor-final-temporal.json
           git diff --cached --quiet || git commit -m 'data: atualizar campeonato estendido e seletores v3'
           git reset --hard HEAD
           git pull --rebase origin main
