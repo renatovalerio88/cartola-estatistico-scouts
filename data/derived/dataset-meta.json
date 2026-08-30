@@ -1,8 +1,8 @@
 {
-  "linhas": 6830,
+  "linhas": 7036,
   "rodada_min": 2,
-  "rodada_max": 24,
-  "jogadores": 638,
+  "rodada_max": 25,
+  "jogadores": 661,
   "colunas": [
     "rodada",
     "atleta_id",
@@ -13,9 +13,15 @@
     "mando",
     "adversario_id",
     "historico_jogos",
+    "historico_atuacoes",
+    "entrou_media3",
+    "entrou_media5",
+    "entrou_ewma",
+    "rodadas_desde_atuou",
     "pontos_media3",
     "pontos_media5",
     "pontos_ewma",
+    "target_entrou",
     "target_pontos",
     "time_jogos",
     "time_gf_media5",
@@ -107,6 +113,11 @@
   "features_contexto": [
     "mando",
     "adversario_id",
+    "historico_atuacoes",
+    "entrou_media3",
+    "entrou_media5",
+    "entrou_ewma",
+    "rodadas_desde_atuou",
     "time_jogos",
     "time_gf_media5",
     "time_ga_media5",
@@ -118,107 +129,183 @@
     "adversario_gf_ewma",
     "adversario_ga_ewma"
   ],
-  "anti_leakage": "Features da rodada R usam exclusivamente rodadas < R. Força de time/adversário é atualizada com o placar de R somente após congelar todas as linhas de R; target é anexado depois.",
+  "universo_amostral": "Todos os jogadores de linha válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA), inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0.",
+  "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
   "por_rodada": [
     {
       "rodada": 1,
-      "linhas": 0
+      "universo_jogadores": 307,
+      "entraram_em_campo": 307,
+      "nao_entraram": 0,
+      "linhas_dataset": 0
     },
     {
       "rodada": 2,
-      "linhas": 249
+      "universo_jogadores": 282,
+      "entraram_em_campo": 282,
+      "nao_entraram": 0,
+      "linhas_dataset": 231
     },
     {
       "rodada": 3,
-      "linhas": 264
+      "universo_jogadores": 281,
+      "entraram_em_campo": 281,
+      "nao_entraram": 0,
+      "linhas_dataset": 248
     },
     {
       "rodada": 4,
-      "linhas": 192
+      "universo_jogadores": 222,
+      "entraram_em_campo": 221,
+      "nao_entraram": 1,
+      "linhas_dataset": 182
     },
     {
       "rodada": 5,
-      "linhas": 242
+      "universo_jogadores": 254,
+      "entraram_em_campo": 254,
+      "nao_entraram": 0,
+      "linhas_dataset": 227
     },
     {
       "rodada": 6,
-      "linhas": 308
+      "universo_jogadores": 316,
+      "entraram_em_campo": 315,
+      "nao_entraram": 1,
+      "linhas_dataset": 290
     },
     {
       "rodada": 7,
-      "linhas": 322
+      "universo_jogadores": 315,
+      "entraram_em_campo": 314,
+      "nao_entraram": 1,
+      "linhas_dataset": 304
     },
     {
       "rodada": 8,
-      "linhas": 323
+      "universo_jogadores": 315,
+      "entraram_em_campo": 315,
+      "nao_entraram": 0,
+      "linhas_dataset": 305
     },
     {
       "rodada": 9,
-      "linhas": 322
+      "universo_jogadores": 322,
+      "entraram_em_campo": 322,
+      "nao_entraram": 0,
+      "linhas_dataset": 303
     },
     {
       "rodada": 10,
-      "linhas": 331
+      "universo_jogadores": 318,
+      "entraram_em_campo": 316,
+      "nao_entraram": 2,
+      "linhas_dataset": 315
     },
     {
       "rodada": 11,
-      "linhas": 328
+      "universo_jogadores": 312,
+      "entraram_em_campo": 312,
+      "nao_entraram": 0,
+      "linhas_dataset": 307
     },
     {
       "rodada": 12,
-      "linhas": 333
+      "universo_jogadores": 320,
+      "entraram_em_campo": 318,
+      "nao_entraram": 2,
+      "linhas_dataset": 314
     },
     {
       "rodada": 13,
-      "linhas": 328
+      "universo_jogadores": 315,
+      "entraram_em_campo": 312,
+      "nao_entraram": 3,
+      "linhas_dataset": 308
     },
     {
       "rodada": 14,
-      "linhas": 326
+      "universo_jogadores": 315,
+      "entraram_em_campo": 314,
+      "nao_entraram": 1,
+      "linhas_dataset": 307
     },
     {
       "rodada": 15,
-      "linhas": 326
+      "universo_jogadores": 313,
+      "entraram_em_campo": 312,
+      "nao_entraram": 1,
+      "linhas_dataset": 308
     },
     {
       "rodada": 16,
-      "linhas": 321
+      "universo_jogadores": 313,
+      "entraram_em_campo": 312,
+      "nao_entraram": 1,
+      "linhas_dataset": 302
     },
     {
       "rodada": 17,
-      "linhas": 328
+      "universo_jogadores": 315,
+      "entraram_em_campo": 314,
+      "nao_entraram": 1,
+      "linhas_dataset": 308
     },
     {
       "rodada": 18,
-      "linhas": 325
+      "universo_jogadores": 319,
+      "entraram_em_campo": 318,
+      "nao_entraram": 1,
+      "linhas_dataset": 308
     },
     {
       "rodada": 19,
-      "linhas": 187
+      "universo_jogadores": 189,
+      "entraram_em_campo": 189,
+      "nao_entraram": 0,
+      "linhas_dataset": 175
     },
     {
       "rodada": 20,
-      "linhas": 310
+      "universo_jogadores": 318,
+      "entraram_em_campo": 316,
+      "nao_entraram": 2,
+      "linhas_dataset": 292
     },
     {
       "rodada": 21,
-      "linhas": 196
+      "universo_jogadores": 192,
+      "entraram_em_campo": 192,
+      "nao_entraram": 0,
+      "linhas_dataset": 184
     },
     {
       "rodada": 22,
-      "linhas": 317
+      "universo_jogadores": 316,
+      "entraram_em_campo": 314,
+      "nao_entraram": 2,
+      "linhas_dataset": 300
     },
     {
       "rodada": 23,
-      "linhas": 322
+      "universo_jogadores": 318,
+      "entraram_em_campo": 316,
+      "nao_entraram": 2,
+      "linhas_dataset": 305
     },
     {
       "rodada": 24,
-      "linhas": 330
+      "universo_jogadores": 317,
+      "entraram_em_campo": 317,
+      "nao_entraram": 0,
+      "linhas_dataset": 310
     },
     {
       "rodada": 25,
-      "linhas": 0
+      "universo_jogadores": 755,
+      "entraram_em_campo": 0,
+      "nao_entraram": 755,
+      "linhas_dataset": 603
     }
   ]
 }
