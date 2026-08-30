@@ -30,8 +30,10 @@ jobs:
         run: python scripts/sincronizar_base_v2.py
       - name: Auditar scouts e regras
         run: python scripts/auditar_scouts.py
-      - name: Construir dataset anti-leakage
+      - name: Construir dataset anti-leakage com universo completo
         run: python scripts/construir_dataset.py
+      - name: Auditar universo de jogadores validos
+        run: python scripts/auditar_universo_jogadores.py
       - name: Bloquear qualquer vazamento temporal
         run: python scripts/auditar_vazamento_temporal.py
       - name: Ablation de mando e força de adversário
