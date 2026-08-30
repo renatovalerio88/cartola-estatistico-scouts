@@ -9,6 +9,7 @@ on:
       - 'scripts/ablation_contexto.py'
       - 'scripts/validar_gate_contexto_catboost.py'
       - 'scripts/ablation_catboost_contexto_nested.py'
+      - 'scripts/comparar_catboost_off_v2.py'
       - 'scripts/resumir_catboost_nested.py'
       - 'scripts/calibrar_catboost_nested_temporal.py'
       - 'scripts/seletor_nested_calibracao_catboost.py'
@@ -50,6 +51,8 @@ jobs:
         run: python scripts/backtest_v3s_catboost_nested.py
       - name: Isolar ganho do contexto dentro do CatBoost
         run: python scripts/ablation_catboost_contexto_nested.py
+      - name: Comparar CatBoost OFF calibrado com V2 oficial
+        run: python scripts/comparar_catboost_off_v2.py
       - name: Resumir CatBoost nested e aplicar guardrails
         run: python scripts/resumir_catboost_nested.py
       - name: Testar calibracao residual temporal do CatBoost
@@ -58,12 +61,61 @@ jobs:
         run: python scripts/seletor_nested_calibracao_catboost.py
       - name: Rodar meta-seletor final V2 V3-H CatBoost
         run: python scripts/meta_seletor_final_temporal.py
-      - name: Commit apenas dos relatórios V3
+      - name: Publicar apenas relatórios V3 com retry transacional
+        shell: bash
         run: |
+          set -euo pipefail
+          REPORTS=(
+            data/reports/ablation-contexto.json
+            data/reports/gate-contexto-catboost.json
+            data/reports/ablation-catboost-contexto-nested.json
+            data/reports/comparacao-catboost-off-v2.json
+            data/reports/campeonato-modelos-estendido.json
+            data/reports/backtest-v3s-catboost-nested.json
+            data/reports/resumo-catboost-nested.json
+            data/reports/calibracao-catboost-nested-temporal.json
+            data/reports/calibracao-catboost-nested-resumo.json
+            data/reports/seletor-nested-calibracao-catboost.json
+            data/reports/meta-seletor-final-temporal.json
+          )
+
+          SNAPSHOT="$(mktemp -d)"
+          trap 'rm -rf "$SNAPSHOT"' EXIT
+          for path in "${REPORTS[@]}"; do
+            if [[ -f "$path" ]]; then
+              mkdir -p "$SNAPSHOT/$(dirname "$path")"
+              cp "$path" "$SNAPSHOT/$path"
+            fi
+          done
+
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/reports/ablation-contexto.json data/reports/gate-contexto-catboost.json data/reports/ablation-catboost-contexto-nested.json data/reports/campeonato-modelos-estendido.json data/reports/backtest-v3s-catboost-nested.json data/reports/resumo-catboost-nested.json data/reports/calibracao-catboost-nested-temporal.json data/reports/calibracao-catboost-nested-resumo.json data/reports/seletor-nested-calibracao-catboost.json data/reports/meta-seletor-final-temporal.json
-          git diff --cached --quiet || git commit -m 'data: atualizar campeonato estendido e seletores v3'
-          git reset --hard HEAD
-          git pull --rebase origin main
-          git push
+
+          for tentativa in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+
+            for path in "${REPORTS[@]}"; do
+              if [[ -f "$SNAPSHOT/$path" ]]; then
+                mkdir -p "$(dirname "$path")"
+                cp "$SNAPSHOT/$path" "$path"
+              fi
+            done
+
+            git add "${REPORTS[@]}"
+            if git diff --cached --quiet; then
+              echo 'Nenhum relatório novo para publicar.'
+              exit 0
+            fi
+
+            git commit -m 'data: atualizar campeonato estendido e seletores v3'
+            if git push origin HEAD:main; then
+              echo "Relatórios publicados na tentativa $tentativa."
+              exit 0
+            fi
+
+            echo "main avançou durante a publicação; repetindo sobre o novo HEAD ($tentativa/4)."
+          done
+
+          echo 'Falha ao publicar relatórios após 4 tentativas sem sobrescrever main.' >&2
+          exit 1
