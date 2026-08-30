@@ -15,6 +15,7 @@ on:
       - 'scripts/calibrar_catboost_nested_temporal.py'
       - 'scripts/seletor_nested_calibracao_catboost.py'
       - 'scripts/meta_seletor_final_temporal.py'
+      - 'scripts/gerar_painel.py'
       - 'requirements-extended.txt'
       - '.github/workflows/campeonato-estendido.yml'
   schedule:
@@ -64,7 +65,9 @@ jobs:
         run: python scripts/seletor_nested_calibracao_catboost.py
       - name: Rodar meta-seletor final V2 V3-H CatBoost
         run: python scripts/meta_seletor_final_temporal.py
-      - name: Publicar apenas relatórios V3 com retry transacional
+      - name: Atualizar dados do painel com resultados estendidos
+        run: python scripts/gerar_painel.py
+      - name: Publicar relatórios e painel V3 com retry transacional
         shell: bash
         run: |
           set -euo pipefail
@@ -81,6 +84,7 @@ jobs:
             data/reports/calibracao-catboost-nested-resumo.json
             data/reports/seletor-nested-calibracao-catboost.json
             data/reports/meta-seletor-final-temporal.json
+            site/dados.json
           )
 
           SNAPSHOT="$(mktemp -d)"
@@ -108,13 +112,13 @@ jobs:
 
             git add "${REPORTS[@]}"
             if git diff --cached --quiet; then
-              echo 'Nenhum relatório novo para publicar.'
+              echo 'Nenhum relatório ou dado de painel novo para publicar.'
               exit 0
             fi
 
-            git commit -m 'data: atualizar campeonato estendido e seletores v3'
+            git commit -m 'data: atualizar campeonato estendido e painel v3'
             if git push origin HEAD:main; then
-              echo "Relatórios publicados na tentativa $tentativa."
+              echo "Relatórios e painel publicados na tentativa $tentativa."
               exit 0
             fi
 
