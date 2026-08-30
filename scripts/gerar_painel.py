@@ -16,6 +16,7 @@ def main():
     SITE_DATA.parent.mkdir(parents=True, exist_ok=True)
     payload = {
         "auditoria": load("auditoria-scouts.json"),
+        "auditoria_universo": load("auditoria-universo-jogadores.json"),
         "auditoria_vazamento": load("auditoria-vazamento-temporal.json"),
         "campeonato": load("campeonato-modelos.json"),
         "campeonato_estendido": load("campeonato-modelos-estendido.json"),
@@ -34,7 +35,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com auditoria, campeonatos, V2 x V3, CatBoost e holdout posicional.")
+    print("Painel V3 atualizado com auditorias, universo amostral, campeonatos, V2 x V3, CatBoost e holdout posicional.")
 
 
 if __name__ == "__main__":
