@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-08-30T03:43:08.891896+00:00",
+  "gerado_em": "2026-08-30T04:38:16.089495+00:00",
   "protocolo": "calibracao residual estritamente temporal; para cada R/posicao usa somente residuos OOS de rodadas anteriores a R; nenhuma estatistica de R participa da calibracao",
   "linhas": 4328,
   "rodadas": [
@@ -280,13 +280,30 @@
     }
   },
   "melhor_calibracao_descritiva": "cal_pos_median5",
-  "guardrails_melhor_calibracao": {
-    "mae_melhor_que_v3h": true,
-    "rmse_nao_piora_mais_5pct": false,
-    "bias_absoluto_ate_0_50": false,
-    "aprovado_experimentalmente": false
+  "guardrails_por_candidato": {
+    "cal_pos_mean5": {
+      "mae_melhor_que_v3h": true,
+      "rmse_nao_piora_mais_5pct": true,
+      "bias_absoluto_ate_0_50": true,
+      "aprovado_experimentalmente": true
+    },
+    "cal_pos_median5": {
+      "mae_melhor_que_v3h": true,
+      "rmse_nao_piora_mais_5pct": false,
+      "bias_absoluto_ate_0_50": false,
+      "aprovado_experimentalmente": false
+    },
+    "cal_pos_mean_all": {
+      "mae_melhor_que_v3h": true,
+      "rmse_nao_piora_mais_5pct": true,
+      "bias_absoluto_ate_0_50": false,
+      "aprovado_experimentalmente": false
+    }
   },
-  "observacao": "A escolha do melhor metodo acima e apenas descritiva ex-post; nao deve ser usada para previsao futura sem um seletor nested adicional. Os tres metodos sao reportados separadamente para evitar cherry-picking.",
+  "melhor_candidato_que_passa_guardrails": "cal_pos_mean5",
+  "decisao": "CANDIDATO_APROVADO_PARA_NESTED_SELETOR",
+  "provas_temporais_ok": true,
+  "observacao": "O melhor MAE descritivo e reportado separadamente. Um candidato so avanca se passar MAE, RMSE e bias. Mesmo aprovado nos guardrails, ele nao e promovido diretamente: precisa de seletor nested adicional para evitar escolher ex-post o metodo de calibracao usando o proprio periodo de avaliacao.",
   "provas_temporais": [
     {
       "rodada_prevista": 10,
