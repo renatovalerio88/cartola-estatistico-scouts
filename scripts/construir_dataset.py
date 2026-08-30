@@ -156,13 +156,17 @@ def target_atleta(pontuado):
 
 
 def main():
-    # Histórico é por rodada em que o atleta estava no universo de jogadores.
-    # Para não participantes, pontos/scouts = 0. Assim o modelo aprende também
-    # o risco de um jogador válido não entrar em campo, sem usar informação de R.
+    # Dois históricos são mantidos sem vazamento:
+    # 1) universo: uma observação por rodada em que o atleta estava disponível,
+    #    com zeros quando não participou;
+    # 2) condicional: somente partidas em que efetivamente entrou em campo.
+    # Isso permite separar P(entrar em campo) de produção esperada se participar.
     history = defaultdict(lambda: {
         "points": deque(maxlen=20),
         "entered": deque(maxlen=20),
         "scouts": defaultdict(lambda: deque(maxlen=20)),
+        "points_cond": deque(maxlen=20),
+        "scouts_cond": defaultdict(lambda: deque(maxlen=20)),
     })
     team_history = defaultdict(lambda: {"gf": deque(maxlen=20), "ga": deque(maxlen=20)})
     rows = []
@@ -211,6 +215,7 @@ def main():
                         desde_atuou = distancia - 1
                         break
 
+                points_cond = list(h["points_cond"])
                 row = {
                     "rodada": rodada,
                     "atleta_id": aid,
@@ -229,6 +234,10 @@ def main():
                     "pontos_media3": mean(list(h["points"])[-3:]),
                     "pontos_media5": mean(list(h["points"])[-5:]),
                     "pontos_ewma": ewma(list(h["points"])),
+                    "cond_atuacoes": len(points_cond),
+                    "pontos_cond_media3": mean(points_cond[-3:]),
+                    "pontos_cond_media5": mean(points_cond[-5:]),
+                    "pontos_cond_ewma": ewma(points_cond),
                     "target_entrou": entrou_atual,
                     "target_pontos": pontos_atual,
                 }
@@ -237,9 +246,13 @@ def main():
 
                 for scout in SCOUTS:
                     vals = list(h["scouts"][scout])
+                    vals_cond = list(h["scouts_cond"][scout])
                     row[f"{scout}_media3"] = mean(vals[-3:])
                     row[f"{scout}_media5"] = mean(vals[-5:])
                     row[f"{scout}_ewma"] = ewma(vals)
+                    row[f"{scout}_cond_media3"] = mean(vals_cond[-3:])
+                    row[f"{scout}_cond_media5"] = mean(vals_cond[-5:])
+                    row[f"{scout}_cond_ewma"] = ewma(vals_cond)
                     row[f"target_{scout}"] = float(scouts_atual.get(scout, 0) or 0) if entrou_atual else 0.0
 
                 rows.append(row)
@@ -249,7 +262,12 @@ def main():
             h["points"].append(pontos_atual)
             h["entered"].append(entrou_atual)
             for scout in SCOUTS:
-                h["scouts"][scout].append(float(scouts_atual.get(scout, 0) or 0) if entrou_atual else 0.0)
+                valor = float(scouts_atual.get(scout, 0) or 0) if entrou_atual else 0.0
+                h["scouts"][scout].append(valor)
+            if entrou_atual:
+                h["points_cond"].append(pontos_atual)
+                for scout in SCOUTS:
+                    h["scouts_cond"][scout].append(float(scouts_atual.get(scout, 0) or 0))
 
         atualizar_times(team_history, partidas)
         round_stats.append({
@@ -271,6 +289,7 @@ def main():
             "entrou_ewma", "rodadas_desde_atuou"
         }
     ] if len(df) else []
+    conditional_cols = [c for c in df.columns if "_cond_" in c or c == "cond_atuacoes"] if len(df) else []
 
     meta = {
         "linhas": len(df),
@@ -279,15 +298,16 @@ def main():
         "jogadores": int(df.atleta_id.nunique()) if len(df) else 0,
         "colunas": list(df.columns),
         "features_contexto": context_cols,
-        "universo_amostral": "Todos os jogadores de linha válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA), inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0.",
-        "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
+        "features_condicionais_participacao": conditional_cols,
+        "universo_amostral": "Todos os jogadores válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA), inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0.",
+        "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. As features *_cond_* usam somente atuações anteriores a R em que o atleta entrou em campo. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
         "por_rodada": round_stats,
     }
     (OUT / "dataset-meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
         f"Dataset walk-forward universo completo: {len(df)} linhas, "
         f"{len(df.columns) if len(df) else 0} colunas, {meta['jogadores']} jogadores; "
-        f"contexto anti-leakage={len(context_cols)} features."
+        f"contexto anti-leakage={len(context_cols)} features; condicionais={len(conditional_cols)}."
     )
 
 
