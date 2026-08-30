@@ -25,6 +25,7 @@ def main():
         "backtest_v3s_catboost": load("backtest-v3s-catboost-nested.json"),
         "backtest_v3s_dois_estagios": load("backtest-v3s-dois-estagios.json"),
         "calibracao_participacao": load("calibracao-participacao-dois-estagios.json"),
+        "calibracao_producao_condicional": load("calibracao-producao-condicional-dois-estagios.json"),
         "ablation_contexto": load("ablation-contexto.json"),
         "ablation_catboost_contexto": load("ablation-catboost-contexto-nested.json"),
         "comparacao_v2": load("comparacao-v2-oficial-v3.json"),
@@ -37,7 +38,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com auditorias, universo amostral, campeonatos, V2 x V3, CatBoost, dois estágios, calibração de participação e holdout posicional.")
+    print("Painel V3 atualizado com auditorias, universo amostral, campeonatos, V2 x V3, CatBoost, dois estágios, calibrações de participação/produção e holdout posicional.")
 
 
 if __name__ == "__main__":
