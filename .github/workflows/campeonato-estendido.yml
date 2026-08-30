@@ -8,6 +8,7 @@ on:
       - 'scripts/benchmark_scouts_estendido.py'
       - 'scripts/backtest_v3s_catboost_nested.py'
       - 'scripts/backtest_v3s_dois_estagios.py'
+      - 'scripts/calibrar_participacao_dois_estagios.py'
       - 'scripts/ablation_contexto.py'
       - 'scripts/validar_gate_contexto_catboost.py'
       - 'scripts/ablation_catboost_contexto_nested.py'
@@ -55,6 +56,8 @@ jobs:
         run: python scripts/backtest_v3s_catboost_nested.py
       - name: Rodar V3 Scouts em dois estágios participação x produção
         run: python scripts/backtest_v3s_dois_estagios.py
+      - name: Calibrar participação em nested temporal estrito
+        run: python scripts/calibrar_participacao_dois_estagios.py
       - name: Isolar ganho do contexto dentro do CatBoost
         run: python scripts/ablation_catboost_contexto_nested.py
       - name: Comparar CatBoost OFF calibrado com V2 oficial
@@ -84,6 +87,7 @@ jobs:
             data/reports/campeonato-modelos-estendido.json
             data/reports/backtest-v3s-catboost-nested.json
             data/reports/backtest-v3s-dois-estagios.json
+            data/reports/calibracao-participacao-dois-estagios.json
             data/reports/resumo-catboost-nested.json
             data/reports/calibracao-catboost-nested-temporal.json
             data/reports/calibracao-catboost-nested-resumo.json
