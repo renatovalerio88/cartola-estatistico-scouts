@@ -85,6 +85,15 @@ def ewma(values, alpha=.45):
     return acc
 
 
+def streak(values, target):
+    count = 0
+    for value in reversed(list(values)):
+        if int(value) != int(target):
+            break
+        count += 1
+    return count
+
+
 def team_features(team_history, club_id, prefix):
     h = team_history[club_id]
     gf = list(h["gf"])
@@ -156,11 +165,6 @@ def target_atleta(pontuado):
 
 
 def main():
-    # Dois históricos são mantidos sem vazamento:
-    # 1) universo: uma observação por rodada em que o atleta estava disponível,
-    #    com zeros quando não participou;
-    # 2) condicional: somente partidas em que efetivamente entrou em campo.
-    # Isso permite separar P(entrar em campo) de produção esperada se participar.
     history = defaultdict(lambda: {
         "points": deque(maxlen=20),
         "entered": deque(maxlen=20),
@@ -227,10 +231,15 @@ def main():
                     "adversario_id": adversario_id,
                     "historico_jogos": past_n,
                     "historico_atuacoes": atuacoes_passadas,
+                    "taxa_atuacao_historica": atuacoes_passadas / past_n,
+                    "entrou_media2": mean(entered_vals[-2:]),
                     "entrou_media3": mean(entered_vals[-3:]),
                     "entrou_media5": mean(entered_vals[-5:]),
+                    "entrou_media10": mean(entered_vals[-10:]),
                     "entrou_ewma": ewma(entered_vals),
                     "rodadas_desde_atuou": desde_atuou,
+                    "sequencia_atuacoes": streak(entered_vals, 1),
+                    "sequencia_ausencias": streak(entered_vals, 0),
                     "pontos_media3": mean(list(h["points"])[-3:]),
                     "pontos_media5": mean(list(h["points"])[-5:]),
                     "pontos_ewma": ewma(list(h["points"])),
@@ -258,7 +267,6 @@ def main():
                 rows.append(row)
                 created += 1
 
-            # Resultado da rodada R só entra no histórico DEPOIS da linha R.
             h["points"].append(pontos_atual)
             h["entered"].append(entrou_atual)
             for scout in SCOUTS:
@@ -285,8 +293,9 @@ def main():
     context_cols = [
         c for c in df.columns
         if c.startswith("time_") or c.startswith("adversario_") or c in {
-            "mando", "historico_atuacoes", "entrou_media3", "entrou_media5",
-            "entrou_ewma", "rodadas_desde_atuou"
+            "mando", "historico_atuacoes", "taxa_atuacao_historica", "entrou_media2",
+            "entrou_media3", "entrou_media5", "entrou_media10", "entrou_ewma",
+            "rodadas_desde_atuou", "sequencia_atuacoes", "sequencia_ausencias"
         }
     ] if len(df) else []
     conditional_cols = [c for c in df.columns if "_cond_" in c or c == "cond_atuacoes"] if len(df) else []
@@ -300,7 +309,7 @@ def main():
         "features_contexto": context_cols,
         "features_condicionais_participacao": conditional_cols,
         "universo_amostral": "Todos os jogadores válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA), inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0.",
-        "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. As features *_cond_* usam somente atuações anteriores a R em que o atleta entrou em campo. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
+        "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. Taxas, sequências e janelas de participação são calculadas exclusivamente sobre flags target_entrou de rodadas anteriores. As features *_cond_* usam somente atuações anteriores a R em que o atleta entrou em campo. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
         "por_rodada": round_stats,
     }
     (OUT / "dataset-meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
