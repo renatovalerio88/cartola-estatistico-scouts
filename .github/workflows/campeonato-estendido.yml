@@ -8,6 +8,7 @@ on:
       - 'scripts/backtest_v3s_catboost_nested.py'
       - 'scripts/resumir_catboost_nested.py'
       - 'scripts/calibrar_catboost_nested_temporal.py'
+      - 'scripts/seletor_nested_calibracao_catboost.py'
       - 'requirements-extended.txt'
       - '.github/workflows/campeonato-estendido.yml'
   schedule:
@@ -43,11 +44,13 @@ jobs:
         run: python scripts/resumir_catboost_nested.py
       - name: Testar calibracao residual temporal do CatBoost
         run: python scripts/calibrar_catboost_nested_temporal.py
+      - name: Selecionar calibracao em nested temporal estrito
+        run: python scripts/seletor_nested_calibracao_catboost.py
       - name: Commit apenas dos relatórios V3
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/reports/campeonato-modelos-estendido.json data/reports/backtest-v3s-catboost-nested.json data/reports/resumo-catboost-nested.json data/reports/calibracao-catboost-nested-temporal.json data/reports/calibracao-catboost-nested-resumo.json
+          git add data/reports/campeonato-modelos-estendido.json data/reports/backtest-v3s-catboost-nested.json data/reports/resumo-catboost-nested.json data/reports/calibracao-catboost-nested-temporal.json data/reports/calibracao-catboost-nested-resumo.json data/reports/seletor-nested-calibracao-catboost.json
           git diff --cached --quiet || git commit -m 'data: atualizar campeonato estendido e catboost nested v3'
           git reset --hard HEAD
           git pull --rebase origin main
