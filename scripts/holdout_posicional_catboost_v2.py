@@ -32,7 +32,15 @@ def metric(y, p) -> dict:
 
 
 def fetch_v2_round(rodada: int) -> list[dict]:
+    """Lê somente a saída histórica já publicada pela V2.
+
+    A V3 pode ter uma rodada nova antes de a V2 fechar/publicar o histórico correspondente.
+    Nesse caso (404), a rodada é simplesmente excluída da comparação pareada. Isso evita
+    quebrar o laboratório e, principalmente, impede comparar universos temporais diferentes.
+    """
     r = requests.get(V2_RAW.format(rodada=rodada), timeout=30)
+    if r.status_code == 404:
+        return []
     r.raise_for_status()
     rows = []
     for j in r.json().get("jogadores") or []:
@@ -93,10 +101,21 @@ def main() -> None:
         raise SystemExit(f"Colunas ausentes: {sorted(missing)}")
     pred = pred.rename(columns={"catboost_contexto_off_cal": "catboost"})
 
-    rounds = sorted(pred.rodada.astype(int).unique().tolist())
+    rounds_v3 = sorted(pred.rodada.astype(int).unique().tolist())
     v2_rows = []
-    for rodada in rounds:
-        v2_rows.extend(fetch_v2_round(rodada))
+    rounds_v2_disponiveis = []
+    rounds_v2_indisponiveis = []
+    for rodada in rounds_v3:
+        rows = fetch_v2_round(rodada)
+        if rows:
+            rounds_v2_disponiveis.append(int(rodada))
+            v2_rows.extend(rows)
+        else:
+            rounds_v2_indisponiveis.append(int(rodada))
+
+    if not v2_rows:
+        raise SystemExit("Nenhuma rodada da V2 disponível para comparação pareada")
+
     merged = pred.merge(pd.DataFrame(v2_rows), on=["rodada", "atleta_id"], how="inner", validate="one_to_one")
     merged = merged[np.abs(merged.real.to_numpy(float) - merged.v2_real.to_numpy(float)) <= 1e-6].copy()
     if merged.empty:
@@ -161,20 +180,26 @@ def main() -> None:
     else:
         decision = "HOLDOUT_POSICIONAL_NAO_SUPERA_V2"
 
+    discovery_rounds = sorted(discovery.rodada.astype(int).unique().tolist())
+    holdout_rounds = sorted(holdout.rodada.astype(int).unique().tolist())
     out = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "objetivo": "Testar arquitetura posicional congelada sem escolher modelos usando o periodo de holdout.",
         "protocolo": (
             "R10-R17 e usado apenas como discovery. Para cada posicao, CatBoost OFF calibrado e escolhido somente se no discovery melhora MAE, "
-            "nao piora RMSE em mais de 2% e mantem |bias| <= 0.50; caso contrario fica V2. A escolha por posicao e congelada antes de avaliar R18-R24. "
-            "Nenhum resultado de R18-R24 participa da escolha. Bootstrap e feito em blocos de rodada."
+            "nao piora RMSE em mais de 2% e mantem |bias| <= 0.50; caso contrario fica V2. A escolha por posicao e congelada antes do holdout. "
+            "O holdout usa somente rodadas com resultado historico disponivel simultaneamente na V2 e na V3; rodadas ainda nao fechadas/publicadas pela V2 "
+            "sao excluidas, nunca imputadas. Nenhum resultado do holdout participa da escolha. Bootstrap e feito em blocos de rodada."
         ),
         "anti_leakage": {
-            "discovery_rodadas": sorted(discovery.rodada.astype(int).unique().tolist()),
-            "holdout_rodadas": sorted(holdout.rodada.astype(int).unique().tolist()),
+            "discovery_rodadas": discovery_rounds,
+            "holdout_rodadas": holdout_rounds,
             "discovery_max": int(discovery.rodada.max()),
             "holdout_min": int(holdout.rodada.min()),
             "split_valido": bool(int(discovery.rodada.max()) < int(holdout.rodada.min())),
+            "rodadas_v3_encontradas": rounds_v3,
+            "rodadas_v2_disponiveis": rounds_v2_disponiveis,
+            "rodadas_v2_indisponiveis_excluidas": rounds_v2_indisponiveis,
         },
         "escolhas_congeladas_por_posicao": escolhas,
         "holdout": holdout_summary,
@@ -184,7 +209,12 @@ def main() -> None:
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(json.dumps({"decisao": decision, "holdout": holdout_summary, "escolhas": escolhas}, ensure_ascii=False, indent=2))
+    print(json.dumps({
+        "decisao": decision,
+        "holdout": holdout_summary,
+        "escolhas": escolhas,
+        "rodadas_v2_indisponiveis_excluidas": rounds_v2_indisponiveis,
+    }, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
