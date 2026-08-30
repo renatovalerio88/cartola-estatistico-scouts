@@ -1,7 +1,7 @@
 {
-  "gerado_em": "2026-08-30T13:55:34.136370+00:00",
+  "gerado_em": "2026-08-30T16:56:32.930965+00:00",
   "protocolo": "calibracao residual estritamente temporal; para cada R/posicao usa somente residuos OOS de rodadas anteriores a R; nenhuma estatistica de R participa da calibracao",
-  "linhas": 4328,
+  "linhas": 4946,
   "rodadas": [
     10,
     11,
@@ -17,72 +17,73 @@
     21,
     22,
     23,
-    24
+    24,
+    25
   ],
   "geral": {
     "v3s_catboost_nested": {
-      "n": 4328,
-      "mae": 2.976709,
-      "rmse": 4.463424,
-      "bias": -2.022016
+      "n": 4946,
+      "mae": 2.816321,
+      "rmse": 4.242022,
+      "bias": -1.582825
     },
     "cal_pos_mean5": {
-      "n": 4328,
-      "mae": 2.958163,
-      "rmse": 4.020677,
-      "bias": -0.464815
+      "n": 4946,
+      "mae": 3.057537,
+      "rmse": 4.009381,
+      "bias": 0.035663
     },
     "cal_pos_median5": {
-      "n": 4328,
-      "mae": 2.859669,
-      "rmse": 4.181848,
-      "bias": -1.344538
+      "n": 4946,
+      "mae": 2.857547,
+      "rmse": 4.06484,
+      "bias": -0.831098
     },
     "cal_pos_mean_all": {
-      "n": 4328,
-      "mae": 2.938397,
-      "rmse": 4.019577,
-      "bias": -0.552346
+      "n": 4946,
+      "mae": 3.02106,
+      "rmse": 3.990022,
+      "bias": -0.071013
     },
     "v3h_hibrido": {
-      "n": 4328,
-      "mae": 2.998415,
-      "rmse": 3.945241,
-      "bias": 0.114287
+      "n": 4946,
+      "mae": 3.052063,
+      "rmse": 3.927912,
+      "bias": 0.522372
     }
   },
   "guardrails_por_candidato": {
     "cal_pos_mean5": {
-      "mae_melhor_que_v3h": true,
+      "mae_melhor_que_v3h": false,
       "rmse_nao_piora_mais_5pct": true,
       "bias_absoluto_ate_0_50": true,
-      "aprovado_experimentalmente": true
+      "aprovado_experimentalmente": false
     },
     "cal_pos_median5": {
       "mae_melhor_que_v3h": true,
-      "rmse_nao_piora_mais_5pct": false,
+      "rmse_nao_piora_mais_5pct": true,
       "bias_absoluto_ate_0_50": false,
       "aprovado_experimentalmente": false
     },
     "cal_pos_mean_all": {
       "mae_melhor_que_v3h": true,
       "rmse_nao_piora_mais_5pct": true,
-      "bias_absoluto_ate_0_50": false,
-      "aprovado_experimentalmente": false
+      "bias_absoluto_ate_0_50": true,
+      "aprovado_experimentalmente": true
     }
   },
   "melhor_calibracao_descritiva": "cal_pos_median5",
-  "melhor_candidato_que_passa_guardrails": "cal_pos_mean5",
+  "melhor_candidato_que_passa_guardrails": "cal_pos_mean_all",
   "decisao": "CANDIDATO_APROVADO_PARA_NESTED_SELETOR",
   "provas_temporais_ok": true,
   "bootstrap_candidato_vs_v3h": {
-    "diferenca_mae_challenger_menos_baseline": -0.040826,
+    "diferenca_mae_challenger_menos_baseline": -0.045405,
     "ic95": [
-      -0.085784,
-      0.003218
+      -0.091966,
+      0.001652
     ],
-    "probabilidade_challenger_melhor": 0.9662,
-    "rodadas_ganhas": 10,
-    "rodadas_perdidas": 5
+    "probabilidade_challenger_melhor": 0.9706,
+    "rodadas_ganhas": 12,
+    "rodadas_perdidas": 4
   }
 }
