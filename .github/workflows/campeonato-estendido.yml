@@ -6,6 +6,7 @@ on:
     paths:
       - 'scripts/benchmark_scouts_estendido.py'
       - 'scripts/backtest_v3s_catboost_nested.py'
+      - 'scripts/resumir_catboost_nested.py'
       - 'requirements-extended.txt'
       - '.github/workflows/campeonato-estendido.yml'
   schedule:
@@ -37,11 +38,13 @@ jobs:
         run: python scripts/benchmark_scouts_estendido.py
       - name: Rodar CatBoost em nested walk-forward estrito
         run: python scripts/backtest_v3s_catboost_nested.py
+      - name: Resumir CatBoost nested e aplicar guardrails
+        run: python scripts/resumir_catboost_nested.py
       - name: Commit apenas dos relatórios V3
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/reports/campeonato-modelos-estendido.json data/reports/backtest-v3s-catboost-nested.json
+          git add data/reports/campeonato-modelos-estendido.json data/reports/backtest-v3s-catboost-nested.json data/reports/resumo-catboost-nested.json
           git diff --cached --quiet || git commit -m 'data: atualizar campeonato estendido e catboost nested v3'
           git reset --hard HEAD
           git pull --rebase origin main
