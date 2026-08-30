@@ -21,6 +21,8 @@ BOOTSTRAPS = 5000
 SEED = 42
 BIAS_LIMIT = 0.60
 RMSE_TOL_V2 = 1.05
+REAL_TOL = 1e-6
+MIN_COMMON_COVERAGE = 0.50
 
 
 def metrics(y, p):
@@ -41,11 +43,15 @@ def round6(d):
 
 def fetch_v2(rounds):
     rows = []
+    available_rounds = []
+    missing_rounds = []
     for rodada in rounds:
         r = requests.get(V2_RAW.format(rodada=int(rodada)), timeout=30)
         if r.status_code == 404:
+            missing_rounds.append(int(rodada))
             continue
         r.raise_for_status()
+        available_rounds.append(int(rodada))
         for j in (r.json().get("jogadores") or []):
             if not isinstance(j, dict):
                 continue
@@ -58,7 +64,7 @@ def fetch_v2(rounds):
                 })
             except (KeyError, TypeError, ValueError):
                 pass
-    return pd.DataFrame(rows)
+    return pd.DataFrame(rows), available_rounds, missing_rounds
 
 
 def choose(history: pd.DataFrame):
@@ -105,6 +111,14 @@ def bootstrap_by_round(df: pd.DataFrame, challenger: str, baseline: str):
         b = np.mean(np.abs(g[baseline].to_numpy(float) - g.real.to_numpy(float)))
         diffs.append(float(a - b))
     arr = np.asarray(diffs, float)
+    if len(arr) == 0:
+        return {
+            "diferenca_mae": None,
+            "ic95": [None, None],
+            "probabilidade_challenger_melhor": None,
+            "rodadas_ganhas": 0,
+            "rodadas_perdidas": 0,
+        }
     rng = np.random.default_rng(SEED)
     sims = np.asarray([
         np.mean(rng.choice(arr, size=len(arr), replace=True)) for _ in range(BOOTSTRAPS)
@@ -127,15 +141,46 @@ def main():
         raise SystemExit(f"Colunas ausentes no seletor CatBoost: {sorted(missing)}")
 
     base = base.rename(columns={"nested_calibrado": "cat_nested"})
-    rounds = sorted(int(r) for r in base.rodada.unique())
-    v2 = fetch_v2(rounds)
+    requested_rounds = sorted(int(r) for r in base.rodada.unique())
+    v2, v2_rounds, missing_v2_rounds = fetch_v2(requested_rounds)
     if v2.empty:
         raise SystemExit("V2 oficial arquivada indisponivel")
 
-    df = base.merge(v2, on=["rodada", "atleta_id"], how="inner")
-    df = df[np.abs(df.real - df.v2_real) <= 1e-6].copy()
-    if len(df) != len(base):
-        raise RuntimeError(f"Cobertura V2 incompleta: {len(df)}/{len(base)}")
+    # Comparacao V2 x V3 deve ser feita somente na intersecao observavel dos dois
+    # sistemas. O V3 passou a conter todo o universo valido (inclusive atletas que
+    # nao atuaram), enquanto o historico legado da V2 possui cobertura menor.
+    # Exigir len(df)==len(base) tornava o pipeline incorretamente dependente da
+    # cobertura da V2. Mantemos o universo completo no laboratorio V3 e isolamos
+    # explicitamente a amostra comum apenas para esta comparacao pareada.
+    base_common_rounds = base[base.rodada.isin(v2_rounds)].copy()
+    merged = base_common_rounds.merge(v2, on=["rodada", "atleta_id"], how="inner")
+    matched_real = np.abs(merged.real - merged.v2_real) <= REAL_TOL
+    mismatched_real = int((~matched_real).sum())
+    df = merged[matched_real].copy()
+
+    if df.empty:
+        raise RuntimeError("Sem observacoes comuns V2/V3 com resultado real consistente")
+
+    coverage = len(df) / max(len(base_common_rounds), 1)
+    if coverage < MIN_COMMON_COVERAGE:
+        raise RuntimeError(
+            f"Cobertura comum V2/V3 insuficiente: {len(df)}/{len(base_common_rounds)} "
+            f"({coverage:.1%}) < {MIN_COMMON_COVERAGE:.0%}"
+        )
+
+    rounds = sorted(int(r) for r in df.rodada.unique())
+    coverage_by_round = []
+    for rodada in requested_rounds:
+        n_v3 = int(base[base.rodada.eq(rodada)].shape[0])
+        n_common = int(df[df.rodada.eq(rodada)].shape[0])
+        coverage_by_round.append({
+            "rodada": int(rodada),
+            "v3": n_v3,
+            "comum_v2_v3": n_common,
+            "cobertura": round(n_common / n_v3, 6) if n_v3 else 0.0,
+            "v2_disponivel": int(rodada) in v2_rounds,
+        })
+
     df = df.sort_values(["rodada", "atleta_id"]).reset_index(drop=True)
 
     predictions = []
@@ -172,6 +217,8 @@ def main():
             })
 
     pred = pd.DataFrame(predictions)
+    if pred.empty:
+        raise RuntimeError("Meta-seletor nao gerou previsoes na amostra comum")
     if not all(x["ok_temporal"] for x in choices):
         raise RuntimeError("Falha temporal no meta seletor final")
 
@@ -183,10 +230,12 @@ def main():
     out = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "protocolo": (
-            "meta-seletor final estritamente temporal por posicao. Para prever R, compara V2 oficial arquivada, "
-            "V3-H e CatBoost nested calibrado somente nas ate 5 rodadas OOS anteriores. Exige no passado "
-            "RMSE <= 105% da V2 e |bias| <= 0.60 para challengers; V2 e fallback seguro. Nenhum resultado de R "
-            "participa da escolha de R."
+            "meta-seletor final estritamente temporal por posicao. A comparacao V2 x V3 usa somente a "
+            "intersecao atleta/rodada com resultado real identico nos dois sistemas, sem reduzir o universo "
+            "de treino/validacao do V3. Para prever R, compara V2 oficial arquivada, V3-H e CatBoost nested "
+            "calibrado somente nas ate 5 rodadas OOS anteriores. Exige no passado RMSE <= 105% da V2 e "
+            "|bias| <= 0.60 para challengers; V2 e fallback seguro. Nenhum resultado de R participa da "
+            "escolha de R."
         ),
         "linhas": int(len(pred)),
         "rodadas": rounds,
@@ -195,6 +244,16 @@ def main():
             "janela_selecao": WINDOW_SELECTION,
             "limite_bias_absoluto": BIAS_LIMIT,
             "tolerancia_rmse_vs_v2": RMSE_TOL_V2,
+            "cobertura_comum_minima": MIN_COMMON_COVERAGE,
+        },
+        "auditoria_cobertura": {
+            "linhas_v3_nas_rodadas_com_v2": int(len(base_common_rounds)),
+            "linhas_comuns_validas": int(len(df)),
+            "cobertura_comum": round(float(coverage), 6),
+            "linhas_real_divergente_excluidas": mismatched_real,
+            "rodadas_v2_disponiveis": v2_rounds,
+            "rodadas_v2_ausentes": missing_v2_rounds,
+            "por_rodada": coverage_by_round,
         },
         "geral": geral,
         "por_posicao": por_posicao,
@@ -208,6 +267,7 @@ def main():
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
     print("Meta-seletor final temporal concluido")
+    print(f"Cobertura comum V2/V3: {len(df)}/{len(base_common_rounds)} ({coverage:.1%})")
     print("Geral:", geral)
     print("Metodos:", out["contagem_metodos"])
     print("Bootstrap meta vs V2:", out["bootstrap_meta_vs_v2"])
