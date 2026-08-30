@@ -37,6 +37,15 @@ def ewma(values, alpha=.45):
     return acc
 
 
+def streak(values, target):
+    count = 0
+    for value in reversed(list(values)):
+        if int(value) != int(target):
+            break
+        count += 1
+    return count
+
+
 def close(a, b):
     return abs(float(a) - float(b)) <= TOL
 
@@ -138,10 +147,15 @@ def main():
                     expected = {
                         "historico_jogos": len(h["pontos"]),
                         "historico_atuacoes": int(sum(entered_vals)),
+                        "taxa_atuacao_historica": float(sum(entered_vals)) / len(entered_vals),
+                        "entrou_media2": mean(entered_vals[-2:]),
                         "entrou_media3": mean(entered_vals[-3:]),
                         "entrou_media5": mean(entered_vals[-5:]),
+                        "entrou_media10": mean(entered_vals[-10:]),
                         "entrou_ewma": ewma(entered_vals),
                         "rodadas_desde_atuou": desde_atuou,
+                        "sequencia_atuacoes": streak(entered_vals, 1),
+                        "sequencia_ausencias": streak(entered_vals, 0),
                         "pontos_media3": mean(list(h["pontos"])[-3:]),
                         "pontos_media5": mean(list(h["pontos"])[-5:]),
                         "pontos_ewma": ewma(list(h["pontos"])),
@@ -171,7 +185,6 @@ def main():
                                 "encontrado": None if pd.isna(got) else round(float(got), 10),
                             })
 
-            # Só após conferir/congelar a linha R o resultado de R entra no histórico.
             h["pontos"].append(pontos_atual)
             h["entered"].append(entrou_atual)
             for scout in SCOUTS:
@@ -187,13 +200,13 @@ def main():
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "status": "APROVADA" if not violations and rows_checked == len(expected_keys) else "REPROVADA",
         "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas < R. Targets de R podem existir apenas como rótulo de avaliação.",
-        "universo": "Jogadores de linha válidos do jogadores.json, inclusive quem não entrou; ausência de atuação em R vira target 0, nunca feature de R.",
+        "universo": "Jogadores válidos do jogadores.json, inclusive quem não entrou; ausência de atuação em R vira target 0, nunca feature de R.",
         "linhas_dataset": int(len(df)),
         "linhas_auditadas": int(rows_checked),
         "checks_features_targets": int(checks),
         "violacoes": violations,
         "violacoes_total_amostradas": len(violations),
-        "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json; cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico.",
+        "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json; cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico. Inclui auditoria explícita de taxas, janelas e sequências de participação.",
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
