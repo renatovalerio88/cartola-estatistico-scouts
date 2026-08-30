@@ -1,6 +1,6 @@
 {
   "auditoria": {
-    "gerado_em": "2026-08-30T11:42:53.677685+00:00",
+    "gerado_em": "2026-08-30T14:26:17.419993+00:00",
     "rodadas_auditadas": 25,
     "atletas_registrados": 7586,
     "atletas_em_campo": 7535,
@@ -617,7 +617,7 @@
     ]
   },
   "auditoria_vazamento": {
-    "gerado_em": "2026-08-30T13:46:33.407204+00:00",
+    "gerado_em": "2026-08-30T14:26:21.076153+00:00",
     "status": "APROVADA",
     "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente rodadas < R.",
     "linhas_dataset": 6830,
@@ -628,7 +628,7 @@
     "metodo": "Reconstrução cronológica desde data/raw; cada linha R é validada antes de inserir target/scouts de R no histórico."
   },
   "campeonato": {
-    "gerado_em": "2026-08-30T11:47:23.384414+00:00",
+    "gerado_em": "2026-08-30T14:29:41.454411+00:00",
     "protocolo": "walk-forward em blocos temporais; todo treino termina antes da primeira rodada do respectivo teste",
     "anti_leakage_aprovado": true,
     "min_linhas_treino": 80,
@@ -16136,7 +16136,7 @@
             "fallbacks_numericos": 0
           },
           "negative_binomial": {
-            "mae": 0.008431,
+            "mae": 0.00843,
             "rmse": 0.054631,
             "bias": 0.004341,
             "n": 1467,
@@ -32943,7 +32943,7 @@
     ]
   },
   "backtest_pontos": {
-    "gerado_em": "2026-08-30T11:47:24.042292+00:00",
+    "gerado_em": "2026-08-30T14:29:41.941562+00:00",
     "protocolo": "baseline arquitetural sem seleção otimista: features de cada R usam apenas rodadas < R; comparação inicia R7",
     "scouts_usados": [
       "G",
@@ -33230,7 +33230,7 @@
     "nota": "Este estágio usa apenas médias/EWMA de scouts. V3 com campeões ML por scout será avaliada depois em nested walk-forward para evitar escolher e testar o vencedor no mesmo período."
   },
   "backtest_v3s_nested": {
-    "gerado_em": "2026-08-30T11:50:13.131901+00:00",
+    "gerado_em": "2026-08-30T14:32:03.456116+00:00",
     "protocolo": "nested walk-forward: em cada R, modelos de scouts usam apenas passado; RF direto treina somente em histórico < R; híbrido escolhe alpha exclusivamente com previsões out-of-sample de rodadas anteriores, nunca com o resultado de R",
     "inicio_rodada": 10,
     "linhas": 4328,
@@ -153539,7 +153539,7 @@
     ]
   },
   "ablation_contexto": {
-    "gerado_em": "2026-08-30T13:48:50.825933+00:00",
+    "gerado_em": "2026-08-30T14:28:06.173723+00:00",
     "protocolo": "Walk-forward estrito rodada a rodada. Para prever R, cada modelo e posição é reajustado usando exclusivamente rodadas < R. A comparação de contexto usa as mesmas linhas e bootstrap pareado sobre MAE por rodada.",
     "modelos_fixos": [
       "ridge",
@@ -208802,7 +208802,7 @@
     ]
   },
   "comparacao_v2": {
-    "gerado_em": "2026-08-30T11:50:17.758371+00:00",
+    "gerado_em": "2026-08-30T14:32:07.454218+00:00",
     "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; bootstrap em blocos por rodada, sem recalibrar a V2 olhando o futuro",
     "rotulo_v2": "V2 projeção histórica salva (produção)",
     "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada, em vez de substituir a V2 pelo RF direto do laboratório.",
@@ -209788,7 +209788,7 @@
     "nota": "Mesmo se aprovado no holdout historico, a V2 permanece intocada; validacao prospectiva imutavel continua obrigatoria."
   },
   "significancia": {
-    "gerado_em": "2026-08-30T11:50:13.690197+00:00",
+    "gerado_em": "2026-08-30T14:32:03.910250+00:00",
     "protocolo": "comparação pareada por rodada; bootstrap em blocos de rodada para preservar dependência intra-rodada; usa somente previsões OOS já produzidas pelo backtest nested anti-leakage",
     "bootstrap_amostras": 5000,
     "seed": 42,
@@ -209872,7 +209872,7 @@
     }
   },
   "meta_seletor": {
-    "gerado_em": "2026-08-30T11:50:19.609932+00:00",
+    "gerado_em": "2026-08-30T14:32:09.883568+00:00",
     "protocolo": "meta-seletor walk-forward por posição: para cada rodada R e posição, escolhe V2 ou V3-H usando apenas MAE observado nas até 5 rodadas anteriores; mínimo de 3 rodadas anteriores; em insuficiência mantém V2. Nunca usa resultado da própria R para escolher.",
     "linhas": 4328,
     "rodadas": [
