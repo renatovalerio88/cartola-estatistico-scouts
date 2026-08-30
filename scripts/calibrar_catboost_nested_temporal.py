@@ -11,6 +11,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 SRC = ROOT / "data" / "reports" / "backtest-v3s-catboost-nested.json"
 OUT = ROOT / "data" / "reports" / "calibracao-catboost-nested-temporal.json"
+OUT_SUMMARY = ROOT / "data" / "reports" / "calibracao-catboost-nested-resumo.json"
 MIN_PRIOR_ROUNDS = 3
 WINDOW = 5
 
@@ -57,6 +58,16 @@ def prior_residuals(df: pd.DataFrame, rodada: int, posicao: str, window: int | N
         used = rounds
     residual = prior.v3s_catboost_nested - prior.real
     return residual, used
+
+
+def avaliar_guardrails(metrics: dict, v3h: dict) -> dict:
+    checks = {
+        "mae_melhor_que_v3h": metrics["mae"] < v3h["mae"],
+        "rmse_nao_piora_mais_5pct": metrics["rmse"] <= v3h["rmse"] * 1.05,
+        "bias_absoluto_ate_0_50": abs(metrics["bias"]) <= 0.50,
+    }
+    checks["aprovado_experimentalmente"] = all(checks.values())
+    return checks
 
 
 def main():
@@ -121,16 +132,30 @@ def main():
         "median5_vs_v3h": bootstrap_by_round(pred, "cal_pos_median5", "v3h_hibrido"),
         "mean_all_vs_v3h": bootstrap_by_round(pred, "cal_pos_mean_all", "v3h_hibrido"),
     }
+
     candidates = ["cal_pos_mean5", "cal_pos_median5", "cal_pos_mean_all"]
-    best = min(candidates, key=lambda m: geral[m]["mae"])
-    best_metrics = geral[best]
     v3h = geral["v3h_hibrido"]
-    guardrails = {
-        "mae_melhor_que_v3h": best_metrics["mae"] < v3h["mae"],
-        "rmse_nao_piora_mais_5pct": best_metrics["rmse"] <= v3h["rmse"] * 1.05,
-        "bias_absoluto_ate_0_50": abs(best_metrics["bias"]) <= 0.50,
+    guardrails_por_candidato = {
+        m: avaliar_guardrails(geral[m], v3h)
+        for m in candidates
     }
-    guardrails["aprovado_experimentalmente"] = all(guardrails.values())
+
+    # O menor MAE continua sendo reportado apenas como descrição ex-post.
+    best_descriptive = min(candidates, key=lambda m: geral[m]["mae"])
+
+    # Para declarar um candidato apto aos próximos testes, guardrails vêm antes do MAE.
+    # Isso impede que um MAE ligeiramente menor esconda bias/RMSE inadequados.
+    eligible = [m for m in candidates if guardrails_por_candidato[m]["aprovado_experimentalmente"]]
+    best_guardrail = min(eligible, key=lambda m: geral[m]["mae"]) if eligible else None
+
+    if best_guardrail is None:
+        decisao = "SEM_CANDIDATO_APROVADO_NOS_GUARDRAILS"
+    else:
+        decisao = "CANDIDATO_APROVADO_PARA_NESTED_SELETOR"
+
+    temporal_ok = all(p["ok"] for p in proofs)
+    if not temporal_ok:
+        raise RuntimeError("Falha nas provas temporais da calibração")
 
     out = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
@@ -144,20 +169,47 @@ def main():
         "geral": geral,
         "por_posicao": por_posicao,
         "bootstrap": bootstrap,
-        "melhor_calibracao_descritiva": best,
-        "guardrails_melhor_calibracao": guardrails,
+        "melhor_calibracao_descritiva": best_descriptive,
+        "guardrails_por_candidato": guardrails_por_candidato,
+        "melhor_candidato_que_passa_guardrails": best_guardrail,
+        "decisao": decisao,
+        "provas_temporais_ok": temporal_ok,
         "observacao": (
-            "A escolha do melhor metodo acima e apenas descritiva ex-post; nao deve ser usada para previsao futura "
-            "sem um seletor nested adicional. Os tres metodos sao reportados separadamente para evitar cherry-picking."
+            "O melhor MAE descritivo e reportado separadamente. Um candidato so avanca se passar MAE, RMSE e bias. "
+            "Mesmo aprovado nos guardrails, ele nao e promovido diretamente: precisa de seletor nested adicional "
+            "para evitar escolher ex-post o metodo de calibracao usando o proprio periodo de avaliacao."
         ),
         "provas_temporais": proofs,
         "previsoes": pred.round(6).to_dict(orient="records"),
     }
     OUT.write_text(json.dumps(out, ensure_ascii=False, indent=2), encoding="utf-8")
+
+    summary = {
+        "gerado_em": out["gerado_em"],
+        "protocolo": out["protocolo"],
+        "linhas": out["linhas"],
+        "rodadas": out["rodadas"],
+        "geral": geral,
+        "guardrails_por_candidato": guardrails_por_candidato,
+        "melhor_calibracao_descritiva": best_descriptive,
+        "melhor_candidato_que_passa_guardrails": best_guardrail,
+        "decisao": decisao,
+        "provas_temporais_ok": temporal_ok,
+        "bootstrap_candidato_vs_v3h": (
+            bootstrap["mean5_vs_v3h"] if best_guardrail == "cal_pos_mean5"
+            else bootstrap["median5_vs_v3h"] if best_guardrail == "cal_pos_median5"
+            else bootstrap["mean_all_vs_v3h"] if best_guardrail == "cal_pos_mean_all"
+            else None
+        ),
+    }
+    OUT_SUMMARY.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+
     print("Calibracao temporal concluida:")
     for m in models:
         print(m, geral[m])
-    print("Melhor descritiva:", best, guardrails)
+    print("Melhor MAE descritivo:", best_descriptive, guardrails_por_candidato[best_descriptive])
+    print("Melhor candidato nos guardrails:", best_guardrail)
+    print("Decisao:", decisao)
 
 
 if __name__ == "__main__":
