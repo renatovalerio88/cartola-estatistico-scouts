@@ -1,70 +1,118 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cartola Estatístico Scouts V3</title>
 <style>
-body{font-family:system-ui,-apple-system,sans-serif;max-width:1220px;margin:0 auto;padding:24px;color:#202124;background:#fafafa}h1,h2{margin:.45em 0}h2{margin-top:30px}small,.muted{color:#666}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:20px 0}.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:16px}.n{font-size:1.7rem;font-weight:700}.good{color:#137333}.bad{color:#b3261e}.tag{display:inline-block;padding:3px 7px;border-radius:999px;background:#eef3f8;font-size:.8rem}table{width:100%;border-collapse:collapse;background:#fff;margin:12px 0 28px}th,td{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left;font-size:.9rem}th{background:#f1f3f4;position:sticky;top:0}.warn{color:#b06000}.scroll{overflow:auto;max-height:620px;border:1px solid #ddd;border-radius:10px}.note{background:#fff;border-left:4px solid #5f6368;padding:12px 14px;margin:12px 0}
+:root{color-scheme:light}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1260px;margin:0 auto;padding:20px;color:#202124;background:#f7f8fa;line-height:1.45}h1{margin:.2em 0}h2{margin:34px 0 8px}h3{margin:20px 0 8px}small,.muted{color:#666}.lead{max-width:900px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin:18px 0}.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px}.n{font-size:1.55rem;font-weight:750;margin-top:3px}.good{color:#137333}.bad{color:#b3261e}.warn{color:#a15c00}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef3f8;font-size:.8rem}.tag.good{background:#e7f5eb}.tag.warn{background:#fff3d6}.tag.bad{background:#fde8e7}table{width:100%;border-collapse:collapse;background:#fff;margin:10px 0 24px}th,td{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left;font-size:.88rem;white-space:nowrap}th{background:#f0f2f4;position:sticky;top:0}.scroll{overflow:auto;max-height:620px;border:1px solid #ddd;border-radius:10px;background:#fff}.note{background:#fff;border-left:4px solid #5f6368;padding:11px 13px;margin:12px 0}.hero{background:#fff;border:1px solid #ddd;border-radius:12px;padding:16px;margin:18px 0}.ok{border-left-color:#137333}.pending{border-left-color:#a15c00}.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.section-help{margin-top:0;color:#666}.footer{margin:40px 0 10px;color:#666;font-size:.85rem}@media(max-width:600px){body{padding:14px}th,td{font-size:.82rem;padding:8px}.n{font-size:1.35rem}}
 </style>
 </head>
 <body>
 <h1>Cartola Estatístico — Scouts V3</h1>
-<p>Laboratório científico independente da V2. Resultados abaixo são auditorias ou validações temporais; nada é promovido à produção automaticamente.</p>
+<p class="lead">Laboratório científico separado da V2 de produção. A meta é prever os scouts de cada jogador, reconstruir a pontuação esperada e provar por walk-forward se a V3 realmente melhora. Nenhum resultado desta página promove alterações na V2.</p>
+<div id="status" class="hero"></div>
 <div id="cards" class="cards"></div>
 
-<h2>Primeiro V3-S verdadeiro — nested walk-forward</h2>
-<p><small>Para cada rodada, a escolha do modelo de cada scout usa somente rodadas anteriores. O vencedor é retreinado sem futuro e só então prevê a rodada.</small></p>
+<h2>V2 × V3: comparação principal</h2>
+<p class="section-help">Mesmos jogadores e mesmas rodadas. Quanto menor o MAE, melhor. Resultados históricos ainda não significam promoção.</p>
+<div id="v2v3"></div>
+
+<h2>Teste congelado por posição</h2>
+<p class="section-help">Os modelos foram escolhidos usando apenas R10–R17 e congelados antes de medir R18–R24. É um teste mais rigoroso contra ajuste ao passado.</p>
+<div id="holdout"></div>
+
+<h2>V3-S por scouts — nested walk-forward</h2>
+<p class="section-help">Em cada rodada, a escolha do modelo de cada scout usa somente rodadas anteriores. Depois o vencedor é retreinado sem futuro e prevê a rodada seguinte.</p>
 <div id="nested"></div>
 
-<h2>Ablation de contexto</h2>
-<p><small>Mando e força histórica de time/adversário são testados separadamente. Só recebem sinal promissor se melhorarem em famílias de modelos diferentes.</small></p>
+<h2>Contexto: ajuda ou atrapalha?</h2>
+<p class="section-help">Mando, força do adversário e outros fatores só devem entrar se a validação temporal mostrar ganho repetível.</p>
 <div id="ablation"></div>
 
-<h2>Arquitetura de pontos — baseline</h2>
-<p><small>Comparação simples de projeção direta vs soma de scouts usando médias/EWMA anteriores.</small></p>
-<div id="points"></div>
+<h2>Campeonato de modelos</h2>
+<p class="section-help">Comparação por scout e posição entre famílias estatísticas e de machine learning.</p>
+<div class="grid2"><div id="champWins"></div><div id="champExt"></div></div>
+<div id="champ" class="scroll"></div>
 
-<h2>Scouts observados em 2026</h2><div id="scouts" class="scroll"></div>
+<h2>Auditoria dos scouts 2026</h2>
+<div id="audit"></div>
+<div id="scouts" class="scroll"></div>
 
-<h2>Campeonato de modelos — modelo × scout × posição</h2>
-<p><small>O campeonato testa famílias diferentes sem escolher vencedor antecipadamente.</small></p>
-<div id="champWins"></div><div id="champ" class="scroll"></div>
+<div class="footer">Painel de laboratório. Previsões prospectivas devem ser salvas antes da rodada e tratadas como imutáveis.</div>
 
 <script>
-const fmt=x=>x==null?'—':typeof x==='number'?x.toLocaleString('pt-BR',{maximumFractionDigits:4}):x;
+const fmt=x=>x==null?'—':typeof x==='number'?x.toLocaleString('pt-BR',{maximumFractionDigits:4}):String(x);
 const pct=x=>x==null?'—':(x*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'%';
 const table=(heads,rows)=>'<table><thead><tr>'+heads.map(h=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>';
-fetch('dados.json?'+Date.now()).then(r=>r.json()).then(d=>{
- const a=d.auditoria||{},c=d.campeonato||{},b=d.backtest_pontos||{},n=d.backtest_v3s_nested||{},ab=d.ablation_contexto||{};
+const metric=(obj,key)=>obj&&obj[key]!=null?obj[key]:null;
+const deltaClass=x=>x==null?'':x<0?'good':x>0?'bad':'';
+const gainClass=x=>x==null?'':x>0?'good':x<0?'bad':'';
+const maeRow=(name,m,base)=>{const d=base&&m&&m.mae!=null&&base.mae!=null?m.mae-base.mae:null;return `<tr><td><b>${name}</b></td><td>${fmt(m?.mae)}</td><td>${fmt(m?.rmse)}</td><td>${fmt(m?.bias)}</td><td class="${deltaClass(d)}">${d==null?'—':fmt(d)}</td><td>${fmt(m?.n)}</td></tr>`};
+
+fetch('dados.json?'+Date.now()).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(d=>{
+ const a=d.auditoria||{}, leak=d.auditoria_vazamento||{}, c=d.campeonato||{}, ce=d.campeonato_estendido||{};
+ const n=d.backtest_v3s_nested||{}, v2=d.comparacao_v2||{}, cbv2=d.comparacao_catboost_v2||{}, h=d.holdout_posicional||{};
+ const ab=d.ablation_contexto||{};
  const rec=a.reconstrucao_jogadores_sem_tecnico||a.reconstrucao||{};
- const ng=n.geral||{},v3=ng.v3s_nested||{},direct=ng.direta_ewma||{};
- const ganho=(direct.mae!=null&&v3.mae!=null)?direct.mae-v3.mae:null;
+ const ng=n.geral||{}, v3s=ng.v3s_nested||{}, direct=ng.direta_ewma||{};
+ const vg=v2.geral||{}, v2m=vg.v2_projecao_salva||{}, v3sm=vg.v3s_nested||{}, v3hm=vg.v3h_hibrido||{};
+ const hh=h.holdout||{}, hv2=hh.v2||{}, hcat=hh.catboost||{}, hhy=hh.hibrido_congelado||{};
+ const hb=hh.bootstrap_hibrido_vs_v2||{};
+ const leakOk=leak.aprovado===true||leak.status==='APROVADO'||leak.resultado==='APROVADO';
+ const holdDecision=h.decisao||'aguardando';
+ document.querySelector('#status').innerHTML=`<b>Leitura rápida:</b> o laboratório está ativo e separado da V2. ${hhy.mae!=null?`No holdout R18–R24, o híbrido congelado teve MAE <b>${fmt(hhy.mae)}</b> contra <b>${fmt(hv2.mae)}</b> da V2.`:'Aguardando resultado do holdout congelado.'} <span class="tag ${holdDecision.includes('PROMISSOR')?'warn':'good'}">${holdDecision}</span>`;
+ const ganhoHold=(hv2.mae!=null&&hhy.mae!=null)?hv2.mae-hhy.mae:null;
  document.querySelector('#cards').innerHTML=[
-  ['Rodadas auditadas',a.rodadas_auditadas],['Atuações',a.atletas_em_campo],['Scouts observados',Object.keys(a.scouts_observados||{}).length],
-  ['MAE regras jogadores',rec.mae],['Competições válidas',c.competicoes_validas],['V3-S MAE',v3.mae],['Ganho vs EWMA direto',ganho]
- ].map(x=>`<div class=card><div>${x[0]}</div><div class="n ${x[0].startsWith('Ganho')&&x[1]>0?'good':''}">${fmt(x[1])}</div></div>`).join('');
+  ['Rodadas auditadas',a.rodadas_auditadas,''],['Atuações',a.atletas_em_campo,''],['Scouts observados',Object.keys(a.scouts_observados||{}).length,''],
+  ['MAE V2',v2m.mae,''],['MAE V3-S',v3sm.mae,''],['MAE V3 híbrida',v3hm.mae,''],['Holdout híbrido',hhy.mae,''],['Ganho holdout vs V2',ganhoHold,gainClass(ganhoHold)]
+ ].map(x=>`<div class=card><div>${x[0]}</div><div class="n ${x[2]}">${fmt(x[1])}</div></div>`).join('');
+
+ let vhtml='';
+ if(Object.keys(vg).length){
+   vhtml+=table(['Arquitetura','MAE','RMSE','Viés','Δ vs V2','N'],[
+    maeRow('V2 produção (histórica salva)',v2m,v2m),maeRow('V3-S scouts',v3sm,v2m),maeRow('V3 híbrida',v3hm,v2m),maeRow('RF direto laboratório',vg.direta_rf_lab||{},v2m),maeRow('EWMA direto',vg.direta_ewma||{},v2m)
+   ]);
+   const comps=v2.comparacoes_bootstrap||{};
+   vhtml+=table(['Comparação','Δ MAE','IC95%','Prob. desafiante melhor','Rodadas G/P','Conclusão'],Object.entries(comps).map(([k,x])=>`<tr><td><b>${k}</b></td><td class="${deltaClass(x.diferenca_mae_desafiante_menos_base)}">${fmt(x.diferenca_mae_desafiante_menos_base)}</td><td>${fmt(x.ic95?.[0])} a ${fmt(x.ic95?.[1])}</td><td>${pct(x.probabilidade_bootstrap_desafiante_melhor)}</td><td>${fmt(x.rodadas_ganhas)} / ${fmt(x.rodadas_perdidas)}</td><td>${fmt(x.evidencia)}</td></tr>`));
+ }
+ if(cbv2.periodo_total||cbv2.geral){
+   const x=cbv2.periodo_total||cbv2.geral||{};
+   vhtml+=`<div class=note><b>CatBoost OFF × V2:</b> ${fmt(cbv2.decisao||x.decisao||'comparação disponível')}. Este experimento é challenger e não altera a produção.</div>`;
+ }
+ document.querySelector('#v2v3').innerHTML=vhtml||'<p class=muted>Aguardando comparação oficial.</p>';
+
+ let hhtml='';
+ if(Object.keys(hh).length){
+  hhtml+=table(['Modelo no holdout R18–R24','MAE','RMSE','Viés','Δ vs V2','N'],[maeRow('V2',hv2,hv2),maeRow('CatBoost OFF',hcat,hv2),maeRow('Híbrido congelado',hhy,hv2)]);
+  hhtml+=`<div class="note ${hb.evidencia==='inconclusiva'?'pending':'ok'}"><b>Bootstrap por rodada:</b> Δ MAE híbrido − V2 = ${fmt(hb.delta_mae_menos_v2)} · IC95% ${fmt(hb.ic95?.[0])} a ${fmt(hb.ic95?.[1])} · probabilidade de ser melhor ${pct(hb.probabilidade_melhor_v2)} · rodadas ${fmt(hb.rodadas_ganhas)} ganhas / ${fmt(hb.rodadas_perdidas)} perdidas. <b>${fmt(hb.evidencia)}</b>.</div>`;
+  hhtml+=table(['Posição','Modelo congelado','MAE V2','MAE CatBoost','Δ CatBoost−V2'],Object.entries(hh.por_posicao||{}).map(([p,x])=>{const dm=(x.catboost?.mae!=null&&x.v2?.mae!=null)?x.catboost.mae-x.v2.mae:null;return `<tr><td><b>${p}</b></td><td>${fmt(x.modelo_congelado)}</td><td>${fmt(x.v2?.mae)}</td><td>${fmt(x.catboost?.mae)}</td><td class="${deltaClass(dm)}">${fmt(dm)}</td></tr>`}));
+ }
+ document.querySelector('#holdout').innerHTML=hhtml||'<p class=muted>Aguardando holdout.</p>';
 
  const pos=n.por_posicao||{};
- const nestedRows=[
-  `<tr><td><b>V3-S nested</b></td><td>${fmt(v3.mae)}</td><td>${fmt(v3.rmse)}</td><td>${fmt(v3.bias)}</td><td>${fmt(v3.n)}</td></tr>`,
+ let nested=table(['Arquitetura','MAE','RMSE','Viés','N'],[
+  `<tr><td><b>V3-S nested</b></td><td>${fmt(v3s.mae)}</td><td>${fmt(v3s.rmse)}</td><td>${fmt(v3s.bias)}</td><td>${fmt(v3s.n)}</td></tr>`,
   `<tr><td>Direta EWMA</td><td>${fmt(direct.mae)}</td><td>${fmt(direct.rmse)}</td><td>${fmt(direct.bias)}</td><td>${fmt(direct.n)}</td></tr>`
- ];
- let html=table(['Arquitetura','MAE','RMSE','Viés','N'],nestedRows);
- html+=`<div class=note><b>Rodadas:</b> ${(n.rodadas||[]).join(', ')} · <b>V3-S venceu:</b> ${fmt(n.vitorias_rodada_v3s)} · <b>Direta venceu:</b> ${fmt(n.vitorias_rodada_direta)} · <b>Empates:</b> ${fmt(n.empates_rodada)}</div>`;
- html+=table(['Posição','MAE V3-S','MAE direta','Δ MAE'],Object.entries(pos).map(([p,x])=>{const vm=x.v3s_nested||{},dm=x.direta_ewma||{},delta=(dm.mae??0)-(vm.mae??0);return `<tr><td><b>${p}</b></td><td>${fmt(vm.mae)}</td><td>${fmt(dm.mae)}</td><td class="${delta>0?'good':'bad'}">${fmt(delta)}</td></tr>`}));
- document.querySelector('#nested').innerHTML=html;
+ ]);
+ nested+=`<div class=note><b>Rodadas:</b> ${(n.rodadas||[]).join(', ')} · <b>V3-S venceu:</b> ${fmt(n.vitorias_rodada_v3s)} · <b>Direta venceu:</b> ${fmt(n.vitorias_rodada_direta)} · <b>Empates:</b> ${fmt(n.empates_rodada)}</div>`;
+ nested+=table(['Posição','MAE V3-S','MAE direta','Ganho V3-S'],Object.entries(pos).map(([p,x])=>{const vm=x.v3s_nested||{},dm=x.direta_ewma||{},gain=(dm.mae!=null&&vm.mae!=null)?dm.mae-vm.mae:null;return `<tr><td><b>${p}</b></td><td>${fmt(vm.mae)}</td><td>${fmt(dm.mae)}</td><td class="${gainClass(gain)}">${fmt(gain)}</td></tr>`}));
+ document.querySelector('#nested').innerHTML=nested;
 
  const factors=ab.fatores||{};
- document.querySelector('#ablation').innerHTML=Object.keys(factors).length?table(['Fator','Δ MAE médio vs base','Modelos com melhora','Sinal'],Object.entries(factors).map(([name,x])=>`<tr><td><b>${name}</b></td><td class="${x.delta_mae_medio<0?'good':'bad'}">${fmt(x.delta_mae_medio)}</td><td>${fmt(x.modelos_com_melhora)} / ${fmt(x.modelos_validos)}</td><td><span class=tag>${fmt(x.sinal)}</span></td></tr>`)):'<p class=muted>Aguardando execução da primeira ablation.</p>';
+ document.querySelector('#ablation').innerHTML=Object.keys(factors).length?table(['Fator','Δ MAE médio vs base','Modelos com melhora','Sinal'],Object.entries(factors).map(([name,x])=>`<tr><td><b>${name}</b></td><td class="${deltaClass(x.delta_mae_medio)}">${fmt(x.delta_mae_medio)}</td><td>${fmt(x.modelos_com_melhora)} / ${fmt(x.modelos_validos)}</td><td><span class=tag>${fmt(x.sinal)}</span></td></tr>`)):'<p class=muted>Aguardando ablation.</p>';
 
- const geral=b.geral||{};
- document.querySelector('#points').innerHTML=table(['Modelo','MAE','RMSE','Viés','N'],(b.ranking||Object.keys(geral)).map(name=>{const m=geral[name]||{};return `<tr><td><b>${name}</b></td><td>${fmt(m.mae)}</td><td>${fmt(m.rmse)}</td><td>${fmt(m.bias)}</td><td>${fmt(m.n)}</td></tr>`}));
- const scouts=Object.entries(a.scouts_observados||{}).sort((x,y)=>y[1]-x[1]);
- document.querySelector('#scouts').innerHTML=table(['Scout','Ocorrências','Peso'],scouts.map(([s,count])=>`<tr><td><b>${s}</b></td><td>${fmt(count)}</td><td>${fmt((a.regras||{})[s])}</td></tr>`));
  const wins=c.vitorias_modelos||{};
- document.querySelector('#champWins').innerHTML=table(['Modelo','Vitórias'],Object.entries(wins).map(([m,w])=>`<tr><td><b>${m}</b></td><td>${fmt(w)}</td></tr>`));
+ document.querySelector('#champWins').innerHTML='<h3>Campeonato base</h3>'+table(['Modelo','Vitórias'],Object.entries(wins).sort((a,b)=>b[1]-a[1]).map(([m,w])=>`<tr><td><b>${m}</b></td><td>${fmt(w)}</td></tr>`));
+ const ewins=ce.vitorias_modelos||ce.vitorias||{};
+ document.querySelector('#champExt').innerHTML='<h3>Campeonato estendido</h3>'+(Object.keys(ewins).length?table(['Modelo','Vitórias'],Object.entries(ewins).sort((a,b)=>b[1]-a[1]).map(([m,w])=>`<tr><td><b>${m}</b></td><td>${fmt(w)}</td></tr>`)):'<p class=muted>Relatório estendido disponível, aguardando resumo compatível.</p>');
  const rows=c.resultados||[];
  document.querySelector('#champ').innerHTML=table(['Scout','Posição','Campeão','MAE','RMSE','N'],rows.map(r=>{const w=(r.ranking||[])[0],m=(r.metricas||{})[w]||{};return `<tr><td>${r.scout}</td><td>${r.posicao}</td><td><b>${w||'—'}</b></td><td>${fmt(m.mae)}</td><td>${fmt(m.rmse)}</td><td>${fmt(m.n)}</td></tr>`}));
-}).catch(e=>document.body.insertAdjacentHTML('beforeend',`<p class=warn>Dados ainda não gerados: ${e}</p>`));
+
+ const scouts=Object.entries(a.scouts_observados||{}).sort((x,y)=>y[1]-x[1]);
+ document.querySelector('#audit').innerHTML=`<div class=note><b>Reconstrução da pontuação pelas regras:</b> MAE ${fmt(rec.mae)}. <b>Auditoria anti-vazamento:</b> <span class="tag ${leakOk?'good':'warn'}">${leakOk?'APROVADA':fmt(leak.status||leak.resultado||'ver relatório')}</span></div>`;
+ document.querySelector('#scouts').innerHTML=table(['Scout','Ocorrências','Peso na pontuação'],scouts.map(([s,count])=>`<tr><td><b>${s}</b></td><td>${fmt(count)}</td><td>${fmt((a.regras||{})[s])}</td></tr>`));
+}).catch(e=>document.body.insertAdjacentHTML('beforeend',`<p class=bad><b>Falha ao carregar dados do painel:</b> ${e}</p>`));
 </script>
-</body></html>
+</body>
+</html>
