@@ -13,7 +13,8 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 DATA = ROOT / "data" / "derived" / "dataset-walk-forward.csv"
 OUT = ROOT / "data" / "reports" / "auditoria-vazamento-temporal.json"
-SCOUTS = ["G","A","FT","FD","FF","FS","PS","I","DS","SG","DP","DE","GC","CV","CA","GS","FC","PC","PP"]
+SCOUTS = ["G", "A", "FT", "FD", "FF", "FS", "PS", "I", "DS", "SG", "DP", "DE", "GC", "CV", "CA", "GS", "FC", "PC", "PP"]
+POS_JOGADORES = {1, 2, 3, 4, 5}
 TOL = 1e-7
 
 
@@ -22,6 +23,7 @@ def load(path: Path):
 
 
 def mean(values):
+    values = list(values)
     return float(np.mean(values)) if values else 0.0
 
 
@@ -39,32 +41,86 @@ def close(a, b):
     return abs(float(a) - float(b)) <= TOL
 
 
+def jogadores_lista(path: Path):
+    raw = load(path)
+    if isinstance(raw, list):
+        return raw
+    if isinstance(raw, dict):
+        return raw.get("atletas", raw.get("jogadores", []))
+    return []
+
+
+def pontuados_map(path: Path):
+    raw = load(path)
+    atletas = raw.get("atletas", raw if isinstance(raw, dict) else {})
+    out = {}
+    for aid_raw, atleta in atletas.items():
+        if not isinstance(atleta, dict):
+            continue
+        try:
+            out[int(aid_raw)] = atleta
+        except (TypeError, ValueError):
+            pass
+    return out
+
+
+def jid(j):
+    try:
+        return int(j.get("id", j.get("atleta_id")))
+    except (TypeError, ValueError):
+        return None
+
+
+def posid(j):
+    try:
+        return int(j.get("posicaoId", j.get("posicao_id", 0)) or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def target(pontuado):
+    if not isinstance(pontuado, dict):
+        return 0.0, 0, {}
+    entrou = bool(pontuado.get("entrou_em_campo", pontuado.get("entrouEmCampo", False)))
+    if not entrou:
+        return 0.0, 0, {}
+    pontos = float(pontuado.get("pontuacao", pontuado.get("pontuacaoReal", 0)) or 0)
+    scouts = pontuado.get("scout", pontuado.get("scouts", {})) or {}
+    return pontos, 1, scouts
+
+
 def main():
     df = pd.read_csv(DATA)
     indexed = {(int(r.rodada), int(r.atleta_id)): r for _, r in df.iterrows()}
     history = defaultdict(lambda: {
         "pontos": deque(maxlen=20),
+        "entered": deque(maxlen=20),
         "scouts": defaultdict(lambda: deque(maxlen=20)),
     })
     violations = []
     checks = 0
     rows_checked = 0
 
-    # Refaz a cronologia a partir dos arquivos brutos, inclusive a primeira atuação
-    # que propositalmente não aparece no dataset por ainda não possuir passado.
     for folder in sorted(RAW.glob("rodada-*")):
-        pontuados = folder / "pontuados.json"
-        if not pontuados.exists():
+        jogadores_path = folder / "jogadores.json"
+        pontuados_path = folder / "pontuados.json"
+        if not jogadores_path.exists() or not pontuados_path.exists():
             continue
         rodada = int(folder.name.split("-")[-1])
-        raw = load(pontuados)
-        atletas = raw.get("atletas", raw if isinstance(raw, dict) else {})
+        pontuados = pontuados_map(pontuados_path)
 
-        for aid_raw, atleta in atletas.items():
-            if not isinstance(atleta, dict) or not atleta.get("entrou_em_campo", False):
+        candidatos = []
+        for j in jogadores_lista(jogadores_path):
+            if not isinstance(j, dict):
                 continue
-            aid = int(aid_raw)
+            aid = jid(j)
+            if aid is None or posid(j) not in POS_JOGADORES:
+                continue
+            candidatos.append(aid)
+
+        for aid in candidatos:
             h = history[aid]
+            pontos_atual, entrou_atual, scouts_atual = target(pontuados.get(aid))
             key = (rodada, aid)
 
             if len(h["pontos"]) >= 1:
@@ -73,36 +129,53 @@ def main():
                     violations.append({"rodada": rodada, "atleta_id": aid, "tipo": "linha_esperada_ausente"})
                 else:
                     rows_checked += 1
+                    entered_vals = list(h["entered"])
+                    desde_atuou = 20
+                    for distancia, flag in enumerate(reversed(entered_vals), start=1):
+                        if flag:
+                            desde_atuou = distancia - 1
+                            break
                     expected = {
                         "historico_jogos": len(h["pontos"]),
+                        "historico_atuacoes": int(sum(entered_vals)),
+                        "entrou_media3": mean(entered_vals[-3:]),
+                        "entrou_media5": mean(entered_vals[-5:]),
+                        "entrou_ewma": ewma(entered_vals),
+                        "rodadas_desde_atuou": desde_atuou,
                         "pontos_media3": mean(list(h["pontos"])[-3:]),
                         "pontos_media5": mean(list(h["pontos"])[-5:]),
                         "pontos_ewma": ewma(list(h["pontos"])),
+                        "target_entrou": entrou_atual,
+                        "target_pontos": pontos_atual,
                     }
                     for scout in SCOUTS:
                         vals = list(h["scouts"][scout])
                         expected[f"{scout}_media3"] = mean(vals[-3:])
                         expected[f"{scout}_media5"] = mean(vals[-5:])
                         expected[f"{scout}_ewma"] = ewma(vals)
+                        expected[f"target_{scout}"] = float(scouts_atual.get(scout, 0) or 0) if entrou_atual else 0.0
 
                     for col, exp in expected.items():
                         checks += 1
+                        if col not in row.index:
+                            violations.append({"rodada": rodada, "atleta_id": aid, "tipo": "coluna_ausente", "coluna": col})
+                            continue
                         got = row[col]
                         if pd.isna(got) or not close(got, exp):
                             violations.append({
                                 "rodada": rodada,
                                 "atleta_id": aid,
-                                "tipo": "feature_divergente",
+                                "tipo": "feature_ou_target_divergente",
                                 "coluna": col,
-                                "esperado_so_passado": round(float(exp), 10),
+                                "esperado": round(float(exp), 10),
                                 "encontrado": None if pd.isna(got) else round(float(got), 10),
                             })
 
-            # Só depois de conferir a linha R, incorpora o resultado de R ao histórico.
-            h["pontos"].append(float(atleta.get("pontuacao") or 0))
-            current_scouts = atleta.get("scout") or {}
+            # Só após conferir/congelar a linha R o resultado de R entra no histórico.
+            h["pontos"].append(pontos_atual)
+            h["entered"].append(entrou_atual)
             for scout in SCOUTS:
-                h["scouts"][scout].append(float(current_scouts.get(scout, 0) or 0))
+                h["scouts"][scout].append(float(scouts_atual.get(scout, 0) or 0) if entrou_atual else 0.0)
 
             if len(violations) >= 100:
                 break
@@ -113,13 +186,14 @@ def main():
     payload = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "status": "APROVADA" if not violations and rows_checked == len(expected_keys) else "REPROVADA",
-        "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente rodadas < R.",
+        "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas < R. Targets de R podem existir apenas como rótulo de avaliação.",
+        "universo": "Jogadores de linha válidos do jogadores.json, inclusive quem não entrou; ausência de atuação em R vira target 0, nunca feature de R.",
         "linhas_dataset": int(len(df)),
         "linhas_auditadas": int(rows_checked),
-        "checks_features": int(checks),
+        "checks_features_targets": int(checks),
         "violacoes": violations,
         "violacoes_total_amostradas": len(violations),
-        "metodo": "Reconstrução cronológica desde data/raw; cada linha R é validada antes de inserir target/scouts de R no histórico.",
+        "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json; cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico.",
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
