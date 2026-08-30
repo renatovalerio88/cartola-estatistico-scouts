@@ -9,6 +9,7 @@ on:
       - 'scripts/backtest_v3s_catboost_nested.py'
       - 'scripts/backtest_v3s_dois_estagios.py'
       - 'scripts/ablation_participacao_enriquecida.py'
+      - 'scripts/ablation_descanso_brasileirao.py'
       - 'scripts/calibrar_participacao_dois_estagios.py'
       - 'scripts/calibrar_producao_condicional_dois_estagios.py'
       - 'scripts/ablation_contexto.py'
@@ -50,6 +51,8 @@ jobs:
         run: python scripts/auditar_vazamento_temporal.py
       - name: Testar sinais históricos enriquecidos de participação
         run: python scripts/ablation_participacao_enriquecida.py
+      - name: Testar descanso entre jogos do Brasileirao
+        run: python scripts/ablation_descanso_brasileirao.py
       - name: Revalidar contexto em walk-forward estrito
         run: python scripts/ablation_contexto.py
       - name: Aplicar gate cientifico de contexto no CatBoost
@@ -86,6 +89,7 @@ jobs:
           set -euo pipefail
           REPORTS=(
             data/reports/ablation-participacao-enriquecida.json
+            data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
@@ -114,6 +118,7 @@ jobs:
           set -euo pipefail
           REPORTS=(
             data/reports/ablation-participacao-enriquecida.json
+            data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
