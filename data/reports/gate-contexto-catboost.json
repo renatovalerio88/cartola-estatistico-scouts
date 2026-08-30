@@ -1,0 +1,44 @@
+{
+  "gerado_em": "2026-08-30T08:49:13.962182+00:00",
+  "objetivo": "Autorizar ou bloquear uso de mando+forca no CatBoost nested V3 sem tocar na V2.",
+  "regra": {
+    "sinal_exigido": "PROMISSORIO_FORTE",
+    "modelos_com_melhora_min": 3,
+    "modelos_probabilidade_ge_80pct_min": 2,
+    "modelos_ic95_favoravel_min": 1,
+    "deterioracao_rmse_ridge_max_relativa": 0.02
+  },
+  "evidencia": {
+    "delta_mae_medio": -0.030672,
+    "modelos_com_melhora": 3,
+    "modelos_probabilidade_melhora_ge_80pct": 2,
+    "modelos_ic95_totalmente_abaixo_zero": 1,
+    "ridge_base_mae": 2.965878,
+    "ridge_contexto_mae": 2.91408,
+    "ridge_base_rmse": 3.863163,
+    "ridge_contexto_rmse": 3.898382,
+    "ridge_deterioracao_rmse_relativa": 0.009117,
+    "bootstrap_ridge": {
+      "n_rodadas": 18,
+      "delta_mae_medio": -0.05128,
+      "ic95": [
+        -0.078258,
+        -0.022805
+      ],
+      "probabilidade_contexto_melhor": 0.9996,
+      "rodadas_melhora": 15,
+      "rodadas_piora": 3,
+      "rodadas_empate": 0
+    }
+  },
+  "checks": {
+    "protocolo_walk_forward_estrito": true,
+    "sinal_forte": true,
+    "todos_modelos_melhoram_mae": true,
+    "evidencia_probabilistica_multimodelo": true,
+    "ao_menos_um_ic95_totalmente_favoravel": true,
+    "rmse_ridge_dentro_guardrail": true
+  },
+  "aprovado": true,
+  "decisao": "CONTEXTO_AUTORIZADO_NO_CHALLENGER"
+}
