@@ -1,6 +1,6 @@
 {
   "auditoria": {
-    "gerado_em": "2026-08-30T13:44:59.007182+00:00",
+    "gerado_em": "2026-08-30T11:42:53.677685+00:00",
     "rodadas_auditadas": 25,
     "atletas_registrados": 7586,
     "atletas_em_campo": 7535,
@@ -617,7 +617,7 @@
     ]
   },
   "auditoria_vazamento": {
-    "gerado_em": "2026-08-30T13:45:03.486040+00:00",
+    "gerado_em": "2026-08-30T13:46:33.407204+00:00",
     "status": "APROVADA",
     "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente rodadas < R.",
     "linhas_dataset": 6830,
@@ -628,7 +628,7 @@
     "metodo": "Reconstrução cronológica desde data/raw; cada linha R é validada antes de inserir target/scouts de R no histórico."
   },
   "campeonato": {
-    "gerado_em": "2026-08-30T13:49:11.240273+00:00",
+    "gerado_em": "2026-08-30T11:47:23.384414+00:00",
     "protocolo": "walk-forward em blocos temporais; todo treino termina antes da primeira rodada do respectivo teste",
     "anti_leakage_aprovado": true,
     "min_linhas_treino": 80,
@@ -17137,7 +17137,7 @@
     ]
   },
   "campeonato_estendido": {
-    "gerado_em": "2026-08-30T12:40:38.531351+00:00",
+    "gerado_em": "2026-08-30T13:49:22.733044+00:00",
     "protocolo": "campeonato estendido walk-forward; cada fold treina exclusivamente em rodadas anteriores; challengers pesados ficam fora do pipeline diário para preservar estabilidade",
     "modelos_disponiveis": [
       "xgboost",
@@ -32943,7 +32943,7 @@
     ]
   },
   "backtest_pontos": {
-    "gerado_em": "2026-08-30T13:49:11.852481+00:00",
+    "gerado_em": "2026-08-30T11:47:24.042292+00:00",
     "protocolo": "baseline arquitetural sem seleção otimista: features de cada R usam apenas rodadas < R; comparação inicia R7",
     "scouts_usados": [
       "G",
@@ -33230,7 +33230,7 @@
     "nota": "Este estágio usa apenas médias/EWMA de scouts. V3 com campeões ML por scout será avaliada depois em nested walk-forward para evitar escolher e testar o vencedor no mesmo período."
   },
   "backtest_v3s_nested": {
-    "gerado_em": "2026-08-30T13:51:49.657416+00:00",
+    "gerado_em": "2026-08-30T11:50:13.131901+00:00",
     "protocolo": "nested walk-forward: em cada R, modelos de scouts usam apenas passado; RF direto treina somente em histórico < R; híbrido escolhe alpha exclusivamente com previsões out-of-sample de rodadas anteriores, nunca com o resultado de R",
     "inicio_rodada": 10,
     "linhas": 4328,
@@ -91405,7 +91405,7 @@
     ]
   },
   "backtest_v3s_catboost": {
-    "gerado_em": "2026-08-30T12:43:37.834509+00:00",
+    "gerado_em": "2026-08-30T13:53:50.381643+00:00",
     "protocolo": "nested walk-forward estrito: para prever R, outer train usa somente rodadas < R; a escolha CatBoost vs baselines/modelos core usa apenas inner validation em rodadas < R; nenhum resultado de R entra na seleção, treino ou hiperparametros",
     "linhas": 4328,
     "rodadas": [
@@ -153539,7 +153539,7 @@
     ]
   },
   "ablation_contexto": {
-    "gerado_em": "2026-08-30T13:47:15.952683+00:00",
+    "gerado_em": "2026-08-30T13:48:50.825933+00:00",
     "protocolo": "Walk-forward estrito rodada a rodada. Para prever R, cada modelo e posição é reajustado usando exclusivamente rodadas < R. A comparação de contexto usa as mesmas linhas e bootstrap pareado sobre MAE por rodada.",
     "modelos_fixos": [
       "ridge",
@@ -163824,7 +163824,7 @@
     }
   },
   "ablation_catboost_contexto": {
-    "gerado_em": "2026-08-30T12:44:31.986553+00:00",
+    "gerado_em": "2026-08-30T13:55:30.493592+00:00",
     "objetivo": "Isolar o ganho incremental de mando+forca no CatBoost sob folds temporais identicos.",
     "protocolo": "Para prever R, ambos os bracos treinam apenas em rodadas < R, com hiperparametros identicos. A unica diferenca e incluir ou remover features de mando/time/adversario. Depois, ambos recebem a mesma calibracao residual online por posicao usando no maximo 5 rodadas OOS anteriores.",
     "gate_contexto_origem": "CONTEXTO_AUTORIZADO_NO_CHALLENGER",
@@ -208802,7 +208802,7 @@
     ]
   },
   "comparacao_v2": {
-    "gerado_em": "2026-08-30T13:51:53.385930+00:00",
+    "gerado_em": "2026-08-30T11:50:17.758371+00:00",
     "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; bootstrap em blocos por rodada, sem recalibrar a V2 olhando o futuro",
     "rotulo_v2": "V2 projeção histórica salva (produção)",
     "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada, em vez de substituir a V2 pelo RF direto do laboratório.",
@@ -209223,7 +209223,7 @@
     }
   },
   "comparacao_catboost_v2": {
-    "gerado_em": "2026-08-30T12:44:35.419651+00:00",
+    "gerado_em": "2026-08-30T13:55:31.827236+00:00",
     "objetivo": "Comparar CatBoost contexto OFF com calibracao residual online fixa contra a V2 historicamente salva.",
     "protocolo": "As previsoes CatBoost sao OOS por rodada e a calibracao de cada R usa somente residuos de ate 5 rodadas anteriores da mesma posicao. A V2 e lida diretamente dos snapshots historicos de producao. As linhas sao alinhadas por rodada+atleta_id e divergencias no real sao excluidas. Bootstrap e feito em blocos por rodada. R18+ e reportado separadamente como robustez temporal posterior, sem alegar independencia prospectiva completa.",
     "nota_anti_cherry_pick": "A janela CAL_WINDOW=5 ja havia sido explorada antes desta comparacao. Por isso o resultado total nao pode, sozinho, promover arquitetura. A decisao permanece bloqueada para V2 e exige validacao prospectiva em previsoes imutaveis futuras.",
@@ -209495,7 +209495,7 @@
     "promover_v2": false
   },
   "holdout_posicional": {
-    "gerado_em": "2026-08-30T12:44:36.330192+00:00",
+    "gerado_em": "2026-08-30T13:55:32.926553+00:00",
     "objetivo": "Testar arquitetura posicional congelada sem escolher modelos usando o periodo de holdout.",
     "protocolo": "R10-R17 e usado apenas como discovery. Para cada posicao, CatBoost OFF calibrado e escolhido somente se no discovery melhora MAE, nao piora RMSE em mais de 2% e mantem |bias| <= 0.50; caso contrario fica V2. A escolha por posicao e congelada antes de avaliar R18-R24. Nenhum resultado de R18-R24 participa da escolha. Bootstrap e feito em blocos de rodada.",
     "anti_leakage": {
@@ -209788,7 +209788,7 @@
     "nota": "Mesmo se aprovado no holdout historico, a V2 permanece intocada; validacao prospectiva imutavel continua obrigatoria."
   },
   "significancia": {
-    "gerado_em": "2026-08-30T13:51:50.193138+00:00",
+    "gerado_em": "2026-08-30T11:50:13.690197+00:00",
     "protocolo": "comparação pareada por rodada; bootstrap em blocos de rodada para preservar dependência intra-rodada; usa somente previsões OOS já produzidas pelo backtest nested anti-leakage",
     "bootstrap_amostras": 5000,
     "seed": 42,
@@ -209872,7 +209872,7 @@
     }
   },
   "meta_seletor": {
-    "gerado_em": "2026-08-30T13:51:54.682245+00:00",
+    "gerado_em": "2026-08-30T11:50:19.609932+00:00",
     "protocolo": "meta-seletor walk-forward por posição: para cada rodada R e posição, escolhe V2 ou V3-H usando apenas MAE observado nas até 5 rodadas anteriores; mínimo de 3 rodadas anteriores; em insuficiência mantém V2. Nunca usa resultado da própria R para escolher.",
     "linhas": 4328,
     "rodadas": [
@@ -211011,7 +211011,7 @@
     }
   },
   "calibracao_catboost": {
-    "gerado_em": "2026-08-30T12:44:36.942444+00:00",
+    "gerado_em": "2026-08-30T13:55:34.136370+00:00",
     "protocolo": "calibracao residual estritamente temporal; para cada R/posicao usa somente residuos OOS de rodadas anteriores a R; nenhuma estatistica de R participa da calibracao",
     "linhas": 4328,
     "rodadas": [
