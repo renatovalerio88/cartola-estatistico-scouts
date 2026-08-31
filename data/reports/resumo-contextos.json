@@ -1,0 +1,605 @@
+{
+  "gerado_em": "2026-08-31T07:42:22.090200+00:00",
+  "objetivo": "Resumo compacto e auditável das ablations de contexto; previsões linha a linha permanecem nos relatórios científicos originais.",
+  "contextos": {
+    "participacao_enriquecida": {
+      "gerado_em": "2026-08-31T07:38:25.154506+00:00",
+      "status": "APROVADA",
+      "decisao": "NAO_APROVAR_FEATURES_PARTICIPACAO_ENRIQUECIDAS",
+      "protocolo": "Ablation walk-forward estrita. Para cada rodada R e posição, o mesmo classificador é treinado exclusivamente em rodadas < R. BASE e ENRIQUECIDO diferem apenas pelas cinco novas features históricas de participação. Nenhuma informação da rodada R entra nas features.",
+      "modelos_com_gate_aprovado": 0,
+      "modelos_testados": 4,
+      "regra_gate": "Aprovar pacote somente se pelo menos 3/4 modelos tiverem Brier menor, AUC não pior que -0.005 e bootstrap por rodada >=95% de probabilidade favorável.",
+      "por_modelo": {
+        "catboost": {
+          "n": 4946,
+          "bootstrap_por_rodada": {
+            "delta_brier_enriquecido_menos_base": 3.964e-05,
+            "ic95": [
+              -0.00017535,
+              0.00034161
+            ],
+            "probabilidade_enriquecido_melhor": 0.4259,
+            "rodadas_ganhas": 10,
+            "rodadas_perdidas": 6,
+            "empates": 0
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "extra_trees": {
+          "n": 4946,
+          "bootstrap_por_rodada": {
+            "delta_brier_enriquecido_menos_base": -7.99e-06,
+            "ic95": [
+              -1.882e-05,
+              3.66e-06
+            ],
+            "probabilidade_enriquecido_melhor": 0.9134,
+            "rodadas_ganhas": 13,
+            "rodadas_perdidas": 3,
+            "empates": 0
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "hist_gb": {
+          "n": 4946,
+          "bootstrap_por_rodada": {
+            "delta_brier_enriquecido_menos_base": -1.672e-05,
+            "ic95": [
+              -4.722e-05,
+              5.32e-06
+            ],
+            "probabilidade_enriquecido_melhor": 0.8851,
+            "rodadas_ganhas": 4,
+            "rodadas_perdidas": 4,
+            "empates": 8
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "logistic": {
+          "n": 4946,
+          "bootstrap_por_rodada": {
+            "delta_brier_enriquecido_menos_base": 9.409e-05,
+            "ic95": [
+              -0.00023402,
+              0.00051647
+            ],
+            "probabilidade_enriquecido_melhor": 0.3011,
+            "rodadas_ganhas": 4,
+            "rodadas_perdidas": 12,
+            "empates": 0
+          },
+          "gate_individual": "REPROVADO"
+        }
+      },
+      "por_posicao": {
+        "ATA": {
+          "n": 5580,
+          "brier_base": 0.12306154,
+          "brier_enriquecido": 0.12306096,
+          "delta_brier": -5.8e-07
+        },
+        "GOL": {
+          "n": 1276,
+          "brier_base": 0.12498634,
+          "brier_enriquecido": 0.12457401,
+          "delta_brier": -0.00041233
+        },
+        "LAT": {
+          "n": 3184,
+          "brier_base": 0.12909745,
+          "brier_enriquecido": 0.1291044,
+          "delta_brier": 6.95e-06
+        },
+        "MEI": {
+          "n": 6724,
+          "brier_base": 0.11255037,
+          "brier_enriquecido": 0.11257391,
+          "delta_brier": 2.354e-05
+        },
+        "ZAG": {
+          "n": 3020,
+          "brier_base": 0.1295919,
+          "brier_enriquecido": 0.12984164,
+          "delta_brier": 0.00024974
+        }
+      }
+    },
+    "descanso_brasileirao": {
+      "gerado_em": "2026-08-31T07:39:33.650609+00:00",
+      "status": "APROVADA",
+      "decisao": "NAO_PROMOVER_DESCANSO_BRASILEIRAO",
+      "escopo": "Screening científico de descanso entre jogos do próprio Brasileirão. NÃO representa ainda desgaste de Libertadores, Sul-Americana ou Copa do Brasil.",
+      "protocolo": "Ablation walk-forward estrita por rodada e posição. A data da partida de R é tratada como informação pré-rodada; histórico de descanso considera apenas partidas de rodadas < R com data anterior à partida atual. BASE e DESCANSO usam as mesmas linhas e o mesmo modelo.",
+      "modelos_com_gate_aprovado": 0,
+      "modelos_testados": 4,
+      "regra_gate": "Promover somente para teste por scout se >=3/4 modelos reduzirem MAE, mantiverem RMSE até +1% e bootstrap por rodada indicar >=90% de probabilidade favorável.",
+      "features_adicionais": [
+        "dias_desde_ultimo_brasileirao",
+        "descanso_curto_brasileirao",
+        "descanso_longo_brasileirao",
+        "jogos_brasileirao_ultimos14d"
+      ],
+      "por_modelo": {
+        "catboost": {
+          "n": 4946,
+          "base": {
+            "mae": 2.79155048,
+            "rmse": 3.8756653,
+            "bias": -0.47929403
+          },
+          "descanso": {
+            "mae": 2.7904696,
+            "rmse": 3.87073157,
+            "bias": -0.46670216
+          },
+          "delta_mae": -0.00108088,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_descanso_menos_base": -0.00294812,
+            "ic95": [
+              -0.01030408,
+              0.00381658
+            ],
+            "probabilidade_descanso_melhor": 0.7933,
+            "rodadas_ganhas": 8,
+            "rodadas_perdidas": 8
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "extra_trees": {
+          "n": 4946,
+          "base": {
+            "mae": 3.06637599,
+            "rmse": 3.90608788,
+            "bias": 0.52763945
+          },
+          "descanso": {
+            "mae": 3.08156153,
+            "rmse": 3.91779936,
+            "bias": 0.55347118
+          },
+          "delta_mae": 0.01518553,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_descanso_menos_base": 0.01381001,
+            "ic95": [
+              -0.00980519,
+              0.0387783
+            ],
+            "probabilidade_descanso_melhor": 0.1344,
+            "rodadas_ganhas": 8,
+            "rodadas_perdidas": 8
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "hist_gb": {
+          "n": 4946,
+          "base": {
+            "mae": 3.19043775,
+            "rmse": 4.12715151,
+            "bias": 0.51553248
+          },
+          "descanso": {
+            "mae": 3.18828218,
+            "rmse": 4.11533705,
+            "bias": 0.53207017
+          },
+          "delta_mae": -0.00215557,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_descanso_menos_base": 0.00677678,
+            "ic95": [
+              -0.0231343,
+              0.04906101
+            ],
+            "probabilidade_descanso_melhor": 0.4036,
+            "rodadas_ganhas": 11,
+            "rodadas_perdidas": 5
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "ridge": {
+          "n": 4946,
+          "base": {
+            "mae": 2.98308526,
+            "rmse": 3.93255409,
+            "bias": 0.27512305
+          },
+          "descanso": {
+            "mae": 3.013945,
+            "rmse": 3.9732473,
+            "bias": 0.33971686
+          },
+          "delta_mae": 0.03085974,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_descanso_menos_base": 0.03055559,
+            "ic95": [
+              0.01723163,
+              0.04420992
+            ],
+            "probabilidade_descanso_melhor": 0.0,
+            "rodadas_ganhas": 2,
+            "rodadas_perdidas": 14
+          },
+          "gate_individual": "REPROVADO"
+        }
+      },
+      "por_posicao": {
+        "ATA": {
+          "n": 5580,
+          "mae_base": 3.18008466,
+          "mae_descanso": 3.18775648,
+          "delta_mae": 0.00767182
+        },
+        "GOL": {
+          "n": 1276,
+          "mae_base": 3.48053929,
+          "mae_descanso": 3.48298616,
+          "delta_mae": 0.00244686
+        },
+        "LAT": {
+          "n": 3184,
+          "mae_base": 3.44900162,
+          "mae_descanso": 3.45663393,
+          "delta_mae": 0.00763231
+        },
+        "MEI": {
+          "n": 6724,
+          "mae_base": 2.63619764,
+          "mae_descanso": 2.64972617,
+          "delta_mae": 0.01352853
+        },
+        "ZAG": {
+          "n": 3020,
+          "mae_base": 2.85234918,
+          "mae_descanso": 2.86908241,
+          "delta_mae": 0.01673323
+        }
+      }
+    },
+    "calendario_externo": {
+      "gerado_em": "2026-08-31T07:40:03.697212+00:00",
+      "status": "BLOQUEADA_FONTE",
+      "decisao": "NAO_AVALIAR_CALENDARIO_EXTERNO_SEM_COBERTURA",
+      "escopo": "Ablation isolada do congestionamento causado por Libertadores, Sul-Americana e Copa do Brasil.",
+      "protocolo": "O teste só pode rodar com calendário histórico externo de cobertura suficiente e corte temporal estrito. Ausência da fonte nunca é convertida em zero jogos.",
+      "modelos_com_gate_aprovado": 0,
+      "modelos_testados": 0,
+      "regra_gate": "Nenhum gate é calculado sem cobertura externa suficiente.",
+      "por_modelo": {},
+      "por_posicao": {}
+    },
+    "mudanca_tecnico": {
+      "gerado_em": "2026-08-31T07:41:11.994485+00:00",
+      "status": "APROVADA",
+      "decisao": "NAO_PROMOVER_MUDANCA_TECNICO",
+      "escopo": "Screening científico isolado do efeito de mudança de técnico durante o Brasileirão 2026.",
+      "protocolo": "Ablation walk-forward estrita por rodada e posição. Evento de técnico entra somente quando sua data efetiva é anterior à data da partida-alvo; mudanças no mesmo dia são ignoradas. BASE e TÉCNICO usam as mesmas linhas, o mesmo alvo e o mesmo modelo.",
+      "modelos_com_gate_aprovado": 0,
+      "modelos_testados": 4,
+      "regra_gate": "Promover somente para teste por scout se >=3/4 modelos reduzirem MAE, mantiverem RMSE até +1% e bootstrap por rodada indicar >=90% de probabilidade favorável.",
+      "snapshot": {
+        "eventos": 21,
+        "fontes": [
+          {
+            "nome": "2026 Campeonato Brasileiro Série A - Coaching changes",
+            "url": "https://en.wikipedia.org/wiki/2026_Campeonato_Brasileiro_S%C3%A9rie_A",
+            "observacao": "Tabela consolidada com referências primárias/secundárias por evento; consultada em 2026-08-31."
+          },
+          {
+            "nome": "ge - Franclim Carvalho é o 15º técnico demitido no Brasileirão 2026",
+            "url": "https://ge.globo.com/gato-mestre/noticia/2026/08/18/franclim-carvalho-e-o-15o-tecnico-demitido-no-brasileirao-2026-veja-a-lista.ghtml",
+            "observacao": "Contraprova editorial da sequência de mudanças da temporada até 18/08/2026."
+          }
+        ],
+        "criterio_temporal": "Uma mudança só pode gerar feature quando a data efetiva é estritamente anterior à data da partida-alvo. Eventos no mesmo dia são ignorados por conservadorismo, pois a hora do anúncio não está normalizada."
+      },
+      "features_adicionais": [
+        "dias_desde_mudanca_tecnico",
+        "tecnico_novo_7d",
+        "tecnico_novo_14d",
+        "tecnico_novo_30d",
+        "mudancas_tecnico_90d",
+        "tecnico_interino"
+      ],
+      "por_modelo": {
+        "catboost": {
+          "n": 4946,
+          "base": {
+            "mae": 2.79155048,
+            "rmse": 3.8756653,
+            "bias": -0.47929403
+          },
+          "mudanca_tecnico": {
+            "mae": 2.80032185,
+            "rmse": 3.8748235,
+            "bias": -0.45100395
+          },
+          "delta_mae": 0.00877137,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_tecnico_menos_base": 0.0083951,
+            "ic95": [
+              0.00328292,
+              0.01313082
+            ],
+            "probabilidade_tecnico_melhor": 0.0014,
+            "rodadas_ganhas": 3,
+            "rodadas_perdidas": 13
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "extra_trees": {
+          "n": 4946,
+          "base": {
+            "mae": 3.06637599,
+            "rmse": 3.90608788,
+            "bias": 0.52763945
+          },
+          "mudanca_tecnico": {
+            "mae": 3.06660906,
+            "rmse": 3.91270754,
+            "bias": 0.53865979
+          },
+          "delta_mae": 0.00023307,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_tecnico_menos_base": 0.00122644,
+            "ic95": [
+              -0.00857641,
+              0.01050433
+            ],
+            "probabilidade_tecnico_melhor": 0.3935,
+            "rodadas_ganhas": 7,
+            "rodadas_perdidas": 9
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "hist_gb": {
+          "n": 4946,
+          "base": {
+            "mae": 3.19043775,
+            "rmse": 4.12715151,
+            "bias": 0.51553248
+          },
+          "mudanca_tecnico": {
+            "mae": 3.19823457,
+            "rmse": 4.13876007,
+            "bias": 0.51528931
+          },
+          "delta_mae": 0.00779682,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_tecnico_menos_base": 0.00630781,
+            "ic95": [
+              -0.01417525,
+              0.02725117
+            ],
+            "probabilidade_tecnico_melhor": 0.2772,
+            "rodadas_ganhas": 6,
+            "rodadas_perdidas": 10
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "ridge": {
+          "n": 4946,
+          "base": {
+            "mae": 2.98308526,
+            "rmse": 3.93255409,
+            "bias": 0.27512305
+          },
+          "mudanca_tecnico": {
+            "mae": 3.0053453,
+            "rmse": 3.93579228,
+            "bias": 0.30729973
+          },
+          "delta_mae": 0.02226003,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_tecnico_menos_base": 0.02135377,
+            "ic95": [
+              0.00063128,
+              0.04739254
+            ],
+            "probabilidade_tecnico_melhor": 0.0204,
+            "rodadas_ganhas": 5,
+            "rodadas_perdidas": 11
+          },
+          "gate_individual": "REPROVADO"
+        }
+      },
+      "por_posicao": {
+        "ATA": {
+          "n": 5580,
+          "mae_base": 3.18008466,
+          "mae_mudanca_tecnico": 3.18945219,
+          "delta_mae": 0.00936753
+        },
+        "GOL": {
+          "n": 1276,
+          "mae_base": 3.48053929,
+          "mae_mudanca_tecnico": 3.51649767,
+          "delta_mae": 0.03595837
+        },
+        "LAT": {
+          "n": 3184,
+          "mae_base": 3.44900162,
+          "mae_mudanca_tecnico": 3.47297516,
+          "delta_mae": 0.02397354
+        },
+        "MEI": {
+          "n": 6724,
+          "mae_base": 2.63619764,
+          "mae_mudanca_tecnico": 2.6301033,
+          "delta_mae": -0.00609434
+        },
+        "ZAG": {
+          "n": 3020,
+          "mae_base": 2.85234918,
+          "mae_mudanca_tecnico": 2.87211408,
+          "delta_mae": 0.0197649
+        }
+      }
+    },
+    "horario_partida": {
+      "gerado_em": "2026-08-31T07:42:21.689319+00:00",
+      "status": "APROVADA",
+      "decisao": "NAO_PROMOVER_HORARIO",
+      "escopo": "Screening científico isolado do horário e dia da semana da partida no Brasileirão 2026.",
+      "protocolo": "Ablation walk-forward estrita por rodada e posição. BASE e HORÁRIO usam exatamente as mesmas linhas, alvo e modelo; as features adicionais derivam apenas de partida_data do fixture, nunca de placar, scouts ou eventos ocorridos durante/depois da partida.",
+      "modelos_com_gate_aprovado": 0,
+      "modelos_testados": 4,
+      "regra_gate": "Promover somente para teste por scout se >=3/4 modelos reduzirem MAE, mantiverem RMSE até +1% e bootstrap por rodada indicar >=90% de probabilidade favorável.",
+      "cobertura_fixture": 1.0,
+      "features_adicionais": [
+        "hora_sin",
+        "hora_cos",
+        "jogo_diurno",
+        "jogo_noturno",
+        "dia_semana_sin",
+        "dia_semana_cos",
+        "fim_de_semana"
+      ],
+      "por_modelo": {
+        "catboost": {
+          "n": 4946,
+          "base": {
+            "mae": 2.79155048,
+            "rmse": 3.8756653,
+            "bias": -0.47929403
+          },
+          "horario": {
+            "mae": 2.79036474,
+            "rmse": 3.87161078,
+            "bias": -0.48094535
+          },
+          "delta_mae": -0.00118574,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_horario_menos_base": -0.0024441,
+            "ic95": [
+              -0.01797065,
+              0.01418207
+            ],
+            "probabilidade_horario_melhor": 0.6257,
+            "rodadas_ganhas": 11,
+            "rodadas_perdidas": 5
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "extra_trees": {
+          "n": 4946,
+          "base": {
+            "mae": 3.06637599,
+            "rmse": 3.90608788,
+            "bias": 0.52763945
+          },
+          "horario": {
+            "mae": 3.0604278,
+            "rmse": 3.90475145,
+            "bias": 0.51866204
+          },
+          "delta_mae": -0.00594819,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_horario_menos_base": -0.00475695,
+            "ic95": [
+              -0.0246706,
+              0.01568103
+            ],
+            "probabilidade_horario_melhor": 0.6781,
+            "rodadas_ganhas": 9,
+            "rodadas_perdidas": 7
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "hist_gb": {
+          "n": 4946,
+          "base": {
+            "mae": 3.19043775,
+            "rmse": 4.12715151,
+            "bias": 0.51553248
+          },
+          "horario": {
+            "mae": 3.18066325,
+            "rmse": 4.11824598,
+            "bias": 0.50595406
+          },
+          "delta_mae": -0.0097745,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_horario_menos_base": -0.00191105,
+            "ic95": [
+              -0.03570244,
+              0.03344342
+            ],
+            "probabilidade_horario_melhor": 0.5482,
+            "rodadas_ganhas": 8,
+            "rodadas_perdidas": 8
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "ridge": {
+          "n": 4946,
+          "base": {
+            "mae": 2.98308526,
+            "rmse": 3.93255409,
+            "bias": 0.27512305
+          },
+          "horario": {
+            "mae": 3.00246288,
+            "rmse": 3.95128207,
+            "bias": 0.29289488
+          },
+          "delta_mae": 0.01937762,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 16,
+            "delta_mae_horario_menos_base": 0.0198206,
+            "ic95": [
+              0.01128348,
+              0.02934432
+            ],
+            "probabilidade_horario_melhor": 0.0,
+            "rodadas_ganhas": 2,
+            "rodadas_perdidas": 14
+          },
+          "gate_individual": "REPROVADO"
+        }
+      },
+      "por_posicao": {
+        "ATA": {
+          "n": 5580,
+          "mae_base": 3.18008466,
+          "mae_horario": 3.19685354,
+          "delta_mae": 0.01676888
+        },
+        "GOL": {
+          "n": 1276,
+          "mae_base": 3.48053929,
+          "mae_horario": 3.48603476,
+          "delta_mae": 0.00549547
+        },
+        "LAT": {
+          "n": 3184,
+          "mae_base": 3.44900162,
+          "mae_horario": 3.42758155,
+          "delta_mae": -0.02142007
+        },
+        "MEI": {
+          "n": 6724,
+          "mae_base": 2.63619764,
+          "mae_horario": 2.6312901,
+          "delta_mae": -0.00490754
+        },
+        "ZAG": {
+          "n": 3020,
+          "mae_base": 2.85234918,
+          "mae_horario": 2.85659747,
+          "delta_mae": 0.00424829
+        }
+      }
+    }
+  }
+}
