@@ -59,6 +59,13 @@ def jogadores_lista(path: Path):
     return []
 
 
+def partidas_lista(path: Path):
+    if not path.exists():
+        return []
+    raw = load(path)
+    return raw.get("partidas", raw if isinstance(raw, list) else [])
+
+
 def pontuados_map(path: Path):
     raw = load(path)
     atletas = raw.get("atletas", raw if isinstance(raw, dict) else {})
@@ -71,6 +78,19 @@ def pontuados_map(path: Path):
         except (TypeError, ValueError):
             pass
     return out
+
+
+def rodada_resolvida(partidas, pontuados):
+    if not pontuados or not partidas:
+        return False
+    validas = [p for p in partidas if isinstance(p, dict)]
+    if not validas:
+        return False
+    return all(
+        p.get("placar_oficial_mandante") is not None
+        and p.get("placar_oficial_visitante") is not None
+        for p in validas
+    )
 
 
 def jid(j):
@@ -109,6 +129,7 @@ def main():
     violations = []
     checks = 0
     rows_checked = 0
+    unresolved_skipped = []
 
     for folder in sorted(RAW.glob("rodada-*")):
         jogadores_path = folder / "jogadores.json"
@@ -117,6 +138,14 @@ def main():
             continue
         rodada = int(folder.name.split("-")[-1])
         pontuados = pontuados_map(pontuados_path)
+        partidas = partidas_lista(folder / "partidas.json")
+
+        if not rodada_resolvida(partidas, pontuados):
+            unresolved_skipped.append(rodada)
+            # Rodada sem resultado final não pode criar target nem alterar histórico.
+            if any(r == rodada for r, _ in indexed):
+                violations.append({"rodada": rodada, "tipo": "rodada_nao_resolvida_presente_no_dataset"})
+            continue
 
         candidatos = []
         for j in jogadores_lista(jogadores_path):
@@ -199,18 +228,19 @@ def main():
     payload = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "status": "APROVADA" if not violations and rows_checked == len(expected_keys) else "REPROVADA",
-        "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas < R. Targets de R podem existir apenas como rótulo de avaliação.",
-        "universo": "Jogadores válidos do jogadores.json, inclusive quem não entrou; ausência de atuação em R vira target 0, nunca feature de R.",
+        "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas resolvidas < R. Targets de R podem existir apenas quando R possui resultado final observável.",
+        "universo": "Jogadores válidos do jogadores.json nas rodadas resolvidas, inclusive quem não entrou. Rodadas futuras/em andamento são excluídas, nunca transformadas artificialmente em targets zero.",
+        "rodadas_nao_resolvidas_ignoradas": unresolved_skipped,
         "linhas_dataset": int(len(df)),
         "linhas_auditadas": int(rows_checked),
         "checks_features_targets": int(checks),
         "violacoes": violations,
         "violacoes_total_amostradas": len(violations),
-        "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json; cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico. Inclui auditoria explícita de taxas, janelas e sequências de participação.",
+        "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json + placares oficiais. Cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico. Rodadas sem pontuação/placares finais são ignoradas integralmente.",
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Auditoria temporal: {payload['status']} | {rows_checked}/{len(df)} linhas | {checks} checks | {len(violations)} violações")
+    print(f"Auditoria temporal: {payload['status']} | {rows_checked}/{len(df)} linhas | {checks} checks | {len(violations)} violações | não resolvidas={unresolved_skipped}")
     if payload["status"] != "APROVADA":
         raise SystemExit("Vazamento temporal ou inconsistência cronológica detectada; pipeline interrompido.")
 
