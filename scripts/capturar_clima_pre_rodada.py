@@ -59,23 +59,55 @@ def parse_dt(value):
         return None
 
 
-def latest_future_round(now):
+def future_matches(raw, now):
+    matches = raw.get("partidas", []) if isinstance(raw, dict) else []
+    return [
+        p for p in matches
+        if parse_dt(p.get("partida_data")) and parse_dt(p.get("partida_data")) > now
+    ]
+
+
+def select_future_round(now):
+    status_path = RAW / "status.json"
+    current_round = None
+    if status_path.exists():
+        try:
+            status = load(status_path)
+            current_round = int(status.get("rodada_atual"))
+        except Exception:
+            current_round = None
+
+    # Regra principal: usar a rodada oficial atual. Isso impede que jogos antigos
+    # adiados (ex.: uma partida remarcada de R04) bloqueiem a captura da rodada corrente.
+    if current_round is not None:
+        folder = RAW / f"rodada-{current_round:02d}"
+        path = folder / "partidas.json"
+        if path.exists():
+            raw = load(path)
+            future = future_matches(raw, now)
+            if future:
+                return current_round, raw, future, "rodada_atual_status_oficial"
+
+    # Fallback científico: se a rodada oficial não tiver mais jogos futuros, escolher
+    # a rodada cujo próximo kickoff é o mais próximo no tempo, nunca o menor número.
     candidates = []
     for folder in RAW.glob("rodada-*"):
         path = folder / "partidas.json"
         if not path.exists():
             continue
         raw = load(path)
-        matches = raw.get("partidas", []) if isinstance(raw, dict) else []
-        future = [
-            p for p in matches
-            if parse_dt(p.get("partida_data")) and parse_dt(p.get("partida_data")) > now
-        ]
-        if future:
-            candidates.append((int(folder.name.split("-")[-1]), raw, future))
+        future = future_matches(raw, now)
+        if not future:
+            continue
+        next_kickoff = min(parse_dt(p.get("partida_data")) for p in future)
+        candidates.append(
+            (next_kickoff, int(folder.name.split("-")[-1]), raw, future)
+        )
+
     if not candidates:
         return None
-    return min(candidates, key=lambda x: x[0])
+    _, rodada, raw, future = min(candidates, key=lambda x: x[0])
+    return rodada, raw, future, "proximo_kickoff_futuro"
 
 
 def nearest_hour(hourly, target_local):
@@ -126,7 +158,7 @@ def forecast(lat, lon, target_dt):
 
 def main():
     now = datetime.now(timezone.utc)
-    selected = latest_future_round(now)
+    selected = select_future_round(now)
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     if not selected:
         payload = {
@@ -140,7 +172,7 @@ def main():
         print("Clima: nenhuma rodada futura disponível; sem snapshot.")
         return
 
-    rodada, raw, future = selected
+    rodada, raw, future, selection_basis = selected
     outfile = OUTDIR / f"2026-r{rodada:02d}.json"
     if outfile.exists():
         existing = load(outfile)
@@ -149,6 +181,7 @@ def main():
             "status": "SNAPSHOT_JA_EXISTE_IMUTAVEL",
             "decisao": "NAO_SOBRESCREVER",
             "rodada": rodada,
+            "criterio_selecao": selection_basis,
             "arquivo": str(outfile.relative_to(ROOT)),
             "capturado_em": existing.get("capturado_em"),
             "sha256": existing.get("sha256_payload"),
@@ -206,6 +239,7 @@ def main():
             "status": "COBERTURA_INSUFICIENTE_NAO_CONGELADA",
             "decisao": "REPETIR_CAPTURA_SEM_CRIAR_SNAPSHOT",
             "rodada": rodada,
+            "criterio_selecao": selection_basis,
             "partidas_futuras": len(future),
             "partidas_com_forecast": len(rows),
             "cobertura": round(coverage, 6),
@@ -228,6 +262,7 @@ def main():
         "capturado_em": now.isoformat(),
         "natureza": "PREVISAO_METEOROLOGICA_PRE_RODADA",
         "fonte": "Open-Meteo Forecast API",
+        "criterio_selecao": selection_basis,
         "regra_imutabilidade": "Arquivo nunca é sobrescrito após a primeira criação.",
         "regra_cientifica": (
             "Usar somente em avaliação prospectiva; proibido substituir por clima observado após a partida."
@@ -247,6 +282,7 @@ def main():
         "status": "CAPTURADO",
         "decisao": "ACUMULAR_AMOSTRA_PROSPECTIVA",
         "rodada": rodada,
+        "criterio_selecao": selection_basis,
         "arquivo": str(outfile.relative_to(ROOT)),
         "partidas_futuras": len(future),
         "partidas_com_forecast": len(rows),
