@@ -1,12 +1,12 @@
 {
-  "gerado_em": "2026-08-31T10:38:42.702331+00:00",
+  "gerado_em": "2026-08-31T11:35:23.857298+00:00",
   "status": "APROVADA",
-  "objetivo": "Garantir que treino/validação não usem somente quem entrou em campo, evitando viés de seleção e permitindo aprender risco de não participação.",
-  "dataset_linhas": 7036,
-  "dataset_jogadores_unicos": 661,
-  "targets_entrou": 6418,
-  "targets_nao_entrou": 618,
-  "taxa_nao_entrou_pct": 8.78,
+  "objetivo": "Garantir que treino/validação usem todos os jogadores válidos das rodadas resolvidas, não somente quem entrou em campo, sem fabricar zeros para rodadas futuras/em andamento.",
+  "dataset_linhas": 6023,
+  "dataset_jogadores_unicos": 597,
+  "targets_entrou": 6008,
+  "targets_nao_entrou": 15,
+  "taxa_nao_entrou_pct": 0.25,
   "features_participacao_so_passado": [
     "historico_atuacoes",
     "entrou_media3",
@@ -14,18 +14,25 @@
     "entrou_ewma",
     "rodadas_desde_atuou"
   ],
-  "universo_total_observacoes_brutas": 7859,
-  "atuacoes_total_brutas": 7083,
-  "por_posicao_bruto": {
-    "LAT": 1233,
-    "ATA": 2168,
-    "GOL": 547,
-    "ZAG": 1204,
-    "MEI": 2707
+  "rodadas_nao_resolvidas_excluidas": [
+    4,
+    21,
+    25
+  ],
+  "rodadas_nao_resolvidas_presentes_no_dataset": [],
+  "universo_total_observacoes_brutas_resolvidas": 6690,
+  "atuacoes_total_brutas_resolvidas": 6670,
+  "por_posicao_bruto_resolvido": {
+    "LAT": 1047,
+    "ATA": 1868,
+    "GOL": 435,
+    "ZAG": 1019,
+    "MEI": 2321
   },
   "por_rodada": [
     {
       "rodada": 1,
+      "resolvida": true,
       "universo_jogadores": 307,
       "entraram_em_campo": 307,
       "nao_entraram": 0,
@@ -36,10 +43,12 @@
         "GOL": 20,
         "ZAG": 47,
         "MEI": 111
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 2,
+      "resolvida": true,
       "universo_jogadores": 282,
       "entraram_em_campo": 282,
       "nao_entraram": 0,
@@ -50,10 +59,12 @@
         "MEI": 106,
         "ZAG": 45,
         "LAT": 42
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 3,
+      "resolvida": true,
       "universo_jogadores": 281,
       "entraram_em_campo": 281,
       "nao_entraram": 0,
@@ -64,66 +75,76 @@
         "MEI": 96,
         "LAT": 43,
         "ZAG": 44
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 4,
+      "resolvida": false,
       "universo_jogadores": 222,
-      "entraram_em_campo": 221,
-      "nao_entraram": 1,
-      "linhas_dataset": 182,
+      "entraram_em_campo": null,
+      "nao_entraram": null,
+      "linhas_dataset": 0,
       "por_posicao": {
         "ATA": 56,
         "GOL": 15,
         "MEI": 85,
         "ZAG": 33,
         "LAT": 33
-      }
+      },
+      "regra": "fora do treino/validação até a rodada ter targets finais observáveis"
     },
     {
       "rodada": 5,
+      "resolvida": true,
       "universo_jogadores": 254,
       "entraram_em_campo": 254,
       "nao_entraram": 0,
-      "linhas_dataset": 227,
+      "linhas_dataset": 203,
       "por_posicao": {
         "GOL": 17,
         "MEI": 90,
         "LAT": 37,
         "ATA": 70,
         "ZAG": 40
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 6,
+      "resolvida": true,
       "universo_jogadores": 316,
       "entraram_em_campo": 315,
       "nao_entraram": 1,
-      "linhas_dataset": 290,
+      "linhas_dataset": 287,
       "por_posicao": {
         "LAT": 47,
         "ATA": 83,
         "MEI": 115,
         "GOL": 20,
         "ZAG": 51
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 7,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 314,
       "nao_entraram": 1,
-      "linhas_dataset": 304,
+      "linhas_dataset": 299,
       "por_posicao": {
         "LAT": 48,
         "ATA": 87,
         "MEI": 114,
         "GOL": 20,
         "ZAG": 46
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 8,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 315,
       "nao_entraram": 0,
@@ -134,38 +155,44 @@
         "MEI": 113,
         "GOL": 21,
         "ZAG": 47
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 9,
+      "resolvida": true,
       "universo_jogadores": 322,
       "entraram_em_campo": 322,
       "nao_entraram": 0,
-      "linhas_dataset": 303,
+      "linhas_dataset": 301,
       "por_posicao": {
         "ATA": 87,
         "LAT": 51,
         "MEI": 119,
         "GOL": 20,
         "ZAG": 45
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 10,
+      "resolvida": true,
       "universo_jogadores": 318,
       "entraram_em_campo": 316,
       "nao_entraram": 2,
-      "linhas_dataset": 315,
+      "linhas_dataset": 314,
       "por_posicao": {
         "ATA": 91,
         "LAT": 50,
         "MEI": 110,
         "GOL": 20,
         "ZAG": 47
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 11,
+      "resolvida": true,
       "universo_jogadores": 312,
       "entraram_em_campo": 312,
       "nao_entraram": 0,
@@ -176,24 +203,28 @@
         "GOL": 20,
         "ZAG": 44,
         "LAT": 50
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 12,
+      "resolvida": true,
       "universo_jogadores": 320,
       "entraram_em_campo": 318,
       "nao_entraram": 2,
-      "linhas_dataset": 314,
+      "linhas_dataset": 313,
       "por_posicao": {
         "ATA": 94,
         "MEI": 109,
         "GOL": 21,
         "ZAG": 48,
         "LAT": 48
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 13,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 312,
       "nao_entraram": 3,
@@ -204,10 +235,12 @@
         "MEI": 110,
         "GOL": 21,
         "ZAG": 48
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 14,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 314,
       "nao_entraram": 1,
@@ -218,10 +251,12 @@
         "MEI": 109,
         "GOL": 20,
         "ZAG": 50
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 15,
+      "resolvida": true,
       "universo_jogadores": 313,
       "entraram_em_campo": 312,
       "nao_entraram": 1,
@@ -232,10 +267,12 @@
         "GOL": 21,
         "ZAG": 46,
         "LAT": 49
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 16,
+      "resolvida": true,
       "universo_jogadores": 313,
       "entraram_em_campo": 312,
       "nao_entraram": 1,
@@ -246,24 +283,28 @@
         "MEI": 99,
         "GOL": 20,
         "ZAG": 50
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 17,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 314,
       "nao_entraram": 1,
-      "linhas_dataset": 308,
+      "linhas_dataset": 307,
       "por_posicao": {
         "LAT": 51,
         "ATA": 92,
         "MEI": 103,
         "GOL": 21,
         "ZAG": 48
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 18,
+      "resolvida": true,
       "universo_jogadores": 319,
       "entraram_em_campo": 318,
       "nao_entraram": 1,
@@ -274,10 +315,12 @@
         "MEI": 108,
         "GOL": 22,
         "ZAG": 49
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 19,
+      "resolvida": true,
       "universo_jogadores": 189,
       "entraram_em_campo": 189,
       "nao_entraram": 0,
@@ -288,10 +331,12 @@
         "ATA": 53,
         "LAT": 35,
         "GOL": 12
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 20,
+      "resolvida": true,
       "universo_jogadores": 318,
       "entraram_em_campo": 316,
       "nao_entraram": 2,
@@ -302,52 +347,60 @@
         "GOL": 21,
         "ZAG": 49,
         "MEI": 100
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 21,
+      "resolvida": false,
       "universo_jogadores": 192,
-      "entraram_em_campo": 192,
-      "nao_entraram": 0,
-      "linhas_dataset": 184,
+      "entraram_em_campo": null,
+      "nao_entraram": null,
+      "linhas_dataset": 0,
       "por_posicao": {
         "MEI": 70,
         "LAT": 31,
         "ZAG": 33,
         "ATA": 46,
         "GOL": 12
-      }
+      },
+      "regra": "fora do treino/validação até a rodada ter targets finais observáveis"
     },
     {
       "rodada": 22,
+      "resolvida": true,
       "universo_jogadores": 316,
       "entraram_em_campo": 314,
       "nao_entraram": 2,
-      "linhas_dataset": 300,
+      "linhas_dataset": 297,
       "por_posicao": {
         "MEI": 114,
         "ATA": 89,
         "LAT": 46,
         "GOL": 20,
         "ZAG": 47
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 23,
+      "resolvida": true,
       "universo_jogadores": 318,
       "entraram_em_campo": 316,
       "nao_entraram": 2,
-      "linhas_dataset": 305,
+      "linhas_dataset": 301,
       "por_posicao": {
         "MEI": 111,
         "ATA": 89,
         "LAT": 49,
         "GOL": 21,
         "ZAG": 48
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 24,
+      "resolvida": true,
       "universo_jogadores": 317,
       "entraram_em_campo": 317,
       "nao_entraram": 0,
@@ -358,22 +411,25 @@
         "LAT": 47,
         "GOL": 21,
         "ZAG": 48
-      }
+      },
+      "regra": null
     },
     {
       "rodada": 25,
+      "resolvida": false,
       "universo_jogadores": 755,
-      "entraram_em_campo": 0,
-      "nao_entraram": 755,
-      "linhas_dataset": 603,
+      "entraram_em_campo": null,
+      "nao_entraram": null,
+      "linhas_dataset": 0,
       "por_posicao": {
         "LAT": 122,
         "ZAG": 119,
         "MEI": 231,
         "GOL": 85,
         "ATA": 198
-      }
+      },
+      "regra": "fora do treino/validação até a rodada ter targets finais observáveis"
     }
   ],
-  "regra": "Universo = GOL/LAT/ZAG/MEI/ATA presentes em jogadores.json. Jogador válido que não atuou recebe target_entrou=0 e target_pontos/scouts=0. A informação de atuação da própria rodada nunca entra nas features."
+  "regra": "Universo de treino = GOL/LAT/ZAG/MEI/ATA presentes em jogadores.json de rodadas resolvidas. Jogador válido que não atuou em uma rodada resolvida recebe target_entrou=0 e target_pontos/scouts=0. Rodada futura/em andamento não gera target e não entra no dataset até possuir pontuados e placares finais."
 }

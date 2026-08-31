@@ -1,12 +1,17 @@
 {
-  "gerado_em": "2026-08-31T10:38:45.034694+00:00",
+  "gerado_em": "2026-08-31T11:35:27.853711+00:00",
   "status": "APROVADA",
-  "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas < R. Targets de R podem existir apenas como rótulo de avaliação.",
-  "universo": "Jogadores válidos do jogadores.json, inclusive quem não entrou; ausência de atuação em R vira target 0, nunca feature de R.",
-  "linhas_dataset": 7036,
-  "linhas_auditadas": 7036,
-  "checks_features_targets": 647312,
+  "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas resolvidas < R. Targets de R podem existir apenas quando R possui resultado final observável.",
+  "universo": "Jogadores válidos do jogadores.json nas rodadas resolvidas, inclusive quem não entrou. Rodadas futuras/em andamento são excluídas, nunca transformadas artificialmente em targets zero.",
+  "rodadas_nao_resolvidas_ignoradas": [
+    4,
+    21,
+    25
+  ],
+  "linhas_dataset": 6023,
+  "linhas_auditadas": 6023,
+  "checks_features_targets": 554116,
   "violacoes": [],
   "violacoes_total_amostradas": 0,
-  "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json; cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico. Inclui auditoria explícita de taxas, janelas e sequências de participação."
+  "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json + placares oficiais. Cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico. Rodadas sem pontuação/placares finais são ignoradas integralmente."
 }

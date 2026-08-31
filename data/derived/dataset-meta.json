@@ -1,8 +1,8 @@
 {
-  "linhas": 7036,
+  "linhas": 6023,
   "rodada_min": 2,
-  "rodada_max": 25,
-  "jogadores": 661,
+  "rodada_max": 24,
+  "jogadores": 597,
   "colunas": [
     "rodada",
     "atleta_id",
@@ -263,11 +263,18 @@
     "PP_cond_media5",
     "PP_cond_ewma"
   ],
-  "universo_amostral": "Todos os jogadores válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA), inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0.",
-  "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. Taxas, sequências e janelas de participação são calculadas exclusivamente sobre flags target_entrou de rodadas anteriores. As features *_cond_* usam somente atuações anteriores a R em que o atleta entrou em campo. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
+  "rodadas_nao_resolvidas_excluidas": [
+    4,
+    21,
+    25
+  ],
+  "criterio_rodada_resolvida": "pontuados.json não vazio e todos os jogos da rodada com placar_oficial_mandante/visitante disponíveis",
+  "universo_amostral": "Todos os jogadores válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA) das rodadas resolvidas, inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0. Rodadas futuras/em andamento são totalmente excluídas de treino/validação até possuírem resultado final observável.",
+  "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1 resolvida. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. Rodadas não resolvidas não geram targets zero e não alteram o histórico. Taxas, sequências e janelas de participação são calculadas exclusivamente sobre flags target_entrou de rodadas resolvidas anteriores. As features *_cond_* usam somente atuações anteriores a R em que o atleta entrou em campo. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
   "por_rodada": [
     {
       "rodada": 1,
+      "resolvida": true,
       "universo_jogadores": 307,
       "entraram_em_campo": 307,
       "nao_entraram": 0,
@@ -275,6 +282,7 @@
     },
     {
       "rodada": 2,
+      "resolvida": true,
       "universo_jogadores": 282,
       "entraram_em_campo": 282,
       "nao_entraram": 0,
@@ -282,6 +290,7 @@
     },
     {
       "rodada": 3,
+      "resolvida": true,
       "universo_jogadores": 281,
       "entraram_em_campo": 281,
       "nao_entraram": 0,
@@ -289,34 +298,40 @@
     },
     {
       "rodada": 4,
+      "resolvida": false,
       "universo_jogadores": 222,
-      "entraram_em_campo": 221,
-      "nao_entraram": 1,
-      "linhas_dataset": 182
+      "entraram_em_campo": null,
+      "nao_entraram": null,
+      "linhas_dataset": 0,
+      "motivo": "rodada sem pontuados completos e/ou sem todos os placares oficiais; excluída de treino e validação"
     },
     {
       "rodada": 5,
+      "resolvida": true,
       "universo_jogadores": 254,
       "entraram_em_campo": 254,
       "nao_entraram": 0,
-      "linhas_dataset": 227
+      "linhas_dataset": 203
     },
     {
       "rodada": 6,
+      "resolvida": true,
       "universo_jogadores": 316,
       "entraram_em_campo": 315,
       "nao_entraram": 1,
-      "linhas_dataset": 290
+      "linhas_dataset": 287
     },
     {
       "rodada": 7,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 314,
       "nao_entraram": 1,
-      "linhas_dataset": 304
+      "linhas_dataset": 299
     },
     {
       "rodada": 8,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 315,
       "nao_entraram": 0,
@@ -324,20 +339,23 @@
     },
     {
       "rodada": 9,
+      "resolvida": true,
       "universo_jogadores": 322,
       "entraram_em_campo": 322,
       "nao_entraram": 0,
-      "linhas_dataset": 303
+      "linhas_dataset": 301
     },
     {
       "rodada": 10,
+      "resolvida": true,
       "universo_jogadores": 318,
       "entraram_em_campo": 316,
       "nao_entraram": 2,
-      "linhas_dataset": 315
+      "linhas_dataset": 314
     },
     {
       "rodada": 11,
+      "resolvida": true,
       "universo_jogadores": 312,
       "entraram_em_campo": 312,
       "nao_entraram": 0,
@@ -345,13 +363,15 @@
     },
     {
       "rodada": 12,
+      "resolvida": true,
       "universo_jogadores": 320,
       "entraram_em_campo": 318,
       "nao_entraram": 2,
-      "linhas_dataset": 314
+      "linhas_dataset": 313
     },
     {
       "rodada": 13,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 312,
       "nao_entraram": 3,
@@ -359,6 +379,7 @@
     },
     {
       "rodada": 14,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 314,
       "nao_entraram": 1,
@@ -366,6 +387,7 @@
     },
     {
       "rodada": 15,
+      "resolvida": true,
       "universo_jogadores": 313,
       "entraram_em_campo": 312,
       "nao_entraram": 1,
@@ -373,6 +395,7 @@
     },
     {
       "rodada": 16,
+      "resolvida": true,
       "universo_jogadores": 313,
       "entraram_em_campo": 312,
       "nao_entraram": 1,
@@ -380,13 +403,15 @@
     },
     {
       "rodada": 17,
+      "resolvida": true,
       "universo_jogadores": 315,
       "entraram_em_campo": 314,
       "nao_entraram": 1,
-      "linhas_dataset": 308
+      "linhas_dataset": 307
     },
     {
       "rodada": 18,
+      "resolvida": true,
       "universo_jogadores": 319,
       "entraram_em_campo": 318,
       "nao_entraram": 1,
@@ -394,6 +419,7 @@
     },
     {
       "rodada": 19,
+      "resolvida": true,
       "universo_jogadores": 189,
       "entraram_em_campo": 189,
       "nao_entraram": 0,
@@ -401,6 +427,7 @@
     },
     {
       "rodada": 20,
+      "resolvida": true,
       "universo_jogadores": 318,
       "entraram_em_campo": 316,
       "nao_entraram": 2,
@@ -408,27 +435,32 @@
     },
     {
       "rodada": 21,
+      "resolvida": false,
       "universo_jogadores": 192,
-      "entraram_em_campo": 192,
-      "nao_entraram": 0,
-      "linhas_dataset": 184
+      "entraram_em_campo": null,
+      "nao_entraram": null,
+      "linhas_dataset": 0,
+      "motivo": "rodada sem pontuados completos e/ou sem todos os placares oficiais; excluída de treino e validação"
     },
     {
       "rodada": 22,
+      "resolvida": true,
       "universo_jogadores": 316,
       "entraram_em_campo": 314,
       "nao_entraram": 2,
-      "linhas_dataset": 300
+      "linhas_dataset": 297
     },
     {
       "rodada": 23,
+      "resolvida": true,
       "universo_jogadores": 318,
       "entraram_em_campo": 316,
       "nao_entraram": 2,
-      "linhas_dataset": 305
+      "linhas_dataset": 301
     },
     {
       "rodada": 24,
+      "resolvida": true,
       "universo_jogadores": 317,
       "entraram_em_campo": 317,
       "nao_entraram": 0,
@@ -436,10 +468,12 @@
     },
     {
       "rodada": 25,
+      "resolvida": false,
       "universo_jogadores": 755,
-      "entraram_em_campo": 0,
-      "nao_entraram": 755,
-      "linhas_dataset": 603
+      "entraram_em_campo": null,
+      "nao_entraram": null,
+      "linhas_dataset": 0,
+      "motivo": "rodada sem pontuados completos e/ou sem todos os placares oficiais; excluída de treino e validação"
     }
   ]
 }
