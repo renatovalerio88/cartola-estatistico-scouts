@@ -1,19 +1,19 @@
 {
-  "gerado_em": "2026-08-31T03:47:04.583448+00:00",
+  "gerado_em": "2026-08-31T04:46:51.760444+00:00",
   "status": "BLOQUEADA_FONTE",
   "decisao": "NAO_AVALIAR_CALENDARIO_EXTERNO_SEM_COBERTURA",
   "escopo": "Ablation isolada do congestionamento causado por Libertadores, Sul-Americana e Copa do Brasil.",
   "protocolo": "O teste só pode rodar com calendário histórico externo de cobertura suficiente e corte temporal estrito. Ausência da fonte nunca é convertida em zero jogos.",
-  "fonte_calendario": "Coleta redundante pública ESPN/Sofascore; snapshot versionado no laboratório.",
-  "status_coleta": "indisponivel",
+  "fonte_calendario": "Coleta redundante ESPN/Sofascore/OpenFootball, com snapshot versionado e gate de cobertura sem imputação artificial de ausência.",
+  "status_coleta": "parcial",
   "janela_calendario": {
     "inicio": "2026-01-01",
     "fim": "2026-08-31"
   },
   "resumo_calendario": {
     "libertadores": {
-      "eventos_com_clube_cartola": 0,
-      "clubes_cartola_distintos": 0
+      "eventos_com_clube_cartola": 35,
+      "clubes_cartola_distintos": 7
     },
     "sulamericana": {
       "eventos_com_clube_cartola": 0,
@@ -26,17 +26,28 @@
   },
   "fontes": {
     "libertadores": {
-      "fonte": "snapshot",
-      "slug": "conmebol.libertadores",
-      "tournament_id": 384,
-      "eventos_recebidos": 0,
-      "eventos_mapeados": 0,
-      "status": "indisponivel"
+      "fonte": "openfootball",
+      "repositorio": "openfootball/south-america",
+      "path": "copa-libertadores/2026_copal.txt",
+      "url_raw": "https://raw.githubusercontent.com/openfootball/south-america/master/copa-libertadores/2026_copal.txt",
+      "licenca": "CC0-1.0 conforme repositório upstream",
+      "eventos_recebidos": 125,
+      "eventos_mapeados": 35,
+      "status": "ok",
+      "fallback_de": [
+        "espn",
+        "sofascore"
+      ],
+      "erros_fallback_anteriores": {
+        "espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260101-20260131&limit=1000",
+        "sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/384/seasons"
+      }
     },
     "sulamericana": {
       "fonte": "snapshot",
       "slug": "conmebol.sudamericana",
       "tournament_id": 480,
+      "openfootball_path": null,
       "eventos_recebidos": 0,
       "eventos_mapeados": 0,
       "status": "indisponivel"
@@ -45,17 +56,13 @@
       "fonte": "snapshot",
       "slug": "bra.copa_do_brazil",
       "tournament_id": 373,
+      "openfootball_path": null,
       "eventos_recebidos": 0,
       "eventos_mapeados": 0,
       "status": "indisponivel"
     }
   },
   "erros_coleta": [
-    {
-      "competicao": "libertadores",
-      "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260101-20260131&limit=1000",
-      "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/384/seasons"
-    },
     {
       "competicao": "sulamericana",
       "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20260101-20260131&limit=1000",
@@ -67,7 +74,7 @@
       "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/373/seasons"
     }
   ],
-  "eventos_disponiveis": 0,
+  "eventos_disponiveis": 35,
   "cobertura_suficiente_para_ablation": false,
   "modelos_com_gate_aprovado": 0,
   "modelos_testados": 0,

@@ -1,33 +1,46 @@
 {
-  "gerado_em": "2026-08-31T03:47:03.640519+00:00",
+  "gerado_em": "2026-08-31T04:46:50.566355+00:00",
   "temporada": 2026,
-  "status_coleta": "indisponivel",
+  "status_coleta": "parcial",
   "cobertura_suficiente_para_ablation": false,
   "fontes_prioridade": [
     "ESPN scoreboard JSON público",
     "Sofascore API pública",
+    "OpenFootball/openfootball/south-america (arquivo versionado, quando disponível)",
     "snapshot versionado anterior"
   ],
-  "fonte": "Coleta redundante pública ESPN/Sofascore; snapshot versionado no laboratório.",
+  "fonte": "Coleta redundante ESPN/Sofascore/OpenFootball, com snapshot versionado e gate de cobertura sem imputação artificial de ausência.",
   "regra_match_clubes": "Nome/slug exato normalizado ou alias explícito. Sigla curta isolada é proibida para evitar colisão internacional.",
-  "regra_anti_leakage": "Somente partidas concluídas são armazenadas. Features filtram data_externa < data_da_partida_alvo; placares/resultados não são usados.",
+  "regra_anti_leakage": "Somente partidas concluídas são armazenadas. Features filtram data_externa < data_da_partida_alvo; placares/resultados não são usados como features.",
+  "regra_cobertura": "Ablation somente com >=2 competições contendo jogos de clubes Cartola e >=10 eventos totais. Adicionar uma fonte não reduz esse gate.",
   "janela_coletada": {
     "inicio": "2026-01-01",
     "fim": "2026-08-31"
   },
   "fontes": {
     "libertadores": {
-      "fonte": "snapshot",
-      "slug": "conmebol.libertadores",
-      "tournament_id": 384,
-      "eventos_recebidos": 0,
-      "eventos_mapeados": 0,
-      "status": "indisponivel"
+      "fonte": "openfootball",
+      "repositorio": "openfootball/south-america",
+      "path": "copa-libertadores/2026_copal.txt",
+      "url_raw": "https://raw.githubusercontent.com/openfootball/south-america/master/copa-libertadores/2026_copal.txt",
+      "licenca": "CC0-1.0 conforme repositório upstream",
+      "eventos_recebidos": 125,
+      "eventos_mapeados": 35,
+      "status": "ok",
+      "fallback_de": [
+        "espn",
+        "sofascore"
+      ],
+      "erros_fallback_anteriores": {
+        "espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260101-20260131&limit=1000",
+        "sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/384/seasons"
+      }
     },
     "sulamericana": {
       "fonte": "snapshot",
       "slug": "conmebol.sudamericana",
       "tournament_id": 480,
+      "openfootball_path": null,
       "eventos_recebidos": 0,
       "eventos_mapeados": 0,
       "status": "indisponivel"
@@ -36,17 +49,13 @@
       "fonte": "snapshot",
       "slug": "bra.copa_do_brazil",
       "tournament_id": 373,
+      "openfootball_path": null,
       "eventos_recebidos": 0,
       "eventos_mapeados": 0,
       "status": "indisponivel"
     }
   },
   "erros_coleta": [
-    {
-      "competicao": "libertadores",
-      "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260101-20260131&limit=1000",
-      "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/384/seasons"
-    },
     {
       "competicao": "sulamericana",
       "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20260101-20260131&limit=1000",
@@ -60,8 +69,8 @@
   ],
   "resumo": {
     "libertadores": {
-      "eventos_com_clube_cartola": 0,
-      "clubes_cartola_distintos": 0
+      "eventos_com_clube_cartola": 35,
+      "clubes_cartola_distintos": 7
     },
     "sulamericana": {
       "eventos_com_clube_cartola": 0,
@@ -214,6 +223,1178 @@
       "slug": "remo"
     }
   },
-  "nao_mapeados_em_eventos_relevantes": [],
-  "eventos": []
+  "nao_mapeados_em_eventos_relevantes": [
+    {
+      "competicao": "libertadores",
+      "nome": "Barcelona SC",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CA Boca Juniors",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CA Peñarol",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CA Platense",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CD Independiente Medellín",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CD Universidad Católica",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CDP Junior FC",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CS Cristal",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "CS Independiente Rivadavia",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "Club Bolívar",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "Club Cerro Porteño",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "Club Nacional Potosí",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "Cusco FC",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "Deportivo La Guaira FC",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "Estudiantes de La Plata",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "Independiente Santa Fe",
+      "abreviacao": "None"
+    },
+    {
+      "competicao": "libertadores",
+      "nome": "O'Higgins FC",
+      "abreviacao": "None"
+    }
+  ],
+  "eventos": [
+    {
+      "evento_id": "openfootball:libertadores:2026-02-18:nacionalpotosi:botafogofr",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-02-18T12:00:00+00:00",
+      "nome_evento": "Club Nacional Potosí x Botafogo FR",
+      "clubes_cartola_ids": [
+        263
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Club Nacional Potosí",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Botafogo FR",
+          "abreviacao": null,
+          "clube_id": 263,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-02-18:ohigginsfc:ecbahia",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-02-18T12:00:00+00:00",
+      "nome_evento": "O'Higgins FC x EC Bahia",
+      "clubes_cartola_ids": [
+        265
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "O'Higgins FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "EC Bahia",
+          "abreviacao": null,
+          "clube_id": 265,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-02-25:botafogofr:nacionalpotosi",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-02-25T12:00:00+00:00",
+      "nome_evento": "Botafogo FR x Club Nacional Potosí",
+      "clubes_cartola_ids": [
+        263
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Botafogo FR",
+          "abreviacao": null,
+          "clube_id": 263,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Club Nacional Potosí",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-02-25:ecbahia:ohigginsfc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-02-25T12:00:00+00:00",
+      "nome_evento": "EC Bahia x O'Higgins FC",
+      "clubes_cartola_ids": [
+        265
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "EC Bahia",
+          "abreviacao": null,
+          "clube_id": 265,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "O'Higgins FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-03-03:barcelonasc:botafogofr",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-03-03T12:00:00+00:00",
+      "nome_evento": "Barcelona SC x Botafogo FR",
+      "clubes_cartola_ids": [
+        263
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Barcelona SC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Botafogo FR",
+          "abreviacao": null,
+          "clube_id": 263,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-03-10:botafogofr:barcelonasc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-03-10T12:00:00+00:00",
+      "nome_evento": "Botafogo FR x Barcelona SC",
+      "clubes_cartola_ids": [
+        263
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Botafogo FR",
+          "abreviacao": null,
+          "clube_id": 263,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Barcelona SC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-07:barcelonasc:cruzeiroec",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-07T12:00:00+00:00",
+      "nome_evento": "Barcelona SC x Cruzeiro EC",
+      "clubes_cartola_ids": [
+        283
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Barcelona SC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Cruzeiro EC",
+          "abreviacao": null,
+          "clube_id": 283,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-07:deportivolaguairafc:fluminensefc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-07T12:00:00+00:00",
+      "nome_evento": "Deportivo La Guaira FC x Fluminense FC",
+      "clubes_cartola_ids": [
+        266
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Deportivo La Guaira FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Fluminense FC",
+          "abreviacao": null,
+          "clube_id": 266,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-08:cdpjuniorfc:sepalmeiras",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-08T12:00:00+00:00",
+      "nome_evento": "CDP Junior FC x SE Palmeiras",
+      "clubes_cartola_ids": [
+        275
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CDP Junior FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "SE Palmeiras",
+          "abreviacao": null,
+          "clube_id": 275,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-08:cuscofc:crflamengo",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-08T12:00:00+00:00",
+      "nome_evento": "Cusco FC x CR Flamengo",
+      "clubes_cartola_ids": [
+        262
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Cusco FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CR Flamengo",
+          "abreviacao": null,
+          "clube_id": 262,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-09:caplatense:sccorinthianspaulista",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-09T12:00:00+00:00",
+      "nome_evento": "CA Platense x SC Corinthians Paulista",
+      "clubes_cartola_ids": [
+        264
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CA Platense",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "SC Corinthians Paulista",
+          "abreviacao": null,
+          "clube_id": 264,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-15:cruzeiroec:cduniversidadcatolica",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-15T12:00:00+00:00",
+      "nome_evento": "Cruzeiro EC x CD Universidad Católica",
+      "clubes_cartola_ids": [
+        283
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Cruzeiro EC",
+          "abreviacao": null,
+          "clube_id": 283,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CD Universidad Católica",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-15:fluminensefc:csindependienterivadavia",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-15T12:00:00+00:00",
+      "nome_evento": "Fluminense FC x CS Independiente Rivadavia",
+      "clubes_cartola_ids": [
+        266
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Fluminense FC",
+          "abreviacao": null,
+          "clube_id": 266,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CS Independiente Rivadavia",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-15:sccorinthianspaulista:independientesantafe",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-15T12:00:00+00:00",
+      "nome_evento": "SC Corinthians Paulista x Independiente Santa Fe",
+      "clubes_cartola_ids": [
+        264
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "SC Corinthians Paulista",
+          "abreviacao": null,
+          "clube_id": 264,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Independiente Santa Fe",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-16:crflamengo:cdindependientemedellin",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-16T12:00:00+00:00",
+      "nome_evento": "CR Flamengo x CD Independiente Medellín",
+      "clubes_cartola_ids": [
+        262
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CR Flamengo",
+          "abreviacao": null,
+          "clube_id": 262,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CD Independiente Medellín",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-16:sepalmeiras:cscristal",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-16T12:00:00+00:00",
+      "nome_evento": "SE Palmeiras x CS Cristal",
+      "clubes_cartola_ids": [
+        275
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "SE Palmeiras",
+          "abreviacao": null,
+          "clube_id": 275,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CS Cristal",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-28:cruzeiroec:cabocajuniors",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-28T12:00:00+00:00",
+      "nome_evento": "Cruzeiro EC x CA Boca Juniors",
+      "clubes_cartola_ids": [
+        283
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Cruzeiro EC",
+          "abreviacao": null,
+          "clube_id": 283,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CA Boca Juniors",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-29:cerroporteno:sepalmeiras",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-29T12:00:00+00:00",
+      "nome_evento": "Club Cerro Porteño x SE Palmeiras",
+      "clubes_cartola_ids": [
+        275
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Club Cerro Porteño",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "SE Palmeiras",
+          "abreviacao": null,
+          "clube_id": 275,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-29:estudiantesdelaplata:crflamengo",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-29T12:00:00+00:00",
+      "nome_evento": "Estudiantes de La Plata x CR Flamengo",
+      "clubes_cartola_ids": [
+        262
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Estudiantes de La Plata",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CR Flamengo",
+          "abreviacao": null,
+          "clube_id": 262,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-30:bolivar:fluminensefc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-30T12:00:00+00:00",
+      "nome_evento": "Club Bolívar x Fluminense FC",
+      "clubes_cartola_ids": [
+        266
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Club Bolívar",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Fluminense FC",
+          "abreviacao": null,
+          "clube_id": 266,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-04-30:sccorinthianspaulista:capenarol",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-04-30T12:00:00+00:00",
+      "nome_evento": "SC Corinthians Paulista x CA Peñarol",
+      "clubes_cartola_ids": [
+        264
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "SC Corinthians Paulista",
+          "abreviacao": null,
+          "clube_id": 264,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CA Peñarol",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-05:cscristal:sepalmeiras",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-05T12:00:00+00:00",
+      "nome_evento": "CS Cristal x SE Palmeiras",
+      "clubes_cartola_ids": [
+        275
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CS Cristal",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "SE Palmeiras",
+          "abreviacao": null,
+          "clube_id": 275,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-06:cduniversidadcatolica:cruzeiroec",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-06T12:00:00+00:00",
+      "nome_evento": "CD Universidad Católica x Cruzeiro EC",
+      "clubes_cartola_ids": [
+        283
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CD Universidad Católica",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Cruzeiro EC",
+          "abreviacao": null,
+          "clube_id": 283,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-06:csindependienterivadavia:fluminensefc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-06T12:00:00+00:00",
+      "nome_evento": "CS Independiente Rivadavia x Fluminense FC",
+      "clubes_cartola_ids": [
+        266
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CS Independiente Rivadavia",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Fluminense FC",
+          "abreviacao": null,
+          "clube_id": 266,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-06:independientesantafe:sccorinthianspaulista",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-06T12:00:00+00:00",
+      "nome_evento": "Independiente Santa Fe x SC Corinthians Paulista",
+      "clubes_cartola_ids": [
+        264
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Independiente Santa Fe",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "SC Corinthians Paulista",
+          "abreviacao": null,
+          "clube_id": 264,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-19:cabocajuniors:cruzeiroec",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-19T12:00:00+00:00",
+      "nome_evento": "CA Boca Juniors x Cruzeiro EC",
+      "clubes_cartola_ids": [
+        283
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CA Boca Juniors",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Cruzeiro EC",
+          "abreviacao": null,
+          "clube_id": 283,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-19:fluminensefc:bolivar",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-19T12:00:00+00:00",
+      "nome_evento": "Fluminense FC x Club Bolívar",
+      "clubes_cartola_ids": [
+        266
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Fluminense FC",
+          "abreviacao": null,
+          "clube_id": 266,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Club Bolívar",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-20:crflamengo:estudiantesdelaplata",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-20T12:00:00+00:00",
+      "nome_evento": "CR Flamengo x Estudiantes de La Plata",
+      "clubes_cartola_ids": [
+        262
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CR Flamengo",
+          "abreviacao": null,
+          "clube_id": 262,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Estudiantes de La Plata",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-20:sepalmeiras:cerroporteno",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-20T12:00:00+00:00",
+      "nome_evento": "SE Palmeiras x Club Cerro Porteño",
+      "clubes_cartola_ids": [
+        275
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "SE Palmeiras",
+          "abreviacao": null,
+          "clube_id": 275,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Club Cerro Porteño",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-21:capenarol:sccorinthianspaulista",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-21T12:00:00+00:00",
+      "nome_evento": "CA Peñarol x SC Corinthians Paulista",
+      "clubes_cartola_ids": [
+        264
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CA Peñarol",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "SC Corinthians Paulista",
+          "abreviacao": null,
+          "clube_id": 264,
+          "metodo_match": "alias:openfootball_name"
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-26:crflamengo:cuscofc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-26T12:00:00+00:00",
+      "nome_evento": "CR Flamengo x Cusco FC",
+      "clubes_cartola_ids": [
+        262
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "CR Flamengo",
+          "abreviacao": null,
+          "clube_id": 262,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Cusco FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-27:fluminensefc:deportivolaguairafc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-27T12:00:00+00:00",
+      "nome_evento": "Fluminense FC x Deportivo La Guaira FC",
+      "clubes_cartola_ids": [
+        266
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Fluminense FC",
+          "abreviacao": null,
+          "clube_id": 266,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Deportivo La Guaira FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-27:sccorinthianspaulista:caplatense",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-27T12:00:00+00:00",
+      "nome_evento": "SC Corinthians Paulista x CA Platense",
+      "clubes_cartola_ids": [
+        264
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "SC Corinthians Paulista",
+          "abreviacao": null,
+          "clube_id": 264,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CA Platense",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-28:cruzeiroec:barcelonasc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-28T12:00:00+00:00",
+      "nome_evento": "Cruzeiro EC x Barcelona SC",
+      "clubes_cartola_ids": [
+        283
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "Cruzeiro EC",
+          "abreviacao": null,
+          "clube_id": 283,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "Barcelona SC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    },
+    {
+      "evento_id": "openfootball:libertadores:2026-05-28:sepalmeiras:cdpjuniorfc",
+      "competicao": "libertadores",
+      "fonte_evento": "openfootball",
+      "source_repo": "openfootball/south-america",
+      "source_path": "copa-libertadores/2026_copal.txt",
+      "data": "2026-05-28T12:00:00+00:00",
+      "nome_evento": "SE Palmeiras x CDP Junior FC",
+      "clubes_cartola_ids": [
+        275
+      ],
+      "times": [
+        {
+          "homeAway": "home",
+          "source_id": null,
+          "nome": "SE Palmeiras",
+          "abreviacao": null,
+          "clube_id": 275,
+          "metodo_match": "alias:openfootball_name"
+        },
+        {
+          "homeAway": "away",
+          "source_id": null,
+          "nome": "CDP Junior FC",
+          "abreviacao": null,
+          "clube_id": null,
+          "metodo_match": null
+        }
+      ],
+      "status": "completed"
+    }
+  ]
 }

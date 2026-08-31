@@ -1,6 +1,6 @@
 {
   "auditoria": {
-    "gerado_em": "2026-08-31T04:44:08.406168+00:00",
+    "gerado_em": "2026-08-31T03:44:16.430465+00:00",
     "rodadas_auditadas": 25,
     "atletas_registrados": 7586,
     "atletas_em_campo": 7535,
@@ -617,7 +617,7 @@
     ]
   },
   "auditoria_universo": {
-    "gerado_em": "2026-08-31T04:44:10.981947+00:00",
+    "gerado_em": "2026-08-31T03:44:19.201407+00:00",
     "status": "APROVADA",
     "objetivo": "Garantir que treino/validação não usem somente quem entrou em campo, evitando viés de seleção e permitindo aprender risco de não participação.",
     "dataset_linhas": 7036,
@@ -996,7 +996,7 @@
     "regra": "Universo = GOL/LAT/ZAG/MEI/ATA presentes em jogadores.json. Jogador válido que não atuou recebe target_entrou=0 e target_pontos/scouts=0. A informação de atuação da própria rodada nunca entra nas features."
   },
   "auditoria_vazamento": {
-    "gerado_em": "2026-08-31T04:44:15.141266+00:00",
+    "gerado_em": "2026-08-31T04:44:21.718843+00:00",
     "status": "APROVADA",
     "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas < R. Targets de R podem existir apenas como rótulo de avaliação.",
     "universo": "Jogadores válidos do jogadores.json, inclusive quem não entrou; ausência de atuação em R vira target 0, nunca feature de R.",
@@ -1008,7 +1008,7 @@
     "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json; cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico. Inclui auditoria explícita de taxas, janelas e sequências de participação."
   },
   "campeonato": {
-    "gerado_em": "2026-08-31T04:48:25.711527+00:00",
+    "gerado_em": "2026-08-31T03:48:56.935881+00:00",
     "protocolo": "walk-forward em blocos temporais; todo treino termina antes da primeira rodada do respectivo teste",
     "anti_leakage_aprovado": true,
     "min_linhas_treino": 80,
@@ -1118,9 +1118,9 @@
             "fallbacks_numericos": 0
           },
           "negative_binomial": {
-            "mae": 0.039858,
-            "rmse": 0.389977,
-            "bias": 0.029192,
+            "mae": 0.039898,
+            "rmse": 0.390125,
+            "bias": 0.029232,
             "n": 375,
             "fallbacks_numericos": 0
           },
@@ -17706,7 +17706,7 @@
     ]
   },
   "campeonato_estendido": {
-    "gerado_em": "2026-08-31T03:49:30.289627+00:00",
+    "gerado_em": "2026-08-31T04:49:46.476679+00:00",
     "protocolo": "campeonato estendido walk-forward; cada fold treina exclusivamente em rodadas anteriores; challengers pesados ficam fora do pipeline diário para preservar estabilidade",
     "modelos_disponiveis": [
       "xgboost",
@@ -33797,7 +33797,7 @@
     ]
   },
   "backtest_pontos": {
-    "gerado_em": "2026-08-31T04:48:26.307356+00:00",
+    "gerado_em": "2026-08-31T03:48:57.560183+00:00",
     "protocolo": "baseline arquitetural sem seleção otimista: features de cada R usam apenas rodadas < R; comparação inicia R7",
     "scouts_usados": [
       "G",
@@ -34089,7 +34089,7 @@
     "nota": "Este estágio usa apenas médias/EWMA de scouts. V3 com campeões ML por scout será avaliada depois em nested walk-forward para evitar escolher e testar o vencedor no mesmo período."
   },
   "backtest_v3s_nested": {
-    "gerado_em": "2026-08-31T04:51:14.013514+00:00",
+    "gerado_em": "2026-08-31T03:51:54.411489+00:00",
     "protocolo": "nested walk-forward: em cada R, modelos de scouts usam apenas passado; RF direto treina somente em histórico < R; híbrido escolhe alpha exclusivamente com previsões out-of-sample de rodadas anteriores, nunca com o resultado de R",
     "inicio_rodada": 10,
     "linhas": 4946,
@@ -99752,7 +99752,7 @@
     ]
   },
   "backtest_v3s_catboost": {
-    "gerado_em": "2026-08-31T03:53:31.933190+00:00",
+    "gerado_em": "2026-08-31T04:54:31.928240+00:00",
     "protocolo": "nested walk-forward estrito: para prever R, outer train usa somente rodadas < R; a escolha CatBoost vs baselines/modelos core usa apenas inner validation em rodadas < R; nenhum resultado de R entra na seleção, treino ou hiperparametros",
     "linhas": 4946,
     "rodadas": [
@@ -169311,7 +169311,7 @@
     ]
   },
   "backtest_v3s_dois_estagios": {
-    "gerado_em": "2026-08-31T03:57:28.647960+00:00",
+    "gerado_em": "2026-08-31T04:59:30.565437+00:00",
     "protocolo": "Nested walk-forward em dois estágios: P(entrar em campo) é selecionada por Brier usando apenas rodadas passadas; produção de scouts é treinada somente em atuações anteriores e selecionada por MAE em validação temporal anterior. A previsão final é P(entrada) x E[scout|entrada] x peso oficial do scout.",
     "linhas": 4946,
     "rodadas": [
@@ -255837,7 +255837,7 @@
     }
   },
   "ablation_participacao_enriquecida": {
-    "gerado_em": "2026-08-31T03:45:39.900541+00:00",
+    "gerado_em": "2026-08-31T04:45:13.024252+00:00",
     "status": "APROVADA",
     "decisao": "NAO_APROVAR_FEATURES_PARTICIPACAO_ENRIQUECIDAS",
     "modelos_com_gate_aprovado": 0,
@@ -436925,7 +436925,7 @@
     "regra_gate": "Aprovar pacote somente se pelo menos 3/4 modelos tiverem Brier menor, AUC não pior que -0.005 e bootstrap por rodada >=95% de probabilidade favorável."
   },
   "ablation_descanso_brasileirao": {
-    "gerado_em": "2026-08-31T03:46:34.194356+00:00",
+    "gerado_em": "2026-08-31T04:46:21.106291+00:00",
     "status": "APROVADA",
     "decisao": "NAO_PROMOVER_DESCANSO_BRASILEIRAO",
     "escopo": "Screening científico de descanso entre jogos do próprio Brasileirão. NÃO representa ainda desgaste de Libertadores, Sul-Americana ou Copa do Brasil.",
@@ -618020,21 +618020,21 @@
     "proximo_passo_se_aprovado": "Adicionar calendário externo pré-rodada de Libertadores/Sul-Americana/Copa do Brasil e repetir ablation isolada antes de qualquer integração."
   },
   "ablation_calendario_externo": {
-    "gerado_em": "2026-08-31T03:47:04.583448+00:00",
+    "gerado_em": "2026-08-31T04:46:51.760444+00:00",
     "status": "BLOQUEADA_FONTE",
     "decisao": "NAO_AVALIAR_CALENDARIO_EXTERNO_SEM_COBERTURA",
     "escopo": "Ablation isolada do congestionamento causado por Libertadores, Sul-Americana e Copa do Brasil.",
     "protocolo": "O teste só pode rodar com calendário histórico externo de cobertura suficiente e corte temporal estrito. Ausência da fonte nunca é convertida em zero jogos.",
-    "fonte_calendario": "Coleta redundante pública ESPN/Sofascore; snapshot versionado no laboratório.",
-    "status_coleta": "indisponivel",
+    "fonte_calendario": "Coleta redundante ESPN/Sofascore/OpenFootball, com snapshot versionado e gate de cobertura sem imputação artificial de ausência.",
+    "status_coleta": "parcial",
     "janela_calendario": {
       "inicio": "2026-01-01",
       "fim": "2026-08-31"
     },
     "resumo_calendario": {
       "libertadores": {
-        "eventos_com_clube_cartola": 0,
-        "clubes_cartola_distintos": 0
+        "eventos_com_clube_cartola": 35,
+        "clubes_cartola_distintos": 7
       },
       "sulamericana": {
         "eventos_com_clube_cartola": 0,
@@ -618047,17 +618047,28 @@
     },
     "fontes": {
       "libertadores": {
-        "fonte": "snapshot",
-        "slug": "conmebol.libertadores",
-        "tournament_id": 384,
-        "eventos_recebidos": 0,
-        "eventos_mapeados": 0,
-        "status": "indisponivel"
+        "fonte": "openfootball",
+        "repositorio": "openfootball/south-america",
+        "path": "copa-libertadores/2026_copal.txt",
+        "url_raw": "https://raw.githubusercontent.com/openfootball/south-america/master/copa-libertadores/2026_copal.txt",
+        "licenca": "CC0-1.0 conforme repositório upstream",
+        "eventos_recebidos": 125,
+        "eventos_mapeados": 35,
+        "status": "ok",
+        "fallback_de": [
+          "espn",
+          "sofascore"
+        ],
+        "erros_fallback_anteriores": {
+          "espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260101-20260131&limit=1000",
+          "sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/384/seasons"
+        }
       },
       "sulamericana": {
         "fonte": "snapshot",
         "slug": "conmebol.sudamericana",
         "tournament_id": 480,
+        "openfootball_path": null,
         "eventos_recebidos": 0,
         "eventos_mapeados": 0,
         "status": "indisponivel"
@@ -618066,17 +618077,13 @@
         "fonte": "snapshot",
         "slug": "bra.copa_do_brazil",
         "tournament_id": 373,
+        "openfootball_path": null,
         "eventos_recebidos": 0,
         "eventos_mapeados": 0,
         "status": "indisponivel"
       }
     },
     "erros_coleta": [
-      {
-        "competicao": "libertadores",
-        "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260101-20260131&limit=1000",
-        "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/384/seasons"
-      },
       {
         "competicao": "sulamericana",
         "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20260101-20260131&limit=1000",
@@ -618088,7 +618095,7 @@
         "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/373/seasons"
       }
     ],
-    "eventos_disponiveis": 0,
+    "eventos_disponiveis": 35,
     "cobertura_suficiente_para_ablation": false,
     "modelos_com_gate_aprovado": 0,
     "modelos_testados": 0,
@@ -618101,7 +618108,7 @@
     "observacao": "BLOQUEADA_FONTE não significa que calendário externo foi reprovado. Significa apenas que não há dados externos auditáveis suficientes nesta execução. Nenhuma promoção é autorizada e a V2 permanece fora deste experimento."
   },
   "calibracao_participacao": {
-    "gerado_em": "2026-08-31T03:57:30.022865+00:00",
+    "gerado_em": "2026-08-31T04:59:32.368245+00:00",
     "protocolo": "Calibracao nested exclusivamente sobre previsoes OOS anteriores. Para R, candidatos sao escolhidos por Brier nas duas ultimas rodadas anteriores e ajustados somente com dados anteriores a R; nenhum target de R participa da escolha ou ajuste.",
     "linhas": 4946,
     "rodadas": [
@@ -672900,7 +672907,7 @@
     ]
   },
   "calibracao_producao_condicional": {
-    "gerado_em": "2026-08-31T03:57:31.441088+00:00",
+    "gerado_em": "2026-08-31T04:59:34.221883+00:00",
     "protocolo": "Calibracao nested da producao condicional. Para prever R, cada posicao escolhe o metodo apenas por OOS de rodadas anteriores; parametros sao ajustados somente com participantes anteriores. A selecao usa MAE final de pontos na validacao temporal anterior, nunca o resultado de R.",
     "linhas": 4946,
     "rodadas": [
@@ -729177,7 +729184,7 @@
     ]
   },
   "ablation_contexto": {
-    "gerado_em": "2026-08-31T04:46:30.436238+00:00",
+    "gerado_em": "2026-08-31T04:49:14.336423+00:00",
     "protocolo": "Walk-forward estrito rodada a rodada. Para prever R, cada modelo e posição é reajustado usando exclusivamente rodadas < R. A comparação de contexto usa as mesmas linhas e bootstrap pareado sobre MAE por rodada.",
     "modelos_fixos": [
       "ridge",
@@ -739954,7 +739961,7 @@
     }
   },
   "ablation_catboost_contexto": {
-    "gerado_em": "2026-08-31T03:58:57.933441+00:00",
+    "gerado_em": "2026-08-31T05:01:20.007115+00:00",
     "objetivo": "Isolar o ganho incremental de mando+forca no CatBoost sob folds temporais identicos.",
     "protocolo": "Para prever R, ambos os bracos treinam apenas em rodadas < R, com hiperparametros identicos. A unica diferenca e incluir ou remover features de mando/time/adversario. Depois, ambos recebem a mesma calibracao residual online por posicao usando no maximo 5 rodadas OOS anteriores.",
     "gate_contexto_origem": "CONTEXTO_AUTORIZADO_NO_CHALLENGER",
@@ -791213,7 +791220,7 @@
     ]
   },
   "comparacao_v2": {
-    "gerado_em": "2026-08-31T04:51:17.656368+00:00",
+    "gerado_em": "2026-08-31T03:51:58.353949+00:00",
     "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; bootstrap em blocos por rodada, sem recalibrar a V2 olhando o futuro",
     "rotulo_v2": "V2 projeção histórica salva (produção)",
     "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada, em vez de substituir a V2 pelo RF direto do laboratório.",
@@ -791637,7 +791644,7 @@
     }
   },
   "comparacao_catboost_v2": {
-    "gerado_em": "2026-08-31T03:59:01.655035+00:00",
+    "gerado_em": "2026-08-31T05:01:23.684595+00:00",
     "objetivo": "Comparar CatBoost contexto OFF com calibracao residual online fixa contra a V2 historicamente salva.",
     "protocolo": "As previsoes CatBoost sao OOS por rodada e a calibracao de cada R usa somente residuos de ate 5 rodadas anteriores da mesma posicao. A V2 e lida diretamente dos snapshots historicos de producao. As linhas sao alinhadas por rodada+atleta_id e divergencias no real sao excluidas. Bootstrap e feito em blocos por rodada. R18+ e reportado separadamente como robustez temporal posterior, sem alegar independencia prospectiva completa.",
     "nota_anti_cherry_pick": "A janela CAL_WINDOW=5 ja havia sido explorada antes desta comparacao. Por isso o resultado total nao pode, sozinho, promover arquitetura. A decisao permanece bloqueada para V2 e exige validacao prospectiva em previsoes imutaveis futuras.",
@@ -791911,7 +791918,7 @@
     "promover_v2": false
   },
   "holdout_posicional": {
-    "gerado_em": "2026-08-31T03:59:03.270884+00:00",
+    "gerado_em": "2026-08-31T05:01:25.509532+00:00",
     "objetivo": "Testar arquitetura posicional congelada sem escolher modelos usando o periodo de holdout.",
     "protocolo": "R10-R17 e usado apenas como discovery. Para cada posicao, CatBoost OFF calibrado e escolhido somente se no discovery melhora MAE, nao piora RMSE em mais de 2% e mantem |bias| <= 0.50; caso contrario fica V2. A escolha por posicao e congelada antes do holdout. O holdout usa somente rodadas com resultado historico disponivel simultaneamente na V2 e na V3; rodadas ainda nao fechadas/publicadas pela V2 sao excluidas, nunca imputadas. Nenhum resultado do holdout participa da escolha. Bootstrap e feito em blocos de rodada.",
     "anti_leakage": {
@@ -792242,7 +792249,7 @@
     "nota": "Mesmo se aprovado no holdout historico, a V2 permanece intocada; validacao prospectiva imutavel continua obrigatoria."
   },
   "significancia": {
-    "gerado_em": "2026-08-31T04:51:14.508574+00:00",
+    "gerado_em": "2026-08-31T03:51:54.928943+00:00",
     "protocolo": "comparação pareada por rodada; bootstrap em blocos de rodada para preservar dependência intra-rodada; usa somente previsões OOS já produzidas pelo backtest nested anti-leakage",
     "bootstrap_amostras": 5000,
     "seed": 42,
@@ -792327,7 +792334,7 @@
     }
   },
   "meta_seletor": {
-    "gerado_em": "2026-08-31T04:51:20.486572+00:00",
+    "gerado_em": "2026-08-31T03:51:59.580084+00:00",
     "protocolo": "meta-seletor walk-forward por posição: para cada rodada R e posição, escolhe V2 ou V3-H usando apenas MAE observado nas até 5 rodadas anteriores; mínimo de 3 rodadas anteriores; em insuficiência mantém V2. Nunca usa resultado da própria R para escolher.",
     "linhas": 4330,
     "rodadas": [
@@ -793466,7 +793473,7 @@
     }
   },
   "calibracao_catboost": {
-    "gerado_em": "2026-08-31T03:59:04.144075+00:00",
+    "gerado_em": "2026-08-31T05:01:26.705129+00:00",
     "protocolo": "calibracao residual estritamente temporal; para cada R/posicao usa somente residuos OOS de rodadas anteriores a R; nenhuma estatistica de R participa da calibracao",
     "linhas": 4946,
     "rodadas": [
