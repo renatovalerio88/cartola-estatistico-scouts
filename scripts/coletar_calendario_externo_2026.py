@@ -56,12 +56,8 @@ def cartola_clubs():
 
 
 def build_indexes(clubs):
-    by_abbr = {}
     by_name = {}
     for cid, c in clubs.items():
-        abbr = c["abreviacao"]
-        if abbr:
-            by_abbr.setdefault(abbr, []).append(cid)
         for value in (c["nome"], c["apelido"], c["slug"]):
             key = normalize(value)
             if key:
@@ -85,16 +81,21 @@ def build_indexes(clubs):
         ids = by_name.get(target_n, [])
         if len(ids) == 1:
             alias_to_id[normalize(alias)] = ids[0]
-    return by_abbr, by_name, alias_to_id
+    return by_name, alias_to_id
 
 
-def map_team(team, by_abbr, by_name, alias_to_id):
-    abbr = str(team.get("abbreviation") or "").upper().strip()
-    ids = by_abbr.get(abbr, [])
-    if len(ids) == 1:
-        return ids[0], "abreviacao"
+def map_team(team, by_name, alias_to_id):
+    """Mapeia por identidade textual, nunca apenas por sigla curta.
+
+    Siglas de três letras colidem entre clubes de países diferentes nas copas.
+    Usá-las isoladamente poderia atribuir um jogo estrangeiro ao clube brasileiro
+    errado. Por isso o match científico aceita somente nome/slug exato ou alias
+    explícito e auditável.
+    """
     for field in ("displayName", "shortDisplayName", "name", "location"):
         key = normalize(team.get(field))
+        if not key:
+            continue
         ids = by_name.get(key, [])
         if len(ids) == 1:
             return ids[0], f"nome:{field}"
@@ -130,7 +131,7 @@ def fetch_events(league_slug: str, start: date, end: date):
 
 def main():
     clubs = cartola_clubs()
-    by_abbr, by_name, alias_to_id = build_indexes(clubs)
+    by_name, alias_to_id = build_indexes(clubs)
     start = date(YEAR, 1, 1)
     end = min(date.today(), date(YEAR, 12, 31))
 
@@ -162,7 +163,7 @@ def main():
             mapped = []
             for competitor in competitors:
                 team = competitor.get("team") or {}
-                cid, method = map_team(team, by_abbr, by_name, alias_to_id)
+                cid, method = map_team(team, by_name, alias_to_id)
                 mapped.append({
                     "homeAway": competitor.get("homeAway"),
                     "espn_id": team.get("id"),
@@ -212,6 +213,7 @@ def main():
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "temporada": YEAR,
         "fonte": "ESPN scoreboard JSON público (endpoint não oficial, sem chave); snapshot versionado no laboratório.",
+        "regra_match_clubes": "Nome/slug exato normalizado ou alias explícito. Sigla curta isolada é proibida para evitar colisão entre clubes de países diferentes.",
         "regra_anti_leakage": "Somente partidas marcadas como concluídas são armazenadas. Features históricas filtram data_externa < data_da_partida_alvo; placares e resultados não são usados.",
         "janela_coletada": {"inicio": start.isoformat(), "fim": end.isoformat()},
         "fontes": sources,
