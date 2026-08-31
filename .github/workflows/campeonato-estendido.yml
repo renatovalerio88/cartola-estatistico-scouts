@@ -12,6 +12,7 @@ on:
       - 'scripts/ablation_descanso_brasileirao.py'
       - 'scripts/coletar_calendario_externo_2026.py'
       - 'scripts/ablation_calendario_externo.py'
+      - 'scripts/executar_ablation_calendario_externo.py'
       - 'scripts/calibrar_participacao_dois_estagios.py'
       - 'scripts/calibrar_producao_condicional_dois_estagios.py'
       - 'scripts/ablation_contexto.py'
@@ -58,7 +59,7 @@ jobs:
       - name: Coletar snapshot de Libertadores Sul-Americana e Copa do Brasil
         run: python scripts/coletar_calendario_externo_2026.py
       - name: Testar congestionamento de calendario externo
-        run: python scripts/ablation_calendario_externo.py
+        run: python scripts/executar_ablation_calendario_externo.py
       - name: Revalidar contexto em walk-forward estrito
         run: python scripts/ablation_contexto.py
       - name: Aplicar gate cientifico de contexto no CatBoost
