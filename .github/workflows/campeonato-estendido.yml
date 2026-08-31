@@ -14,6 +14,8 @@ on:
       - 'scripts/coletar_calendario_externo_2026.py'
       - 'scripts/ablation_calendario_externo.py'
       - 'scripts/executar_ablation_calendario_externo.py'
+      - 'scripts/ablation_mudanca_tecnico.py'
+      - 'data/context/mudancas-tecnicos-2026.json'
       - 'scripts/calibrar_participacao_dois_estagios.py'
       - 'scripts/calibrar_producao_condicional_dois_estagios.py'
       - 'scripts/ablation_contexto.py'
@@ -65,6 +67,8 @@ jobs:
         run: python scripts/coletar_calendario_externo_2026.py
       - name: Testar congestionamento de calendario externo
         run: python scripts/executar_ablation_calendario_externo.py
+      - name: Testar efeito de mudanca de tecnico
+        run: python scripts/ablation_mudanca_tecnico.py
       - name: Revalidar contexto em walk-forward estrito
         run: python scripts/ablation_contexto.py
       - name: Aplicar gate cientifico de contexto no CatBoost
@@ -101,10 +105,12 @@ jobs:
           set -euo pipefail
           REPORTS=(
             data/context/calendario-externo-2026.json
+            data/context/mudancas-tecnicos-2026.json
             data/reports/auditoria-previsoes-imutaveis.json
             data/reports/ablation-participacao-enriquecida.json
             data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-calendario-externo.json
+            data/reports/ablation-mudanca-tecnico.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
@@ -133,10 +139,12 @@ jobs:
           set -euo pipefail
           REPORTS=(
             data/context/calendario-externo-2026.json
+            data/context/mudancas-tecnicos-2026.json
             data/reports/auditoria-previsoes-imutaveis.json
             data/reports/ablation-participacao-enriquecida.json
             data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-calendario-externo.json
+            data/reports/ablation-mudanca-tecnico.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
