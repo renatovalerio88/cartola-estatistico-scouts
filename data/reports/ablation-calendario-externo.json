@@ -1,0 +1,81 @@
+{
+  "gerado_em": "2026-08-31T03:47:04.583448+00:00",
+  "status": "BLOQUEADA_FONTE",
+  "decisao": "NAO_AVALIAR_CALENDARIO_EXTERNO_SEM_COBERTURA",
+  "escopo": "Ablation isolada do congestionamento causado por Libertadores, Sul-Americana e Copa do Brasil.",
+  "protocolo": "O teste só pode rodar com calendário histórico externo de cobertura suficiente e corte temporal estrito. Ausência da fonte nunca é convertida em zero jogos.",
+  "fonte_calendario": "Coleta redundante pública ESPN/Sofascore; snapshot versionado no laboratório.",
+  "status_coleta": "indisponivel",
+  "janela_calendario": {
+    "inicio": "2026-01-01",
+    "fim": "2026-08-31"
+  },
+  "resumo_calendario": {
+    "libertadores": {
+      "eventos_com_clube_cartola": 0,
+      "clubes_cartola_distintos": 0
+    },
+    "sulamericana": {
+      "eventos_com_clube_cartola": 0,
+      "clubes_cartola_distintos": 0
+    },
+    "copa_do_brasil": {
+      "eventos_com_clube_cartola": 0,
+      "clubes_cartola_distintos": 0
+    }
+  },
+  "fontes": {
+    "libertadores": {
+      "fonte": "snapshot",
+      "slug": "conmebol.libertadores",
+      "tournament_id": 384,
+      "eventos_recebidos": 0,
+      "eventos_mapeados": 0,
+      "status": "indisponivel"
+    },
+    "sulamericana": {
+      "fonte": "snapshot",
+      "slug": "conmebol.sudamericana",
+      "tournament_id": 480,
+      "eventos_recebidos": 0,
+      "eventos_mapeados": 0,
+      "status": "indisponivel"
+    },
+    "copa_do_brasil": {
+      "fonte": "snapshot",
+      "slug": "bra.copa_do_brazil",
+      "tournament_id": 373,
+      "eventos_recebidos": 0,
+      "eventos_mapeados": 0,
+      "status": "indisponivel"
+    }
+  },
+  "erros_coleta": [
+    {
+      "competicao": "libertadores",
+      "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.libertadores/scoreboard?dates=20260101-20260131&limit=1000",
+      "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/384/seasons"
+    },
+    {
+      "competicao": "sulamericana",
+      "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/conmebol.sudamericana/scoreboard?dates=20260101-20260131&limit=1000",
+      "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/480/seasons"
+    },
+    {
+      "competicao": "copa_do_brasil",
+      "erro_espn": "403 Client Error: Forbidden for url: https://site.api.espn.com/apis/site/v2/sports/soccer/bra.copa_do_brazil/scoreboard?dates=20260101-20260131&limit=1000",
+      "erro_sofascore": "403 Client Error: Forbidden for url: https://www.sofascore.com/api/v1/unique-tournament/373/seasons"
+    }
+  ],
+  "eventos_disponiveis": 0,
+  "cobertura_suficiente_para_ablation": false,
+  "modelos_com_gate_aprovado": 0,
+  "modelos_testados": 0,
+  "por_modelo": {},
+  "por_posicao": {},
+  "provas_temporais_modelos": [],
+  "provas_temporais_calendario": [],
+  "previsoes": [],
+  "regra_gate": "Nenhum gate é calculado sem cobertura externa suficiente.",
+  "observacao": "BLOQUEADA_FONTE não significa que calendário externo foi reprovado. Significa apenas que não há dados externos auditáveis suficientes nesta execução. Nenhuma promoção é autorizada e a V2 permanece fora deste experimento."
+}
