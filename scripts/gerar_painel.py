@@ -18,6 +18,7 @@ def main():
         "auditoria": load("auditoria-scouts.json"),
         "auditoria_universo": load("auditoria-universo-jogadores.json"),
         "auditoria_vazamento": load("auditoria-vazamento-temporal.json"),
+        "auditoria_previsoes_imutaveis": load("auditoria-previsoes-imutaveis.json"),
         "campeonato": load("campeonato-modelos.json"),
         "campeonato_estendido": load("campeonato-modelos-estendido.json"),
         "backtest_pontos": load("backtest-pontos-scouts.json"),
@@ -27,6 +28,7 @@ def main():
         "ablation_participacao_enriquecida": load("ablation-participacao-enriquecida.json"),
         "ablation_descanso_brasileirao": load("ablation-descanso-brasileirao.json"),
         "ablation_calendario_externo": load("ablation-calendario-externo.json"),
+        "ablation_mudanca_tecnico": load("ablation-mudanca-tecnico.json"),
         "calibracao_participacao": load("calibracao-participacao-dois-estagios.json"),
         "calibracao_producao_condicional": load("calibracao-producao-condicional-dois-estagios.json"),
         "ablation_contexto": load("ablation-contexto.json"),
@@ -41,7 +43,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com auditorias, universo amostral, campeonatos, V2 x V3, CatBoost, dois estágios, ablations de participação/descanso/calendário externo, calibrações e holdout posicional.")
+    print("Painel V3 atualizado com auditorias, previsões imutáveis, campeonatos, V2 x V3, CatBoost, dois estágios, ablations de participação/descanso/calendário externo/mudança de técnico, calibrações e holdout posicional.")
 
 
 if __name__ == "__main__":
