@@ -21,6 +21,8 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -36,6 +38,10 @@ jobs:
         run: python scripts/auditar_universo_jogadores.py
       - name: Bloquear qualquer vazamento temporal
         run: python scripts/auditar_vazamento_temporal.py
+      - name: Congelar previsao meteorologica antes da rodada
+        run: python scripts/capturar_clima_pre_rodada.py
+      - name: Auditar imutabilidade e corte temporal do clima
+        run: python scripts/auditar_clima_pre_rodada.py
       - name: Ablation de mando e força de adversário
         run: python scripts/ablation_contexto.py
       - name: Campeonato ampliado de modelos
