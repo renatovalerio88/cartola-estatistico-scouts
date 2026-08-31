@@ -4,12 +4,20 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "data" / "reports"
+ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
 SITE_DATA = ROOT / "site" / "dados.json"
 
 
 def load(name):
     p = REPORTS / name
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+def load_latest_explicabilidade():
+    arquivos = sorted(ARCHIVE.glob("R??.explicabilidade.json"), reverse=True)
+    if not arquivos:
+        return {}
+    return json.loads(arquivos[0].read_text(encoding="utf-8"))
 
 
 def main():
@@ -19,6 +27,9 @@ def main():
         "auditoria_universo": load("auditoria-universo-jogadores.json"),
         "auditoria_vazamento": load("auditoria-vazamento-temporal.json"),
         "auditoria_previsoes_imutaveis": load("auditoria-previsoes-imutaveis.json"),
+        "auditoria_explicabilidade_pre_rodada": load("auditoria-explicabilidade-pre-rodada.json"),
+        "explicabilidade_pre_rodada_status": load("explicabilidade-pre-rodada.json"),
+        "explicabilidade_pre_rodada": load_latest_explicabilidade(),
         "auditoria_clima_pre_rodada": load("auditoria-clima-pre-rodada.json"),
         "clima_pre_rodada": load("clima-pre-rodada.json"),
         "campeonato": load("campeonato-modelos.json"),
@@ -47,7 +58,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com auditorias, previsões imutáveis, clima prospectivo, campeonatos, V2 x V3, CatBoost, dois estágios, ablations de contexto, calibrações e holdout posicional.")
+    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, V2 x V3, CatBoost, dois estágios, ablations, calibrações e holdout posicional.")
 
 
 if __name__ == "__main__":
