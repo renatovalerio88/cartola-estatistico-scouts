@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-08-31T10:58:57.550608+00:00",
+  "gerado_em": "2026-08-31T14:57:50.597854+00:00",
   "objetivo": "Testar arquitetura posicional congelada sem escolher modelos usando o periodo de holdout.",
   "protocolo": "R10-R17 e usado apenas como discovery. Para cada posicao, CatBoost OFF calibrado e escolhido somente se no discovery melhora MAE, nao piora RMSE em mais de 2% e mantem |bias| <= 0.50; caso contrario fica V2. A escolha por posicao e congelada antes do holdout. O holdout usa somente rodadas com resultado historico disponivel simultaneamente na V2 e na V3; rodadas ainda nao fechadas/publicadas pela V2 sao excluidas, nunca imputadas. Nenhum resultado do holdout participa da escolha. Bootstrap e feito em blocos de rodada.",
   "anti_leakage": {
@@ -17,7 +17,6 @@
       18,
       19,
       20,
-      21,
       22,
       23,
       24
@@ -37,11 +36,9 @@
       18,
       19,
       20,
-      21,
       22,
       23,
-      24,
-      25
+      24
     ],
     "rodadas_v2_disponiveis": [
       10,
@@ -55,29 +52,26 @@
       18,
       19,
       20,
-      21,
       22,
       23,
       24
     ],
-    "rodadas_v2_indisponiveis_excluidas": [
-      25
-    ]
+    "rodadas_v2_indisponiveis_excluidas": []
   },
   "escolhas_congeladas_por_posicao": {
     "ATA": {
       "modelo_congelado": "V2",
       "discovery_v2": {
-        "n": 708,
-        "mae": 3.185339,
-        "rmse": 4.424241,
-        "bias": -0.28904
+        "n": 707,
+        "mae": 3.18942,
+        "rmse": 4.427354,
+        "bias": -0.289024
       },
       "discovery_catboost": {
-        "n": 708,
-        "mae": 3.221755,
-        "rmse": 4.492226,
-        "bias": -0.613351
+        "n": 707,
+        "mae": 3.225706,
+        "rmse": 4.496177,
+        "bias": -0.602024
       },
       "checks": {
         "mae_melhor": false,
@@ -95,9 +89,9 @@
       },
       "discovery_catboost": {
         "n": 158,
-        "mae": 3.422609,
-        "rmse": 4.202262,
-        "bias": 0.167052
+        "mae": 3.389766,
+        "rmse": 4.174151,
+        "bias": 0.0795
       },
       "checks": {
         "mae_melhor": true,
@@ -115,9 +109,9 @@
       },
       "discovery_catboost": {
         "n": 385,
-        "mae": 3.15803,
-        "rmse": 4.014838,
-        "bias": -0.307245
+        "mae": 3.172956,
+        "rmse": 4.012807,
+        "bias": -0.275996
       },
       "checks": {
         "mae_melhor": true,
@@ -128,16 +122,16 @@
     "MEI": {
       "modelo_congelado": "CATBOOST_OFF_CAL",
       "discovery_v2": {
-        "n": 845,
-        "mae": 2.615562,
-        "rmse": 3.520973,
-        "bias": -0.008817
+        "n": 843,
+        "mae": 2.615836,
+        "rmse": 3.523013,
+        "bias": -0.002906
       },
       "discovery_catboost": {
-        "n": 845,
-        "mae": 2.552603,
-        "rmse": 3.48649,
-        "bias": -0.263451
+        "n": 843,
+        "mae": 2.543211,
+        "rmse": 3.479181,
+        "bias": -0.254548
       },
       "checks": {
         "mae_melhor": true,
@@ -155,9 +149,9 @@
       },
       "discovery_catboost": {
         "n": 366,
-        "mae": 2.569031,
-        "rmse": 3.333225,
-        "bias": -0.273181
+        "mae": 2.599041,
+        "rmse": 3.349072,
+        "bias": -0.32336
       },
       "checks": {
         "mae_melhor": true,
@@ -167,53 +161,51 @@
     }
   },
   "holdout": {
-    "linhas": 1868,
+    "linhas": 1677,
     "rodadas": [
       18,
       19,
       20,
-      21,
       22,
       23,
       24
     ],
     "v2": {
-      "n": 1868,
-      "mae": 3.007007,
-      "rmse": 4.056575,
-      "bias": -0.193249
+      "n": 1677,
+      "mae": 3.002987,
+      "rmse": 4.067465,
+      "bias": -0.21006
     },
     "catboost": {
-      "n": 1868,
-      "mae": 2.997847,
-      "rmse": 4.015996,
-      "bias": -0.171369
+      "n": 1677,
+      "mae": 3.005079,
+      "rmse": 4.021079,
+      "bias": -0.195902
     },
     "hibrido_congelado": {
-      "n": 1868,
-      "mae": 2.99203,
-      "rmse": 4.021742,
-      "bias": -0.163395
+      "n": 1677,
+      "mae": 2.982985,
+      "rmse": 4.015256,
+      "bias": -0.219691
     },
     "bootstrap_hibrido_vs_v2": {
-      "n_rodadas": 7,
-      "delta_mae_menos_v2": -0.021335,
+      "n_rodadas": 6,
+      "delta_mae_menos_v2": -0.023549,
       "ic95": [
-        -0.062013,
-        0.021668
+        -0.065746,
+        0.021178
       ],
-      "probabilidade_melhor_v2": 0.8355,
+      "probabilidade_melhor_v2": 0.8731,
       "rodadas_ganhas": 4,
-      "rodadas_perdidas": 3,
+      "rodadas_perdidas": 2,
       "empates": 0,
       "por_rodada": {
-        "18": 0.054534,
-        "19": -0.064893,
-        "20": -0.092817,
-        "21": -0.058436,
-        "22": -0.058668,
-        "23": 0.015621,
-        "24": 0.055314
+        "18": 0.047232,
+        "19": -0.05462,
+        "20": -0.069342,
+        "22": -0.072355,
+        "23": -0.056458,
+        "24": 0.064252
       },
       "evidencia": "inconclusiva"
     },
@@ -221,106 +213,106 @@
       "ATA": {
         "modelo_congelado": "V2",
         "v2": {
-          "n": 512,
-          "mae": 3.242559,
-          "rmse": 4.448321,
-          "bias": 0.17666
+          "n": 467,
+          "mae": 3.270364,
+          "rmse": 4.502398,
+          "bias": 0.065096
         },
         "catboost": {
-          "n": 512,
-          "mae": 3.263783,
-          "rmse": 4.429338,
-          "bias": 0.147569
+          "n": 467,
+          "mae": 3.349706,
+          "rmse": 4.52102,
+          "bias": 0.150523
         },
         "hibrido": {
-          "n": 512,
-          "mae": 3.242559,
-          "rmse": 4.448321,
-          "bias": 0.17666
+          "n": 467,
+          "mae": 3.270364,
+          "rmse": 4.502398,
+          "bias": 0.065096
         }
       },
       "GOL": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 118,
-          "mae": 3.35678,
-          "rmse": 4.12861,
-          "bias": -0.01322
+          "n": 106,
+          "mae": 3.273113,
+          "rmse": 3.978981,
+          "bias": 0.176698
         },
         "catboost": {
-          "n": 118,
-          "mae": 3.372473,
-          "rmse": 4.085079,
-          "bias": -0.193468
+          "n": 106,
+          "mae": 3.255841,
+          "rmse": 3.875128,
+          "bias": -0.366963
         },
         "hibrido": {
-          "n": 118,
-          "mae": 3.372473,
-          "rmse": 4.085079,
-          "bias": -0.193468
+          "n": 106,
+          "mae": 3.255841,
+          "rmse": 3.875128,
+          "bias": -0.366963
         }
       },
       "LAT": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 306,
-          "mae": 3.253693,
-          "rmse": 4.040771,
-          "bias": -0.341144
+          "n": 275,
+          "mae": 3.193745,
+          "rmse": 3.994639,
+          "bias": -0.321309
         },
         "catboost": {
-          "n": 306,
-          "mae": 3.203134,
-          "rmse": 4.013888,
-          "bias": -0.485231
+          "n": 275,
+          "mae": 3.130658,
+          "rmse": 3.959074,
+          "bias": -0.501366
         },
         "hibrido": {
-          "n": 306,
-          "mae": 3.203134,
-          "rmse": 4.013888,
-          "bias": -0.485231
+          "n": 275,
+          "mae": 3.130658,
+          "rmse": 3.959074,
+          "bias": -0.501366
         }
       },
       "MEI": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 643,
-          "mae": 2.643142,
-          "rmse": 3.809932,
-          "bias": -0.24846
+          "n": 573,
+          "mae": 2.671344,
+          "rmse": 3.84953,
+          "bias": -0.262688
         },
         "catboost": {
-          "n": 643,
-          "mae": 2.672546,
-          "rmse": 3.826345,
-          "bias": -0.176221
+          "n": 573,
+          "mae": 2.681142,
+          "rmse": 3.830373,
+          "bias": -0.218812
         },
         "hibrido": {
-          "n": 643,
-          "mae": 2.672546,
-          "rmse": 3.826345,
-          "bias": -0.176221
+          "n": 573,
+          "mae": 2.681142,
+          "rmse": 3.830373,
+          "bias": -0.218812
         }
       },
       "ZAG": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 289,
-          "mae": 2.99526,
-          "rmse": 3.842491,
-          "bias": -0.642664
+          "n": 256,
+          "mae": 2.940781,
+          "rmse": 3.812121,
+          "bias": -0.634844
         },
         "catboost": {
-          "n": 289,
-          "mae": 2.880149,
-          "rmse": 3.611418,
-          "bias": -0.384263
+          "n": 256,
+          "mae": 2.862738,
+          "rmse": 3.569144,
+          "bias": -0.377612
         },
         "hibrido": {
-          "n": 289,
-          "mae": 2.880149,
-          "rmse": 3.611418,
-          "bias": -0.384263
+          "n": 256,
+          "mae": 2.862738,
+          "rmse": 3.569144,
+          "bias": -0.377612
         }
       }
     }
