@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Cartola Estatístico Scouts V3</title>
 <style>
-:root{color-scheme:light}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1260px;margin:0 auto;padding:20px;color:#202124;background:#f7f8fa;line-height:1.45}h1{margin:.2em 0}h2{margin:34px 0 8px}h3{margin:20px 0 8px}small,.muted{color:#666}.lead{max-width:900px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin:18px 0}.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px}.n{font-size:1.55rem;font-weight:750;margin-top:3px}.good{color:#137333}.bad{color:#b3261e}.warn{color:#a15c00}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef3f8;font-size:.8rem}.tag.good{background:#e7f5eb}.tag.warn{background:#fff3d6}.tag.bad{background:#fde8e7}table{width:100%;border-collapse:collapse;background:#fff;margin:10px 0 24px}th,td{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left;font-size:.88rem;white-space:nowrap}th{background:#f0f2f4;position:sticky;top:0}.scroll{overflow:auto;max-height:620px;border:1px solid #ddd;border-radius:10px;background:#fff}.note{background:#fff;border-left:4px solid #5f6368;padding:11px 13px;margin:12px 0}.hero{background:#fff;border:1px solid #ddd;border-radius:12px;padding:16px;margin:18px 0}.ok{border-left-color:#137333}.pending{border-left-color:#a15c00}.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.section-help{margin-top:0;color:#666}.footer{margin:40px 0 10px;color:#666;font-size:.85rem}@media(max-width:600px){body{padding:14px}th,td{font-size:.82rem;padding:8px}.n{font-size:1.35rem}}
+:root{color-scheme:light}*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;max-width:1260px;margin:0 auto;padding:20px;color:#202124;background:#f7f8fa;line-height:1.45}h1{margin:.2em 0}h2{margin:34px 0 8px}h3{margin:20px 0 8px}small,.muted{color:#666}.lead{max-width:900px}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:10px;margin:18px 0}.card{background:#fff;border:1px solid #ddd;border-radius:10px;padding:14px}.n{font-size:1.55rem;font-weight:750;margin-top:3px}.good{color:#137333}.bad{color:#b3261e}.warn{color:#a15c00}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef3f8;font-size:.8rem}.tag.good{background:#e7f5eb}.tag.warn{background:#fff3d6}.tag.bad{background:#fde8e7}table{width:100%;border-collapse:collapse;background:#fff;margin:10px 0 24px}th,td{padding:9px;border-bottom:1px solid #e5e5e5;text-align:left;font-size:.88rem;white-space:nowrap}th{background:#f0f2f4;position:sticky;top:0}.scroll{overflow:auto;max-height:620px;border:1px solid #ddd;border-radius:10px;background:#fff}.note{background:#fff;border-left:4px solid #5f6368;padding:11px 13px;margin:12px 0}.hero{background:#fff;border:1px solid #ddd;border-radius:12px;padding:16px;margin:18px 0}.ok{border-left-color:#137333}.pending{border-left-color:#a15c00}.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}.section-help{margin-top:0;color:#666}.reason{white-space:normal;min-width:310px;max-width:520px}.footer{margin:40px 0 10px;color:#666;font-size:.85rem}@media(max-width:600px){body{padding:14px}th,td{font-size:.82rem;padding:8px}.n{font-size:1.35rem}.reason{min-width:240px}}
 </style>
 </head>
 <body>
@@ -13,6 +13,11 @@
 <p class="lead">Laboratório científico separado da V2 de produção. A meta é prever os scouts de cada jogador, reconstruir a pontuação esperada e provar por walk-forward se a V3 realmente melhora. Nenhum resultado desta página promove alterações na V2.</p>
 <div id="status" class="hero"></div>
 <div id="cards" class="cards"></div>
+
+<h2>Por que o jogador tem essa projeção?</h2>
+<p class="section-help">A V3-S é explicável por construção: cada parcela abaixo é <b>scout esperado × peso oficial do Cartola</b>. A justificativa descreve matematicamente a projeção; não é uma explicação causal e não entra como feature do modelo.</p>
+<div id="explainStatus"></div>
+<div id="explain" class="scroll"></div>
 
 <h2>V2 × V3: comparação principal</h2>
 <p class="section-help">Mesmos jogadores e mesmas rodadas. Quanto menor o MAE, melhor. Resultados históricos ainda não significam promoção.</p>
@@ -45,15 +50,15 @@
 const fmt=x=>x==null?'—':typeof x==='number'?x.toLocaleString('pt-BR',{maximumFractionDigits:4}):String(x);
 const pct=x=>x==null?'—':(x*100).toLocaleString('pt-BR',{maximumFractionDigits:2})+'%';
 const table=(heads,rows)=>'<table><thead><tr>'+heads.map(h=>`<th>${h}</th>`).join('')+'</tr></thead><tbody>'+rows.join('')+'</tbody></table>';
-const metric=(obj,key)=>obj&&obj[key]!=null?obj[key]:null;
 const deltaClass=x=>x==null?'':x<0?'good':x>0?'bad':'';
 const gainClass=x=>x==null?'':x>0?'good':x<0?'bad':'';
 const maeRow=(name,m,base)=>{const d=base&&m&&m.mae!=null&&base.mae!=null?m.mae-base.mae:null;return `<tr><td><b>${name}</b></td><td>${fmt(m?.mae)}</td><td>${fmt(m?.rmse)}</td><td>${fmt(m?.bias)}</td><td class="${deltaClass(d)}">${d==null?'—':fmt(d)}</td><td>${fmt(m?.n)}</td></tr>`};
+const drivers=p=>(p||[]).filter(x=>Math.abs(x.contribuicao_pontos||0)>=.04).map(x=>`${x.scout} ${x.contribuicao_pontos>=0?'+':''}${fmt(x.contribuicao_pontos)}`).join(' · ')||'—';
 
 fetch('dados.json?'+Date.now()).then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json()}).then(d=>{
  const a=d.auditoria||{}, leak=d.auditoria_vazamento||{}, c=d.campeonato||{}, ce=d.campeonato_estendido||{};
  const n=d.backtest_v3s_nested||{}, v2=d.comparacao_v2||{}, cbv2=d.comparacao_catboost_v2||{}, h=d.holdout_posicional||{};
- const ab=d.ablation_contexto||{};
+ const ab=d.ablation_contexto||{}, ex=d.explicabilidade_pre_rodada||{}, exs=d.explicabilidade_pre_rodada_status||{}, exa=d.auditoria_explicabilidade_pre_rodada||{};
  const rec=a.reconstrucao_jogadores_sem_tecnico||a.reconstrucao||{};
  const ng=n.geral||{}, v3s=ng.v3s_nested||{}, direct=ng.direta_ewma||{};
  const vg=v2.geral||{}, v2m=vg.v2_projecao_salva||{}, v3sm=vg.v3s_nested||{}, v3hm=vg.v3h_hibrido||{};
@@ -67,6 +72,13 @@ fetch('dados.json?'+Date.now()).then(r=>{if(!r.ok)throw new Error('HTTP '+r.stat
   ['Rodadas auditadas',a.rodadas_auditadas,''],['Atuações',a.atletas_em_campo,''],['Scouts observados',Object.keys(a.scouts_observados||{}).length,''],
   ['MAE V2',v2m.mae,''],['MAE V3-S',v3sm.mae,''],['MAE V3 híbrida',v3hm.mae,''],['Holdout híbrido',hhy.mae,''],['Ganho holdout vs V2',ganhoHold,gainClass(ganhoHold)]
  ].map(x=>`<div class=card><div>${x[0]}</div><div class="n ${x[2]}">${fmt(x[1])}</div></div>`).join('');
+
+ const expPlayers=(ex.jogadores||[]).slice().sort((x,y)=>(y.v3h_hibrido||0)-(x.v3h_hibrido||0));
+ const expOk=exa.aprovado===true;
+ document.querySelector('#explainStatus').innerHTML=expPlayers.length
+  ? `<div class="note ok"><b>Snapshot explicável R${fmt(ex.rodada)}:</b> ${fmt(expPlayers.length)} jogadores. Auditoria: <span class="tag ${expOk?'good':'warn'}">${fmt(exa.status||'verificando')}</span>. A soma das contribuições precisa reconciliar exatamente com a V3-S congelada.</div>`
+  : `<div class="note pending"><b>${fmt(exs.status||exa.status||'AGUARDANDO')}</b>: ${fmt(exs.mensagem||exa.mensagem||'A decomposição imutável passará a aparecer no primeiro lock em que as fontes originais ainda coincidirem exatamente com o snapshot.')}</div>`;
+ document.querySelector('#explain').innerHTML=expPlayers.length?table(['Jogador','Pos.','Jogo','V3-S','V3-H','Principais +','Principais −','Justificativa'],expPlayers.slice(0,60).map(p=>`<tr><td><b>${p.apelido}</b></td><td>${p.posicao}</td><td>${p.sigla_clube||'—'} ${p.mando==='casa'?'×':'@'} ${p.sigla_adversario||'—'}</td><td>${fmt(p.v3s_expected_scouts)}</td><td><b>${fmt(p.v3h_hibrido)}</b></td><td class=good>${drivers(p.principais_contribuicoes_positivas)}</td><td class=bad>${drivers(p.principais_contribuicoes_negativas)}</td><td class=reason>${p.justificativa||'—'}</td></tr>`)):'<p class=muted style="padding:12px">Nenhum sidecar explicável publicado ainda. Locks antigos não são reescritos nem recebem explicação pós-hoc.</p>';
 
  let vhtml='';
  if(Object.keys(vg).length){
