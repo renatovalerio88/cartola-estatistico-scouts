@@ -54,6 +54,25 @@ def pontuados_map(path: Path):
     return out
 
 
+def rodada_resolvida(partidas, pontuados):
+    """Só autoriza targets quando a rodada possui resultados finais observáveis.
+
+    Isso impede que uma rodada futura/em andamento, cujo pontuados.json ainda esteja vazio
+    ou parcial, seja interpretada como se todos os jogadores tivessem feito zero ponto.
+    Uma rodada incompleta também fica fora do histórico até todos os placares oficiais
+    estarem disponíveis.
+    """
+    if not pontuados or not partidas:
+        return False
+    validas = [p for p in partidas if isinstance(p, dict)]
+    if not validas:
+        return False
+    for p in validas:
+        if p.get("placar_oficial_mandante") is None or p.get("placar_oficial_visitante") is None:
+            return False
+    return True
+
+
 def partida_context(partidas):
     ctx = {}
     for p in partidas:
@@ -108,7 +127,7 @@ def team_features(team_history, club_id, prefix):
 
 
 def atualizar_times(team_history, partidas):
-    # Só é chamado DEPOIS de congelar as features da rodada R.
+    # Só é chamado DEPOIS de congelar as features da rodada R e apenas para rodadas resolvidas.
     for p in partidas:
         if not isinstance(p, dict):
             continue
@@ -175,6 +194,7 @@ def main():
     team_history = defaultdict(lambda: {"gf": deque(maxlen=20), "ga": deque(maxlen=20)})
     rows = []
     round_stats = []
+    unresolved_rounds = []
 
     for folder in sorted(RAW.glob("rodada-*")):
         jogadores_path = folder / "jogadores.json"
@@ -186,6 +206,7 @@ def main():
         jogadores = jogadores_lista(jogadores_path)
         pontuados = pontuados_map(pontuados_path)
         partidas = partidas_lista(folder / "partidas.json")
+        resolvida = rodada_resolvida(partidas, pontuados)
         ctx = partida_context(partidas)
 
         candidatos = []
@@ -197,6 +218,20 @@ def main():
             if aid is None or pos_id not in POS_JOGADORES:
                 continue
             candidatos.append((aid, j, pos_id))
+
+        if not resolvida:
+            unresolved_rounds.append(rodada)
+            round_stats.append({
+                "rodada": rodada,
+                "resolvida": False,
+                "universo_jogadores": len(candidatos),
+                "entraram_em_campo": None,
+                "nao_entraram": None,
+                "linhas_dataset": 0,
+                "motivo": "rodada sem pontuados completos e/ou sem todos os placares oficiais; excluída de treino e validação",
+            })
+            # Regra crítica: rodada futura/em andamento não altera histórico de jogador nem de clube.
+            continue
 
         created = 0
         entered_count = 0
@@ -280,6 +315,7 @@ def main():
         atualizar_times(team_history, partidas)
         round_stats.append({
             "rodada": rodada,
+            "resolvida": True,
             "universo_jogadores": len(candidatos),
             "entraram_em_campo": entered_count,
             "nao_entraram": zero_count,
@@ -308,15 +344,18 @@ def main():
         "colunas": list(df.columns),
         "features_contexto": context_cols,
         "features_condicionais_participacao": conditional_cols,
-        "universo_amostral": "Todos os jogadores válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA), inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0.",
-        "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. Taxas, sequências e janelas de participação são calculadas exclusivamente sobre flags target_entrou de rodadas anteriores. As features *_cond_* usam somente atuações anteriores a R em que o atleta entrou em campo. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
+        "rodadas_nao_resolvidas_excluidas": unresolved_rounds,
+        "criterio_rodada_resolvida": "pontuados.json não vazio e todos os jogos da rodada com placar_oficial_mandante/visitante disponíveis",
+        "universo_amostral": "Todos os jogadores válidos presentes em jogadores.json (GOL/LAT/ZAG/MEI/ATA) das rodadas resolvidas, inclusive os que não entraram em campo; não participantes recebem target_pontos/scouts=0. Rodadas futuras/em andamento são totalmente excluídas de treino/validação até possuírem resultado final observável.",
+        "anti_leakage": "Features da rodada R usam exclusivamente histórico acumulado até R-1 resolvida. Participação, pontos, scouts e placar de R só são incorporados depois de congelar todas as linhas de R. Rodadas não resolvidas não geram targets zero e não alteram o histórico. Taxas, sequências e janelas de participação são calculadas exclusivamente sobre flags target_entrou de rodadas resolvidas anteriores. As features *_cond_* usam somente atuações anteriores a R em que o atleta entrou em campo. statusId/preço/média pós-rodada de jogadores.json não entram como features.",
         "por_rodada": round_stats,
     }
     (OUT / "dataset-meta.json").write_text(json.dumps(meta, ensure_ascii=False, indent=2), encoding="utf-8")
     print(
         f"Dataset walk-forward universo completo: {len(df)} linhas, "
         f"{len(df.columns) if len(df) else 0} colunas, {meta['jogadores']} jogadores; "
-        f"contexto anti-leakage={len(context_cols)} features; condicionais={len(conditional_cols)}."
+        f"contexto anti-leakage={len(context_cols)} features; condicionais={len(conditional_cols)}; "
+        f"rodadas não resolvidas excluídas={unresolved_rounds}."
     )
 
 
