@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/auditar_top50_liga_nacional.py'
+      - 'scripts/validar_coorte_top50.py'
       - 'scripts/analisar_top50_liga_nacional.py'
       - '.github/workflows/top50-liga-nacional.yml'
   schedule:
@@ -38,6 +39,9 @@ jobs:
       - name: Auditar fonte pública e reproduzível do Top 50 Brasil
         run: python scripts/auditar_top50_liga_nacional.py
 
+      - name: Validar proveniência e congelar coorte auditável
+        run: python scripts/validar_coorte_top50.py
+
       - name: Reconstruir estratégias históricas quando houver coorte auditável
         run: python scripts/analisar_top50_liga_nacional.py
 
@@ -46,6 +50,7 @@ jobs:
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add data/reports/top50-liga-nacional-viabilidade.json \
+                  data/reports/top50-liga-nacional-coorte.json \
                   data/reports/top50-liga-nacional-estrategias.json \
                   data/raw/top50-liga-nacional
           git diff --cached --quiet || git commit -m 'data: atualizar estudo Top 50 Liga Nacional'
