@@ -1,0 +1,4952 @@
+{
+  "gerado_em": "2026-08-31T15:55:42.867861+00:00",
+  "objetivo": "Testar se escolher a arquitetura por posição usando somente rodadas anteriores supera V2 e CatBoost global.",
+  "protocolo": "Para cada rodada-alvo R e posição, o seletor calcula MAE/RMSE/bias apenas em registros da mesma posição com rodada < R. Exige pelo menos 3 rodadas anteriores; caso contrário usa V2 como fallback. A escolha é congelada antes de avaliar R. Nenhuma pontuação ou scout da rodada-alvo participa da seleção.",
+  "anti_leakage": true,
+  "min_rodadas_anteriores": 3,
+  "linhas_intersecao_limpa": 4136,
+  "divergencias_resultado_excluidas": 13,
+  "rodadas_disponiveis": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    22,
+    23,
+    24
+  ],
+  "seletor_core_v2_v3h_catboost": {
+    "status": "avaliado",
+    "rodadas_avaliadas": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24
+    ],
+    "metricas": {
+      "seletor": {
+        "n": 3205,
+        "mae": 2.983321,
+        "rmse": 3.990026,
+        "bias": -0.162029
+      },
+      "v2": {
+        "n": 3205,
+        "mae": 3.008396,
+        "rmse": 4.049278,
+        "bias": -0.139516
+      },
+      "catboost_global": {
+        "n": 3205,
+        "mae": 2.982025,
+        "rmse": 3.976471,
+        "bias": -0.16005
+      }
+    },
+    "bootstrap_vs_v2": {
+      "n_rodadas": 11,
+      "delta_mae": -0.025108,
+      "ic95": [
+        -0.072279,
+        0.024125
+      ],
+      "probabilidade_challenger_melhor": 0.8452,
+      "rodadas_ganhas": 7,
+      "rodadas_perdidas": 4,
+      "empates": 0,
+      "por_rodada": {
+        "13": 0.070623,
+        "14": -0.121698,
+        "15": -0.143037,
+        "16": 0.113323,
+        "17": -0.088012,
+        "18": 0.044403,
+        "19": -0.017888,
+        "20": -0.069342,
+        "22": -0.072355,
+        "23": -0.056458,
+        "24": 0.064252
+      },
+      "evidencia": "inconclusiva"
+    },
+    "bootstrap_vs_catboost_global": {
+      "n_rodadas": 11,
+      "delta_mae": 0.003252,
+      "ic95": [
+        -0.034503,
+        0.033516
+      ],
+      "probabilidade_challenger_melhor": 0.401,
+      "rodadas_ganhas": 4,
+      "rodadas_perdidas": 7,
+      "empates": 0,
+      "por_rodada": {
+        "13": 0.04361,
+        "14": 0.007252,
+        "15": 0.084437,
+        "16": 0.022045,
+        "17": -0.040775,
+        "18": -0.149126,
+        "19": 0.052169,
+        "20": -0.019874,
+        "22": -0.006284,
+        "23": 0.029283,
+        "24": 0.013034
+      },
+      "evidencia": "inconclusiva"
+    },
+    "por_posicao": {
+      "ATA": {
+        "seletor": {
+          "n": 902,
+          "mae": 3.311086,
+          "rmse": 4.563668,
+          "bias": -0.185867
+        },
+        "v2": {
+          "n": 902,
+          "mae": 3.248969,
+          "rmse": 4.496275,
+          "bias": -0.185865
+        },
+        "catboost": {
+          "n": 902,
+          "mae": 3.336915,
+          "rmse": 4.526294,
+          "bias": -0.143509
+        }
+      },
+      "GOL": {
+        "seletor": {
+          "n": 204,
+          "mae": 3.405197,
+          "rmse": 3.999156,
+          "bias": -0.070196
+        },
+        "v2": {
+          "n": 204,
+          "mae": 3.417255,
+          "rmse": 4.136322,
+          "bias": 0.176765
+        },
+        "catboost": {
+          "n": 204,
+          "mae": 3.336257,
+          "rmse": 3.989215,
+          "bias": -0.152421
+        }
+      },
+      "LAT": {
+        "seletor": {
+          "n": 515,
+          "mae": 3.124862,
+          "rmse": 3.916005,
+          "bias": -0.178719
+        },
+        "v2": {
+          "n": 515,
+          "mae": 3.256835,
+          "rmse": 4.044446,
+          "bias": -0.021806
+        },
+        "catboost": {
+          "n": 515,
+          "mae": 3.124862,
+          "rmse": 3.916005,
+          "bias": -0.178719
+        }
+      },
+      "MEI": {
+        "seletor": {
+          "n": 1095,
+          "mae": 2.664054,
+          "rmse": 3.72376,
+          "bias": -0.128131
+        },
+        "v2": {
+          "n": 1095,
+          "mae": 2.690457,
+          "rmse": 3.78902,
+          "bias": -0.167845
+        },
+        "catboost": {
+          "n": 1095,
+          "mae": 2.664054,
+          "rmse": 3.72376,
+          "bias": -0.128131
+        }
+      },
+      "ZAG": {
+        "seletor": {
+          "n": 489,
+          "mae": 2.768592,
+          "rmse": 3.471962,
+          "bias": -0.214699
+        },
+        "v2": {
+          "n": 489,
+          "mae": 2.844376,
+          "rmse": 3.696301,
+          "bias": -0.246503
+        },
+        "catboost": {
+          "n": 489,
+          "mae": 2.741213,
+          "rmse": 3.465052,
+          "bias": -0.245555
+        }
+      }
+    },
+    "contagem_escolhas": {
+      "catboost_contexto_off_cal": 2345,
+      "v2": 727,
+      "v3h_hibrido": 133
+    }
+  },
+  "seletor_todas_arquiteturas": {
+    "status": "avaliado",
+    "rodadas_avaliadas": [
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24
+    ],
+    "metricas": {
+      "seletor": {
+        "n": 3205,
+        "mae": 2.985762,
+        "rmse": 3.992296,
+        "bias": -0.159235
+      },
+      "v2": {
+        "n": 3205,
+        "mae": 3.008396,
+        "rmse": 4.049278,
+        "bias": -0.139516
+      },
+      "catboost_global": {
+        "n": 3205,
+        "mae": 2.982025,
+        "rmse": 3.976471,
+        "bias": -0.16005
+      }
+    },
+    "bootstrap_vs_v2": {
+      "n_rodadas": 11,
+      "delta_mae": -0.023115,
+      "ic95": [
+        -0.069725,
+        0.025882
+      ],
+      "probabilidade_challenger_melhor": 0.8279,
+      "rodadas_ganhas": 7,
+      "rodadas_perdidas": 4,
+      "empates": 0,
+      "por_rodada": {
+        "13": 0.075516,
+        "14": -0.121698,
+        "15": -0.143037,
+        "16": 0.113323,
+        "17": -0.088012,
+        "18": 0.044403,
+        "19": -0.029652,
+        "20": -0.04055,
+        "22": -0.072355,
+        "23": -0.056458,
+        "24": 0.064252
+      },
+      "evidencia": "inconclusiva"
+    },
+    "bootstrap_vs_catboost_global": {
+      "n_rodadas": 11,
+      "delta_mae": 0.005245,
+      "ic95": [
+        -0.032209,
+        0.03464
+      ],
+      "probabilidade_challenger_melhor": 0.3519,
+      "rodadas_ganhas": 3,
+      "rodadas_perdidas": 8,
+      "empates": 0,
+      "por_rodada": {
+        "13": 0.048503,
+        "14": 0.007252,
+        "15": 0.084437,
+        "16": 0.022045,
+        "17": -0.040775,
+        "18": -0.149126,
+        "19": 0.040404,
+        "20": 0.008918,
+        "22": -0.006284,
+        "23": 0.029283,
+        "24": 0.013034
+      },
+      "evidencia": "inconclusiva"
+    },
+    "por_posicao": {
+      "ATA": {
+        "seletor": {
+          "n": 902,
+          "mae": 3.311086,
+          "rmse": 4.563668,
+          "bias": -0.185867
+        },
+        "v2": {
+          "n": 902,
+          "mae": 3.248969,
+          "rmse": 4.496275,
+          "bias": -0.185865
+        },
+        "catboost": {
+          "n": 902,
+          "mae": 3.336915,
+          "rmse": 4.526294,
+          "bias": -0.143509
+        }
+      },
+      "GOL": {
+        "seletor": {
+          "n": 204,
+          "mae": 3.443538,
+          "rmse": 4.034605,
+          "bias": -0.026293
+        },
+        "v2": {
+          "n": 204,
+          "mae": 3.417255,
+          "rmse": 4.136322,
+          "bias": 0.176765
+        },
+        "catboost": {
+          "n": 204,
+          "mae": 3.336257,
+          "rmse": 3.989215,
+          "bias": -0.152421
+        }
+      },
+      "LAT": {
+        "seletor": {
+          "n": 515,
+          "mae": 3.124862,
+          "rmse": 3.916005,
+          "bias": -0.178719
+        },
+        "v2": {
+          "n": 515,
+          "mae": 3.256835,
+          "rmse": 4.044446,
+          "bias": -0.021806
+        },
+        "catboost": {
+          "n": 515,
+          "mae": 3.124862,
+          "rmse": 3.916005,
+          "bias": -0.178719
+        }
+      },
+      "MEI": {
+        "seletor": {
+          "n": 1095,
+          "mae": 2.664054,
+          "rmse": 3.72376,
+          "bias": -0.128131
+        },
+        "v2": {
+          "n": 1095,
+          "mae": 2.690457,
+          "rmse": 3.78902,
+          "bias": -0.167845
+        },
+        "catboost": {
+          "n": 1095,
+          "mae": 2.664054,
+          "rmse": 3.72376,
+          "bias": -0.128131
+        }
+      },
+      "ZAG": {
+        "seletor": {
+          "n": 489,
+          "mae": 2.768592,
+          "rmse": 3.471962,
+          "bias": -0.214699
+        },
+        "v2": {
+          "n": 489,
+          "mae": 2.844376,
+          "rmse": 3.696301,
+          "bias": -0.246503
+        },
+        "catboost": {
+          "n": 489,
+          "mae": 2.741213,
+          "rmse": 3.465052,
+          "bias": -0.245555
+        }
+      }
+    },
+    "contagem_escolhas": {
+      "catboost_contexto_off_cal": 2309,
+      "v2": 727,
+      "v3h_hibrido": 122,
+      "direta_rf_lab": 47
+    }
+  },
+  "decisoes_core": [
+    {
+      "seletor": "core",
+      "rodada_alvo": 10,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 10,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 10,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 10,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 10,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 11,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 11,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 11,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 11,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 11,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 12,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 12,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 12,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 12,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 12,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 13,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 272,
+          "mae": 3.130919,
+          "rmse": 4.325793,
+          "bias": -0.023125
+        },
+        "v3h_hibrido": {
+          "n": 272,
+          "mae": 3.077627,
+          "rmse": 4.24939,
+          "bias": 0.131551
+        },
+        "catboost_contexto_off_cal": {
+          "n": 272,
+          "mae": 3.069813,
+          "rmse": 4.438369,
+          "bias": -0.830484
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 13,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 60,
+          "mae": 3.516667,
+          "rmse": 4.476966,
+          "bias": -0.351
+        },
+        "v3h_hibrido": {
+          "n": 60,
+          "mae": 3.351704,
+          "rmse": 4.172239,
+          "bias": 0.035883
+        },
+        "catboost_contexto_off_cal": {
+          "n": 60,
+          "mae": 3.335096,
+          "rmse": 4.278352,
+          "bias": 0.079281
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 13,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 145,
+          "mae": 3.51931,
+          "rmse": 4.478845,
+          "bias": 0.284552
+        },
+        "v3h_hibrido": {
+          "n": 145,
+          "mae": 3.431442,
+          "rmse": 4.170371,
+          "bias": 0.350049
+        },
+        "catboost_contexto_off_cal": {
+          "n": 145,
+          "mae": 3.26355,
+          "rmse": 4.244555,
+          "bias": -1.048922
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 13,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 321,
+          "mae": 2.460374,
+          "rmse": 3.173909,
+          "bias": 0.096012
+        },
+        "v3h_hibrido": {
+          "n": 321,
+          "mae": 2.419817,
+          "rmse": 3.107995,
+          "bias": 0.216232
+        },
+        "catboost_contexto_off_cal": {
+          "n": 321,
+          "mae": 2.377201,
+          "rmse": 3.267645,
+          "bias": -0.621991
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 13,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 133,
+          "mae": 2.903083,
+          "rmse": 3.646098,
+          "bias": 0.339624
+        },
+        "v3h_hibrido": {
+          "n": 133,
+          "mae": 2.562304,
+          "rmse": 3.223037,
+          "bias": 0.276959
+        },
+        "catboost_contexto_off_cal": {
+          "n": 133,
+          "mae": 2.583885,
+          "rmse": 3.352781,
+          "bias": -0.713849
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 14,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 361,
+          "mae": 3.037036,
+          "rmse": 4.20172,
+          "bias": -0.136814
+        },
+        "v3h_hibrido": {
+          "n": 361,
+          "mae": 3.055952,
+          "rmse": 4.189832,
+          "bias": 0.103511
+        },
+        "catboost_contexto_off_cal": {
+          "n": 361,
+          "mae": 3.067206,
+          "rmse": 4.35566,
+          "bias": -0.745885
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 14,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 78,
+          "mae": 3.487949,
+          "rmse": 4.360349,
+          "bias": -0.474103
+        },
+        "v3h_hibrido": {
+          "n": 78,
+          "mae": 3.384458,
+          "rmse": 4.180067,
+          "bias": -0.138416
+        },
+        "catboost_contexto_off_cal": {
+          "n": 78,
+          "mae": 3.470185,
+          "rmse": 4.347589,
+          "bias": -0.185552
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 14,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 191,
+          "mae": 3.530471,
+          "rmse": 4.438081,
+          "bias": 0.208901
+        },
+        "v3h_hibrido": {
+          "n": 191,
+          "mae": 3.395351,
+          "rmse": 4.164856,
+          "bias": 0.296212
+        },
+        "catboost_contexto_off_cal": {
+          "n": 191,
+          "mae": 3.247905,
+          "rmse": 4.23981,
+          "bias": -0.826085
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 14,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 430,
+          "mae": 2.530442,
+          "rmse": 3.343949,
+          "bias": 0.065093
+        },
+        "v3h_hibrido": {
+          "n": 430,
+          "mae": 2.491571,
+          "rmse": 3.283721,
+          "bias": 0.205002
+        },
+        "catboost_contexto_off_cal": {
+          "n": 430,
+          "mae": 2.44877,
+          "rmse": 3.420861,
+          "bias": -0.467366
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 14,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 178,
+          "mae": 2.769775,
+          "rmse": 3.49254,
+          "bias": 0.280562
+        },
+        "v3h_hibrido": {
+          "n": 178,
+          "mae": 2.571138,
+          "rmse": 3.167241,
+          "bias": 0.215276
+        },
+        "catboost_contexto_off_cal": {
+          "n": 178,
+          "mae": 2.512047,
+          "rmse": 3.246107,
+          "bias": -0.609814
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 15,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 446,
+          "mae": 3.147242,
+          "rmse": 4.333432,
+          "bias": -0.171592
+        },
+        "v3h_hibrido": {
+          "n": 446,
+          "mae": 3.191024,
+          "rmse": 4.328187,
+          "bias": 0.119546
+        },
+        "catboost_contexto_off_cal": {
+          "n": 446,
+          "mae": 3.153067,
+          "rmse": 4.413911,
+          "bias": -0.699846
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 15,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 97,
+          "mae": 3.59866,
+          "rmse": 4.507541,
+          "bias": -0.189175
+        },
+        "v3h_hibrido": {
+          "n": 97,
+          "mae": 3.380651,
+          "rmse": 4.093414,
+          "bias": 0.022309
+        },
+        "catboost_contexto_off_cal": {
+          "n": 97,
+          "mae": 3.512211,
+          "rmse": 4.321537,
+          "bias": 0.07375
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 15,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 238,
+          "mae": 3.427101,
+          "rmse": 4.302666,
+          "bias": 0.331303
+        },
+        "v3h_hibrido": {
+          "n": 238,
+          "mae": 3.345442,
+          "rmse": 4.098283,
+          "bias": 0.492452
+        },
+        "catboost_contexto_off_cal": {
+          "n": 238,
+          "mae": 3.222852,
+          "rmse": 4.160235,
+          "bias": -0.532687
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 15,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 537,
+          "mae": 2.561006,
+          "rmse": 3.404974,
+          "bias": -0.025475
+        },
+        "v3h_hibrido": {
+          "n": 537,
+          "mae": 2.537406,
+          "rmse": 3.356543,
+          "bias": 0.12838
+        },
+        "catboost_contexto_off_cal": {
+          "n": 537,
+          "mae": 2.473787,
+          "rmse": 3.434723,
+          "bias": -0.46567
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 15,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 226,
+          "mae": 2.876504,
+          "rmse": 3.689142,
+          "bias": 0.303407
+        },
+        "v3h_hibrido": {
+          "n": 226,
+          "mae": 2.701879,
+          "rmse": 3.370965,
+          "bias": 0.280861
+        },
+        "catboost_contexto_off_cal": {
+          "n": 226,
+          "mae": 2.594725,
+          "rmse": 3.384363,
+          "bias": -0.497261
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 16,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 530,
+          "mae": 3.145151,
+          "rmse": 4.289257,
+          "bias": -0.125528
+        },
+        "v3h_hibrido": {
+          "n": 530,
+          "mae": 3.173422,
+          "rmse": 4.2684,
+          "bias": 0.168092
+        },
+        "catboost_contexto_off_cal": {
+          "n": 530,
+          "mae": 3.11613,
+          "rmse": 4.314501,
+          "bias": -0.57703
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 16,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 117,
+          "mae": 3.544615,
+          "rmse": 4.401755,
+          "bias": -0.158632
+        },
+        "v3h_hibrido": {
+          "n": 117,
+          "mae": 3.305881,
+          "rmse": 3.998234,
+          "bias": 0.131239
+        },
+        "catboost_contexto_off_cal": {
+          "n": 117,
+          "mae": 3.347061,
+          "rmse": 4.143361,
+          "bias": 0.114042
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 16,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 287,
+          "mae": 3.449233,
+          "rmse": 4.326437,
+          "bias": 0.341289
+        },
+        "v3h_hibrido": {
+          "n": 287,
+          "mae": 3.352706,
+          "rmse": 4.121648,
+          "bias": 0.53541
+        },
+        "catboost_contexto_off_cal": {
+          "n": 287,
+          "mae": 3.205224,
+          "rmse": 4.119961,
+          "bias": -0.449455
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 16,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 646,
+          "mae": 2.57856,
+          "rmse": 3.444021,
+          "bias": -0.038313
+        },
+        "v3h_hibrido": {
+          "n": 646,
+          "mae": 2.558193,
+          "rmse": 3.404457,
+          "bias": 0.098911
+        },
+        "catboost_contexto_off_cal": {
+          "n": 646,
+          "mae": 2.493911,
+          "rmse": 3.444311,
+          "bias": -0.398762
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 16,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 271,
+          "mae": 2.889299,
+          "rmse": 3.690059,
+          "bias": 0.275351
+        },
+        "v3h_hibrido": {
+          "n": 271,
+          "mae": 2.685813,
+          "rmse": 3.388302,
+          "bias": 0.225979
+        },
+        "catboost_contexto_off_cal": {
+          "n": 271,
+          "mae": 2.625302,
+          "rmse": 3.415075,
+          "bias": -0.389283
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 17,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 616,
+          "mae": 3.165195,
+          "rmse": 4.411969,
+          "bias": -0.230747
+        },
+        "v3h_hibrido": {
+          "n": 616,
+          "mae": 3.237295,
+          "rmse": 4.418179,
+          "bias": 0.066545
+        },
+        "catboost_contexto_off_cal": {
+          "n": 616,
+          "mae": 3.186519,
+          "rmse": 4.49556,
+          "bias": -0.618774
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 17,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 137,
+          "mae": 3.561314,
+          "rmse": 4.40969,
+          "bias": 0.040876
+        },
+        "v3h_hibrido": {
+          "n": 137,
+          "mae": 3.377169,
+          "rmse": 4.068506,
+          "bias": 0.308087
+        },
+        "catboost_contexto_off_cal": {
+          "n": 137,
+          "mae": 3.363902,
+          "rmse": 4.168456,
+          "bias": 0.260903
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 17,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 336,
+          "mae": 3.365952,
+          "rmse": 4.224711,
+          "bias": 0.416667
+        },
+        "v3h_hibrido": {
+          "n": 336,
+          "mae": 3.280957,
+          "rmse": 4.055051,
+          "bias": 0.630075
+        },
+        "catboost_contexto_off_cal": {
+          "n": 336,
+          "mae": 3.14726,
+          "rmse": 4.014315,
+          "bias": -0.227127
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 17,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 743,
+          "mae": 2.575639,
+          "rmse": 3.453233,
+          "bias": -0.032894
+        },
+        "v3h_hibrido": {
+          "n": 743,
+          "mae": 2.562488,
+          "rmse": 3.41181,
+          "bias": 0.096015
+        },
+        "catboost_contexto_off_cal": {
+          "n": 743,
+          "mae": 2.511637,
+          "rmse": 3.44661,
+          "bias": -0.342212
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 17,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 320,
+          "mae": 2.833375,
+          "rmse": 3.617766,
+          "bias": 0.337937
+        },
+        "v3h_hibrido": {
+          "n": 320,
+          "mae": 2.687217,
+          "rmse": 3.404631,
+          "bias": 0.25648
+        },
+        "catboost_contexto_off_cal": {
+          "n": 320,
+          "mae": 2.607333,
+          "rmse": 3.390205,
+          "bias": -0.290662
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 18,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 707,
+          "mae": 3.18942,
+          "rmse": 4.427354,
+          "bias": -0.289024
+        },
+        "v3h_hibrido": {
+          "n": 707,
+          "mae": 3.288136,
+          "rmse": 4.463055,
+          "bias": 0.054331
+        },
+        "catboost_contexto_off_cal": {
+          "n": 707,
+          "mae": 3.225706,
+          "rmse": 4.496177,
+          "bias": -0.602024
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 18,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 158,
+          "mae": 3.551709,
+          "rmse": 4.368066,
+          "bias": -0.023608
+        },
+        "v3h_hibrido": {
+          "n": 158,
+          "mae": 3.367667,
+          "rmse": 4.046087,
+          "bias": 0.180837
+        },
+        "catboost_contexto_off_cal": {
+          "n": 158,
+          "mae": 3.389766,
+          "rmse": 4.174151,
+          "bias": 0.0795
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 18,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 385,
+          "mae": 3.400753,
+          "rmse": 4.247116,
+          "bias": 0.307506
+        },
+        "v3h_hibrido": {
+          "n": 385,
+          "mae": 3.308086,
+          "rmse": 4.061755,
+          "bias": 0.494807
+        },
+        "catboost_contexto_off_cal": {
+          "n": 385,
+          "mae": 3.172956,
+          "rmse": 4.012807,
+          "bias": -0.275996
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 18,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 843,
+          "mae": 2.615836,
+          "rmse": 3.523013,
+          "bias": -0.002906
+        },
+        "v3h_hibrido": {
+          "n": 843,
+          "mae": 2.611656,
+          "rmse": 3.476398,
+          "bias": 0.146862
+        },
+        "catboost_contexto_off_cal": {
+          "n": 843,
+          "mae": 2.543211,
+          "rmse": 3.479181,
+          "bias": -0.254548
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 18,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 366,
+          "mae": 2.798279,
+          "rmse": 3.594499,
+          "bias": 0.238115
+        },
+        "v3h_hibrido": {
+          "n": 366,
+          "mae": 2.647374,
+          "rmse": 3.362983,
+          "bias": 0.142128
+        },
+        "catboost_contexto_off_cal": {
+          "n": 366,
+          "mae": 2.599041,
+          "rmse": 3.349072,
+          "bias": -0.32336
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 19,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 793,
+          "mae": 3.170404,
+          "rmse": 4.435642,
+          "bias": -0.295549
+        },
+        "v3h_hibrido": {
+          "n": 793,
+          "mae": 3.283132,
+          "rmse": 4.48218,
+          "bias": 0.057749
+        },
+        "catboost_contexto_off_cal": {
+          "n": 793,
+          "mae": 3.259391,
+          "rmse": 4.54252,
+          "bias": -0.530826
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 19,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 176,
+          "mae": 3.527216,
+          "rmse": 4.357047,
+          "bias": -0.130625
+        },
+        "v3h_hibrido": {
+          "n": 176,
+          "mae": 3.384284,
+          "rmse": 4.077785,
+          "bias": 0.074435
+        },
+        "catboost_contexto_off_cal": {
+          "n": 176,
+          "mae": 3.409058,
+          "rmse": 4.199063,
+          "bias": -0.039792
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 19,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 437,
+          "mae": 3.34833,
+          "rmse": 4.206159,
+          "bias": 0.15849
+        },
+        "v3h_hibrido": {
+          "n": 437,
+          "mae": 3.280908,
+          "rmse": 4.046655,
+          "bias": 0.37377
+        },
+        "catboost_contexto_off_cal": {
+          "n": 437,
+          "mae": 3.183326,
+          "rmse": 4.040516,
+          "bias": -0.344869
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 19,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 948,
+          "mae": 2.627215,
+          "rmse": 3.555312,
+          "bias": -0.040717
+        },
+        "v3h_hibrido": {
+          "n": 948,
+          "mae": 2.629345,
+          "rmse": 3.522455,
+          "bias": 0.115074
+        },
+        "catboost_contexto_off_cal": {
+          "n": 948,
+          "mae": 2.559845,
+          "rmse": 3.51333,
+          "bias": -0.255231
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 19,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 412,
+          "mae": 2.844757,
+          "rmse": 3.666374,
+          "bias": 0.15835
+        },
+        "v3h_hibrido": {
+          "n": 412,
+          "mae": 2.697117,
+          "rmse": 3.424856,
+          "bias": 0.076495
+        },
+        "catboost_contexto_off_cal": {
+          "n": 412,
+          "mae": 2.659894,
+          "rmse": 3.420173,
+          "bias": -0.340023
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 20,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 837,
+          "mae": 3.22908,
+          "rmse": 4.56655,
+          "bias": -0.333883
+        },
+        "v3h_hibrido": {
+          "n": 837,
+          "mae": 3.335502,
+          "rmse": 4.603047,
+          "bias": 0.018671
+        },
+        "catboost_contexto_off_cal": {
+          "n": 837,
+          "mae": 3.310162,
+          "rmse": 4.651558,
+          "bias": -0.566627
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 20,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 187,
+          "mae": 3.439519,
+          "rmse": 4.262786,
+          "bias": -0.062406
+        },
+        "v3h_hibrido": {
+          "n": 187,
+          "mae": 3.347673,
+          "rmse": 4.023329,
+          "bias": 0.147706
+        },
+        "catboost_contexto_off_cal": {
+          "n": 187,
+          "mae": 3.336615,
+          "rmse": 4.12101,
+          "bias": -0.012708
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 20,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 471,
+          "mae": 3.345902,
+          "rmse": 4.19874,
+          "bias": 0.138854
+        },
+        "v3h_hibrido": {
+          "n": 471,
+          "mae": 3.2879,
+          "rmse": 4.047221,
+          "bias": 0.358557
+        },
+        "catboost_contexto_off_cal": {
+          "n": 471,
+          "mae": 3.177483,
+          "rmse": 4.026753,
+          "bias": -0.344174
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 20,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 1003,
+          "mae": 2.638116,
+          "rmse": 3.598344,
+          "bias": -0.049242
+        },
+        "v3h_hibrido": {
+          "n": 1003,
+          "mae": 2.63841,
+          "rmse": 3.556751,
+          "bias": 0.11644
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1003,
+          "mae": 2.572961,
+          "rmse": 3.554945,
+          "bias": -0.246445
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 20,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 443,
+          "mae": 2.8086,
+          "rmse": 3.62394,
+          "bias": 0.157991
+        },
+        "v3h_hibrido": {
+          "n": 443,
+          "mae": 2.647003,
+          "rmse": 3.367258,
+          "bias": 0.089468
+        },
+        "catboost_contexto_off_cal": {
+          "n": 443,
+          "mae": 2.631235,
+          "rmse": 3.374049,
+          "bias": -0.293594
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 22,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 919,
+          "mae": 3.214102,
+          "rmse": 4.513838,
+          "bias": -0.210598
+        },
+        "v3h_hibrido": {
+          "n": 919,
+          "mae": 3.344154,
+          "rmse": 4.574053,
+          "bias": 0.15768
+        },
+        "catboost_contexto_off_cal": {
+          "n": 919,
+          "mae": 3.294243,
+          "rmse": 4.584028,
+          "bias": -0.415506
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 22,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 205,
+          "mae": 3.42161,
+          "rmse": 4.231531,
+          "bias": -0.051268
+        },
+        "v3h_hibrido": {
+          "n": 205,
+          "mae": 3.3542,
+          "rmse": 4.013454,
+          "bias": 0.180502
+        },
+        "catboost_contexto_off_cal": {
+          "n": 205,
+          "mae": 3.335948,
+          "rmse": 4.103844,
+          "bias": -0.010614
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 22,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 525,
+          "mae": 3.356343,
+          "rmse": 4.173688,
+          "bias": 0.231695
+        },
+        "v3h_hibrido": {
+          "n": 525,
+          "mae": 3.275483,
+          "rmse": 4.018701,
+          "bias": 0.41844
+        },
+        "catboost_contexto_off_cal": {
+          "n": 525,
+          "mae": 3.161905,
+          "rmse": 3.978965,
+          "bias": -0.249967
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 22,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 1096,
+          "mae": 2.651195,
+          "rmse": 3.633193,
+          "bias": -0.047874
+        },
+        "v3h_hibrido": {
+          "n": 1096,
+          "mae": 2.652664,
+          "rmse": 3.588917,
+          "bias": 0.116276
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1096,
+          "mae": 2.588982,
+          "rmse": 3.5917,
+          "bias": -0.244802
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 22,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 487,
+          "mae": 2.769856,
+          "rmse": 3.594555,
+          "bias": 0.097782
+        },
+        "v3h_hibrido": {
+          "n": 487,
+          "mae": 2.630942,
+          "rmse": 3.368117,
+          "bias": 0.031056
+        },
+        "catboost_contexto_off_cal": {
+          "n": 487,
+          "mae": 2.616172,
+          "rmse": 3.354094,
+          "bias": -0.312831
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 23,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 999,
+          "mae": 3.194735,
+          "rmse": 4.461955,
+          "bias": -0.150511
+        },
+        "v3h_hibrido": {
+          "n": 999,
+          "mae": 3.317144,
+          "rmse": 4.510642,
+          "bias": 0.221761
+        },
+        "catboost_contexto_off_cal": {
+          "n": 999,
+          "mae": 3.270313,
+          "rmse": 4.514283,
+          "bias": -0.313316
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 23,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 224,
+          "mae": 3.439821,
+          "rmse": 4.239695,
+          "bias": -0.029375
+        },
+        "v3h_hibrido": {
+          "n": 224,
+          "mae": 3.373868,
+          "rmse": 4.003705,
+          "bias": 0.17054
+        },
+        "catboost_contexto_off_cal": {
+          "n": 224,
+          "mae": 3.365651,
+          "rmse": 4.107738,
+          "bias": -0.065855
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 23,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 568,
+          "mae": 3.35794,
+          "rmse": 4.181021,
+          "bias": 0.161813
+        },
+        "v3h_hibrido": {
+          "n": 568,
+          "mae": 3.28978,
+          "rmse": 4.053278,
+          "bias": 0.322255
+        },
+        "catboost_contexto_off_cal": {
+          "n": 568,
+          "mae": 3.189796,
+          "rmse": 4.019926,
+          "bias": -0.324566
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 23,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 1205,
+          "mae": 2.615452,
+          "rmse": 3.571009,
+          "bias": -0.023137
+        },
+        "v3h_hibrido": {
+          "n": 1205,
+          "mae": 2.599918,
+          "rmse": 3.516738,
+          "bias": 0.130464
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1205,
+          "mae": 2.543947,
+          "rmse": 3.520255,
+          "bias": -0.205897
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 23,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 531,
+          "mae": 2.825424,
+          "rmse": 3.644411,
+          "bias": -0.004557
+        },
+        "v3h_hibrido": {
+          "n": 531,
+          "mae": 2.690424,
+          "rmse": 3.426251,
+          "bias": -0.057177
+        },
+        "catboost_contexto_off_cal": {
+          "n": 531,
+          "mae": 2.663972,
+          "rmse": 3.39867,
+          "bias": -0.380824
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 24,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 1084,
+          "mae": 3.207131,
+          "rmse": 4.466031,
+          "bias": -0.187205
+        },
+        "v3h_hibrido": {
+          "n": 1084,
+          "mae": 3.323431,
+          "rmse": 4.518664,
+          "bias": 0.164898
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1084,
+          "mae": 3.268706,
+          "rmse": 4.510213,
+          "bias": -0.342687
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 24,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 244,
+          "mae": 3.429098,
+          "rmse": 4.221964,
+          "bias": 0.084508
+        },
+        "v3h_hibrido": {
+          "n": 244,
+          "mae": 3.36905,
+          "rmse": 3.991348,
+          "bias": 0.265069
+        },
+        "catboost_contexto_off_cal": {
+          "n": 244,
+          "mae": 3.312084,
+          "rmse": 4.042566,
+          "bias": -0.006208
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 24,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 614,
+          "mae": 3.319511,
+          "rmse": 4.132634,
+          "bias": 0.15114
+        },
+        "v3h_hibrido": {
+          "n": 614,
+          "mae": 3.245705,
+          "rmse": 4.006391,
+          "bias": 0.31712
+        },
+        "catboost_contexto_off_cal": {
+          "n": 614,
+          "mae": 3.15945,
+          "rmse": 3.980994,
+          "bias": -0.307856
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 24,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 1309,
+          "mae": 2.622353,
+          "rmse": 3.626072,
+          "bias": -0.044431
+        },
+        "v3h_hibrido": {
+          "n": 1309,
+          "mae": 2.607457,
+          "rmse": 3.567251,
+          "bias": 0.103386
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1309,
+          "mae": 2.562758,
+          "rmse": 3.583257,
+          "bias": -0.210809
+        }
+      }
+    },
+    {
+      "seletor": "core",
+      "rodada_alvo": 24,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 575,
+          "mae": 2.845791,
+          "rmse": 3.680687,
+          "bias": -0.072365
+        },
+        "v3h_hibrido": {
+          "n": 575,
+          "mae": 2.705734,
+          "rmse": 3.458585,
+          "bias": -0.103592
+        },
+        "catboost_contexto_off_cal": {
+          "n": 575,
+          "mae": 2.678736,
+          "rmse": 3.423467,
+          "bias": -0.378564
+        }
+      }
+    }
+  ],
+  "decisoes_todas": [
+    {
+      "seletor": "todos",
+      "rodada_alvo": 10,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 10,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 10,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 10,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 10,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 0
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 11,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 11,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 11,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 11,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 11,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 1
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 12,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 12,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 12,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 12,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 12,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v2",
+      "motivo": "fallback_historico_insuficiente",
+      "rodadas_treino": 2
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 13,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 272,
+          "mae": 3.130919,
+          "rmse": 4.325793,
+          "bias": -0.023125
+        },
+        "v3s_nested": {
+          "n": 272,
+          "mae": 3.172533,
+          "rmse": 4.497851,
+          "bias": 0.001041
+        },
+        "v3h_hibrido": {
+          "n": 272,
+          "mae": 3.077627,
+          "rmse": 4.24939,
+          "bias": 0.131551
+        },
+        "catboost_contexto_off_cal": {
+          "n": 272,
+          "mae": 3.069813,
+          "rmse": 4.438369,
+          "bias": -0.830484
+        },
+        "direta_rf_lab": {
+          "n": 272,
+          "mae": 3.146393,
+          "rmse": 4.250843,
+          "bias": 0.209122
+        },
+        "direta_ewma": {
+          "n": 272,
+          "mae": 3.210722,
+          "rmse": 4.514083,
+          "bias": -0.018855
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 13,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "direta_rf_lab",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 60,
+          "mae": 3.516667,
+          "rmse": 4.476966,
+          "bias": -0.351
+        },
+        "v3s_nested": {
+          "n": 60,
+          "mae": 3.494801,
+          "rmse": 4.338844,
+          "bias": -0.044603
+        },
+        "v3h_hibrido": {
+          "n": 60,
+          "mae": 3.351704,
+          "rmse": 4.172239,
+          "bias": 0.035883
+        },
+        "catboost_contexto_off_cal": {
+          "n": 60,
+          "mae": 3.335096,
+          "rmse": 4.278352,
+          "bias": 0.079281
+        },
+        "direta_rf_lab": {
+          "n": 60,
+          "mae": 3.326086,
+          "rmse": 4.188558,
+          "bias": 0.052393
+        },
+        "direta_ewma": {
+          "n": 60,
+          "mae": 3.658133,
+          "rmse": 4.718076,
+          "bias": -0.230184
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 13,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 145,
+          "mae": 3.51931,
+          "rmse": 4.478845,
+          "bias": 0.284552
+        },
+        "v3s_nested": {
+          "n": 145,
+          "mae": 3.522996,
+          "rmse": 4.367158,
+          "bias": 0.25604
+        },
+        "v3h_hibrido": {
+          "n": 145,
+          "mae": 3.431442,
+          "rmse": 4.170371,
+          "bias": 0.350049
+        },
+        "catboost_contexto_off_cal": {
+          "n": 145,
+          "mae": 3.26355,
+          "rmse": 4.244555,
+          "bias": -1.048922
+        },
+        "direta_rf_lab": {
+          "n": 145,
+          "mae": 3.473985,
+          "rmse": 4.183039,
+          "bias": 0.399504
+        },
+        "direta_ewma": {
+          "n": 145,
+          "mae": 3.550754,
+          "rmse": 4.628183,
+          "bias": 0.347863
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 13,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 321,
+          "mae": 2.460374,
+          "rmse": 3.173909,
+          "bias": 0.096012
+        },
+        "v3s_nested": {
+          "n": 321,
+          "mae": 2.460659,
+          "rmse": 3.202502,
+          "bias": 0.228518
+        },
+        "v3h_hibrido": {
+          "n": 321,
+          "mae": 2.419817,
+          "rmse": 3.107995,
+          "bias": 0.216232
+        },
+        "catboost_contexto_off_cal": {
+          "n": 321,
+          "mae": 2.377201,
+          "rmse": 3.267645,
+          "bias": -0.621991
+        },
+        "direta_rf_lab": {
+          "n": 321,
+          "mae": 2.428958,
+          "rmse": 3.122584,
+          "bias": 0.205391
+        },
+        "direta_ewma": {
+          "n": 321,
+          "mae": 2.534463,
+          "rmse": 3.315653,
+          "bias": 0.136971
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 13,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 3,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 12,
+      "scores": {
+        "v2": {
+          "n": 133,
+          "mae": 2.903083,
+          "rmse": 3.646098,
+          "bias": 0.339624
+        },
+        "v3s_nested": {
+          "n": 133,
+          "mae": 2.631524,
+          "rmse": 3.379469,
+          "bias": 0.188468
+        },
+        "v3h_hibrido": {
+          "n": 133,
+          "mae": 2.562304,
+          "rmse": 3.223037,
+          "bias": 0.276959
+        },
+        "catboost_contexto_off_cal": {
+          "n": 133,
+          "mae": 2.583885,
+          "rmse": 3.352781,
+          "bias": -0.713849
+        },
+        "direta_rf_lab": {
+          "n": 133,
+          "mae": 2.569033,
+          "rmse": 3.208479,
+          "bias": 0.297048
+        },
+        "direta_ewma": {
+          "n": 133,
+          "mae": 3.081902,
+          "rmse": 3.836541,
+          "bias": 0.310237
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 14,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 361,
+          "mae": 3.037036,
+          "rmse": 4.20172,
+          "bias": -0.136814
+        },
+        "v3s_nested": {
+          "n": 361,
+          "mae": 3.116798,
+          "rmse": 4.382572,
+          "bias": -0.05231
+        },
+        "v3h_hibrido": {
+          "n": 361,
+          "mae": 3.055952,
+          "rmse": 4.189832,
+          "bias": 0.103511
+        },
+        "catboost_contexto_off_cal": {
+          "n": 361,
+          "mae": 3.067206,
+          "rmse": 4.35566,
+          "bias": -0.745885
+        },
+        "direta_rf_lab": {
+          "n": 361,
+          "mae": 3.130649,
+          "rmse": 4.220264,
+          "bias": 0.219445
+        },
+        "direta_ewma": {
+          "n": 361,
+          "mae": 3.136393,
+          "rmse": 4.402759,
+          "bias": -0.11706
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 14,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 78,
+          "mae": 3.487949,
+          "rmse": 4.360349,
+          "bias": -0.474103
+        },
+        "v3s_nested": {
+          "n": 78,
+          "mae": 3.401115,
+          "rmse": 4.23504,
+          "bias": -0.22067
+        },
+        "v3h_hibrido": {
+          "n": 78,
+          "mae": 3.384458,
+          "rmse": 4.180067,
+          "bias": -0.138416
+        },
+        "catboost_contexto_off_cal": {
+          "n": 78,
+          "mae": 3.470185,
+          "rmse": 4.347589,
+          "bias": -0.185552
+        },
+        "direta_rf_lab": {
+          "n": 78,
+          "mae": 3.482511,
+          "rmse": 4.316494,
+          "bias": -0.105375
+        },
+        "direta_ewma": {
+          "n": 78,
+          "mae": 3.518331,
+          "rmse": 4.486009,
+          "bias": -0.332416
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 14,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 191,
+          "mae": 3.530471,
+          "rmse": 4.438081,
+          "bias": 0.208901
+        },
+        "v3s_nested": {
+          "n": 191,
+          "mae": 3.45378,
+          "rmse": 4.324017,
+          "bias": 0.232442
+        },
+        "v3h_hibrido": {
+          "n": 191,
+          "mae": 3.395351,
+          "rmse": 4.164856,
+          "bias": 0.296212
+        },
+        "catboost_contexto_off_cal": {
+          "n": 191,
+          "mae": 3.247905,
+          "rmse": 4.23981,
+          "bias": -0.826085
+        },
+        "direta_rf_lab": {
+          "n": 191,
+          "mae": 3.463464,
+          "rmse": 4.21008,
+          "bias": 0.326159
+        },
+        "direta_ewma": {
+          "n": 191,
+          "mae": 3.589297,
+          "rmse": 4.598897,
+          "bias": 0.268368
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 14,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 430,
+          "mae": 2.530442,
+          "rmse": 3.343949,
+          "bias": 0.065093
+        },
+        "v3s_nested": {
+          "n": 430,
+          "mae": 2.499287,
+          "rmse": 3.347973,
+          "bias": 0.171716
+        },
+        "v3h_hibrido": {
+          "n": 430,
+          "mae": 2.491571,
+          "rmse": 3.283721,
+          "bias": 0.205002
+        },
+        "catboost_contexto_off_cal": {
+          "n": 430,
+          "mae": 2.44877,
+          "rmse": 3.420861,
+          "bias": -0.467366
+        },
+        "direta_rf_lab": {
+          "n": 430,
+          "mae": 2.531159,
+          "rmse": 3.327344,
+          "bias": 0.239368
+        },
+        "direta_ewma": {
+          "n": 430,
+          "mae": 2.578876,
+          "rmse": 3.465221,
+          "bias": 0.095949
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 14,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 4,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 13,
+      "scores": {
+        "v2": {
+          "n": 178,
+          "mae": 2.769775,
+          "rmse": 3.49254,
+          "bias": 0.280562
+        },
+        "v3s_nested": {
+          "n": 178,
+          "mae": 2.624466,
+          "rmse": 3.303175,
+          "bias": 0.129615
+        },
+        "v3h_hibrido": {
+          "n": 178,
+          "mae": 2.571138,
+          "rmse": 3.167241,
+          "bias": 0.215276
+        },
+        "catboost_contexto_off_cal": {
+          "n": 178,
+          "mae": 2.512047,
+          "rmse": 3.246107,
+          "bias": -0.609814
+        },
+        "direta_rf_lab": {
+          "n": 178,
+          "mae": 2.578627,
+          "rmse": 3.163952,
+          "bias": 0.249828
+        },
+        "direta_ewma": {
+          "n": 178,
+          "mae": 2.950926,
+          "rmse": 3.691307,
+          "bias": 0.242153
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 15,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 446,
+          "mae": 3.147242,
+          "rmse": 4.333432,
+          "bias": -0.171592
+        },
+        "v3s_nested": {
+          "n": 446,
+          "mae": 3.237823,
+          "rmse": 4.540824,
+          "bias": -0.053032
+        },
+        "v3h_hibrido": {
+          "n": 446,
+          "mae": 3.191024,
+          "rmse": 4.328187,
+          "bias": 0.119546
+        },
+        "catboost_contexto_off_cal": {
+          "n": 446,
+          "mae": 3.153067,
+          "rmse": 4.413911,
+          "bias": -0.699846
+        },
+        "direta_rf_lab": {
+          "n": 446,
+          "mae": 3.274286,
+          "rmse": 4.338277,
+          "bias": 0.259839
+        },
+        "direta_ewma": {
+          "n": 446,
+          "mae": 3.245611,
+          "rmse": 4.539947,
+          "bias": -0.100855
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 15,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 97,
+          "mae": 3.59866,
+          "rmse": 4.507541,
+          "bias": -0.189175
+        },
+        "v3s_nested": {
+          "n": 97,
+          "mae": 3.408315,
+          "rmse": 4.162175,
+          "bias": -0.085321
+        },
+        "v3h_hibrido": {
+          "n": 97,
+          "mae": 3.380651,
+          "rmse": 4.093414,
+          "bias": 0.022309
+        },
+        "catboost_contexto_off_cal": {
+          "n": 97,
+          "mae": 3.512211,
+          "rmse": 4.321537,
+          "bias": 0.07375
+        },
+        "direta_rf_lab": {
+          "n": 97,
+          "mae": 3.445228,
+          "rmse": 4.211091,
+          "bias": 0.090367
+        },
+        "direta_ewma": {
+          "n": 97,
+          "mae": 3.641063,
+          "rmse": 4.676764,
+          "bias": -0.057691
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 15,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 238,
+          "mae": 3.427101,
+          "rmse": 4.302666,
+          "bias": 0.331303
+        },
+        "v3s_nested": {
+          "n": 238,
+          "mae": 3.394431,
+          "rmse": 4.249826,
+          "bias": 0.431233
+        },
+        "v3h_hibrido": {
+          "n": 238,
+          "mae": 3.345442,
+          "rmse": 4.098283,
+          "bias": 0.492452
+        },
+        "catboost_contexto_off_cal": {
+          "n": 238,
+          "mae": 3.222852,
+          "rmse": 4.160235,
+          "bias": -0.532687
+        },
+        "direta_rf_lab": {
+          "n": 238,
+          "mae": 3.422334,
+          "rmse": 4.15273,
+          "bias": 0.526527
+        },
+        "direta_ewma": {
+          "n": 238,
+          "mae": 3.528889,
+          "rmse": 4.499727,
+          "bias": 0.414166
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 15,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 537,
+          "mae": 2.561006,
+          "rmse": 3.404974,
+          "bias": -0.025475
+        },
+        "v3s_nested": {
+          "n": 537,
+          "mae": 2.555227,
+          "rmse": 3.442518,
+          "bias": 0.069415
+        },
+        "v3h_hibrido": {
+          "n": 537,
+          "mae": 2.537406,
+          "rmse": 3.356543,
+          "bias": 0.12838
+        },
+        "catboost_contexto_off_cal": {
+          "n": 537,
+          "mae": 2.473787,
+          "rmse": 3.434723,
+          "bias": -0.46567
+        },
+        "direta_rf_lab": {
+          "n": 537,
+          "mae": 2.569874,
+          "rmse": 3.379246,
+          "bias": 0.188208
+        },
+        "direta_ewma": {
+          "n": 537,
+          "mae": 2.667448,
+          "rmse": 3.588955,
+          "bias": 0.015206
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 15,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 5,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 14,
+      "scores": {
+        "v2": {
+          "n": 226,
+          "mae": 2.876504,
+          "rmse": 3.689142,
+          "bias": 0.303407
+        },
+        "v3s_nested": {
+          "n": 226,
+          "mae": 2.754171,
+          "rmse": 3.508697,
+          "bias": 0.196428
+        },
+        "v3h_hibrido": {
+          "n": 226,
+          "mae": 2.701879,
+          "rmse": 3.370965,
+          "bias": 0.280861
+        },
+        "catboost_contexto_off_cal": {
+          "n": 226,
+          "mae": 2.594725,
+          "rmse": 3.384363,
+          "bias": -0.497261
+        },
+        "direta_rf_lab": {
+          "n": 226,
+          "mae": 2.72352,
+          "rmse": 3.368896,
+          "bias": 0.32504
+        },
+        "direta_ewma": {
+          "n": 226,
+          "mae": 3.025415,
+          "rmse": 3.865583,
+          "bias": 0.243521
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 16,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 530,
+          "mae": 3.145151,
+          "rmse": 4.289257,
+          "bias": -0.125528
+        },
+        "v3s_nested": {
+          "n": 530,
+          "mae": 3.235082,
+          "rmse": 4.512696,
+          "bias": 0.014574
+        },
+        "v3h_hibrido": {
+          "n": 530,
+          "mae": 3.173422,
+          "rmse": 4.2684,
+          "bias": 0.168092
+        },
+        "catboost_contexto_off_cal": {
+          "n": 530,
+          "mae": 3.11613,
+          "rmse": 4.314501,
+          "bias": -0.57703
+        },
+        "direta_rf_lab": {
+          "n": 530,
+          "mae": 3.238743,
+          "rmse": 4.252255,
+          "bias": 0.294441
+        },
+        "direta_ewma": {
+          "n": 530,
+          "mae": 3.255048,
+          "rmse": 4.534309,
+          "bias": -0.043609
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 16,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 117,
+          "mae": 3.544615,
+          "rmse": 4.401755,
+          "bias": -0.158632
+        },
+        "v3s_nested": {
+          "n": 117,
+          "mae": 3.376323,
+          "rmse": 4.101618,
+          "bias": 0.03067
+        },
+        "v3h_hibrido": {
+          "n": 117,
+          "mae": 3.305881,
+          "rmse": 3.998234,
+          "bias": 0.131239
+        },
+        "catboost_contexto_off_cal": {
+          "n": 117,
+          "mae": 3.347061,
+          "rmse": 4.143361,
+          "bias": 0.114042
+        },
+        "direta_rf_lab": {
+          "n": 117,
+          "mae": 3.336173,
+          "rmse": 4.084944,
+          "bias": 0.198999
+        },
+        "direta_ewma": {
+          "n": 117,
+          "mae": 3.593805,
+          "rmse": 4.57265,
+          "bias": -0.026108
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 16,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 287,
+          "mae": 3.449233,
+          "rmse": 4.326437,
+          "bias": 0.341289
+        },
+        "v3s_nested": {
+          "n": 287,
+          "mae": 3.432055,
+          "rmse": 4.298555,
+          "bias": 0.489825
+        },
+        "v3h_hibrido": {
+          "n": 287,
+          "mae": 3.352706,
+          "rmse": 4.121648,
+          "bias": 0.53541
+        },
+        "catboost_contexto_off_cal": {
+          "n": 287,
+          "mae": 3.205224,
+          "rmse": 4.119961,
+          "bias": -0.449455
+        },
+        "direta_rf_lab": {
+          "n": 287,
+          "mae": 3.419527,
+          "rmse": 4.157527,
+          "bias": 0.558485
+        },
+        "direta_ewma": {
+          "n": 287,
+          "mae": 3.55793,
+          "rmse": 4.53845,
+          "bias": 0.409992
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 16,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 646,
+          "mae": 2.57856,
+          "rmse": 3.444021,
+          "bias": -0.038313
+        },
+        "v3s_nested": {
+          "n": 646,
+          "mae": 2.583567,
+          "rmse": 3.504185,
+          "bias": 0.066359
+        },
+        "v3h_hibrido": {
+          "n": 646,
+          "mae": 2.558193,
+          "rmse": 3.404457,
+          "bias": 0.098911
+        },
+        "catboost_contexto_off_cal": {
+          "n": 646,
+          "mae": 2.493911,
+          "rmse": 3.444311,
+          "bias": -0.398762
+        },
+        "direta_rf_lab": {
+          "n": 646,
+          "mae": 2.58692,
+          "rmse": 3.418194,
+          "bias": 0.132181
+        },
+        "direta_ewma": {
+          "n": 646,
+          "mae": 2.692493,
+          "rmse": 3.631974,
+          "bias": 0.014438
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 16,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 6,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 15,
+      "scores": {
+        "v2": {
+          "n": 271,
+          "mae": 2.889299,
+          "rmse": 3.690059,
+          "bias": 0.275351
+        },
+        "v3s_nested": {
+          "n": 271,
+          "mae": 2.78634,
+          "rmse": 3.567569,
+          "bias": 0.1781
+        },
+        "v3h_hibrido": {
+          "n": 271,
+          "mae": 2.685813,
+          "rmse": 3.388302,
+          "bias": 0.225979
+        },
+        "catboost_contexto_off_cal": {
+          "n": 271,
+          "mae": 2.625302,
+          "rmse": 3.415075,
+          "bias": -0.389283
+        },
+        "direta_rf_lab": {
+          "n": 271,
+          "mae": 2.680521,
+          "rmse": 3.364393,
+          "bias": 0.240288
+        },
+        "direta_ewma": {
+          "n": 271,
+          "mae": 3.067441,
+          "rmse": 3.889468,
+          "bias": 0.231764
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 17,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 616,
+          "mae": 3.165195,
+          "rmse": 4.411969,
+          "bias": -0.230747
+        },
+        "v3s_nested": {
+          "n": 616,
+          "mae": 3.286696,
+          "rmse": 4.62604,
+          "bias": -0.070591
+        },
+        "v3h_hibrido": {
+          "n": 616,
+          "mae": 3.237295,
+          "rmse": 4.418179,
+          "bias": 0.066545
+        },
+        "catboost_contexto_off_cal": {
+          "n": 616,
+          "mae": 3.186519,
+          "rmse": 4.49556,
+          "bias": -0.618774
+        },
+        "direta_rf_lab": {
+          "n": 616,
+          "mae": 3.303471,
+          "rmse": 4.418359,
+          "bias": 0.180306
+        },
+        "direta_ewma": {
+          "n": 616,
+          "mae": 3.29655,
+          "rmse": 4.650385,
+          "bias": -0.153992
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 17,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 137,
+          "mae": 3.561314,
+          "rmse": 4.40969,
+          "bias": 0.040876
+        },
+        "v3s_nested": {
+          "n": 137,
+          "mae": 3.454031,
+          "rmse": 4.17813,
+          "bias": 0.216149
+        },
+        "v3h_hibrido": {
+          "n": 137,
+          "mae": 3.377169,
+          "rmse": 4.068506,
+          "bias": 0.308087
+        },
+        "catboost_contexto_off_cal": {
+          "n": 137,
+          "mae": 3.363902,
+          "rmse": 4.168456,
+          "bias": 0.260903
+        },
+        "direta_rf_lab": {
+          "n": 137,
+          "mae": 3.388338,
+          "rmse": 4.129567,
+          "bias": 0.372006
+        },
+        "direta_ewma": {
+          "n": 137,
+          "mae": 3.658601,
+          "rmse": 4.636522,
+          "bias": 0.125442
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 17,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 336,
+          "mae": 3.365952,
+          "rmse": 4.224711,
+          "bias": 0.416667
+        },
+        "v3s_nested": {
+          "n": 336,
+          "mae": 3.381089,
+          "rmse": 4.245866,
+          "bias": 0.599378
+        },
+        "v3h_hibrido": {
+          "n": 336,
+          "mae": 3.280957,
+          "rmse": 4.055051,
+          "bias": 0.630075
+        },
+        "catboost_contexto_off_cal": {
+          "n": 336,
+          "mae": 3.14726,
+          "rmse": 4.014315,
+          "bias": -0.227127
+        },
+        "direta_rf_lab": {
+          "n": 336,
+          "mae": 3.337812,
+          "rmse": 4.079596,
+          "bias": 0.641544
+        },
+        "direta_ewma": {
+          "n": 336,
+          "mae": 3.502256,
+          "rmse": 4.452081,
+          "bias": 0.465669
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 17,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 743,
+          "mae": 2.575639,
+          "rmse": 3.453233,
+          "bias": -0.032894
+        },
+        "v3s_nested": {
+          "n": 743,
+          "mae": 2.590859,
+          "rmse": 3.516388,
+          "bias": 0.069539
+        },
+        "v3h_hibrido": {
+          "n": 743,
+          "mae": 2.562488,
+          "rmse": 3.41181,
+          "bias": 0.096015
+        },
+        "catboost_contexto_off_cal": {
+          "n": 743,
+          "mae": 2.511637,
+          "rmse": 3.44661,
+          "bias": -0.342212
+        },
+        "direta_rf_lab": {
+          "n": 743,
+          "mae": 2.593709,
+          "rmse": 3.422542,
+          "bias": 0.123115
+        },
+        "direta_ewma": {
+          "n": 743,
+          "mae": 2.685554,
+          "rmse": 3.636714,
+          "bias": 0.021956
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 17,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 7,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 16,
+      "scores": {
+        "v2": {
+          "n": 320,
+          "mae": 2.833375,
+          "rmse": 3.617766,
+          "bias": 0.337937
+        },
+        "v3s_nested": {
+          "n": 320,
+          "mae": 2.770724,
+          "rmse": 3.557354,
+          "bias": 0.206643
+        },
+        "v3h_hibrido": {
+          "n": 320,
+          "mae": 2.687217,
+          "rmse": 3.404631,
+          "bias": 0.25648
+        },
+        "catboost_contexto_off_cal": {
+          "n": 320,
+          "mae": 2.607333,
+          "rmse": 3.390205,
+          "bias": -0.290662
+        },
+        "direta_rf_lab": {
+          "n": 320,
+          "mae": 2.6918,
+          "rmse": 3.391867,
+          "bias": 0.277887
+        },
+        "direta_ewma": {
+          "n": 320,
+          "mae": 3.006782,
+          "rmse": 3.828419,
+          "bias": 0.280342
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 18,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 707,
+          "mae": 3.18942,
+          "rmse": 4.427354,
+          "bias": -0.289024
+        },
+        "v3s_nested": {
+          "n": 707,
+          "mae": 3.322443,
+          "rmse": 4.663202,
+          "bias": -0.097293
+        },
+        "v3h_hibrido": {
+          "n": 707,
+          "mae": 3.288136,
+          "rmse": 4.463055,
+          "bias": 0.054331
+        },
+        "catboost_contexto_off_cal": {
+          "n": 707,
+          "mae": 3.225706,
+          "rmse": 4.496177,
+          "bias": -0.602024
+        },
+        "direta_rf_lab": {
+          "n": 707,
+          "mae": 3.365315,
+          "rmse": 4.468141,
+          "bias": 0.185589
+        },
+        "direta_ewma": {
+          "n": 707,
+          "mae": 3.327761,
+          "rmse": 4.701098,
+          "bias": -0.206652
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 18,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "v3h_hibrido",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 158,
+          "mae": 3.551709,
+          "rmse": 4.368066,
+          "bias": -0.023608
+        },
+        "v3s_nested": {
+          "n": 158,
+          "mae": 3.446962,
+          "rmse": 4.125542,
+          "bias": 0.119102
+        },
+        "v3h_hibrido": {
+          "n": 158,
+          "mae": 3.367667,
+          "rmse": 4.046087,
+          "bias": 0.180837
+        },
+        "catboost_contexto_off_cal": {
+          "n": 158,
+          "mae": 3.389766,
+          "rmse": 4.174151,
+          "bias": 0.0795
+        },
+        "direta_rf_lab": {
+          "n": 158,
+          "mae": 3.391463,
+          "rmse": 4.151175,
+          "bias": 0.218278
+        },
+        "direta_ewma": {
+          "n": 158,
+          "mae": 3.632744,
+          "rmse": 4.541264,
+          "bias": 0.003498
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 18,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 385,
+          "mae": 3.400753,
+          "rmse": 4.247116,
+          "bias": 0.307506
+        },
+        "v3s_nested": {
+          "n": 385,
+          "mae": 3.407803,
+          "rmse": 4.253549,
+          "bias": 0.470051
+        },
+        "v3h_hibrido": {
+          "n": 385,
+          "mae": 3.308086,
+          "rmse": 4.061755,
+          "bias": 0.494807
+        },
+        "catboost_contexto_off_cal": {
+          "n": 385,
+          "mae": 3.172956,
+          "rmse": 4.012807,
+          "bias": -0.275996
+        },
+        "direta_rf_lab": {
+          "n": 385,
+          "mae": 3.351779,
+          "rmse": 4.075388,
+          "bias": 0.502784
+        },
+        "direta_ewma": {
+          "n": 385,
+          "mae": 3.539049,
+          "rmse": 4.492684,
+          "bias": 0.339635
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 18,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 843,
+          "mae": 2.615836,
+          "rmse": 3.523013,
+          "bias": -0.002906
+        },
+        "v3s_nested": {
+          "n": 843,
+          "mae": 2.637455,
+          "rmse": 3.572882,
+          "bias": 0.116038
+        },
+        "v3h_hibrido": {
+          "n": 843,
+          "mae": 2.611656,
+          "rmse": 3.476398,
+          "bias": 0.146862
+        },
+        "catboost_contexto_off_cal": {
+          "n": 843,
+          "mae": 2.543211,
+          "rmse": 3.479181,
+          "bias": -0.254548
+        },
+        "direta_rf_lab": {
+          "n": 843,
+          "mae": 2.64092,
+          "rmse": 3.485098,
+          "bias": 0.178236
+        },
+        "direta_ewma": {
+          "n": 843,
+          "mae": 2.721385,
+          "rmse": 3.709272,
+          "bias": 0.058761
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 18,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 8,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 17,
+      "scores": {
+        "v2": {
+          "n": 366,
+          "mae": 2.798279,
+          "rmse": 3.594499,
+          "bias": 0.238115
+        },
+        "v3s_nested": {
+          "n": 366,
+          "mae": 2.721271,
+          "rmse": 3.500868,
+          "bias": 0.078499
+        },
+        "v3h_hibrido": {
+          "n": 366,
+          "mae": 2.647374,
+          "rmse": 3.362983,
+          "bias": 0.142128
+        },
+        "catboost_contexto_off_cal": {
+          "n": 366,
+          "mae": 2.599041,
+          "rmse": 3.349072,
+          "bias": -0.32336
+        },
+        "direta_rf_lab": {
+          "n": 366,
+          "mae": 2.659277,
+          "rmse": 3.35888,
+          "bias": 0.1809
+        },
+        "direta_ewma": {
+          "n": 366,
+          "mae": 2.966401,
+          "rmse": 3.793533,
+          "bias": 0.168127
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 19,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 793,
+          "mae": 3.170404,
+          "rmse": 4.435642,
+          "bias": -0.295549
+        },
+        "v3s_nested": {
+          "n": 793,
+          "mae": 3.315771,
+          "rmse": 4.694763,
+          "bias": -0.099048
+        },
+        "v3h_hibrido": {
+          "n": 793,
+          "mae": 3.283132,
+          "rmse": 4.48218,
+          "bias": 0.057749
+        },
+        "catboost_contexto_off_cal": {
+          "n": 793,
+          "mae": 3.259391,
+          "rmse": 4.54252,
+          "bias": -0.530826
+        },
+        "direta_rf_lab": {
+          "n": 793,
+          "mae": 3.362497,
+          "rmse": 4.478799,
+          "bias": 0.196387
+        },
+        "direta_ewma": {
+          "n": 793,
+          "mae": 3.331113,
+          "rmse": 4.725292,
+          "bias": -0.183223
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 19,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "direta_rf_lab",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 176,
+          "mae": 3.527216,
+          "rmse": 4.357047,
+          "bias": -0.130625
+        },
+        "v3s_nested": {
+          "n": 176,
+          "mae": 3.484456,
+          "rmse": 4.193647,
+          "bias": 0.001739
+        },
+        "v3h_hibrido": {
+          "n": 176,
+          "mae": 3.384284,
+          "rmse": 4.077785,
+          "bias": 0.074435
+        },
+        "catboost_contexto_off_cal": {
+          "n": 176,
+          "mae": 3.409058,
+          "rmse": 4.199063,
+          "bias": -0.039792
+        },
+        "direta_rf_lab": {
+          "n": 176,
+          "mae": 3.378845,
+          "rmse": 4.147948,
+          "bias": 0.125322
+        },
+        "direta_ewma": {
+          "n": 176,
+          "mae": 3.660392,
+          "rmse": 4.580537,
+          "bias": -0.110307
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 19,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 437,
+          "mae": 3.34833,
+          "rmse": 4.206159,
+          "bias": 0.15849
+        },
+        "v3s_nested": {
+          "n": 437,
+          "mae": 3.380277,
+          "rmse": 4.223551,
+          "bias": 0.333317
+        },
+        "v3h_hibrido": {
+          "n": 437,
+          "mae": 3.280908,
+          "rmse": 4.046655,
+          "bias": 0.37377
+        },
+        "catboost_contexto_off_cal": {
+          "n": 437,
+          "mae": 3.183326,
+          "rmse": 4.040516,
+          "bias": -0.344869
+        },
+        "direta_rf_lab": {
+          "n": 437,
+          "mae": 3.318443,
+          "rmse": 4.065637,
+          "bias": 0.399441
+        },
+        "direta_ewma": {
+          "n": 437,
+          "mae": 3.508446,
+          "rmse": 4.472697,
+          "bias": 0.170067
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 19,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 948,
+          "mae": 2.627215,
+          "rmse": 3.555312,
+          "bias": -0.040717
+        },
+        "v3s_nested": {
+          "n": 948,
+          "mae": 2.659049,
+          "rmse": 3.617261,
+          "bias": 0.085164
+        },
+        "v3h_hibrido": {
+          "n": 948,
+          "mae": 2.629345,
+          "rmse": 3.522455,
+          "bias": 0.115074
+        },
+        "catboost_contexto_off_cal": {
+          "n": 948,
+          "mae": 2.559845,
+          "rmse": 3.51333,
+          "bias": -0.255231
+        },
+        "direta_rf_lab": {
+          "n": 948,
+          "mae": 2.655091,
+          "rmse": 3.528953,
+          "bias": 0.145473
+        },
+        "direta_ewma": {
+          "n": 948,
+          "mae": 2.734056,
+          "rmse": 3.745478,
+          "bias": 0.007215
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 19,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 9,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 18,
+      "scores": {
+        "v2": {
+          "n": 412,
+          "mae": 2.844757,
+          "rmse": 3.666374,
+          "bias": 0.15835
+        },
+        "v3s_nested": {
+          "n": 412,
+          "mae": 2.749736,
+          "rmse": 3.539098,
+          "bias": 0.025261
+        },
+        "v3h_hibrido": {
+          "n": 412,
+          "mae": 2.697117,
+          "rmse": 3.424856,
+          "bias": 0.076495
+        },
+        "catboost_contexto_off_cal": {
+          "n": 412,
+          "mae": 2.659894,
+          "rmse": 3.420173,
+          "bias": -0.340023
+        },
+        "direta_rf_lab": {
+          "n": 412,
+          "mae": 2.722839,
+          "rmse": 3.436477,
+          "bias": 0.105648
+        },
+        "direta_ewma": {
+          "n": 412,
+          "mae": 3.019101,
+          "rmse": 3.875326,
+          "bias": 0.102399
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 20,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 837,
+          "mae": 3.22908,
+          "rmse": 4.56655,
+          "bias": -0.333883
+        },
+        "v3s_nested": {
+          "n": 837,
+          "mae": 3.360841,
+          "rmse": 4.802798,
+          "bias": -0.134987
+        },
+        "v3h_hibrido": {
+          "n": 837,
+          "mae": 3.335502,
+          "rmse": 4.603047,
+          "bias": 0.018671
+        },
+        "catboost_contexto_off_cal": {
+          "n": 837,
+          "mae": 3.310162,
+          "rmse": 4.651558,
+          "bias": -0.566627
+        },
+        "direta_rf_lab": {
+          "n": 837,
+          "mae": 3.421746,
+          "rmse": 4.609448,
+          "bias": 0.155126
+        },
+        "direta_ewma": {
+          "n": 837,
+          "mae": 3.365815,
+          "rmse": 4.808302,
+          "bias": -0.20841
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 20,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "direta_rf_lab",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 187,
+          "mae": 3.439519,
+          "rmse": 4.262786,
+          "bias": -0.062406
+        },
+        "v3s_nested": {
+          "n": 187,
+          "mae": 3.452962,
+          "rmse": 4.143233,
+          "bias": 0.086702
+        },
+        "v3h_hibrido": {
+          "n": 187,
+          "mae": 3.347673,
+          "rmse": 4.023329,
+          "bias": 0.147706
+        },
+        "catboost_contexto_off_cal": {
+          "n": 187,
+          "mae": 3.336615,
+          "rmse": 4.12101,
+          "bias": -0.012708
+        },
+        "direta_rf_lab": {
+          "n": 187,
+          "mae": 3.331544,
+          "rmse": 4.084122,
+          "bias": 0.188182
+        },
+        "direta_ewma": {
+          "n": 187,
+          "mae": 3.604589,
+          "rmse": 4.508943,
+          "bias": -0.018173
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 20,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 471,
+          "mae": 3.345902,
+          "rmse": 4.19874,
+          "bias": 0.138854
+        },
+        "v3s_nested": {
+          "n": 471,
+          "mae": 3.404199,
+          "rmse": 4.244702,
+          "bias": 0.322611
+        },
+        "v3h_hibrido": {
+          "n": 471,
+          "mae": 3.2879,
+          "rmse": 4.047221,
+          "bias": 0.358557
+        },
+        "catboost_contexto_off_cal": {
+          "n": 471,
+          "mae": 3.177483,
+          "rmse": 4.026753,
+          "bias": -0.344174
+        },
+        "direta_rf_lab": {
+          "n": 471,
+          "mae": 3.305559,
+          "rmse": 4.042635,
+          "bias": 0.380786
+        },
+        "direta_ewma": {
+          "n": 471,
+          "mae": 3.509114,
+          "rmse": 4.459404,
+          "bias": 0.167959
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 20,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 1003,
+          "mae": 2.638116,
+          "rmse": 3.598344,
+          "bias": -0.049242
+        },
+        "v3s_nested": {
+          "n": 1003,
+          "mae": 2.667442,
+          "rmse": 3.652736,
+          "bias": 0.077176
+        },
+        "v3h_hibrido": {
+          "n": 1003,
+          "mae": 2.63841,
+          "rmse": 3.556751,
+          "bias": 0.11644
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1003,
+          "mae": 2.572961,
+          "rmse": 3.554945,
+          "bias": -0.246445
+        },
+        "direta_rf_lab": {
+          "n": 1003,
+          "mae": 2.669583,
+          "rmse": 3.567517,
+          "bias": 0.156167
+        },
+        "direta_ewma": {
+          "n": 1003,
+          "mae": 2.746168,
+          "rmse": 3.782696,
+          "bias": 0.011171
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 20,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 10,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 19,
+      "scores": {
+        "v2": {
+          "n": 443,
+          "mae": 2.8086,
+          "rmse": 3.62394,
+          "bias": 0.157991
+        },
+        "v3s_nested": {
+          "n": 443,
+          "mae": 2.705273,
+          "rmse": 3.483481,
+          "bias": 0.051312
+        },
+        "v3h_hibrido": {
+          "n": 443,
+          "mae": 2.647003,
+          "rmse": 3.367258,
+          "bias": 0.089468
+        },
+        "catboost_contexto_off_cal": {
+          "n": 443,
+          "mae": 2.631235,
+          "rmse": 3.374049,
+          "bias": -0.293594
+        },
+        "direta_rf_lab": {
+          "n": 443,
+          "mae": 2.675358,
+          "rmse": 3.381029,
+          "bias": 0.107088
+        },
+        "direta_ewma": {
+          "n": 443,
+          "mae": 3.010824,
+          "rmse": 3.8442,
+          "bias": 0.112192
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 22,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 919,
+          "mae": 3.214102,
+          "rmse": 4.513838,
+          "bias": -0.210598
+        },
+        "v3s_nested": {
+          "n": 919,
+          "mae": 3.365615,
+          "rmse": 4.772598,
+          "bias": -0.001386
+        },
+        "v3h_hibrido": {
+          "n": 919,
+          "mae": 3.344154,
+          "rmse": 4.574053,
+          "bias": 0.15768
+        },
+        "catboost_contexto_off_cal": {
+          "n": 919,
+          "mae": 3.294243,
+          "rmse": 4.584028,
+          "bias": -0.415506
+        },
+        "direta_rf_lab": {
+          "n": 919,
+          "mae": 3.439461,
+          "rmse": 4.588902,
+          "bias": 0.301078
+        },
+        "direta_ewma": {
+          "n": 919,
+          "mae": 3.389075,
+          "rmse": 4.804914,
+          "bias": -0.062667
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 22,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 205,
+          "mae": 3.42161,
+          "rmse": 4.231531,
+          "bias": -0.051268
+        },
+        "v3s_nested": {
+          "n": 205,
+          "mae": 3.425661,
+          "rmse": 4.111594,
+          "bias": 0.157564
+        },
+        "v3h_hibrido": {
+          "n": 205,
+          "mae": 3.3542,
+          "rmse": 4.013454,
+          "bias": 0.180502
+        },
+        "catboost_contexto_off_cal": {
+          "n": 205,
+          "mae": 3.335948,
+          "rmse": 4.103844,
+          "bias": -0.010614
+        },
+        "direta_rf_lab": {
+          "n": 205,
+          "mae": 3.372193,
+          "rmse": 4.095696,
+          "bias": 0.184716
+        },
+        "direta_ewma": {
+          "n": 205,
+          "mae": 3.581169,
+          "rmse": 4.47093,
+          "bias": 0.008135
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 22,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 525,
+          "mae": 3.356343,
+          "rmse": 4.173688,
+          "bias": 0.231695
+        },
+        "v3s_nested": {
+          "n": 525,
+          "mae": 3.39466,
+          "rmse": 4.228333,
+          "bias": 0.380476
+        },
+        "v3h_hibrido": {
+          "n": 525,
+          "mae": 3.275483,
+          "rmse": 4.018701,
+          "bias": 0.41844
+        },
+        "catboost_contexto_off_cal": {
+          "n": 525,
+          "mae": 3.161905,
+          "rmse": 3.978965,
+          "bias": -0.249967
+        },
+        "direta_rf_lab": {
+          "n": 525,
+          "mae": 3.284042,
+          "rmse": 4.006959,
+          "bias": 0.444099
+        },
+        "direta_ewma": {
+          "n": 525,
+          "mae": 3.503562,
+          "rmse": 4.416804,
+          "bias": 0.256602
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 22,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 1096,
+          "mae": 2.651195,
+          "rmse": 3.633193,
+          "bias": -0.047874
+        },
+        "v3s_nested": {
+          "n": 1096,
+          "mae": 2.683252,
+          "rmse": 3.687133,
+          "bias": 0.078656
+        },
+        "v3h_hibrido": {
+          "n": 1096,
+          "mae": 2.652664,
+          "rmse": 3.588917,
+          "bias": 0.116276
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1096,
+          "mae": 2.588982,
+          "rmse": 3.5917,
+          "bias": -0.244802
+        },
+        "direta_rf_lab": {
+          "n": 1096,
+          "mae": 2.68617,
+          "rmse": 3.602887,
+          "bias": 0.15432
+        },
+        "direta_ewma": {
+          "n": 1096,
+          "mae": 2.750154,
+          "rmse": 3.808704,
+          "bias": 0.009614
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 22,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 11,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 20,
+      "scores": {
+        "v2": {
+          "n": 487,
+          "mae": 2.769856,
+          "rmse": 3.594555,
+          "bias": 0.097782
+        },
+        "v3s_nested": {
+          "n": 487,
+          "mae": 2.702346,
+          "rmse": 3.496832,
+          "bias": -0.016742
+        },
+        "v3h_hibrido": {
+          "n": 487,
+          "mae": 2.630942,
+          "rmse": 3.368117,
+          "bias": 0.031056
+        },
+        "catboost_contexto_off_cal": {
+          "n": 487,
+          "mae": 2.616172,
+          "rmse": 3.354094,
+          "bias": -0.312831
+        },
+        "direta_rf_lab": {
+          "n": 487,
+          "mae": 2.662356,
+          "rmse": 3.373776,
+          "bias": 0.060174
+        },
+        "direta_ewma": {
+          "n": 487,
+          "mae": 2.960395,
+          "rmse": 3.808434,
+          "bias": 0.053979
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 23,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 999,
+          "mae": 3.194735,
+          "rmse": 4.461955,
+          "bias": -0.150511
+        },
+        "v3s_nested": {
+          "n": 999,
+          "mae": 3.340568,
+          "rmse": 4.707319,
+          "bias": 0.065878
+        },
+        "v3h_hibrido": {
+          "n": 999,
+          "mae": 3.317144,
+          "rmse": 4.510642,
+          "bias": 0.221761
+        },
+        "catboost_contexto_off_cal": {
+          "n": 999,
+          "mae": 3.270313,
+          "rmse": 4.514283,
+          "bias": -0.313316
+        },
+        "direta_rf_lab": {
+          "n": 999,
+          "mae": 3.410462,
+          "rmse": 4.524166,
+          "bias": 0.363231
+        },
+        "direta_ewma": {
+          "n": 999,
+          "mae": 3.368232,
+          "rmse": 4.755158,
+          "bias": -0.010444
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 23,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 224,
+          "mae": 3.439821,
+          "rmse": 4.239695,
+          "bias": -0.029375
+        },
+        "v3s_nested": {
+          "n": 224,
+          "mae": 3.452829,
+          "rmse": 4.116752,
+          "bias": 0.165192
+        },
+        "v3h_hibrido": {
+          "n": 224,
+          "mae": 3.373868,
+          "rmse": 4.003705,
+          "bias": 0.17054
+        },
+        "catboost_contexto_off_cal": {
+          "n": 224,
+          "mae": 3.365651,
+          "rmse": 4.107738,
+          "bias": -0.065855
+        },
+        "direta_rf_lab": {
+          "n": 224,
+          "mae": 3.38847,
+          "rmse": 4.07274,
+          "bias": 0.15875
+        },
+        "direta_ewma": {
+          "n": 224,
+          "mae": 3.66425,
+          "rmse": 4.544643,
+          "bias": 0.020763
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 23,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 568,
+          "mae": 3.35794,
+          "rmse": 4.181021,
+          "bias": 0.161813
+        },
+        "v3s_nested": {
+          "n": 568,
+          "mae": 3.418752,
+          "rmse": 4.273592,
+          "bias": 0.279655
+        },
+        "v3h_hibrido": {
+          "n": 568,
+          "mae": 3.28978,
+          "rmse": 4.053278,
+          "bias": 0.322255
+        },
+        "catboost_contexto_off_cal": {
+          "n": 568,
+          "mae": 3.189796,
+          "rmse": 4.019926,
+          "bias": -0.324566
+        },
+        "direta_rf_lab": {
+          "n": 568,
+          "mae": 3.291317,
+          "rmse": 4.031498,
+          "bias": 0.353482
+        },
+        "direta_ewma": {
+          "n": 568,
+          "mae": 3.505533,
+          "rmse": 4.436487,
+          "bias": 0.173903
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 23,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 1205,
+          "mae": 2.615452,
+          "rmse": 3.571009,
+          "bias": -0.023137
+        },
+        "v3s_nested": {
+          "n": 1205,
+          "mae": 2.629768,
+          "rmse": 3.613674,
+          "bias": 0.085216
+        },
+        "v3h_hibrido": {
+          "n": 1205,
+          "mae": 2.599918,
+          "rmse": 3.516738,
+          "bias": 0.130464
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1205,
+          "mae": 2.543947,
+          "rmse": 3.520255,
+          "bias": -0.205897
+        },
+        "direta_rf_lab": {
+          "n": 1205,
+          "mae": 2.63932,
+          "rmse": 3.534032,
+          "bias": 0.176097
+        },
+        "direta_ewma": {
+          "n": 1205,
+          "mae": 2.7221,
+          "rmse": 3.771116,
+          "bias": 0.031986
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 23,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 12,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 22,
+      "scores": {
+        "v2": {
+          "n": 531,
+          "mae": 2.825424,
+          "rmse": 3.644411,
+          "bias": -0.004557
+        },
+        "v3s_nested": {
+          "n": 531,
+          "mae": 2.773652,
+          "rmse": 3.574404,
+          "bias": -0.09994
+        },
+        "v3h_hibrido": {
+          "n": 531,
+          "mae": 2.690424,
+          "rmse": 3.426251,
+          "bias": -0.057177
+        },
+        "catboost_contexto_off_cal": {
+          "n": 531,
+          "mae": 2.663972,
+          "rmse": 3.39867,
+          "bias": -0.380824
+        },
+        "direta_rf_lab": {
+          "n": 531,
+          "mae": 2.705654,
+          "rmse": 3.413764,
+          "bias": -0.031546
+        },
+        "direta_ewma": {
+          "n": 531,
+          "mae": 3.020453,
+          "rmse": 3.861548,
+          "bias": -0.0312
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 24,
+      "posicao": "ATA",
+      "arquitetura_escolhida": "v2",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 1084,
+          "mae": 3.207131,
+          "rmse": 4.466031,
+          "bias": -0.187205
+        },
+        "v3s_nested": {
+          "n": 1084,
+          "mae": 3.363857,
+          "rmse": 4.720901,
+          "bias": 0.01441
+        },
+        "v3h_hibrido": {
+          "n": 1084,
+          "mae": 3.323431,
+          "rmse": 4.518664,
+          "bias": 0.164898
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1084,
+          "mae": 3.268706,
+          "rmse": 4.510213,
+          "bias": -0.342687
+        },
+        "direta_rf_lab": {
+          "n": 1084,
+          "mae": 3.408359,
+          "rmse": 4.524415,
+          "bias": 0.302103
+        },
+        "direta_ewma": {
+          "n": 1084,
+          "mae": 3.401193,
+          "rmse": 4.776694,
+          "bias": -0.066794
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 24,
+      "posicao": "GOL",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 244,
+          "mae": 3.429098,
+          "rmse": 4.221964,
+          "bias": 0.084508
+        },
+        "v3s_nested": {
+          "n": 244,
+          "mae": 3.460472,
+          "rmse": 4.103917,
+          "bias": 0.258458
+        },
+        "v3h_hibrido": {
+          "n": 244,
+          "mae": 3.36905,
+          "rmse": 3.991348,
+          "bias": 0.265069
+        },
+        "catboost_contexto_off_cal": {
+          "n": 244,
+          "mae": 3.312084,
+          "rmse": 4.042566,
+          "bias": -0.006208
+        },
+        "direta_rf_lab": {
+          "n": 244,
+          "mae": 3.363521,
+          "rmse": 4.054396,
+          "bias": 0.255948
+        },
+        "direta_ewma": {
+          "n": 244,
+          "mae": 3.662133,
+          "rmse": 4.522078,
+          "bias": 0.132736
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 24,
+      "posicao": "LAT",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 614,
+          "mae": 3.319511,
+          "rmse": 4.132634,
+          "bias": 0.15114
+        },
+        "v3s_nested": {
+          "n": 614,
+          "mae": 3.361587,
+          "rmse": 4.210684,
+          "bias": 0.256681
+        },
+        "v3h_hibrido": {
+          "n": 614,
+          "mae": 3.245705,
+          "rmse": 4.006391,
+          "bias": 0.31712
+        },
+        "catboost_contexto_off_cal": {
+          "n": 614,
+          "mae": 3.15945,
+          "rmse": 3.980994,
+          "bias": -0.307856
+        },
+        "direta_rf_lab": {
+          "n": 614,
+          "mae": 3.260218,
+          "rmse": 3.998768,
+          "bias": 0.367037
+        },
+        "direta_ewma": {
+          "n": 614,
+          "mae": 3.477646,
+          "rmse": 4.39719,
+          "bias": 0.161841
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 24,
+      "posicao": "MEI",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 1309,
+          "mae": 2.622353,
+          "rmse": 3.626072,
+          "bias": -0.044431
+        },
+        "v3s_nested": {
+          "n": 1309,
+          "mae": 2.634646,
+          "rmse": 3.657215,
+          "bias": 0.053556
+        },
+        "v3h_hibrido": {
+          "n": 1309,
+          "mae": 2.607457,
+          "rmse": 3.567251,
+          "bias": 0.103386
+        },
+        "catboost_contexto_off_cal": {
+          "n": 1309,
+          "mae": 2.562758,
+          "rmse": 3.583257,
+          "bias": -0.210809
+        },
+        "direta_rf_lab": {
+          "n": 1309,
+          "mae": 2.646092,
+          "rmse": 3.585878,
+          "bias": 0.15357
+        },
+        "direta_ewma": {
+          "n": 1309,
+          "mae": 2.73007,
+          "rmse": 3.810824,
+          "bias": -0.002344
+        }
+      }
+    },
+    {
+      "seletor": "todos",
+      "rodada_alvo": 24,
+      "posicao": "ZAG",
+      "arquitetura_escolhida": "catboost_contexto_off_cal",
+      "motivo": "menor_mae_historico_anterior",
+      "rodadas_treino": 13,
+      "primeira_rodada_treino": 10,
+      "ultima_rodada_treino": 23,
+      "scores": {
+        "v2": {
+          "n": 575,
+          "mae": 2.845791,
+          "rmse": 3.680687,
+          "bias": -0.072365
+        },
+        "v3s_nested": {
+          "n": 575,
+          "mae": 2.785551,
+          "rmse": 3.602943,
+          "bias": -0.164883
+        },
+        "v3h_hibrido": {
+          "n": 575,
+          "mae": 2.705734,
+          "rmse": 3.458585,
+          "bias": -0.103592
+        },
+        "catboost_contexto_off_cal": {
+          "n": 575,
+          "mae": 2.678736,
+          "rmse": 3.423467,
+          "bias": -0.378564
+        },
+        "direta_rf_lab": {
+          "n": 575,
+          "mae": 2.724295,
+          "rmse": 3.444182,
+          "bias": -0.058123
+        },
+        "direta_ewma": {
+          "n": 575,
+          "mae": 3.051398,
+          "rmse": 3.914474,
+          "bias": -0.068783
+        }
+      }
+    }
+  ],
+  "promover_v2": false,
+  "nota": "Resultado é retrospectivo walk-forward e precisa de confirmação prospectiva imutável antes de qualquer promoção."
+}
