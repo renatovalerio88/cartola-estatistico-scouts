@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import re
+import time
 import unicodedata
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
@@ -116,16 +117,50 @@ def month_windows(start: date, end: date):
         cur = nxt
 
 
+def _session() -> requests.Session:
+    session = requests.Session()
+    # O endpoint é público, mas a borda da ESPN passou a bloquear UAs de bot em
+    # runners de datacenter. Usamos cabeçalhos equivalentes aos do site público;
+    # não há autenticação, cookie privado ou contorno de paywall.
+    session.headers.update({
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/140.0.0.0 Safari/537.36"
+        ),
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+        "Referer": "https://www.espn.com/",
+        "Origin": "https://www.espn.com",
+        "Cache-Control": "no-cache",
+    })
+    return session
+
+
 def fetch_events(league_slug: str, start: date, end: date):
     events = {}
-    headers = {"User-Agent": "cartola-estatistico-scouts-v3/1.0"}
+    session = _session()
     for ini, fim in month_windows(start, end):
         params = {"dates": f"{ini:%Y%m%d}-{fim:%Y%m%d}", "limit": 1000}
-        response = requests.get(BASE_URL.format(league=league_slug), params=params, headers=headers, timeout=30)
-        response.raise_for_status()
-        for event in response.json().get("events", []):
-            if event.get("id"):
-                events[str(event["id"])] = event
+        last_error = None
+        for attempt in range(3):
+            try:
+                response = session.get(BASE_URL.format(league=league_slug), params=params, timeout=30)
+                response.raise_for_status()
+                payload = response.json()
+                for event in payload.get("events", []):
+                    if event.get("id"):
+                        events[str(event["id"])] = event
+                last_error = None
+                break
+            except (requests.RequestException, ValueError) as exc:
+                last_error = exc
+                if attempt < 2:
+                    time.sleep(1.5 * (attempt + 1))
+        if last_error is not None:
+            raise last_error
+        # Evita rajadas mensais que podem acionar proteção anti-bot do provedor.
+        time.sleep(0.15)
     return list(events.values())
 
 
@@ -135,7 +170,7 @@ def main():
     start = date(YEAR, 1, 1)
     end = min(date.today(), date(YEAR, 12, 31))
 
-    prior = load_json(OUT) if OUT.exists() else {}
+    prior = load_json(OUT) if OUT.exists() and OUT.stat().st_size > 2 else {}
     prior_events = {str(e.get("evento_id")): e for e in prior.get("eventos", []) if e.get("evento_id")}
     collected = dict(prior_events)
     sources = {}
@@ -147,7 +182,11 @@ def main():
             raw_events = fetch_events(slug, start, end)
             sources[comp] = {"slug": slug, "eventos_recebidos": len(raw_events), "status": "ok"}
         except Exception as exc:
-            sources[comp] = {"slug": slug, "eventos_recebidos": 0, "status": "erro"}
+            sources[comp] = {
+                "slug": slug,
+                "eventos_recebidos": 0,
+                "status": "snapshot_anterior" if prior_events else "indisponivel",
+            }
             errors.append({"competicao": comp, "erro": str(exc)[:400]})
             continue
 
@@ -197,8 +236,6 @@ def main():
                     unmatched.append({"competicao": comp, "nome": t.get("nome"), "abreviacao": t.get("abreviacao")})
 
     relevant = sorted(collected.values(), key=lambda e: (e.get("data", ""), e.get("evento_id", "")))
-    if not relevant and errors:
-        raise RuntimeError(f"Falha na coleta ESPN e nenhum snapshot anterior disponível: {errors}")
 
     counts = {}
     for comp in LEAGUES:
@@ -208,10 +245,13 @@ def main():
             "clubes_cartola_distintos": len({cid for e in comp_events for cid in e.get("clubes_cartola_ids", [])}),
         }
 
+    coverage_ok = bool(relevant)
     dedup_unmatched = sorted({(x["competicao"], str(x.get("nome")), str(x.get("abreviacao"))) for x in unmatched})
     payload = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
         "temporada": YEAR,
+        "status_coleta": "ok" if not errors else ("parcial" if coverage_ok else "indisponivel"),
+        "cobertura_suficiente_para_ablation": coverage_ok,
         "fonte": "ESPN scoreboard JSON público (endpoint não oficial, sem chave); snapshot versionado no laboratório.",
         "regra_match_clubes": "Nome/slug exato normalizado ou alias explícito. Sigla curta isolada é proibida para evitar colisão entre clubes de países diferentes.",
         "regra_anti_leakage": "Somente partidas marcadas como concluídas são armazenadas. Features históricas filtram data_externa < data_da_partida_alvo; placares e resultados não são usados.",
@@ -228,6 +268,8 @@ def main():
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print("Calendário externo 2026:", counts, "| erros:", len(errors), "| eventos:", len(relevant))
+    if not coverage_ok:
+        print("AVISO_CIENTIFICO: fonte externa indisponível e sem snapshot histórico; ablation deve registrar cobertura insuficiente, nunca inferir zeros como ausência de jogos.")
 
 
 if __name__ == "__main__":
