@@ -10,6 +10,8 @@ on:
       - 'scripts/backtest_v3s_dois_estagios.py'
       - 'scripts/ablation_participacao_enriquecida.py'
       - 'scripts/ablation_descanso_brasileirao.py'
+      - 'scripts/coletar_calendario_externo_2026.py'
+      - 'scripts/ablation_calendario_externo.py'
       - 'scripts/calibrar_participacao_dois_estagios.py'
       - 'scripts/calibrar_producao_condicional_dois_estagios.py'
       - 'scripts/ablation_contexto.py'
@@ -53,6 +55,10 @@ jobs:
         run: python scripts/ablation_participacao_enriquecida.py
       - name: Testar descanso entre jogos do Brasileirao
         run: python scripts/ablation_descanso_brasileirao.py
+      - name: Coletar snapshot de Libertadores Sul-Americana e Copa do Brasil
+        run: python scripts/coletar_calendario_externo_2026.py
+      - name: Testar congestionamento de calendario externo
+        run: python scripts/ablation_calendario_externo.py
       - name: Revalidar contexto em walk-forward estrito
         run: python scripts/ablation_contexto.py
       - name: Aplicar gate cientifico de contexto no CatBoost
@@ -88,8 +94,10 @@ jobs:
         run: |
           set -euo pipefail
           REPORTS=(
+            data/context/calendario-externo-2026.json
             data/reports/ablation-participacao-enriquecida.json
             data/reports/ablation-descanso-brasileirao.json
+            data/reports/ablation-calendario-externo.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
@@ -117,8 +125,10 @@ jobs:
         run: |
           set -euo pipefail
           REPORTS=(
+            data/context/calendario-externo-2026.json
             data/reports/ablation-participacao-enriquecida.json
             data/reports/ablation-descanso-brasileirao.json
+            data/reports/ablation-calendario-externo.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
