@@ -15,6 +15,8 @@ on:
       - 'scripts/ablation_calendario_externo.py'
       - 'scripts/executar_ablation_calendario_externo.py'
       - 'scripts/ablation_mudanca_tecnico.py'
+      - 'scripts/ablation_horario_partida.py'
+      - 'scripts/resumir_contextos.py'
       - 'data/context/mudancas-tecnicos-2026.json'
       - 'scripts/calibrar_participacao_dois_estagios.py'
       - 'scripts/calibrar_producao_condicional_dois_estagios.py'
@@ -69,6 +71,10 @@ jobs:
         run: python scripts/executar_ablation_calendario_externo.py
       - name: Testar efeito de mudanca de tecnico
         run: python scripts/ablation_mudanca_tecnico.py
+      - name: Testar efeito do horario da partida
+        run: python scripts/ablation_horario_partida.py
+      - name: Gerar resumo compacto das ablations de contexto
+        run: python scripts/resumir_contextos.py
       - name: Revalidar contexto em walk-forward estrito
         run: python scripts/ablation_contexto.py
       - name: Aplicar gate cientifico de contexto no CatBoost
@@ -111,6 +117,8 @@ jobs:
             data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-calendario-externo.json
             data/reports/ablation-mudanca-tecnico.json
+            data/reports/ablation-horario-partida.json
+            data/reports/resumo-contextos.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
@@ -145,6 +153,8 @@ jobs:
             data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-calendario-externo.json
             data/reports/ablation-mudanca-tecnico.json
+            data/reports/ablation-horario-partida.json
+            data/reports/resumo-contextos.json
             data/reports/ablation-contexto.json
             data/reports/gate-contexto-catboost.json
             data/reports/ablation-catboost-contexto-nested.json
