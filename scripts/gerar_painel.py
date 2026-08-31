@@ -51,6 +51,7 @@ def main():
         "comparacao_v2": load("comparacao-v2-oficial-v3.json"),
         "comparacao_catboost_v2": load("comparacao-catboost-off-v2.json"),
         "ranking_arquiteturas_comum": load("ranking-arquiteturas-comum.json"),
+        "seletor_posicional_temporal": load("seletor-posicional-temporal.json"),
         "holdout_posicional": load("holdout-posicional-catboost-v2.json"),
         "significancia": load("significancia-arquiteturas.json"),
         "meta_seletor": load("meta-seletor-v2-v3.json"),
@@ -59,7 +60,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, ranking comum V2/V3/CatBoost, dois estágios, ablations, calibrações e holdout posicional.")
+    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estágios, ablations, calibrações e holdout posicional.")
 
 
 if __name__ == "__main__":
