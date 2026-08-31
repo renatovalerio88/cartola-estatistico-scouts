@@ -1,0 +1,47 @@
+name: Estudo Top 50 Liga Nacional
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/auditar_top50_liga_nacional.py'
+      - '.github/workflows/top50-liga-nacional.yml'
+  schedule:
+    - cron: '40 9 * * *'
+
+concurrency:
+  group: top50-liga-nacional-v3
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  auditar-fonte:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Auditar fonte pública e reproduzível do Top 50 Brasil
+        run: python scripts/auditar_top50_liga_nacional.py
+
+      - name: Publicar somente auditoria e snapshots do estudo
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data/reports/top50-liga-nacional-viabilidade.json data/raw/top50-liga-nacional
+          git diff --cached --quiet || git commit -m 'data: auditar fonte Top 50 Liga Nacional'
+          git pull --rebase origin main
+          git push
