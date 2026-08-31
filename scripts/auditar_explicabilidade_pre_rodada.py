@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
 REPORT = ROOT / "data" / "reports" / "auditoria-explicabilidade-pre-rodada.json"
 TOL = 1e-4
-PROIBIDOS = {"pontuacao_real", "pontuacao", "target", "scouts_reais", "resultado_real"}
+PROIBIDOS = {"pontuacao_real", "pontuacao", "target", "scouts_reais", "resultado_real", "real"}
 
 
 def load(path: Path):
@@ -28,7 +28,7 @@ def main():
             "status": "AGUARDANDO_PRIMEIRO_SIDECAR",
             "aprovado": True,
             "sidecars_auditados": 0,
-            "mensagem": "Locks antigos continuam válidos. A decomposição por scouts passa a ser exigida nos novos snapshots quando puder ser reproduzida exatamente sem informação pós-lock.",
+            "mensagem": "Locks antigos continuam válidos. A decomposição por scouts e risco/confiança OOS passam a ser exigidos nos novos snapshots quando puderem ser reproduzidos exatamente sem informação pós-lock.",
         }
         REPORT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
         print("Auditoria de explicabilidade: aguardando primeiro sidecar; protocolo ativado.")
@@ -55,6 +55,18 @@ def main():
         e = load(ep)
         if e.get("origem_explicacao") != "decomposicao_matematica_da_v3s" or e.get("nao_e_causal") is not True:
             item["erros"].append("protocolo_explicacao_invalido")
+
+        protocolo_risco = e.get("protocolo_risco_confianca") or {}
+        if int(e.get("schema") or 1) >= 2:
+            if protocolo_risco.get("status") == "APROVADO":
+                rodadas_usadas = [int(x) for x in (protocolo_risco.get("rodadas_usadas") or [])]
+                if any(r >= rodada for r in rodadas_usadas):
+                    item["erros"].append("risco_oos_usa_rodada_alvo_ou_futura")
+                if protocolo_risco.get("arquitetura") != "v3s_nested":
+                    item["erros"].append("arquitetura_risco_invalida")
+            elif protocolo_risco.get("status") not in {"SEM_BACKTEST", "SEM_PREVISOES_OOS", "SEM_HISTORICO_ANTERIOR"}:
+                item["erros"].append("status_risco_invalido")
+
         players = e.get("jogadores") or []
         total_jogadores += len(players)
         ids = []
@@ -70,6 +82,22 @@ def main():
             soma = sum(float(c.get("contribuicao_pontos") or 0) for c in comps)
             alvo = float(p.get("v3s_expected_scouts") or 0)
             max_err = max(max_err, abs(soma - alvo))
+
+            risco = p.get("risco_confianca_oos")
+            if risco is not None:
+                if PROIBIDOS.intersection(risco.keys()):
+                    item["erros"].append(f"campo_risco_pos_rodada_proibido:{p.get('atleta_id')}")
+                if int(risco.get("amostra_oos") or 0) < 20:
+                    item["erros"].append(f"amostra_risco_insuficiente:{p.get('atleta_id')}")
+                if risco.get("confianca") not in {"alta", "media", "baixa"}:
+                    item["erros"].append(f"confianca_invalida:{p.get('atleta_id')}")
+                faixa = risco.get("faixa_indicativa_p80") or []
+                if len(faixa) != 2 or float(faixa[0]) > float(faixa[1]):
+                    item["erros"].append(f"faixa_risco_invalida:{p.get('atleta_id')}")
+                base = str(risco.get("base_temporal") or "")
+                if f"R{rodada:02d}" not in base or "anterior" not in base.lower():
+                    item["erros"].append(f"base_temporal_risco_invalida:{p.get('atleta_id')}")
+
         if len(ids) != len(set(ids)):
             item["erros"].append("atleta_id_duplicado")
         if len(players) != int(m.get("jogadores") or -1):
@@ -90,7 +118,7 @@ def main():
         "tolerancia_reconciliacao": TOL,
         "erros": erros,
         "rodadas": detalhes,
-        "regra": "Explicação é somente decomposição matemática de scouts esperados × pesos oficiais, sem alvo real, scout real ou informação pós-rodada.",
+        "regra": "Explicação é somente decomposição matemática de scouts esperados × pesos oficiais. Risco/confiança usa exclusivamente erros OOS de rodadas anteriores à rodada-alvo; alvo real, scout real e informação pós-rodada são proibidos no sidecar.",
     }
     REPORT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(f"Auditoria de explicabilidade: {payload['status']} | sidecars={len(manifests)} | jogadores={total_jogadores} | erros={len(erros)}")
