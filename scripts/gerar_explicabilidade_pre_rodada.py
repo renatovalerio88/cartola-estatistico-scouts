@@ -20,6 +20,7 @@ RAW = ROOT / "data" / "raw"
 DATA = ROOT / "data" / "derived" / "dataset-walk-forward.csv"
 ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
 REPORT = ROOT / "data" / "reports" / "explicabilidade-pre-rodada.json"
+BACKTEST = ROOT / "data" / "reports" / "backtest-v3s-nested.json"
 
 SCOUT_LABELS = {
     "G": "gol",
@@ -98,6 +99,55 @@ def reason(top_pos, top_neg):
     return txt + "."
 
 
+def construir_incerteza_oos(rodada_alvo: int):
+    """Resume erros OOS anteriores à rodada-alvo, sem usar qualquer resultado de R."""
+    if not BACKTEST.exists():
+        return {}, {"status": "SEM_BACKTEST", "rodadas_usadas": []}
+    payload = load(BACKTEST)
+    rows = payload.get("previsoes") or []
+    hist = pd.DataFrame(rows)
+    if hist.empty or not {"rodada", "posicao", "real", "v3s_nested"}.issubset(hist.columns):
+        return {}, {"status": "SEM_PREVISOES_OOS", "rodadas_usadas": []}
+    hist = hist[pd.to_numeric(hist["rodada"], errors="coerce") < rodada_alvo].copy()
+    if hist.empty:
+        return {}, {"status": "SEM_HISTORICO_ANTERIOR", "rodadas_usadas": []}
+    hist["erro_abs"] = (pd.to_numeric(hist["v3s_nested"], errors="coerce") - pd.to_numeric(hist["real"], errors="coerce")).abs()
+    hist = hist[np.isfinite(hist["erro_abs"])].copy()
+    saida = {}
+    for pos, g in hist.groupby("posicao"):
+        erros = g["erro_abs"].to_numpy(float)
+        if len(erros) < 20:
+            continue
+        q50 = float(np.quantile(erros, 0.50))
+        q80 = float(np.quantile(erros, 0.80))
+        q90 = float(np.quantile(erros, 0.90))
+        mae = float(np.mean(erros))
+        # Confiança é relativa à dispersão histórica OOS da própria posição.
+        # Não usa informação do jogador na rodada-alvo além da posição.
+        if q80 <= 3.0:
+            nivel = "alta"
+        elif q80 <= 4.5:
+            nivel = "media"
+        else:
+            nivel = "baixa"
+        saida[str(pos)] = {
+            "amostra_oos": int(len(erros)),
+            "mae_oos": round(mae, 6),
+            "erro_abs_mediano": round(q50, 6),
+            "erro_abs_p80": round(q80, 6),
+            "erro_abs_p90": round(q90, 6),
+            "confianca": nivel,
+        }
+    return saida, {
+        "status": "APROVADO",
+        "arquitetura": "v3s_nested",
+        "corte_temporal": f"somente previsoes OOS com rodada < {rodada_alvo}",
+        "rodadas_usadas": sorted(int(x) for x in hist["rodada"].unique()),
+        "linhas_oos": int(len(hist)),
+        "regra_faixa": "faixa indicativa = projeção V3-S ± erro absoluto P80 histórico OOS da posição; não é intervalo probabilístico calibrado",
+    }
+
+
 def escrever_relatorio(payload):
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     REPORT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -161,6 +211,7 @@ def main():
 
     dataset = pd.read_csv(DATA)
     dataset = dataset[(dataset.rodada < rodada) & dataset.posicao.isin(POSITIONS)].copy()
+    incerteza_por_posicao, protocolo_incerteza = construir_incerteza_oos(rodada)
     n = len(current)
     scout_predictions = {s: np.zeros(n, float) for s in SCOUT_WEIGHTS}
     scout_models = {}
@@ -220,6 +271,15 @@ def main():
         max_reconciliation_error = max(max_reconciliation_error, abs(reconciled - locked_v3s))
         pos_sorted = sorted(comps, key=lambda x: x["contribuicao_pontos"], reverse=True)[:3]
         neg_sorted = sorted(comps, key=lambda x: x["contribuicao_pontos"])[:2]
+        unc = incerteza_por_posicao.get(str(m.posicao))
+        risco = None
+        if unc:
+            margem = float(unc["erro_abs_p80"])
+            risco = {
+                **unc,
+                "faixa_indicativa_p80": [round(locked_v3s - margem, 6), round(locked_v3s + margem, 6)],
+                "base_temporal": f"OOS anterior à R{rodada:02d}",
+            }
         players.append(
             {
                 "atleta_id": aid,
@@ -234,6 +294,7 @@ def main():
                 "scouts": comps,
                 "principais_contribuicoes_positivas": pos_sorted,
                 "principais_contribuicoes_negativas": neg_sorted,
+                "risco_confianca_oos": risco,
                 "justificativa": reason(pos_sorted, neg_sorted),
             }
         )
@@ -244,13 +305,14 @@ def main():
         )
 
     payload = {
-        "schema": 1,
+        "schema": 2,
         "temporada": 2026,
         "rodada": rodada,
         "gerado_em_utc": datetime.now(timezone.utc).isoformat(),
         "origem_explicacao": "decomposicao_matematica_da_v3s",
         "nao_e_causal": True,
         "protocolo": "Cada contribuição é scout esperado × peso oficial. A explicação descreve a projeção V3-S e nunca entra como feature, target ou critério de seleção de modelo.",
+        "protocolo_risco_confianca": protocolo_incerteza,
         "csv_pre_rodada": str(csv_path.relative_to(ROOT)),
         "csv_sha256": csv_hash,
         "jogadores": players,
@@ -265,7 +327,7 @@ def main():
     explain_path.write_bytes(data)
     eh = sha256_bytes(data)
     em = {
-        "schema": 1,
+        "schema": 2,
         "temporada": 2026,
         "rodada": rodada,
         "gerado_em_utc": datetime.now(timezone.utc).isoformat(),
@@ -275,6 +337,7 @@ def main():
         "explicabilidade_sha256": eh,
         "jogadores": len(players),
         "fontes_sha256": manifest.get("fontes_sha256", {}),
+        "risco_confianca": "somente erros OOS de rodadas anteriores",
     }
     explain_manifest_path.write_text(json.dumps(em, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
     escrever_relatorio(
@@ -287,9 +350,10 @@ def main():
             "explicabilidade_sha256": eh,
             "erro_maximo_recomputado_vs_lock": max_lock_error,
             "erro_maximo_reconciliacao": max_reconciliation_error,
+            "risco_confianca": protocolo_incerteza,
         }
     )
-    print(f"Explicabilidade R{rodada:02d}: {len(players)} jogadores; sidecar imutável criado e reconciliado com o lock.")
+    print(f"Explicabilidade R{rodada:02d}: {len(players)} jogadores; sidecar imutável criado, reconciliado e com risco/confiança OOS.")
 
 
 if __name__ == "__main__":
