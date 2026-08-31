@@ -65,6 +65,7 @@ def model() -> CatBoostRegressor:
         loss_function="MAE",
         l2_leaf_reg=4.0,
         random_seed=42,
+        bootstrap_type="No",
         verbose=False,
         thread_count=2,
         allow_writing_files=False,
@@ -279,6 +280,7 @@ def main() -> None:
         "protocolo": (
             "Para prever R, ambos os bracos treinam apenas em rodadas < R, com hiperparametros identicos. "
             "A unica diferenca e incluir ou remover features de mando/time/adversario. "
+            "CatBoost usa bootstrap_type=No nos dois bracos para manter o teste deterministico e evitar amostragem MVS invalida em folds scout-posicao esparsos. "
             "Depois, ambos recebem a mesma calibracao residual online por posicao usando no maximo 5 rodadas OOS anteriores."
         ),
         "gate_contexto_origem": gate.get("decisao"),
