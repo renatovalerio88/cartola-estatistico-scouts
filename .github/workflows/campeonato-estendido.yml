@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/construir_dataset.py'
+      - 'scripts/auditar_previsoes_imutaveis.py'
       - 'scripts/benchmark_scouts_estendido.py'
       - 'scripts/backtest_v3s_catboost_nested.py'
       - 'scripts/backtest_v3s_dois_estagios.py'
@@ -40,6 +41,8 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -52,6 +55,8 @@ jobs:
         run: python scripts/construir_dataset.py
       - name: Auditar corte temporal antes do campeonato
         run: python scripts/auditar_vazamento_temporal.py
+      - name: Auditar previsoes pre-rodada imutaveis
+        run: python scripts/auditar_previsoes_imutaveis.py
       - name: Testar sinais históricos enriquecidos de participação
         run: python scripts/ablation_participacao_enriquecida.py
       - name: Testar descanso entre jogos do Brasileirao
@@ -96,6 +101,7 @@ jobs:
           set -euo pipefail
           REPORTS=(
             data/context/calendario-externo-2026.json
+            data/reports/auditoria-previsoes-imutaveis.json
             data/reports/ablation-participacao-enriquecida.json
             data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-calendario-externo.json
@@ -127,6 +133,7 @@ jobs:
           set -euo pipefail
           REPORTS=(
             data/context/calendario-externo-2026.json
+            data/reports/auditoria-previsoes-imutaveis.json
             data/reports/ablation-participacao-enriquecida.json
             data/reports/ablation-descanso-brasileirao.json
             data/reports/ablation-calendario-externo.json
