@@ -1,6 +1,6 @@
 {
   "auditoria": {
-    "gerado_em": "2026-08-31T04:44:08.406168+00:00",
+    "gerado_em": "2026-08-31T06:41:16.623343+00:00",
     "rodadas_auditadas": 25,
     "atletas_registrados": 7586,
     "atletas_em_campo": 7535,
@@ -617,7 +617,7 @@
     ]
   },
   "auditoria_universo": {
-    "gerado_em": "2026-08-31T04:44:10.981947+00:00",
+    "gerado_em": "2026-08-31T06:41:18.783069+00:00",
     "status": "APROVADA",
     "objetivo": "Garantir que treino/validação não usem somente quem entrou em campo, evitando viés de seleção e permitindo aprender risco de não participação.",
     "dataset_linhas": 7036,
@@ -996,7 +996,7 @@
     "regra": "Universo = GOL/LAT/ZAG/MEI/ATA presentes em jogadores.json. Jogador válido que não atuou recebe target_entrou=0 e target_pontos/scouts=0. A informação de atuação da própria rodada nunca entra nas features."
   },
   "auditoria_vazamento": {
-    "gerado_em": "2026-08-31T05:36:16.552748+00:00",
+    "gerado_em": "2026-08-31T06:41:22.009338+00:00",
     "status": "APROVADA",
     "regra_inviolavel": "Para projetar a rodada R, toda feature, treino, seleção e calibração deve usar somente informações de rodadas < R. Targets de R podem existir apenas como rótulo de avaliação.",
     "universo": "Jogadores válidos do jogadores.json, inclusive quem não entrou; ausência de atuação em R vira target 0, nunca feature de R.",
@@ -1007,8 +1007,40 @@
     "violacoes_total_amostradas": 0,
     "metodo": "Reconstrução cronológica a partir de jogadores.json + pontuados.json; cada linha R é conferida antes de incorporar participação, pontos e scouts de R ao histórico. Inclui auditoria explícita de taxas, janelas e sequências de participação."
   },
+  "auditoria_previsoes_imutaveis": {
+    "gerado_em": "2026-08-31T05:36:16.760974+00:00",
+    "escopo": "integridade e imutabilidade das previsões pré-rodada do Scouts V3",
+    "regra": "snapshot pré-rodada é append-only: CSV/manifesto podem ser criados uma vez e jamais regravados",
+    "snapshots_encontrados": 1,
+    "snapshots_aprovados": 1,
+    "snapshots_reprovados": 0,
+    "status": "APROVADA",
+    "snapshots": [
+      {
+        "temporada": 2026,
+        "rodada": 25,
+        "manifest": "predictions/pre_round/2026/R25.manifest.json",
+        "csv": "predictions/pre_round/2026/R25.csv",
+        "linhas": 601,
+        "csv_sha256_manifest": "d874902ab25168eea9c5e6ff969fd8e5f9b4d138d2a3eb76e13c23393b747030",
+        "csv_sha256_real": "d874902ab25168eea9c5e6ff969fd8e5f9b4d138d2a3eb76e13c23393b747030",
+        "historico_git": {
+          "predictions/pre_round/2026/R25.csv": [
+            "0b4170bf92207eff53f4380051d3f9fc89ca67d0"
+          ],
+          "predictions/pre_round/2026/R25.manifest.json": [
+            "0b4170bf92207eff53f4380051d3f9fc89ca67d0"
+          ]
+        },
+        "avisos": [],
+        "erros": [],
+        "status": "APROVADA"
+      }
+    ],
+    "observacao": "A auditoria não modifica previsões e não acessa a V2."
+  },
   "campeonato": {
-    "gerado_em": "2026-08-31T04:48:25.711527+00:00",
+    "gerado_em": "2026-08-31T06:44:50.187410+00:00",
     "protocolo": "walk-forward em blocos temporais; todo treino termina antes da primeira rodada do respectivo teste",
     "anti_leakage_aprovado": true,
     "min_linhas_treino": 80,
@@ -33797,7 +33829,7 @@
     ]
   },
   "backtest_pontos": {
-    "gerado_em": "2026-08-31T04:48:26.307356+00:00",
+    "gerado_em": "2026-08-31T06:44:50.691217+00:00",
     "protocolo": "baseline arquitetural sem seleção otimista: features de cada R usam apenas rodadas < R; comparação inicia R7",
     "scouts_usados": [
       "G",
@@ -34089,7 +34121,7 @@
     "nota": "Este estágio usa apenas médias/EWMA de scouts. V3 com campeões ML por scout será avaliada depois em nested walk-forward para evitar escolher e testar o vencedor no mesmo período."
   },
   "backtest_v3s_nested": {
-    "gerado_em": "2026-08-31T04:51:14.013514+00:00",
+    "gerado_em": "2026-08-31T06:47:21.103313+00:00",
     "protocolo": "nested walk-forward: em cada R, modelos de scouts usam apenas passado; RF direto treina somente em histórico < R; híbrido escolhe alpha exclusivamente com previsões out-of-sample de rodadas anteriores, nunca com o resultado de R",
     "inicio_rodada": 10,
     "linhas": 4946,
@@ -618107,6 +618139,7 @@
     "regra_gate": "Nenhum gate é calculado sem cobertura externa suficiente.",
     "observacao": "BLOQUEADA_FONTE não significa que calendário externo foi reprovado. Significa apenas que não há dados externos auditáveis suficientes nesta execução. Nenhuma promoção é autorizada e a V2 permanece fora deste experimento."
   },
+  "ablation_mudanca_tecnico": {},
   "calibracao_participacao": {
     "gerado_em": "2026-08-31T05:47:33.147208+00:00",
     "protocolo": "Calibracao nested exclusivamente sobre previsoes OOS anteriores. Para R, candidatos sao escolhidos por Brier nas duas ultimas rodadas anteriores e ajustados somente com dados anteriores a R; nenhum target de R participa da escolha ou ajuste.",
@@ -729184,7 +729217,7 @@
     ]
   },
   "ablation_contexto": {
-    "gerado_em": "2026-08-31T05:39:44.601708+00:00",
+    "gerado_em": "2026-08-31T06:43:13.109978+00:00",
     "protocolo": "Walk-forward estrito rodada a rodada. Para prever R, cada modelo e posição é reajustado usando exclusivamente rodadas < R. A comparação de contexto usa as mesmas linhas e bootstrap pareado sobre MAE por rodada.",
     "modelos_fixos": [
       "ridge",
@@ -791220,7 +791253,7 @@
     ]
   },
   "comparacao_v2": {
-    "gerado_em": "2026-08-31T04:51:17.656368+00:00",
+    "gerado_em": "2026-08-31T06:47:26.234575+00:00",
     "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; bootstrap em blocos por rodada, sem recalibrar a V2 olhando o futuro",
     "rotulo_v2": "V2 projeção histórica salva (produção)",
     "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada, em vez de substituir a V2 pelo RF direto do laboratório.",
@@ -792249,7 +792282,7 @@
     "nota": "Mesmo se aprovado no holdout historico, a V2 permanece intocada; validacao prospectiva imutavel continua obrigatoria."
   },
   "significancia": {
-    "gerado_em": "2026-08-31T04:51:14.508574+00:00",
+    "gerado_em": "2026-08-31T06:47:21.531580+00:00",
     "protocolo": "comparação pareada por rodada; bootstrap em blocos de rodada para preservar dependência intra-rodada; usa somente previsões OOS já produzidas pelo backtest nested anti-leakage",
     "bootstrap_amostras": 5000,
     "seed": 42,
@@ -792334,7 +792367,7 @@
     }
   },
   "meta_seletor": {
-    "gerado_em": "2026-08-31T04:51:20.486572+00:00",
+    "gerado_em": "2026-08-31T06:47:29.609847+00:00",
     "protocolo": "meta-seletor walk-forward por posição: para cada rodada R e posição, escolhe V2 ou V3-H usando apenas MAE observado nas até 5 rodadas anteriores; mínimo de 3 rodadas anteriores; em insuficiência mantém V2. Nunca usa resultado da própria R para escolher.",
     "linhas": 4330,
     "rodadas": [
