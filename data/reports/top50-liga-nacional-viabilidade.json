@@ -1,0 +1,96 @@
+{
+  "gerado_em": "2026-08-31T21:34:32.990494+00:00",
+  "estudo": "Top 50 Liga Nacional - viabilidade e proveniencia",
+  "status": "FONTE_PUBLICA_NAO_CONFIRMADA",
+  "regras": {
+    "v2_read_only": true,
+    "sem_autenticacao": true,
+    "sem_credenciais": true,
+    "sem_proxy_por_popularidade": true,
+    "coorte_deve_ser_reproduzivel": true,
+    "historico_deve_respeitar_rodada": true
+  },
+  "probes": [
+    {
+      "nome": "busca_ligas_Liga Nacional",
+      "url": "https://api.cartolafc.globo.com/ligas?q=Liga%20Nacional",
+      "http_status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "json_valido": true,
+      "requer_auth": false,
+      "contem_times": false,
+      "quantidade_times_detectada": 0,
+      "erro": null
+    },
+    {
+      "nome": "busca_ligas_Nacional",
+      "url": "https://api.cartolafc.globo.com/ligas?q=Nacional",
+      "http_status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "json_valido": true,
+      "requer_auth": false,
+      "contem_times": false,
+      "quantidade_times_detectada": 0,
+      "erro": null
+    },
+    {
+      "nome": "busca_ligas_liga nacional",
+      "url": "https://api.cartolafc.globo.com/ligas?q=liga%20nacional",
+      "http_status": 200,
+      "content_type": "application/json;charset=UTF-8",
+      "json_valido": true,
+      "requer_auth": false,
+      "contem_times": false,
+      "quantidade_times_detectada": 0,
+      "erro": null
+    },
+    {
+      "nome": "liga_publica_nacional",
+      "url": "https://api.cartolafc.globo.com/liga/nacional",
+      "http_status": 500,
+      "content_type": "application/json;charset=UTF-8",
+      "json_valido": true,
+      "requer_auth": false,
+      "contem_times": false,
+      "quantidade_times_detectada": 0,
+      "erro": null
+    },
+    {
+      "nome": "liga_publica_classica",
+      "url": "https://api.cartolafc.globo.com/liga/classica",
+      "http_status": 500,
+      "content_type": "application/json;charset=UTF-8",
+      "json_valido": true,
+      "requer_auth": false,
+      "contem_times": false,
+      "quantidade_times_detectada": 0,
+      "erro": null
+    },
+    {
+      "nome": "liga_auth_nacional",
+      "url": "https://api.cartolafc.globo.com/auth/liga/nacional",
+      "http_status": 401,
+      "content_type": "application/json;charset=UTF-8",
+      "json_valido": true,
+      "requer_auth": true,
+      "contem_times": false,
+      "quantidade_times_detectada": 0,
+      "erro": null
+    }
+  ],
+  "fonte_confirmada": null,
+  "metricas_planejadas": [
+    "formacao por rodada",
+    "capitao e multiplicador",
+    "concentracao por clube",
+    "mando e adversario",
+    "perfil de preco e patrimonio",
+    "popularidade versus diferenciais quando disponivel pre-rodada",
+    "persistencia e rotacao de atletas",
+    "exposicao por posicao",
+    "scouts realizados dos atletas escolhidos",
+    "aderencia ao ranking V2/V3 usando apenas previsoes que existiam antes da rodada"
+  ],
+  "proximo_passo": "Buscar fonte oficial/publicamente reproduzivel para identificar a coorte Top 50. Nao iniciar analise comportamental ate a coorte ser auditavel; nao usar popularidade como proxy.",
+  "snapshot_fontes": "data/raw/top50-liga-nacional/auditoria-fontes.json"
+}
