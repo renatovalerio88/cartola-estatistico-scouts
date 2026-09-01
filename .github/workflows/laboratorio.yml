@@ -7,6 +7,7 @@ on:
       - 'scripts/**'
       - 'src/**'
       - 'requirements.txt'
+      - 'requirements-extended.txt'
       - '.github/workflows/laboratorio.yml'
   schedule:
     - cron: '20 9 * * *'
@@ -18,7 +19,7 @@ permissions:
 jobs:
   laboratorio:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
         with:
@@ -27,7 +28,8 @@ jobs:
         with:
           python-version: '3.11'
           cache: pip
-      - run: pip install -r requirements.txt
+      - name: Instalar dependencias completas do laboratorio
+        run: pip install -r requirements-extended.txt
       - name: Sincronizar historico sem escrever na V2
         run: python scripts/sincronizar_base_v2.py
       - name: Auditar scouts e regras
