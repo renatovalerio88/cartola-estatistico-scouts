@@ -11,6 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 RAW = ROOT / "data" / "raw"
 ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
 GENERATOR = ROOT / "scripts" / "gerar_previsao_pre_rodada.py"
+CATBOOST_GENERATOR = ROOT / "scripts" / "gerar_catboost_pre_rodada.py"
+CATBOOST_EVALUATOR = ROOT / "scripts" / "avaliar_catboost_prospectivo.py"
 
 
 def load(path: Path):
@@ -54,10 +56,19 @@ def detectar_rodada_aberta():
     return max(candidatas) if candidatas else None
 
 
+def executar_extensoes_catboost():
+    # O sidecar e independente do lock principal e nunca reescreve snapshots antigos.
+    subprocess.run([sys.executable, str(CATBOOST_GENERATOR)], check=True, cwd=ROOT)
+    # Avaliar aqui garante que o relatorio exista mesmo sem alterar o workflow.
+    subprocess.run([sys.executable, str(CATBOOST_EVALUATOR)], check=True, cwd=ROOT)
+
+
 def main():
     rodada = detectar_rodada_aberta()
     if rodada is None:
         print("Nenhuma rodada aberta sem resultado; nada a congelar.")
+        # Ainda atualiza o placar de sidecars antigos caso alguma rodada tenha fechado.
+        subprocess.run([sys.executable, str(CATBOOST_EVALUATOR)], check=True, cwd=ROOT)
         return
 
     csv_path = ARCHIVE / f"R{rodada:02d}.csv"
@@ -79,9 +90,10 @@ def main():
             f"LOCK R{rodada:02d} já existe e foi validado ({actual[:12]}...). "
             "Snapshot original preservado; nenhuma recomputação permitida."
         )
-        return
+    else:
+        subprocess.run([sys.executable, str(GENERATOR)], check=True, cwd=ROOT)
 
-    subprocess.run([sys.executable, str(GENERATOR)], check=True, cwd=ROOT)
+    executar_extensoes_catboost()
 
 
 if __name__ == "__main__":
