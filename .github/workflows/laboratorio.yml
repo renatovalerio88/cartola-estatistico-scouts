@@ -56,6 +56,8 @@ jobs:
         run: python scripts/backtest_v3s_nested.py
       - name: Validar guardrail raro em pontuacao total nested
         run: python scripts/backtest_v3s_guardrail_raros_nested.py
+      - name: Gate estatistico do guardrail raro
+        run: python scripts/gate_guardrail_raros.py
       - name: Significancia estatistica das arquiteturas
         run: python scripts/significancia_arquiteturas.py
       - name: Comparar V2 historica salva contra V3
