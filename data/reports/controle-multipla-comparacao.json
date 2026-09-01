@@ -1,0 +1,76 @@
+{
+  "gerado_em": "2026-09-01T07:03:05.356002+00:00",
+  "objetivo": "Controlar inflacao de falso positivo apos testar multiplos challengers contra a V2.",
+  "metodo": "p-valor empirico bilateral derivado do bootstrap em blocos por rodada + correcao Holm-Bonferroni (FWER 5%)",
+  "alpha": 0.05,
+  "numero_comparacoes": 3,
+  "amostra": {
+    "linhas_consistentes": 4136,
+    "rodadas_comuns": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24
+    ]
+  },
+  "comparacoes": {
+    "v3s_vs_v2": {
+      "probabilidade_bootstrap_desafiante_melhor": 0.015,
+      "diferenca_mae_desafiante_menos_v2": 0.041305,
+      "ic95": [
+        0.003644,
+        0.080771
+      ],
+      "rodadas_ganhas": 4,
+      "rodadas_perdidas": 10,
+      "p_empirico_bilateral": 0.03,
+      "p_holm": 0.09,
+      "significativo_fwer_5pct": false
+    },
+    "v3h_vs_v2": {
+      "probabilidade_bootstrap_desafiante_melhor": 0.6798,
+      "diferenca_mae_desafiante_menos_v2": -0.01058,
+      "ic95": [
+        -0.054901,
+        0.034164
+      ],
+      "rodadas_ganhas": 8,
+      "rodadas_perdidas": 6,
+      "p_empirico_bilateral": 0.6404,
+      "p_holm": 0.6404,
+      "significativo_fwer_5pct": false
+    },
+    "rf_lab_vs_v2": {
+      "probabilidade_bootstrap_desafiante_melhor": 0.1046,
+      "diferenca_mae_desafiante_menos_v2": 0.036313,
+      "ic95": [
+        -0.022084,
+        0.092721
+      ],
+      "rodadas_ganhas": 5,
+      "rodadas_perdidas": 9,
+      "p_empirico_bilateral": 0.2092,
+      "p_holm": 0.4184,
+      "significativo_fwer_5pct": false
+    }
+  },
+  "challengers_com_evidencia_apos_holm": [],
+  "dois_estagios": {
+    "status": "MANTER_EXPERIMENTAL",
+    "decisao": "NAO_INCORPORAR; manter como experimento ate nova evidencia",
+    "incluido_no_holm_vs_v2": false,
+    "motivo": "aguarda comparacao pareada na mesma amostra comum contra a V2 historica salva"
+  },
+  "regra_decisao": "Nao declarar vencedor final apenas por MAE ou probabilidade bootstrap nominal; exigir delta favoravel e significancia apos Holm na mesma amostra pareada.",
+  "nota": "Este controle e deliberadamente conservador. Ele nao promove modelo para V2 e nao altera producao."
+}
