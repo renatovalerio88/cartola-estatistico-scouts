@@ -1,0 +1,1435 @@
+{
+  "gerado_em": "2026-09-01T01:53:48.280186+00:00",
+  "status": "APROVADA",
+  "objetivo": "Diagnosticar campeoes por MAE em scouts raros e impedir conclusoes espurias causadas por previsoes quase-zero. Este relatorio nao promove nem altera modelos de producao.",
+  "protocolo": "Cruza apenas previsoes OOS dos mesmos folds walk-forward ja auditados. Para cada scout/posicao raro, o campeao por MAE precisa respeitar Brier, calibracao e discriminacao.",
+  "limites": {
+    "brier_max_relativo_ao_melhor": 1.1,
+    "ap_min_relativa_prevalencia": 0.9,
+    "bias_abs_minimo": 0.02,
+    "bias_relativo_prevalencia": 0.5,
+    "colapso_quase_zero": "prob_media <= max(0.001, 10% da prevalencia)"
+  },
+  "anti_leakage_aprovado": true,
+  "competicoes_raras_avaliadas": 37,
+  "campeoes_mae_reprovados_guardrail": 35,
+  "campeoes_mae_com_colapso_quase_zero": 32,
+  "trocas_diagnosticas_sugeridas": 35,
+  "regra_de_uso": "REVISAR_CAMPEAO_MAE significa apenas que o vencedor por MAE nao deve ser adotado automaticamente. Qualquer troca deve ser validada em nested walk-forward de pontuacao total antes de uso.",
+  "resultados": [
+    {
+      "scout": "G",
+      "posicao": "GOL",
+      "n": 227,
+      "eventos": 2,
+      "prevalencia": 0.008811,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.008811,
+        "brier": 0.008811,
+        "average_precision": 0.008811,
+        "prob_media": 0.0,
+        "prevalencia": 0.008811,
+        "calibration_bias": -0.008811,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "shrinkage_eb",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "elastic_net",
+      "avaliacao_recomendado": {
+        "modelo": "elastic_net",
+        "mae": 0.010953,
+        "brier": 0.008785,
+        "average_precision": 0.008281,
+        "prob_media": 0.002172,
+        "prevalencia": 0.008811,
+        "calibration_bias": -0.006639,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "G",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 30,
+      "prevalencia": 0.037783,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.037783,
+        "brier": 0.037783,
+        "average_precision": 0.037783,
+        "prob_media": 0.0,
+        "prevalencia": 0.037783,
+        "calibration_bias": -0.037783,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "shrinkage_eb",
+      "melhor_average_precision": "shrinkage_eb",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.078809,
+        "brier": 0.035413,
+        "average_precision": 0.133201,
+        "prob_media": 0.046017,
+        "prevalencia": 0.037783,
+        "calibration_bias": 0.008234,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "G",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 34,
+      "prevalencia": 0.044855,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.044855,
+        "brier": 0.044855,
+        "average_precision": 0.044855,
+        "prob_media": 0.0,
+        "prevalencia": 0.044855,
+        "calibration_bias": -0.044855,
+        "limite_bias_abs": 0.0224275,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "gradient_boosting",
+      "recomendado_diagnostico": "bayesian_ridge",
+      "avaliacao_recomendado": {
+        "modelo": "bayesian_ridge",
+        "mae": 0.088339,
+        "brier": 0.043057,
+        "average_precision": 0.041283,
+        "prob_media": 0.046466,
+        "prevalencia": 0.044855,
+        "calibration_bias": 0.001611,
+        "limite_bias_abs": 0.0224275,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "G",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 106,
+      "prevalencia": 0.060399,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.064387,
+        "brier": 0.060399,
+        "average_precision": 0.060399,
+        "prob_media": 0.0,
+        "prevalencia": 0.060399,
+        "calibration_bias": -0.060399,
+        "limite_bias_abs": 0.0301995,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "ridge",
+      "avaliacao_recomendado": {
+        "modelo": "ridge",
+        "mae": 0.109791,
+        "brier": 0.057569,
+        "average_precision": 0.081741,
+        "prob_media": 0.050469,
+        "prevalencia": 0.060399,
+        "calibration_bias": -0.00993,
+        "limite_bias_abs": 0.0301995,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "G",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 203,
+      "prevalencia": 0.142556,
+      "vencedor_mae": "ewma",
+      "avaliacao_vencedor_mae": {
+        "modelo": "ewma",
+        "mae": 0.252415,
+        "brier": 0.135484,
+        "average_precision": 0.197189,
+        "prob_media": 0.125073,
+        "prevalencia": 0.142556,
+        "calibration_bias": -0.017483,
+        "limite_bias_abs": 0.071278,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "brier_degradado"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "ridge",
+      "recomendado_diagnostico": "gradient_boosting",
+      "avaliacao_recomendado": {
+        "modelo": "gradient_boosting",
+        "mae": 0.253871,
+        "brier": 0.123491,
+        "average_precision": 0.168054,
+        "prob_media": 0.124071,
+        "prevalencia": 0.142556,
+        "calibration_bias": -0.018485,
+        "limite_bias_abs": 0.071278,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "A",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 65,
+      "prevalencia": 0.081864,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.086902,
+        "brier": 0.081864,
+        "average_precision": 0.081864,
+        "prob_media": 0.0,
+        "prevalencia": 0.081864,
+        "calibration_bias": -0.081864,
+        "limite_bias_abs": 0.040932,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "ridge",
+      "recomendado_diagnostico": "ridge",
+      "avaliacao_recomendado": {
+        "modelo": "ridge",
+        "mae": 0.152522,
+        "brier": 0.076421,
+        "average_precision": 0.115585,
+        "prob_media": 0.075208,
+        "prevalencia": 0.081864,
+        "calibration_bias": -0.006656,
+        "limite_bias_abs": 0.040932,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "A",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 10,
+      "prevalencia": 0.013193,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.013193,
+        "brier": 0.013193,
+        "average_precision": 0.013193,
+        "prob_media": 0.0,
+        "prevalencia": 0.013193,
+        "calibration_bias": -0.013193,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "extra_trees",
+      "recomendado_diagnostico": "elastic_net",
+      "avaliacao_recomendado": {
+        "modelo": "elastic_net",
+        "mae": 0.02035,
+        "brier": 0.013133,
+        "average_precision": 0.019696,
+        "prob_media": 0.007305,
+        "prevalencia": 0.013193,
+        "calibration_bias": -0.005888,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "A",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 104,
+      "prevalencia": 0.059259,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.062108,
+        "brier": 0.059259,
+        "average_precision": 0.059259,
+        "prob_media": 0.0,
+        "prevalencia": 0.059259,
+        "calibration_bias": -0.059259,
+        "limite_bias_abs": 0.0296295,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "elastic_net",
+      "melhor_average_precision": "negative_binomial",
+      "recomendado_diagnostico": "ridge",
+      "avaliacao_recomendado": {
+        "modelo": "ridge",
+        "mae": 0.114391,
+        "brier": 0.055755,
+        "average_precision": 0.100346,
+        "prob_media": 0.059128,
+        "prevalencia": 0.059259,
+        "calibration_bias": -0.000132,
+        "limite_bias_abs": 0.0296295,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "A",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 91,
+      "prevalencia": 0.063904,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.068118,
+        "brier": 0.063904,
+        "average_precision": 0.063904,
+        "prob_media": 0.0,
+        "prevalencia": 0.063904,
+        "calibration_bias": -0.063904,
+        "limite_bias_abs": 0.031952,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "poisson",
+      "recomendado_diagnostico": "elastic_net",
+      "avaliacao_recomendado": {
+        "modelo": "elastic_net",
+        "mae": 0.120948,
+        "brier": 0.060713,
+        "average_precision": 0.073965,
+        "prob_media": 0.058462,
+        "prevalencia": 0.063904,
+        "calibration_bias": -0.005443,
+        "limite_bias_abs": 0.031952,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FT",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 14,
+      "prevalencia": 0.017632,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.017632,
+        "brier": 0.017632,
+        "average_precision": 0.017632,
+        "prob_media": 0.0,
+        "prevalencia": 0.017632,
+        "calibration_bias": -0.017632,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "negative_binomial",
+      "recomendado_diagnostico": "poisson",
+      "avaliacao_recomendado": {
+        "modelo": "poisson",
+        "mae": 0.029031,
+        "brier": 0.017364,
+        "average_precision": 0.019292,
+        "prob_media": 0.011747,
+        "prevalencia": 0.017632,
+        "calibration_bias": -0.005885,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FT",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 8,
+      "prevalencia": 0.010554,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.010554,
+        "brier": 0.010554,
+        "average_precision": 0.010554,
+        "prob_media": 0.0,
+        "prevalencia": 0.010554,
+        "calibration_bias": -0.010554,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "hist_gradient_boosting",
+      "recomendado_diagnostico": "bayesian_ridge",
+      "avaliacao_recomendado": {
+        "modelo": "bayesian_ridge",
+        "mae": 0.01892,
+        "brier": 0.010499,
+        "average_precision": 0.010081,
+        "prob_media": 0.008466,
+        "prevalencia": 0.010554,
+        "calibration_bias": -0.002088,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FT",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 35,
+      "prevalencia": 0.019943,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.019943,
+        "brier": 0.019943,
+        "average_precision": 0.019943,
+        "prob_media": 0.0,
+        "prevalencia": 0.019943,
+        "calibration_bias": -0.019943,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "extra_trees",
+      "avaliacao_recomendado": {
+        "modelo": "extra_trees",
+        "mae": 0.037296,
+        "brier": 0.020522,
+        "average_precision": 0.022374,
+        "prob_media": 0.017362,
+        "prevalencia": 0.019943,
+        "calibration_bias": -0.002581,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FT",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 44,
+      "prevalencia": 0.030899,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.030899,
+        "brier": 0.030899,
+        "average_precision": 0.030899,
+        "prob_media": 0.0,
+        "prevalencia": 0.030899,
+        "calibration_bias": -0.030899,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "bayesian_ridge",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.061759,
+        "brier": 0.031165,
+        "average_precision": 0.033318,
+        "prob_media": 0.031781,
+        "prevalencia": 0.030899,
+        "calibration_bias": 0.000882,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FD",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 104,
+      "prevalencia": 0.130982,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.223089,
+        "brier": 0.116549,
+        "average_precision": 0.166018,
+        "prob_media": 0.104765,
+        "prevalencia": 0.130982,
+        "calibration_bias": -0.026217,
+        "limite_bias_abs": 0.065491,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "melhor_brier": "shrinkage_eb",
+      "melhor_average_precision": "negative_binomial",
+      "recomendado_diagnostico": "gradient_boosting",
+      "avaliacao_recomendado": {
+        "modelo": "gradient_boosting",
+        "mae": 0.223089,
+        "brier": 0.116549,
+        "average_precision": 0.166018,
+        "prob_media": 0.104765,
+        "prevalencia": 0.130982,
+        "calibration_bias": -0.026217,
+        "limite_bias_abs": 0.065491,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "MANTER_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FD",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 64,
+      "prevalencia": 0.084433,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.097625,
+        "brier": 0.084433,
+        "average_precision": 0.084433,
+        "prob_media": 0.0,
+        "prevalencia": 0.084433,
+        "calibration_bias": -0.084433,
+        "limite_bias_abs": 0.0422165,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.165035,
+        "brier": 0.080012,
+        "average_precision": 0.096609,
+        "prob_media": 0.077134,
+        "prevalencia": 0.084433,
+        "calibration_bias": -0.007299,
+        "limite_bias_abs": 0.0422165,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FS",
+      "posicao": "GOL",
+      "n": 227,
+      "eventos": 32,
+      "prevalencia": 0.140969,
+      "vencedor_mae": "media3",
+      "avaliacao_vencedor_mae": {
+        "modelo": "media3",
+        "mae": 0.259912,
+        "brier": 0.141439,
+        "average_precision": 0.193751,
+        "prob_media": 0.131589,
+        "prevalencia": 0.140969,
+        "calibration_bias": -0.00938,
+        "limite_bias_abs": 0.0704845,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "brier_degradado"
+        ]
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "gradient_boosting",
+      "avaliacao_recomendado": {
+        "modelo": "gradient_boosting",
+        "mae": 0.268378,
+        "brier": 0.126427,
+        "average_precision": 0.14945,
+        "prob_media": 0.144338,
+        "prevalencia": 0.140969,
+        "calibration_bias": 0.003369,
+        "limite_bias_abs": 0.0704845,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PS",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 2,
+      "prevalencia": 0.002519,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.002519,
+        "brier": 0.002519,
+        "average_precision": 0.002519,
+        "prob_media": 0.0,
+        "prevalencia": 0.002519,
+        "calibration_bias": -0.002519,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "gradient_boosting",
+      "melhor_average_precision": "elastic_net",
+      "recomendado_diagnostico": "elastic_net",
+      "avaliacao_recomendado": {
+        "modelo": "elastic_net",
+        "mae": 0.006183,
+        "brier": 0.002524,
+        "average_precision": 0.002994,
+        "prob_media": 0.003668,
+        "prevalencia": 0.002519,
+        "calibration_bias": 0.001149,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PS",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 8,
+      "prevalencia": 0.004558,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.004558,
+        "brier": 0.004558,
+        "average_precision": 0.004558,
+        "prob_media": 0.0,
+        "prevalencia": 0.004558,
+        "calibration_bias": -0.004558,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "elastic_net",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.010282,
+        "brier": 0.00479,
+        "average_precision": 0.004796,
+        "prob_media": 0.005613,
+        "prevalencia": 0.004558,
+        "calibration_bias": 0.001055,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PS",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 18,
+      "prevalencia": 0.01264,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.01264,
+        "brier": 0.01264,
+        "average_precision": 0.01264,
+        "prob_media": 0.0,
+        "prevalencia": 0.01264,
+        "calibration_bias": -0.01264,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "hist_gradient_boosting",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.027635,
+        "brier": 0.013016,
+        "average_precision": 0.019651,
+        "prob_media": 0.015048,
+        "prevalencia": 0.01264,
+        "calibration_bias": 0.002407,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "I",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 55,
+      "prevalencia": 0.06927,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.073048,
+        "brier": 0.06927,
+        "average_precision": 0.06927,
+        "prob_media": 0.0,
+        "prevalencia": 0.06927,
+        "calibration_bias": -0.06927,
+        "limite_bias_abs": 0.034635,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "poisson",
+      "recomendado_diagnostico": "ridge",
+      "avaliacao_recomendado": {
+        "modelo": "ridge",
+        "mae": 0.105251,
+        "brier": 0.06648,
+        "average_precision": 0.086967,
+        "prob_media": 0.036706,
+        "prevalencia": 0.06927,
+        "calibration_bias": -0.032564,
+        "limite_bias_abs": 0.034635,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "I",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 31,
+      "prevalencia": 0.040897,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.043536,
+        "brier": 0.040897,
+        "average_precision": 0.040897,
+        "prob_media": 0.0,
+        "prevalencia": 0.040897,
+        "calibration_bias": -0.040897,
+        "limite_bias_abs": 0.0204485,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "poisson",
+      "avaliacao_recomendado": {
+        "modelo": "poisson",
+        "mae": 0.075053,
+        "brier": 0.039641,
+        "average_precision": 0.043023,
+        "prob_media": 0.033476,
+        "prevalencia": 0.040897,
+        "calibration_bias": -0.007421,
+        "limite_bias_abs": 0.0204485,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "I",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 72,
+      "prevalencia": 0.041026,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.044444,
+        "brier": 0.041026,
+        "average_precision": 0.041026,
+        "prob_media": 0.0,
+        "prevalencia": 0.041026,
+        "calibration_bias": -0.041026,
+        "limite_bias_abs": 0.020513,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "shrinkage_eb",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "ridge",
+      "avaliacao_recomendado": {
+        "modelo": "ridge",
+        "mae": 0.077421,
+        "brier": 0.039345,
+        "average_precision": 0.067152,
+        "prob_media": 0.035659,
+        "prevalencia": 0.041026,
+        "calibration_bias": -0.005367,
+        "limite_bias_abs": 0.020513,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "DS",
+      "posicao": "GOL",
+      "n": 227,
+      "eventos": 3,
+      "prevalencia": 0.013216,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.013216,
+        "brier": 0.013216,
+        "average_precision": 0.013216,
+        "prob_media": 0.0,
+        "prevalencia": 0.013216,
+        "calibration_bias": -0.013216,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "ridge",
+      "melhor_average_precision": "hist_gradient_boosting",
+      "recomendado_diagnostico": "random_forest",
+      "avaliacao_recomendado": {
+        "modelo": "random_forest",
+        "mae": 0.020456,
+        "brier": 0.013036,
+        "average_precision": 0.082912,
+        "prob_media": 0.007715,
+        "prevalencia": 0.013216,
+        "calibration_bias": -0.005501,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "GC",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 13,
+      "prevalencia": 0.01715,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.01847,
+        "brier": 0.01715,
+        "average_precision": 0.01715,
+        "prob_media": 0.0,
+        "prevalencia": 0.01715,
+        "calibration_bias": -0.01715,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "hist_gradient_boosting",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.030595,
+        "brier": 0.017829,
+        "average_precision": 0.017492,
+        "prob_media": 0.011836,
+        "prevalencia": 0.01715,
+        "calibration_bias": -0.005314,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "CV",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 8,
+      "prevalencia": 0.010076,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.010076,
+        "brier": 0.010076,
+        "average_precision": 0.010076,
+        "prob_media": 0.0,
+        "prevalencia": 0.010076,
+        "calibration_bias": -0.010076,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "poisson",
+      "recomendado_diagnostico": "poisson",
+      "avaliacao_recomendado": {
+        "modelo": "poisson",
+        "mae": 0.017635,
+        "brier": 0.010025,
+        "average_precision": 0.029727,
+        "prob_media": 0.007653,
+        "prevalencia": 0.010076,
+        "calibration_bias": -0.002422,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "CV",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 10,
+      "prevalencia": 0.013193,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.013193,
+        "brier": 0.013193,
+        "average_precision": 0.013193,
+        "prob_media": 0.0,
+        "prevalencia": 0.013193,
+        "calibration_bias": -0.013193,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "extra_trees",
+      "recomendado_diagnostico": "extra_trees",
+      "avaliacao_recomendado": {
+        "modelo": "extra_trees",
+        "mae": 0.03123,
+        "brier": 0.013822,
+        "average_precision": 0.015832,
+        "prob_media": 0.017908,
+        "prevalencia": 0.013193,
+        "calibration_bias": 0.004715,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "CV",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 17,
+      "prevalencia": 0.009687,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.009687,
+        "brier": 0.009687,
+        "average_precision": 0.009687,
+        "prob_media": 0.0,
+        "prevalencia": 0.009687,
+        "calibration_bias": -0.009687,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "elastic_net",
+      "melhor_average_precision": "random_forest",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.020384,
+        "brier": 0.009985,
+        "average_precision": 0.012655,
+        "prob_media": 0.010698,
+        "prevalencia": 0.009687,
+        "calibration_bias": 0.001011,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "CV",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 6,
+      "prevalencia": 0.004213,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.004213,
+        "brier": 0.004213,
+        "average_precision": 0.004213,
+        "prob_media": 0.0,
+        "prevalencia": 0.004213,
+        "calibration_bias": -0.004213,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "ridge",
+      "melhor_average_precision": "extra_trees",
+      "recomendado_diagnostico": "extra_trees",
+      "avaliacao_recomendado": {
+        "modelo": "extra_trees",
+        "mae": 0.006219,
+        "brier": 0.004233,
+        "average_precision": 0.012059,
+        "prob_media": 0.002017,
+        "prevalencia": 0.004213,
+        "calibration_bias": -0.002197,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "CA",
+      "posicao": "GOL",
+      "n": 227,
+      "eventos": 19,
+      "prevalencia": 0.0837,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.0837,
+        "brier": 0.0837,
+        "average_precision": 0.0837,
+        "prob_media": 0.0,
+        "prevalencia": 0.0837,
+        "calibration_bias": -0.0837,
+        "limite_bias_abs": 0.04185,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "calibracao_degradada",
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "elastic_net",
+      "melhor_average_precision": "elastic_net",
+      "recomendado_diagnostico": "negative_binomial",
+      "avaliacao_recomendado": {
+        "modelo": "negative_binomial",
+        "mae": 0.129127,
+        "brier": 0.078314,
+        "average_precision": 0.136468,
+        "prob_media": 0.054735,
+        "prevalencia": 0.0837,
+        "calibration_bias": -0.028965,
+        "limite_bias_abs": 0.04185,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "CA",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 262,
+      "prevalencia": 0.149288,
+      "vencedor_mae": "media3",
+      "avaliacao_vencedor_mae": {
+        "modelo": "media3",
+        "mae": 0.248813,
+        "brier": 0.151388,
+        "average_precision": 0.1583,
+        "prob_media": 0.120076,
+        "prevalencia": 0.149288,
+        "calibration_bias": -0.029212,
+        "limite_bias_abs": 0.074644,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "brier_degradado"
+        ]
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "extra_trees",
+      "recomendado_diagnostico": "shrinkage_eb",
+      "avaliacao_recomendado": {
+        "modelo": "shrinkage_eb",
+        "mae": 0.254057,
+        "brier": 0.130403,
+        "average_precision": 0.161991,
+        "prob_media": 0.137913,
+        "prevalencia": 0.149288,
+        "calibration_bias": -0.011375,
+        "limite_bias_abs": 0.074644,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "CA",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 155,
+      "prevalencia": 0.108848,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.184698,
+        "brier": 0.100069,
+        "average_precision": 0.115634,
+        "prob_media": 0.091117,
+        "prevalencia": 0.108848,
+        "calibration_bias": -0.017731,
+        "limite_bias_abs": 0.054424,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "melhor_brier": "bayesian_ridge",
+      "melhor_average_precision": "shrinkage_eb",
+      "recomendado_diagnostico": "gradient_boosting",
+      "avaliacao_recomendado": {
+        "modelo": "gradient_boosting",
+        "mae": 0.184698,
+        "brier": 0.100069,
+        "average_precision": 0.115634,
+        "prob_media": 0.091117,
+        "prevalencia": 0.108848,
+        "calibration_bias": -0.017731,
+        "limite_bias_abs": 0.054424,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "MANTER_CAMPEAO_MAE"
+    },
+    {
+      "scout": "FC",
+      "posicao": "GOL",
+      "n": 227,
+      "eventos": 2,
+      "prevalencia": 0.008811,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.008811,
+        "brier": 0.008811,
+        "average_precision": 0.008811,
+        "prob_media": 0.0,
+        "prevalencia": 0.008811,
+        "calibration_bias": -0.008811,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "elastic_net",
+      "melhor_average_precision": "hist_gradient_boosting",
+      "recomendado_diagnostico": "random_forest",
+      "avaliacao_recomendado": {
+        "modelo": "random_forest",
+        "mae": 0.010608,
+        "brier": 0.008879,
+        "average_precision": 0.008811,
+        "prob_media": 0.001762,
+        "prevalencia": 0.008811,
+        "calibration_bias": -0.007049,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PC",
+      "posicao": "LAT",
+      "n": 794,
+      "eventos": 6,
+      "prevalencia": 0.007557,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.007557,
+        "brier": 0.007557,
+        "average_precision": 0.007557,
+        "prob_media": 0.0,
+        "prevalencia": 0.007557,
+        "calibration_bias": -0.007557,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "random_forest",
+      "recomendado_diagnostico": "extra_trees",
+      "avaliacao_recomendado": {
+        "modelo": "extra_trees",
+        "mae": 0.015268,
+        "brier": 0.007844,
+        "average_precision": 0.006998,
+        "prob_media": 0.007569,
+        "prevalencia": 0.007557,
+        "calibration_bias": 1.2e-05,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PC",
+      "posicao": "ZAG",
+      "n": 758,
+      "eventos": 10,
+      "prevalencia": 0.013193,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.013193,
+        "brier": 0.013193,
+        "average_precision": 0.013193,
+        "prob_media": 0.0,
+        "prevalencia": 0.013193,
+        "calibration_bias": -0.013193,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "poisson",
+      "melhor_average_precision": "random_forest",
+      "recomendado_diagnostico": "elastic_net",
+      "avaliacao_recomendado": {
+        "modelo": "elastic_net",
+        "mae": 0.025189,
+        "brier": 0.013259,
+        "average_precision": 0.012416,
+        "prob_media": 0.012072,
+        "prevalencia": 0.013193,
+        "calibration_bias": -0.001121,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PC",
+      "posicao": "MEI",
+      "n": 1755,
+      "eventos": 15,
+      "prevalencia": 0.008547,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.008547,
+        "brier": 0.008547,
+        "average_precision": 0.008547,
+        "prob_media": 0.0,
+        "prevalencia": 0.008547,
+        "calibration_bias": -0.008547,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "elastic_net",
+      "melhor_average_precision": "hist_gradient_boosting",
+      "recomendado_diagnostico": "elastic_net",
+      "avaliacao_recomendado": {
+        "modelo": "elastic_net",
+        "mae": 0.013207,
+        "brier": 0.008509,
+        "average_precision": 0.007888,
+        "prob_media": 0.004714,
+        "prevalencia": 0.008547,
+        "calibration_bias": -0.003833,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PC",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 3,
+      "prevalencia": 0.002107,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.002107,
+        "brier": 0.002107,
+        "average_precision": 0.002107,
+        "prob_media": 0.0,
+        "prevalencia": 0.002107,
+        "calibration_bias": -0.002107,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "elastic_net",
+      "melhor_average_precision": "hist_gradient_boosting",
+      "recomendado_diagnostico": "elastic_net",
+      "avaliacao_recomendado": {
+        "modelo": "elastic_net",
+        "mae": 0.003551,
+        "brier": 0.002106,
+        "average_precision": 0.002038,
+        "prob_media": 0.001446,
+        "prevalencia": 0.002107,
+        "calibration_bias": -0.00066,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    },
+    {
+      "scout": "PP",
+      "posicao": "ATA",
+      "n": 1424,
+      "eventos": 4,
+      "prevalencia": 0.002809,
+      "vencedor_mae": "gradient_boosting",
+      "avaliacao_vencedor_mae": {
+        "modelo": "gradient_boosting",
+        "mae": 0.002809,
+        "brier": 0.002809,
+        "average_precision": 0.002809,
+        "prob_media": 0.0,
+        "prevalencia": 0.002809,
+        "calibration_bias": -0.002809,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": false,
+        "falhas": [
+          "colapso_quase_zero"
+        ]
+      },
+      "melhor_brier": "gradient_boosting",
+      "melhor_average_precision": "ewma",
+      "recomendado_diagnostico": "ewma",
+      "avaliacao_recomendado": {
+        "modelo": "ewma",
+        "mae": 0.005529,
+        "brier": 0.00303,
+        "average_precision": 0.064607,
+        "prob_media": 0.002869,
+        "prevalencia": 0.002809,
+        "calibration_bias": 6e-05,
+        "limite_bias_abs": 0.02,
+        "aprovado_guardrail": true,
+        "falhas": []
+      },
+      "acao": "REVISAR_CAMPEAO_MAE"
+    }
+  ]
+}
