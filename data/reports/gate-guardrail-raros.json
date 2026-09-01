@@ -1,0 +1,252 @@
+{
+  "gerado_em": "2026-09-01T03:57:03.701321+00:00",
+  "status": "MANTER_COMO_DIAGNOSTICO",
+  "objetivo": "Gate estatistico para decidir se o guardrail de scouts raros melhora a pontuacao total fora da amostra. Nao promove V2 nem altera producao.",
+  "fonte": "data/reports/backtest-v3s-guardrail-raros-nested.json",
+  "anti_leakage_aprovado": true,
+  "linhas": 4149,
+  "rodadas": [
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    22,
+    23,
+    24
+  ],
+  "checagens_raras_inner": 324,
+  "trocas_modelo_inner": 105,
+  "geral": {
+    "base": {
+      "n": 4149,
+      "mae": 3.037192,
+      "rmse": 4.094565,
+      "bias": 0.023621
+    },
+    "guardrail": {
+      "n": 4149,
+      "mae": 3.022285,
+      "rmse": 4.048384,
+      "bias": 0.038097
+    },
+    "delta_mae_guardrail_menos_base": -0.014907
+  },
+  "bootstrap_rodadas": {
+    "metodo": "bootstrap em blocos por rodada",
+    "n_boot": 20000,
+    "seed": 20260901,
+    "delta_mae_guardrail_menos_base_media_boot": -0.014927,
+    "ic95": [
+      -0.041299,
+      0.015486
+    ],
+    "prob_guardrail_melhor": 0.8461,
+    "prob_guardrail_nao_pior": 0.8461
+  },
+  "vitorias_por_rodada": {
+    "base": 4,
+    "guardrail": 10,
+    "empate": 0
+  },
+  "por_rodada": [
+    {
+      "rodada": 10,
+      "mae_base": 2.952591,
+      "mae_guardrail": 2.86042,
+      "delta": -0.092171,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 11,
+      "mae_base": 2.791817,
+      "mae_guardrail": 2.770258,
+      "delta": -0.021559,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 12,
+      "mae_base": 3.028907,
+      "mae_guardrail": 3.024204,
+      "delta": -0.004703,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 13,
+      "mae_base": 2.830046,
+      "mae_guardrail": 2.813835,
+      "delta": -0.01621,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 14,
+      "mae_base": 3.214662,
+      "mae_guardrail": 3.141132,
+      "delta": -0.07353,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 15,
+      "mae_base": 3.076403,
+      "mae_guardrail": 3.035292,
+      "delta": -0.041111,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 16,
+      "mae_base": 3.077026,
+      "mae_guardrail": 3.044727,
+      "delta": -0.032299,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 17,
+      "mae_base": 3.190416,
+      "mae_guardrail": 3.155663,
+      "delta": -0.034754,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 18,
+      "mae_base": 3.09328,
+      "mae_guardrail": 3.114044,
+      "delta": 0.020764,
+      "vencedor": "base"
+    },
+    {
+      "rodada": 19,
+      "mae_base": 3.214085,
+      "mae_guardrail": 3.119146,
+      "delta": -0.094939,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 20,
+      "mae_base": 3.089413,
+      "mae_guardrail": 3.093003,
+      "delta": 0.003589,
+      "vencedor": "base"
+    },
+    {
+      "rodada": 22,
+      "mae_base": 2.928043,
+      "mae_guardrail": 2.925814,
+      "delta": -0.00223,
+      "vencedor": "guardrail"
+    },
+    {
+      "rodada": 23,
+      "mae_base": 3.046719,
+      "mae_guardrail": 3.05808,
+      "delta": 0.011361,
+      "vencedor": "base"
+    },
+    {
+      "rodada": 24,
+      "mae_base": 3.065346,
+      "mae_guardrail": 3.201634,
+      "delta": 0.136288,
+      "vencedor": "base"
+    }
+  ],
+  "por_posicao": {
+    "ATA": {
+      "base": {
+        "n": 1177,
+        "mae": 3.343832,
+        "rmse": 4.681029,
+        "bias": 0.037329
+      },
+      "guardrail": {
+        "n": 1177,
+        "mae": 3.364236,
+        "rmse": 4.644747,
+        "bias": 0.079594
+      },
+      "delta_mae_guardrail_menos_base": 0.020404
+    },
+    "GOL": {
+      "base": {
+        "n": 267,
+        "mae": 3.455156,
+        "rmse": 4.097046,
+        "bias": 0.25712
+      },
+      "guardrail": {
+        "n": 267,
+        "mae": 3.436243,
+        "rmse": 4.081621,
+        "bias": 0.270751
+      },
+      "delta_mae_guardrail_menos_base": -0.018913
+    },
+    "LAT": {
+      "base": {
+        "n": 661,
+        "mae": 3.35974,
+        "rmse": 4.224542,
+        "bias": 0.154646
+      },
+      "guardrail": {
+        "n": 661,
+        "mae": 3.30329,
+        "rmse": 4.142311,
+        "bias": 0.150394
+      },
+      "delta_mae_guardrail_menos_base": -0.05645
+    },
+    "MEI": {
+      "base": {
+        "n": 1417,
+        "mae": 2.656005,
+        "rmse": 3.698233,
+        "bias": -0.007017
+      },
+      "guardrail": {
+        "n": 1417,
+        "mae": 2.631077,
+        "rmse": 3.64398,
+        "bias": 0.013231
+      },
+      "delta_mae_guardrail_menos_base": -0.024928
+    },
+    "ZAG": {
+      "base": {
+        "n": 627,
+        "mae": 2.805016,
+        "rmse": 3.596632,
+        "bias": -0.17043
+      },
+      "guardrail": {
+        "n": 627,
+        "mae": 2.791971,
+        "rmse": 3.572369,
+        "bias": -0.201066
+      },
+      "delta_mae_guardrail_menos_base": -0.013045
+    }
+  },
+  "regressoes_posicionais_materiais": [
+    {
+      "posicao": "ATA",
+      "delta_mae": 0.020404
+    }
+  ],
+  "limiares": {
+    "probabilidade_minima_melhoria": 0.9,
+    "regressao_mae_posicao_max": 0.02
+  },
+  "criterios": {
+    "mae_total_nao_degrada": true,
+    "probabilidade_melhoria_suficiente": false,
+    "sem_regressao_posicional_material": false,
+    "anti_leakage_origem_aprovado": true
+  },
+  "decisao": "NAO_INCORPORAR_NO_MOTOR; manter guardrail como diagnostico/explicabilidade"
+}
