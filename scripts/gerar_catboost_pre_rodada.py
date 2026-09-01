@@ -10,12 +10,16 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import sys
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
 
 from scripts.backtest_v3s_catboost_nested import (
     POSITIONS,
@@ -26,7 +30,6 @@ from scripts.backtest_v3s_catboost_nested import (
 )
 from scripts.gerar_previsao_pre_rodada import detectar_rodada_aberta, montar_frame_atual
 
-ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "data" / "derived" / "dataset-walk-forward.csv"
 ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
 
@@ -138,7 +141,7 @@ def main() -> int:
         "csv": str(csv_path.relative_to(ROOT)),
         "csv_sha256": hashlib.sha256(data).hexdigest(),
         "fontes_sha256": {str(p.relative_to(ROOT)): sha256(p) for p in fontes if p.exists()},
-        "modelos_selecionados": dict(sorted(contagem.items(), key=lambda kv: (-kv[1], kv[0]))),
+        "modelos_selecionados": dict(sorted(contagem.items(), key=lambda kv: (-kv[1], kv[0])),
         "selecoes_modelos": selecoes,
         "v2_producao_alterada": False,
     }
