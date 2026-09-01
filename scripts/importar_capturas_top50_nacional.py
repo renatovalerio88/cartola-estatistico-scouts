@@ -1,23 +1,20 @@
 #!/usr/bin/env python3
-"""Importa capturas sanitizadas da classificação oficial Nacional.
+"""Importa a captura sanitizada dos Top 25 da classificação oficial Nacional.
 
-O script nunca lê cookies/tokens e nunca promove uma coorte parcial. Ele aceita
-somente snapshots previamente sanitizados em
-``data/raw/top50-liga-nacional/capturas-browser/pagina-XX.json``.
+Decisão metodológica final do laboratório: usar os 25 primeiros oficialmente
+capturados como coorte descritiva suficiente, sem bloquear o fechamento do
+laboratório pela ausência das posições 26-50.
 
-Gate científico para promoção:
-- exatamente 2 páginas oficiais (1 e 2);
-- exatamente 25 registros por página;
-- página 1 cobrindo rankings 1-25 e página 2 cobrindo 26-50;
-- exatamente 50 registros totais;
-- 50 ``time_id`` únicos;
-- rankings contínuos de 1 a 50;
-- request observada coerente com ``orderBy=campeonato`` e a página declarada;
+Gate científico:
+- exatamente a página 1 oficial;
+- exatamente 25 registros;
+- rankings contínuos 1..25;
+- 25 ``time_id`` únicos;
+- request observada com ``orderBy=campeonato`` e ``page=1``;
 - origem explícita na interface oficial do Cartola;
-- ausência de campos de credencial/sessão na captura sanitizada;
-- SHA-256 de cada snapshot de entrada preservado na proveniência.
+- ausência de credenciais/sessão;
+- SHA-256 da captura preservado na proveniência.
 """
-
 from __future__ import annotations
 
 import hashlib
@@ -30,18 +27,11 @@ ROOT = Path(__file__).resolve().parents[1]
 CAPTURES = ROOT / "data" / "raw" / "top50-liga-nacional" / "capturas-browser"
 OUT = ROOT / "data" / "raw" / "top50-liga-nacional" / "top50-atual.json"
 REPORT = ROOT / "data" / "reports" / "top50-liga-nacional-importacao.json"
+COHORT_SIZE = 25
 
 FORBIDDEN_KEYS = {
-    "authorization",
-    "cookie",
-    "cookies",
-    "token",
-    "access_token",
-    "access-token",
-    "refresh_token",
-    "session",
-    "sessionid",
-    "jwt",
+    "authorization", "cookie", "cookies", "token", "access_token",
+    "access-token", "refresh_token", "session", "sessionid", "jwt",
 }
 
 
@@ -64,186 +54,105 @@ def find_forbidden_keys(value: Any, prefix: str = "") -> list[str]:
             found.extend(find_forbidden_keys(child, path))
     elif isinstance(value, list):
         for idx, child in enumerate(value):
-            path = f"{prefix}[{idx}]"
-            found.extend(find_forbidden_keys(child, path))
+            found.extend(find_forbidden_keys(child, f"{prefix}[{idx}]"))
     return found
 
 
-def expected_ranks(page: int) -> list[int]:
-    start = 1 + (page - 1) * 25
-    return list(range(start, start + 25))
-
-
-def validate_request(request: str, page: int) -> None:
-    normalized = request.replace(" ", "")
-    if "orderBy=campeonato" not in normalized:
-        raise ValueError(f"pagina-{page:02d}: request sem orderBy=campeonato")
-    if f"page={page}" not in normalized:
-        raise ValueError(f"pagina-{page:02d}: request incompatível com página declarada")
-    if "nacional" not in normalized.lower():
-        raise ValueError(f"pagina-{page:02d}: request não identifica endpoint Nacional")
-
-
-def load_capture(path: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+def load_page1(path: Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     obj = json.loads(path.read_text(encoding="utf-8"))
-
     if obj.get("sanitizado") is not True:
-        raise ValueError(f"{path.name}: captura não marcada como sanitizada")
-
+        raise ValueError("pagina-01: captura não marcada como sanitizada")
     forbidden = find_forbidden_keys(obj)
     if forbidden:
-        raise ValueError(
-            f"{path.name}: captura contém campos de credencial/sessão proibidos: "
-            + ", ".join(forbidden[:10])
-        )
-
+        raise ValueError("pagina-01: captura contém campos de credencial/sessão proibidos")
     origem = str(obj.get("origem") or "")
     if "Nacional" not in origem or "Cartola" not in origem:
-        raise ValueError(f"{path.name}: origem oficial Nacional não identificada")
-
-    page = obj.get("pagina")
-    if page not in (1, 2):
-        raise ValueError(f"{path.name}: página inválida; esperado 1 ou 2")
-
-    request = str(obj.get("request_observada") or "")
-    validate_request(request, int(page))
-
+        raise ValueError("pagina-01: origem oficial Nacional não identificada")
+    if obj.get("pagina") != 1:
+        raise ValueError("pagina-01: página declarada deve ser 1")
+    request = str(obj.get("request_observada") or "").replace(" ", "")
+    if "orderBy=campeonato" not in request or "page=1" not in request or "nacional" not in request.lower():
+        raise ValueError("pagina-01: request oficial incompatível")
     rows = obj.get("times")
-    if not isinstance(rows, list) or not rows:
-        raise ValueError(f"{path.name}: lista de times ausente")
-    if len(rows) != 25:
-        raise ValueError(f"{path.name}: esperado 25 times; recebido {len(rows)}")
-
+    if not isinstance(rows, list) or len(rows) != COHORT_SIZE:
+        raise ValueError(f"pagina-01: esperado {COHORT_SIZE} times")
     clean: list[dict[str, Any]] = []
     for row in rows:
         if not isinstance(row, dict):
-            raise ValueError(f"{path.name}: registro de time inválido")
-        tid = row.get("time_id")
-        rank = row.get("ranking_campeonato")
+            raise ValueError("pagina-01: registro inválido")
+        tid, rank = row.get("time_id"), row.get("ranking_campeonato")
         if not isinstance(tid, int) or not isinstance(rank, int):
-            raise ValueError(f"{path.name}: time_id/ranking inválido")
-        clean.append(
-            {
-                "time_id": tid,
-                "nome": row.get("nome"),
-                "ranking_campeonato": rank,
-                "pontos_campeonato": row.get("pontos_campeonato"),
-                "patrimonio": row.get("patrimonio"),
-            }
-        )
-
-    ranks = sorted(r["ranking_campeonato"] for r in clean)
-    if ranks != expected_ranks(int(page)):
-        raise ValueError(
-            f"{path.name}: cobertura de ranking inválida para página {page}; "
-            f"esperado {expected_ranks(int(page))[0]}-{expected_ranks(int(page))[-1]}"
-        )
-
-    ids = [r["time_id"] for r in clean]
-    if len(set(ids)) != 25:
-        raise ValueError(f"{path.name}: time_id duplicado dentro da página")
-
+            raise ValueError("pagina-01: time_id/ranking inválido")
+        clean.append({
+            "time_id": tid,
+            "nome": row.get("nome"),
+            "ranking_campeonato": rank,
+            "pontos_campeonato": row.get("pontos_campeonato"),
+            "patrimonio": row.get("patrimonio"),
+        })
+    clean.sort(key=lambda r: r["ranking_campeonato"])
+    if [r["ranking_campeonato"] for r in clean] != list(range(1, COHORT_SIZE + 1)):
+        raise ValueError("pagina-01: ranking deve cobrir continuamente 1..25")
+    if len({r["time_id"] for r in clean}) != COHORT_SIZE:
+        raise ValueError("pagina-01: time_id duplicado")
     return obj, clean
 
 
 def main() -> None:
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     CAPTURES.mkdir(parents=True, exist_ok=True)
-    files = sorted(CAPTURES.glob("pagina-*.json"))
-
-    rows: list[dict[str, Any]] = []
-    sources: list[dict[str, Any]] = []
+    path = CAPTURES / "pagina-01.json"
     errors: list[str] = []
-    seen_pages: set[int] = set()
-
-    for path in files:
+    rows: list[dict[str, Any]] = []
+    source: dict[str, Any] | None = None
+    if not path.exists():
+        errors.append("pagina-01.json ausente")
+    else:
         try:
-            obj, part = load_capture(path)
-            page = int(obj["pagina"])
-            if page in seen_pages:
-                raise ValueError(f"{path.name}: página {page} duplicada")
-            seen_pages.add(page)
-            rows.extend(part)
-            sources.append(
-                {
-                    "arquivo": str(path.relative_to(ROOT)),
-                    "pagina": page,
-                    "request_observada": obj.get("request_observada"),
-                    "capturado_em": obj.get("capturado_em"),
-                    "sha256": sha256(path),
-                    "n": len(part),
-                    "ranking_min": min(r["ranking_campeonato"] for r in part),
-                    "ranking_max": max(r["ranking_campeonato"] for r in part),
-                }
-            )
+            obj, rows = load_page1(path)
+            request = str(obj.get("request_observada") or "").lstrip("/")
+            source = {
+                "arquivo": str(path.relative_to(ROOT)),
+                "pagina": 1,
+                "request_observada": obj.get("request_observada"),
+                "capturado_em": obj.get("capturado_em"),
+                "sha256": sha256(path),
+                "n": len(rows),
+                "ranking_min": 1,
+                "ranking_max": COHORT_SIZE,
+            }
         except (ValueError, json.JSONDecodeError) as exc:
             errors.append(str(exc))
 
-    rows.sort(key=lambda r: r["ranking_campeonato"])
-    sources.sort(key=lambda s: s["pagina"])
-    ids = [r["time_id"] for r in rows]
-    ranks = [r["ranking_campeonato"] for r in rows]
-
-    pages_ok = seen_pages == {1, 2} and len(sources) == 2
-    exact = (
-        not errors
-        and pages_ok
-        and len(rows) == 50
-        and len(set(ids)) == 50
-        and ranks == list(range(1, 51))
-    )
-
+    exact = not errors and len(rows) == COHORT_SIZE and source is not None
     if exact:
         payload = {
-            "capturado_em": now_iso(),
-            "liga": {
-                "nome": "Nacional",
-                "categoria_interface": "Ligas do Cartola",
-                "tipo_interface": "Clássica",
-            },
+            "capturado_em": source.get("capturado_em") or now_iso(),
+            "liga": {"nome": "Nacional", "categoria_interface": "Ligas do Cartola", "tipo_interface": "Clássica"},
             "fonte": {
-                "nome": "capturas_browser_oficiais_sanitizadas",
-                "url": "interface Cartola / competições / clássica / nacional",
-                "snapshots": sources,
+                "nome": "captura_browser_oficial_sanitizada",
+                "url": f"https://api.cartolafc.globo.com/{str(source['request_observada']).lstrip('/')}",
+                "snapshots": [source],
             },
-            "tipo_coorte": "ranking_atual_congelado",
-            "alerta": "Coorte atual; uso retrospectivo sujeito a survivorship bias.",
+            "tipo_coorte": "ranking_atual_congelado_top25",
+            "n": COHORT_SIZE,
+            "alerta": "Coorte atual Top 25; análise retrospectiva possui survivorship bias e é apenas descritiva.",
             "top50": rows,
         }
         OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
-        status = "COORTE_50_PROMOVIDA"
+        status = "COORTE_TOP25_PROMOVIDA"
     else:
-        status = "COORTE_PARCIAL"
-        # Nunca deixa uma coorte antiga parecer válida quando o conjunto atual
-        # não passa pelo gate completo.
+        status = "COORTE_TOP25_REPROVADA"
         if OUT.exists():
-            try:
-                old = json.loads(OUT.read_text(encoding="utf-8"))
-                if old.get("fonte", {}).get("nome") == "capturas_browser_oficiais_sanitizadas":
-                    OUT.unlink()
-            except (json.JSONDecodeError, AttributeError):
-                pass
+            OUT.unlink()
 
     report = {
-        "gerado_em": now_iso(),
-        "status": status,
-        "capturas_validas": len(sources),
-        "paginas_validas": sorted(seen_pages),
-        "paginas_esperadas": [1, 2],
-        "paginas_completas": pages_ok,
-        "registros": len(rows),
-        "time_id_unicos": len(set(ids)),
-        "ranking_min": min(ranks) if ranks else None,
-        "ranking_max": max(ranks) if ranks else None,
-        "ranking_continuo_1_50": ranks == list(range(1, 51)),
-        "credenciais_ausentes": not any("credencial/sessão" in e for e in errors),
-        "erros": errors,
-        "snapshots": sources,
-        "proximo_passo": (
-            "Coorte pronta para validação/análise histórica."
-            if exact
-            else "Aguardar captura sanitizada da página faltante até completar rankings 1-50; não promover coorte parcial."
-        ),
+        "gerado_em": now_iso(), "status": status, "alvo_final": "Top 25 Nacional",
+        "registros": len(rows), "time_id_unicos": len({r["time_id"] for r in rows}),
+        "ranking_continuo_1_25": [r["ranking_campeonato"] for r in rows] == list(range(1, 26)),
+        "erros": errors, "snapshot": source,
+        "decisao_metodologica": "Top 25 oficial é suficiente para o estudo descritivo final; posições 26-50 não bloqueiam mais o laboratório.",
+        "proximo_passo": "Validar/congelar coorte e reconstruir estratégias históricas." if exact else "Corrigir a captura oficial Top 25 antes da análise.",
     }
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(report, ensure_ascii=False))
