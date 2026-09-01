@@ -1,8 +1,24 @@
 {
-  "gerado_em": "2026-09-01T07:03:05.258779+00:00",
-  "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; bootstrap em blocos por rodada, sem recalibrar a V2 olhando o futuro",
+  "gerado_em": "2026-09-01T07:54:16.950305+00:00",
+  "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; CatBoost nested e dois estágios entram somente quando possuem previsão OOS para a mesma chave; bootstrap em blocos por rodada, sem recalibrar a V2 nem qualquer desafiante olhando a rodada avaliada",
   "rotulo_v2": "V2 projeção histórica salva (produção)",
-  "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada, em vez de substituir a V2 pelo RF direto do laboratório.",
+  "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada. As comparações opcionais registram explicitamente sua própria interseção pareada para evitar falsa equivalência de amostras.",
+  "fontes_opcionais": {
+    "catboost_nested": {
+      "arquivo": "data/reports/backtest-v3s-catboost-nested.json",
+      "coluna": "v3s_catboost_nested",
+      "disponivel": true,
+      "linhas_arquivo": 4149,
+      "linhas_casadas": 4149
+    },
+    "dois_estagios": {
+      "arquivo": "data/reports/backtest-v3s-dois-estagios.json",
+      "coluna": "v3s_dois_estagios",
+      "disponivel": true,
+      "linhas_arquivo": 4149,
+      "linhas_casadas": 4149
+    }
+  },
   "rodadas_v3": [
     10,
     11,
@@ -41,6 +57,50 @@
     23,
     24
   ],
+  "amostras_comparacoes_opcionais": {
+    "catboost_nested_vs_v2": {
+      "linhas": 4136,
+      "rodadas": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        24
+      ],
+      "mae_v2": 2.99582,
+      "mae_desafiante": 2.974478
+    },
+    "dois_estagios_vs_v2": {
+      "linhas": 4136,
+      "rodadas": [
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        22,
+        23,
+        24
+      ],
+      "mae_v2": 2.99582,
+      "mae_desafiante": 2.97939
+    }
+  },
   "geral": {
     "v2_projecao_salva": {
       "mae": 2.99582,
@@ -60,6 +120,14 @@
     },
     "direta_ewma": {
       "mae": 3.15542,
+      "n": 4136
+    },
+    "v3s_catboost_nested": {
+      "mae": 2.974478,
+      "n": 4136
+    },
+    "v3s_dois_estagios": {
+      "mae": 2.97939,
       "n": 4136
     }
   },
@@ -84,6 +152,14 @@
       "direta_ewma": {
         "mae": 3.391173,
         "n": 1174
+      },
+      "v3s_catboost_nested": {
+        "mae": 3.287496,
+        "n": 1174
+      },
+      "v3s_dois_estagios": {
+        "mae": 3.285338,
+        "n": 1174
       }
     },
     "GOL": {
@@ -105,6 +181,14 @@
       },
       "direta_ewma": {
         "mae": 3.678634,
+        "n": 264
+      },
+      "v3s_catboost_nested": {
+        "mae": 3.31547,
+        "n": 264
+      },
+      "v3s_dois_estagios": {
+        "mae": 3.208725,
         "n": 264
       }
     },
@@ -128,6 +212,14 @@
       "direta_ewma": {
         "mae": 3.478561,
         "n": 660
+      },
+      "v3s_catboost_nested": {
+        "mae": 3.326689,
+        "n": 660
+      },
+      "v3s_dois_estagios": {
+        "mae": 3.371373,
+        "n": 660
       }
     },
     "MEI": {
@@ -149,6 +241,14 @@
       },
       "direta_ewma": {
         "mae": 2.74955,
+        "n": 1416
+      },
+      "v3s_catboost_nested": {
+        "mae": 2.57279,
+        "n": 1416
+      },
+      "v3s_dois_estagios": {
+        "mae": 2.576459,
         "n": 1416
       }
     },
@@ -172,6 +272,14 @@
       "direta_ewma": {
         "mae": 3.069463,
         "n": 622
+      },
+      "v3s_catboost_nested": {
+        "mae": 2.779664,
+        "n": 622
+      },
+      "v3s_dois_estagios": {
+        "mae": 2.805939,
+        "n": 622
       }
     }
   },
@@ -183,7 +291,9 @@
         "v3s_nested": 2.954308,
         "v3h_hibrido": 2.817874,
         "direta_rf_lab": 2.819819,
-        "direta_ewma": 3.126691
+        "direta_ewma": 3.126691,
+        "v3s_catboost_nested": 2.594511,
+        "v3s_dois_estagios": 2.568453
       }
     },
     "11": {
@@ -193,7 +303,9 @@
         "v3s_nested": 2.791817,
         "v3h_hibrido": 2.743965,
         "direta_rf_lab": 2.794752,
-        "direta_ewma": 2.944529
+        "direta_ewma": 2.944529,
+        "v3s_catboost_nested": 2.725225,
+        "v3s_dois_estagios": 2.755095
       }
     },
     "12": {
@@ -203,7 +315,9 @@
         "v3s_nested": 3.027192,
         "v3h_hibrido": 2.986376,
         "direta_rf_lab": 3.021526,
-        "direta_ewma": 3.050067
+        "direta_ewma": 3.050067,
+        "v3s_catboost_nested": 2.99404,
+        "v3s_dois_estagios": 3.028316
       }
     },
     "13": {
@@ -213,7 +327,9 @@
         "v3s_nested": 2.829499,
         "v3h_hibrido": 2.903625,
         "direta_rf_lab": 3.030056,
-        "direta_ewma": 2.91624
+        "direta_ewma": 2.91624,
+        "v3s_catboost_nested": 2.961485,
+        "v3s_dois_estagios": 3.001043
       }
     },
     "14": {
@@ -223,7 +339,9 @@
         "v3s_nested": 3.219535,
         "v3h_hibrido": 3.188923,
         "direta_rf_lab": 3.247897,
-        "direta_ewma": 3.367189
+        "direta_ewma": 3.367189,
+        "v3s_catboost_nested": 2.996205,
+        "v3s_dois_estagios": 3.016074
       }
     },
     "15": {
@@ -233,7 +351,9 @@
         "v3s_nested": 3.066956,
         "v3h_hibrido": 2.901726,
         "direta_rf_lab": 2.870585,
-        "direta_ewma": 3.194263
+        "direta_ewma": 3.194263,
+        "v3s_catboost_nested": 2.80978,
+        "v3s_dois_estagios": 2.772097
       }
     },
     "16": {
@@ -243,7 +363,9 @@
         "v3s_nested": 3.07903,
         "v3h_hibrido": 3.028933,
         "direta_rf_lab": 3.067461,
-        "direta_ewma": 3.085697
+        "direta_ewma": 3.085697,
+        "v3s_catboost_nested": 2.985656,
+        "v3s_dois_estagios": 3.003569
       }
     },
     "17": {
@@ -253,7 +375,9 @@
         "v3s_nested": 3.190416,
         "v3h_hibrido": 3.185328,
         "direta_rf_lab": 3.244323,
-        "direta_ewma": 3.266668
+        "direta_ewma": 3.266668,
+        "v3s_catboost_nested": 3.171056,
+        "v3s_dois_estagios": 3.156966
       }
     },
     "18": {
@@ -263,7 +387,9 @@
         "v3s_nested": 3.089806,
         "v3h_hibrido": 3.048093,
         "direta_rf_lab": 3.078104,
-        "direta_ewma": 3.210691
+        "direta_ewma": 3.210691,
+        "v3s_catboost_nested": 3.242204,
+        "v3s_dois_estagios": 3.238765
       }
     },
     "19": {
@@ -273,7 +399,9 @@
         "v3s_nested": 3.214085,
         "v3h_hibrido": 3.135041,
         "direta_rf_lab": 3.180349,
-        "direta_ewma": 3.299954
+        "direta_ewma": 3.299954,
+        "v3s_catboost_nested": 3.177545,
+        "v3s_dois_estagios": 3.190719
       }
     },
     "20": {
@@ -283,7 +411,9 @@
         "v3s_nested": 3.087139,
         "v3h_hibrido": 3.036863,
         "direta_rf_lab": 3.127845,
-        "direta_ewma": 3.13303
+        "direta_ewma": 3.13303,
+        "v3s_catboost_nested": 2.66707,
+        "v3s_dois_estagios": 2.664921
       }
     },
     "22": {
@@ -293,7 +423,9 @@
         "v3s_nested": 2.914743,
         "v3h_hibrido": 2.815524,
         "direta_rf_lab": 2.832959,
-        "direta_ewma": 3.107928
+        "direta_ewma": 3.107928,
+        "v3s_catboost_nested": 2.923586,
+        "v3s_dois_estagios": 2.931279
       }
     },
     "23": {
@@ -303,7 +435,9 @@
         "v3s_nested": 3.04696,
         "v3h_hibrido": 2.965833,
         "direta_rf_lab": 2.992368,
-        "direta_ewma": 3.288143
+        "direta_ewma": 3.288143,
+        "v3s_catboost_nested": 3.158475,
+        "v3s_dois_estagios": 3.158189
       }
     },
     "24": {
@@ -313,7 +447,9 @@
         "v3s_nested": 3.065346,
         "v3h_hibrido": 3.092325,
         "direta_rf_lab": 3.198895,
-        "direta_ewma": 3.247971
+        "direta_ewma": 3.247971,
+        "v3s_catboost_nested": 3.312805,
+        "v3s_dois_estagios": 3.306517
       }
     }
   },
@@ -400,6 +536,62 @@
         "22": -0.046329,
         "23": -0.014688,
         "24": 0.068863
+      }
+    },
+    "catboost_nested_vs_v2": {
+      "diferenca_mae_desafiante_menos_base": -0.019922,
+      "ic95": [
+        -0.11822,
+        0.0746
+      ],
+      "probabilidade_bootstrap_desafiante_melhor": 0.654,
+      "rodadas_ganhas": 6,
+      "rodadas_perdidas": 8,
+      "empates": 0,
+      "evidencia": "inconclusivo",
+      "por_rodada": {
+        "10": -0.385297,
+        "11": -0.135524,
+        "12": -0.021505,
+        "13": 0.111127,
+        "14": -0.173337,
+        "15": -0.208429,
+        "16": 0.099709,
+        "17": 0.025454,
+        "18": 0.290803,
+        "19": 0.027202,
+        "20": -0.287604,
+        "22": 0.044298,
+        "23": 0.151418,
+        "24": 0.182773
+      }
+    },
+    "dois_estagios_vs_v2": {
+      "diferenca_mae_desafiante_menos_base": -0.014754,
+      "ic95": [
+        -0.116752,
+        0.08245
+      ],
+      "probabilidade_bootstrap_desafiante_melhor": 0.6064,
+      "rodadas_ganhas": 5,
+      "rodadas_perdidas": 9,
+      "empates": 0,
+      "evidencia": "inconclusivo",
+      "por_rodada": {
+        "10": -0.411355,
+        "11": -0.105654,
+        "12": 0.012771,
+        "13": 0.150685,
+        "14": -0.153469,
+        "15": -0.246111,
+        "16": 0.117622,
+        "17": 0.011364,
+        "18": 0.287364,
+        "19": 0.040376,
+        "20": -0.289753,
+        "22": 0.051991,
+        "23": 0.151132,
+        "24": 0.176485
       }
     }
   }

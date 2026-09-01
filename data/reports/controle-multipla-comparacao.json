@@ -1,10 +1,10 @@
 {
-  "gerado_em": "2026-09-01T07:03:05.356002+00:00",
+  "gerado_em": "2026-09-01T07:54:17.044702+00:00",
   "objetivo": "Controlar inflacao de falso positivo apos testar multiplos challengers contra a V2.",
   "metodo": "p-valor empirico bilateral derivado do bootstrap em blocos por rodada + correcao Holm-Bonferroni (FWER 5%)",
   "alpha": 0.05,
-  "numero_comparacoes": 3,
-  "amostra": {
+  "numero_comparacoes": 5,
+  "amostra_base": {
     "linhas_consistentes": 4136,
     "rodadas_comuns": [
       10,
@@ -23,6 +23,7 @@
       24
     ]
   },
+  "nota_amostras": "Comparacoes opcionais como CatBoost nested e dois estagios usam sua propria intersecao pareada V2/desafiante, registrada no relatorio de comparacao; entram no mesmo controle Holm apenas porque cada p-valor foi obtido contra a V2 historica salva sem olhar a rodada avaliada.",
   "comparacoes": {
     "v3s_vs_v2": {
       "probabilidade_bootstrap_desafiante_melhor": 0.015,
@@ -34,7 +35,7 @@
       "rodadas_ganhas": 4,
       "rodadas_perdidas": 10,
       "p_empirico_bilateral": 0.03,
-      "p_holm": 0.09,
+      "p_holm": 0.15,
       "significativo_fwer_5pct": false
     },
     "v3h_vs_v2": {
@@ -47,7 +48,7 @@
       "rodadas_ganhas": 8,
       "rodadas_perdidas": 6,
       "p_empirico_bilateral": 0.6404,
-      "p_holm": 0.6404,
+      "p_holm": 1.0,
       "significativo_fwer_5pct": false
     },
     "rf_lab_vs_v2": {
@@ -60,7 +61,75 @@
       "rodadas_ganhas": 5,
       "rodadas_perdidas": 9,
       "p_empirico_bilateral": 0.2092,
-      "p_holm": 0.4184,
+      "p_holm": 0.8368,
+      "significativo_fwer_5pct": false
+    },
+    "catboost_nested_vs_v2": {
+      "probabilidade_bootstrap_desafiante_melhor": 0.654,
+      "diferenca_mae_desafiante_menos_v2": -0.019922,
+      "ic95": [
+        -0.11822,
+        0.0746
+      ],
+      "rodadas_ganhas": 6,
+      "rodadas_perdidas": 8,
+      "amostra_pareada": {
+        "linhas": 4136,
+        "rodadas": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          22,
+          23,
+          24
+        ],
+        "mae_v2": 2.99582,
+        "mae_desafiante": 2.974478
+      },
+      "p_empirico_bilateral": 0.692,
+      "p_holm": 1.0,
+      "significativo_fwer_5pct": false
+    },
+    "dois_estagios_vs_v2": {
+      "probabilidade_bootstrap_desafiante_melhor": 0.6064,
+      "diferenca_mae_desafiante_menos_v2": -0.014754,
+      "ic95": [
+        -0.116752,
+        0.08245
+      ],
+      "rodadas_ganhas": 5,
+      "rodadas_perdidas": 9,
+      "amostra_pareada": {
+        "linhas": 4136,
+        "rodadas": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          22,
+          23,
+          24
+        ],
+        "mae_v2": 2.99582,
+        "mae_desafiante": 2.97939
+      },
+      "p_empirico_bilateral": 0.7872,
+      "p_holm": 1.0,
       "significativo_fwer_5pct": false
     }
   },
@@ -68,9 +137,42 @@
   "dois_estagios": {
     "status": "MANTER_EXPERIMENTAL",
     "decisao": "NAO_INCORPORAR; manter como experimento ate nova evidencia",
-    "incluido_no_holm_vs_v2": false,
-    "motivo": "aguarda comparacao pareada na mesma amostra comum contra a V2 historica salva"
+    "incluido_no_holm_vs_v2": true,
+    "resultado_holm": {
+      "probabilidade_bootstrap_desafiante_melhor": 0.6064,
+      "diferenca_mae_desafiante_menos_v2": -0.014754,
+      "ic95": [
+        -0.116752,
+        0.08245
+      ],
+      "rodadas_ganhas": 5,
+      "rodadas_perdidas": 9,
+      "amostra_pareada": {
+        "linhas": 4136,
+        "rodadas": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          16,
+          17,
+          18,
+          19,
+          20,
+          22,
+          23,
+          24
+        ],
+        "mae_v2": 2.99582,
+        "mae_desafiante": 2.97939
+      },
+      "p_empirico_bilateral": 0.7872,
+      "p_holm": 1.0,
+      "significativo_fwer_5pct": false
+    }
   },
-  "regra_decisao": "Nao declarar vencedor final apenas por MAE ou probabilidade bootstrap nominal; exigir delta favoravel e significancia apos Holm na mesma amostra pareada.",
+  "regra_decisao": "Nao declarar vencedor final apenas por MAE ou probabilidade bootstrap nominal; exigir delta favoravel e significancia apos Holm em comparacao pareada contra a V2.",
   "nota": "Este controle e deliberadamente conservador. Ele nao promove modelo para V2 e nao altera producao."
 }
