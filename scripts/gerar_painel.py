@@ -42,6 +42,7 @@ def main():
         "backtest_v3s_nested": load("backtest-v3s-nested.json"),
         "backtest_v3s_catboost": load("backtest-v3s-catboost-nested.json"),
         "backtest_v3s_dois_estagios": load("backtest-v3s-dois-estagios.json"),
+        "gate_dois_estagios": load("gate-dois-estagios.json"),
         "ablation_participacao_enriquecida": load("ablation-participacao-enriquecida.json"),
         "ablation_descanso_brasileirao": load("ablation-descanso-brasileirao.json"),
         "ablation_calendario_externo": load("ablation-calendario-externo.json"),
@@ -54,6 +55,7 @@ def main():
         "ablation_catboost_contexto": load("ablation-catboost-contexto-nested.json"),
         "comparacao_v2": load("comparacao-v2-oficial-v3.json"),
         "comparacao_catboost_v2": load("comparacao-catboost-off-v2.json"),
+        "controle_multipla_comparacao": load("controle-multipla-comparacao.json"),
         "ranking_arquiteturas_comum": load("ranking-arquiteturas-comum.json"),
         "seletor_posicional_temporal": load("seletor-posicional-temporal.json"),
         "holdout_posicional": load("holdout-posicional-catboost-v2.json"),
@@ -64,7 +66,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, eventos raros e seu gate nested, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estágios, ablations, calibrações e holdout posicional.")
+    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, eventos raros, gates nested, controle de múltiplas comparações, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estágios, ablations, calibrações e holdout posicional.")
 
 
 if __name__ == "__main__":
