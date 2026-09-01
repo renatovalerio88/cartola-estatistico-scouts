@@ -78,6 +78,10 @@ jobs:
         run: python scripts/meta_seletor_v2_v3.py
       - name: Gerar ou validar lock pre-rodada imutavel
         run: python scripts/gerenciar_lock_pre_rodada.py
+      - name: Auditar locks pre-rodada imutaveis
+        run: python scripts/auditar_previsoes_imutaveis.py
+      - name: Avaliar previsoes prospectivas ja resolvidas
+        run: python scripts/avaliar_previsoes_prospectivas.py
       - name: Congelar decomposicao explicavel por scouts
         run: python scripts/gerar_explicabilidade_pre_rodada.py
       - name: Auditar explicabilidade sem informacao pos-rodada
