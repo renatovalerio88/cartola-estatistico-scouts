@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Valida e congela snapshots auditáveis da coorte Top 50 da Liga Nacional.
+"""Valida e congela snapshots auditáveis da coorte Top 50 da Nacional oficial.
 
 O estudo Top 50 só pode avançar quando ``top50-atual.json`` vier de uma fonte
 oficial/reproduzível já aprovada pela auditoria. Este módulo adiciona uma
 segunda barreira independente antes da análise histórica:
 
 - exige exatamente 50 ``time_id`` únicos;
+- exige identidade da liga oficial ``Nacional`` exibida em ``Ligas do Cartola``;
 - exige proveniência e instante de captura;
 - rejeita URLs fora dos domínios oficiais usados pelo Cartola/Globo;
 - valida ranking 1..50 quando o ranking é fornecido em massa;
@@ -35,6 +36,7 @@ REPORT = ROOT / "data" / "reports" / "top50-liga-nacional-coorte.json"
 
 ALLOWED_HOSTS = {
     "api.cartolafc.globo.com",
+    "api.cartola.globo.com",
     "cartolafc.globo.com",
     "ge.globo.com",
     "globoesporte.globo.com",
@@ -99,6 +101,22 @@ def validate_source(source: Any) -> tuple[str, str]:
     return name, url
 
 
+def validate_identity(obj: dict[str, Any]) -> dict[str, Any]:
+    liga = obj.get("liga")
+    if not isinstance(liga, dict):
+        fail("identidade da liga oficial ausente")
+    nome = str(liga.get("nome") or "").strip()
+    categoria = str(liga.get("categoria_interface") or "").strip()
+    tipo = str(liga.get("tipo_interface") or "").strip()
+    if nome.casefold() != "nacional":
+        fail("coorte não está identificada como liga Nacional oficial", {"nome": nome})
+    if categoria.casefold() != "ligas do cartola":
+        fail("coorte não pertence à categoria oficial Ligas do Cartola", {"categoria": categoria})
+    if tipo and tipo.casefold() != "clássica":
+        fail("tipo da liga oficial inesperado", {"tipo": tipo})
+    return {"nome": nome, "categoria_interface": categoria, "tipo_interface": tipo or None}
+
+
 def validate_ranks(teams: list[dict[str, Any]]) -> dict[str, Any]:
     ranks = [t.get("ranking_campeonato") for t in teams]
     numeric = [int(r) for r in ranks if isinstance(r, (int, float)) and float(r).is_integer()]
@@ -124,10 +142,16 @@ def main() -> None:
             "gerado_em": now_iso(),
             "status": "AGUARDANDO_COORTE_AUDITAVEL",
             "apta_para_analise": False,
+            "alvo": {
+                "nome": "Nacional",
+                "categoria_interface": "Ligas do Cartola",
+                "tipo_interface": "Clássica",
+            },
             "motivo": "top50-atual.json ainda não existe porque nenhuma fonte pública oficial foi confirmada",
             "regras": {
                 "exatamente_50_times": True,
                 "time_id_unico": True,
+                "identidade_nacional_oficial": True,
                 "proveniencia_obrigatoria": True,
                 "snapshot_sha256": True,
                 "sem_proxy_popularidade": True,
@@ -142,6 +166,7 @@ def main() -> None:
     except (OSError, json.JSONDecodeError) as exc:
         fail("arquivo da coorte inválido", {"erro": str(exc)})
 
+    identity = validate_identity(obj)
     captured = obj.get("capturado_em")
     if not isinstance(captured, str) or not captured.strip():
         fail("capturado_em ausente")
@@ -166,9 +191,10 @@ def main() -> None:
     frozen = SNAPSHOT_DIR / frozen_name
 
     frozen_payload = {
-        "schema_version": 1,
+        "schema_version": 2,
         "congelado_em": now_iso(),
         "capturado_em": captured,
+        "liga": identity,
         "fonte": {"nome": source_name, "url": source_url},
         "coorte_sha256": sha,
         "n": 50,
@@ -186,6 +212,7 @@ def main() -> None:
         "gerado_em": now_iso(),
         "status": "COORTE_APROVADA_E_CONGELADA",
         "apta_para_analise": True,
+        "liga": identity,
         "capturado_em": captured,
         "fonte": {"nome": source_name, "url": source_url},
         "n": 50,
