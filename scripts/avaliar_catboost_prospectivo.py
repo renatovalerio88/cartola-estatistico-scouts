@@ -5,14 +5,17 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 import numpy as np
 
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
 from scripts.avaliar_previsoes_prospectivas import carregar_pontuados, metricas, numero
 
-ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
 OUT = ROOT / "data" / "reports" / "avaliacao-prospectiva-catboost-imutavel.json"
 MIN_PONTUADOS = 100
