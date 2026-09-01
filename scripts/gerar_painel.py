@@ -64,11 +64,14 @@ def main():
         "significancia": load("significancia-arquiteturas.json"),
         "meta_seletor": load("meta-seletor-v2-v3.json"),
         "calibracao_catboost": load("calibracao-catboost-nested-resumo.json"),
+        "top50_liga_nacional_viabilidade": load("top50-liga-nacional-viabilidade.json"),
+        "top50_liga_nacional_coorte": load("top50-liga-nacional-coorte.json"),
+        "top50_liga_nacional_estrategias": load("top50-liga-nacional-estrategias.json"),
     }
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com placares prospectivos imutaveis (incluindo CatBoost), explicabilidade por scouts, auditorias, clima prospectivo, campeonatos, eventos raros, gates nested, controle de multiplas comparacoes, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estagios, ablations, calibracoes e holdout posicional.")
+    print("Painel V3 atualizado com placares prospectivos imutaveis (incluindo CatBoost), explicabilidade por scouts, auditorias, clima prospectivo, campeonatos, eventos raros, gates nested, controle de multiplas comparacoes, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estagios, ablations, calibracoes, holdout posicional e estudo auditavel do Top 50 da Liga Nacional.")
 
 
 if __name__ == "__main__":
