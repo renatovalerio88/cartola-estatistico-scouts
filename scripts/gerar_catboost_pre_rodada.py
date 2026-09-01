@@ -141,7 +141,7 @@ def main() -> int:
         "csv": str(csv_path.relative_to(ROOT)),
         "csv_sha256": hashlib.sha256(data).hexdigest(),
         "fontes_sha256": {str(p.relative_to(ROOT)): sha256(p) for p in fontes if p.exists()},
-        "modelos_selecionados": dict(sorted(contagem.items(), key=lambda kv: (-kv[1], kv[0])),
+        "modelos_selecionados": dict(sorted(contagem.items(), key=lambda kv: (-kv[1], kv[0]))),
         "selecoes_modelos": selecoes,
         "v2_producao_alterada": False,
     }
