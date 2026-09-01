@@ -27,6 +27,7 @@ def main():
         "auditoria_universo": load("auditoria-universo-jogadores.json"),
         "auditoria_vazamento": load("auditoria-vazamento-temporal.json"),
         "auditoria_previsoes_imutaveis": load("auditoria-previsoes-imutaveis.json"),
+        "avaliacao_prospectiva_imutavel": load("avaliacao-prospectiva-imutavel.json"),
         "auditoria_explicabilidade_pre_rodada": load("auditoria-explicabilidade-pre-rodada.json"),
         "explicabilidade_pre_rodada_status": load("explicabilidade-pre-rodada.json"),
         "explicabilidade_pre_rodada": load_latest_explicabilidade(),
@@ -66,7 +67,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, eventos raros, gates nested, controle de múltiplas comparações, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estágios, ablations, calibrações e holdout posicional.")
+    print("Painel V3 atualizado com placar prospectivo imutavel, explicabilidade por scouts, auditorias, clima prospectivo, campeonatos, eventos raros, gates nested, controle de multiplas comparacoes, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estagios, ablations, calibracoes e holdout posicional.")
 
 
 if __name__ == "__main__":
