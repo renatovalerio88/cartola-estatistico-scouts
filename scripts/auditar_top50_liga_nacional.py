@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Audita fontes públicas para o estudo Top 50 da Liga Nacional do Cartola.
+"""Audita fontes públicas para o estudo Top 50 da liga Nacional oficial do Cartola.
 
 Objetivo científico:
-- descobrir se o ranking nacional atual pode ser obtido de fonte pública/reproduzível;
+- descobrir se o ranking nacional atual pode ser obtido de fonte oficial/reproduzível;
+- tratar como alvo a liga oficial exibida pelo Cartola em "Ligas do Cartola > Nacional > Clássica";
 - extrair ids dos times somente quando a estrutura da resposta for inequívoca;
 - nunca exigir autenticação nem armazenar credenciais;
-- nunca inferir Top 50 a partir de popularidade ou fontes parciais;
+- nunca inferir Top 50 a partir de popularidade ou de uma liga criada por usuário com nome parecido;
 - produzir relatório explícito quando a fonte não estiver confirmada.
 
 Este script é deliberadamente conservador. Ele prepara o estudo comportamental
@@ -15,7 +16,6 @@ sem contaminar o laboratório de projeção e sem tocar no repositório V2.
 from __future__ import annotations
 
 import json
-import re
 from dataclasses import dataclass, asdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -38,12 +38,15 @@ HEADERS = {
 class Probe:
     nome: str
     url: str
+    tipo: str = "descoberta"
     http_status: int | None = None
     content_type: str | None = None
     json_valido: bool = False
     requer_auth: bool = False
     contem_times: bool = False
     quantidade_times_detectada: int = 0
+    identidade_nacional_detectada: bool = False
+    candidato_promocao: bool = False
     erro: str | None = None
 
 
@@ -152,30 +155,65 @@ def ranking_is_credible(teams: list[dict[str, Any]]) -> bool:
             ranks.append(float(rank))
         if isinstance(t.get("pontos_campeonato"), (int, float)):
             points.append(float(t["pontos_campeonato"]))
-    # Uma lista Top 50 confiável deve expor pontuação/ranking do campeonato em massa.
     return len(ranks) >= 40 or len(points) >= 40
+
+
+def identity_is_nacional(data: Any) -> bool:
+    """Procura identidade inequívoca da liga oficial Nacional no payload.
+
+    Não basta a palavra aparecer em texto solto. Exigimos um objeto com nome/slug
+    compatível e sinais de entidade de liga. A busca pública serve apenas para
+    descoberta; ela nunca é promovida automaticamente a coorte.
+    """
+    for d in iter_dicts(data):
+        nome = str(d.get("nome") or "").strip().casefold()
+        slug = str(d.get("slug") or "").strip().casefold()
+        has_league_signal = any(
+            k in d
+            for k in (
+                "liga_id",
+                "tipo",
+                "editorial",
+                "patrocinador",
+                "quantidade_times",
+                "url_flamula_svg",
+                "url_flamula_png",
+            )
+        )
+        if has_league_signal and (nome == "nacional" or slug == "nacional"):
+            return True
+    return False
 
 
 def main() -> None:
     REPORT.parent.mkdir(parents=True, exist_ok=True)
     RAW_DIR.mkdir(parents=True, exist_ok=True)
 
-    queries = ["Liga Nacional", "Nacional", "liga nacional"]
-    candidates: list[tuple[str, str]] = []
-    for q in queries:
-        candidates.append((f"busca_ligas_{q}", f"https://api.cartolafc.globo.com/ligas?q={quote(q)}"))
+    # Fontes de descoberta podem revelar slug/metadados, mas NÃO podem ser
+    # promovidas sozinhas, pois existem ligas de usuários com nomes parecidos.
+    candidates: list[tuple[str, str, str]] = []
+    for q in ("Nacional", "Liga Nacional", "liga nacional"):
+        candidates.extend([
+            (f"busca_ligas_{q}", f"https://api.cartolafc.globo.com/ligas?q={quote(q)}", "descoberta"),
+            (f"busca_geral_{q}", f"https://api.cartolafc.globo.com/busca?q={quote(q)}", "descoberta"),
+        ])
+
+    # Endpoints historicamente documentados pelo ecossistema Cartola. São
+    # auditados porque pertencem aos hosts oficiais; respostas 401/403 são
+    # registradas como bloqueio legítimo, nunca contornadas.
     candidates.extend([
-        ("liga_publica_nacional", "https://api.cartolafc.globo.com/liga/nacional"),
-        ("liga_publica_classica", "https://api.cartolafc.globo.com/liga/classica"),
-        ("liga_auth_nacional", "https://api.cartolafc.globo.com/auth/liga/nacional"),
+        ("liga_publica_nacional", "https://api.cartolafc.globo.com/liga/nacional", "direta"),
+        ("liga_auth_nacional", "https://api.cartolafc.globo.com/auth/liga/nacional", "direta"),
+        ("campeoes_nacionais", "https://api.cartolafc.globo.com/logged/ligas/campeoes-nacionais", "direta"),
+        ("rankings_cartola", "https://api.cartola.globo.com/rankings", "ranking_oficial"),
     ])
 
     probes: list[Probe] = []
     credible_source: dict[str, Any] | None = None
     all_payloads: dict[str, Any] = {}
 
-    for nome, url in candidates:
-        probe = Probe(nome=nome, url=url)
+    for nome, url, tipo in candidates:
+        probe = Probe(nome=nome, url=url, tipo=tipo)
         response, data, error = get_json(url)
         if error:
             probe.erro = error
@@ -186,14 +224,25 @@ def main() -> None:
         probe.content_type = response.headers.get("content-type")
         probe.requer_auth = response.status_code in (401, 403)
         probe.json_valido = data is not None
+
         if data is not None:
             all_payloads[nome] = data
+            probe.identidade_nacional_detectada = identity_is_nacional(data)
             raw_candidates = extract_team_candidates(data)
             normalized = [normalize_team(x) for x in raw_candidates]
             probe.quantidade_times_detectada = len(normalized)
             probe.contem_times = len(normalized) > 0
-            if credible_source is None and ranking_is_credible(normalized):
-                # Ordenação preferencial pelo ranking oficial; fallback por pontos.
+
+            # Descoberta nunca promove coorte. Em uma rota direta, exigimos a
+            # identidade Nacional. Em um endpoint explicitamente de ranking
+            # oficial, a própria semântica da rota é aceita como identidade,
+            # mas a massa de ranking/pontos ainda precisa passar o gate.
+            source_identity_ok = (
+                tipo == "ranking_oficial" or (tipo == "direta" and probe.identidade_nacional_detectada)
+            )
+            probe.candidato_promocao = source_identity_ok and ranking_is_credible(normalized)
+
+            if credible_source is None and probe.candidato_promocao:
                 def sort_key(t: dict[str, Any]) -> tuple[int, float]:
                     rank = t.get("ranking_campeonato")
                     if isinstance(rank, (int, float)) and rank > 0:
@@ -207,7 +256,19 @@ def main() -> None:
 
     raw_snapshot = RAW_DIR / "auditoria-fontes.json"
     raw_snapshot.write_text(
-        json.dumps({"capturado_em": now_iso(), "payloads": all_payloads}, ensure_ascii=False, indent=2),
+        json.dumps(
+            {
+                "capturado_em": now_iso(),
+                "alvo_confirmado": {
+                    "nome": "Nacional",
+                    "categoria_interface": "Ligas do Cartola",
+                    "tipo_interface": "Clássica",
+                },
+                "payloads": all_payloads,
+            },
+            ensure_ascii=False,
+            indent=2,
+        ),
         encoding="utf-8",
     )
 
@@ -217,6 +278,11 @@ def main() -> None:
             json.dumps(
                 {
                     "capturado_em": now_iso(),
+                    "liga": {
+                        "nome": "Nacional",
+                        "categoria_interface": "Ligas do Cartola",
+                        "tipo_interface": "Clássica",
+                    },
                     "fonte": {"nome": credible_source["nome"], "url": credible_source["url"]},
                     "top50": credible_source["top50"],
                 },
@@ -233,19 +299,26 @@ def main() -> None:
     else:
         status = "FONTE_PUBLICA_NAO_CONFIRMADA"
         proximo_passo = (
-            "Buscar fonte oficial/publicamente reproduzivel para identificar a coorte Top 50. "
-            "Nao iniciar analise comportamental ate a coorte ser auditavel; nao usar popularidade como proxy."
+            "A fonte pública ainda não entregou uma coorte inequívoca da liga oficial Nacional. "
+            "Próxima alternativa segura: observar no navegador a requisição que a própria tela "
+            "Nacional faz e registrar apenas endpoint/estrutura sanitizada, sem senha, cookie ou token."
         )
 
     report = {
         "gerado_em": now_iso(),
-        "estudo": "Top 50 Liga Nacional - viabilidade e proveniencia",
+        "estudo": "Top 50 Nacional oficial - viabilidade e proveniencia",
+        "alvo_confirmado": {
+            "nome": "Nacional",
+            "categoria_interface": "Ligas do Cartola",
+            "tipo_interface": "Clássica",
+        },
         "status": status,
         "regras": {
             "v2_read_only": True,
             "sem_autenticacao": True,
             "sem_credenciais": True,
             "sem_proxy_por_popularidade": True,
+            "sem_liga_homonima_de_usuario": True,
             "coorte_deve_ser_reproduzivel": True,
             "historico_deve_respeitar_rodada": True,
         },
