@@ -34,6 +34,10 @@ def main():
         "clima_pre_rodada": load("clima-pre-rodada.json"),
         "campeonato": load("campeonato-modelos.json"),
         "campeonato_estendido": load("campeonato-modelos-estendido.json"),
+        "auditoria_eventos_raros": load("auditoria-eventos-raros.json"),
+        "guardrail_scouts_raros": load("guardrail-scouts-raros.json"),
+        "backtest_guardrail_raros_nested": load("backtest-v3s-guardrail-raros-nested.json"),
+        "gate_guardrail_raros": load("gate-guardrail-raros.json"),
         "backtest_pontos": load("backtest-pontos-scouts.json"),
         "backtest_v3s_nested": load("backtest-v3s-nested.json"),
         "backtest_v3s_catboost": load("backtest-v3s-catboost-nested.json"),
@@ -60,7 +64,7 @@ def main():
     SITE_DATA.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
-    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estágios, ablations, calibrações e holdout posicional.")
+    print("Painel V3 atualizado com explicabilidade por scouts, auditorias, previsões imutáveis, clima prospectivo, campeonatos, eventos raros e seu gate nested, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estágios, ablations, calibrações e holdout posicional.")
 
 
 if __name__ == "__main__":
