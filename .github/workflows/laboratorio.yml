@@ -58,6 +58,14 @@ jobs:
         run: python scripts/backtest_v3s_guardrail_raros_nested.py
       - name: Gate estatistico do guardrail raro
         run: python scripts/gate_guardrail_raros.py
+      - name: Calibrar participacao do modelo em dois estagios
+        run: python scripts/calibrar_participacao_dois_estagios.py
+      - name: Calibrar producao condicional do modelo em dois estagios
+        run: python scripts/calibrar_producao_condicional_dois_estagios.py
+      - name: Backtest nested do modelo em dois estagios
+        run: python scripts/backtest_v3s_dois_estagios.py
+      - name: Gate estatistico do modelo em dois estagios
+        run: python scripts/gate_dois_estagios.py
       - name: Significancia estatistica das arquiteturas
         run: python scripts/significancia_arquiteturas.py
       - name: Comparar V2 historica salva contra V3
