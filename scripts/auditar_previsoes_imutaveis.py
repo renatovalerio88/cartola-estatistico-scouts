@@ -189,7 +189,13 @@ def audit_snapshot(manifest_path: Path) -> dict:
 
 
 def main() -> int:
-    manifests = sorted(PRED_ROOT.glob("*/R*.manifest.json"))
+    # O sidecar CatBoost usa Rxx.catboost.manifest.json e possui auditoria/hash próprios.
+    # Este auditor deve validar somente o lock principal Rxx.manifest.json.
+    manifests = sorted(
+        path
+        for path in PRED_ROOT.glob("*/R*.manifest.json")
+        if ROUND_RE.match(path.name)
+    )
     snapshots = [audit_snapshot(path) for path in manifests]
     reprovados = [s for s in snapshots if s.get("status") != "APROVADA"]
 
