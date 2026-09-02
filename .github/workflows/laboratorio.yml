@@ -23,6 +23,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
@@ -90,11 +91,50 @@ jobs:
         run: python scripts/auditar_explicabilidade_pre_rodada.py
       - name: Gerar painel
         run: python scripts/gerar_painel.py
-      - name: Commit dos resultados reproduziveis
+      - name: Commit dos resultados reproduziveis com retry transacional
+        shell: bash
         run: |
+          set -euo pipefail
+          PATHS=(data/raw data/derived data/reports predictions site/dados.json)
+          SNAPSHOT="$(mktemp -d)"
+          trap 'rm -rf "$SNAPSHOT"' EXIT
+
+          for path in "${PATHS[@]}"; do
+            if [[ -e "$path" ]]; then
+              mkdir -p "$SNAPSHOT/$(dirname "$path")"
+              cp -a "$path" "$SNAPSHOT/$path"
+            fi
+          done
+
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add data/raw data/derived data/reports predictions site/dados.json
-          git diff --cached --quiet || git commit -m 'data: atualizar laboratorio scouts v3'
-          git pull --rebase origin main
-          git push
+
+          for tentativa in 1 2 3 4; do
+            git fetch origin main
+            git reset --hard origin/main
+
+            for path in "${PATHS[@]}"; do
+              if [[ -e "$SNAPSHOT/$path" ]]; then
+                rm -rf "$path"
+                mkdir -p "$(dirname "$path")"
+                cp -a "$SNAPSHOT/$path" "$path"
+              fi
+            done
+
+            git add "${PATHS[@]}"
+            if git diff --cached --quiet; then
+              echo 'Nenhum resultado novo para publicar.'
+              exit 0
+            fi
+
+            git commit -m 'data: atualizar laboratorio scouts v3'
+            if git push origin HEAD:main; then
+              echo "Resultados publicados na tentativa $tentativa."
+              exit 0
+            fi
+
+            echo "main avançou durante a publicação; repetindo sobre o novo HEAD ($tentativa/4)."
+          done
+
+          echo 'Falha ao publicar resultados após 4 tentativas sem sobrescrever main.' >&2
+          exit 1
