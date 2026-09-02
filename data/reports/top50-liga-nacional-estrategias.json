@@ -1,7 +1,291 @@
 {
-  "gerado_em": "2026-09-01T21:00:39.759248+00:00",
-  "estudo": "Estratégias históricas da coorte Top 50 Liga Nacional",
-  "status": "AGUARDANDO_COORTE_AUDITAVEL",
-  "motivo": "coorte Top 50 auditável ainda não existe",
-  "proximo_passo": "Não analisar até existir fonte oficial/reproduzível com exatamente 50 time_id."
+  "gerado_em": "2026-09-02T04:54:03.186928+00:00",
+  "estudo": "Estratégias históricas da coorte atual Top 25 Liga Nacional",
+  "status": "ANALISE_DESCRITIVA_CONCLUIDA",
+  "proveniencia_coorte": {
+    "nome": "captura_browser_oficial_sanitizada",
+    "url": "https://api.cartolafc.globo.com/nacional?orderBy=campeonato&page=1",
+    "snapshots": [
+      {
+        "arquivo": "data/raw/top50-liga-nacional/capturas-browser/pagina-01.json",
+        "pagina": 1,
+        "request_observada": "nacional?orderBy=campeonato&page=1",
+        "capturado_em": "2026-09-01T14:40:24-03:00",
+        "sha256": "7c1d0b83c5dc127d0eb5c9cc64ad372e9807db3ff5de9f783edc4b29455828db",
+        "n": 25,
+        "ranking_min": 1,
+        "ranking_max": 25
+      }
+    ]
+  },
+  "coorte_capturada_em": "2026-09-01T14:40:24-03:00",
+  "alertas_metodologicos": [
+    "A coorte definida pelo ranking atual possui survivorship bias ao ser analisada retrospectivamente.",
+    "Resultados do Top 25 são descritivos e não entram automaticamente como features/pesos do V3.",
+    "Qualquer regra inspirada nos melhores times deve vencer ablation/walk-forward antes de ser incorporada."
+  ],
+  "cobertura": {
+    "rodadas_com_dados": 25,
+    "time_rodadas": 625,
+    "media_times_por_rodada": 25.0
+  },
+  "estrategias": {
+    "formacoes": {
+      "4-3-3": 603,
+      "4-4-2": 19,
+      "3-4-3": 3
+    },
+    "posicoes_capitao": {
+      "ATA": 578,
+      "MEI": 45,
+      "LAT": 2
+    },
+    "media_max_jogadores_mesmo_clube": 4.3552,
+    "media_fracao_clubes_unicos": 0.5006666666666667,
+    "media_custo_escalacao": 139.028736,
+    "media_patrimonio": 159.60886399999998,
+    "media_pontos": 92.00091796875,
+    "media_rotacao_entre_rodadas": 0.7872222222222222
+  },
+  "por_rodada": [
+    {
+      "rodada": 1,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 78.376826171875,
+      "media_rotacao": null
+    },
+    {
+      "rodada": 2,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 93.419638671875,
+      "media_rotacao": 0.95
+    },
+    {
+      "rodada": 3,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 98.82677734375,
+      "media_rotacao": 0.9033333333333333
+    },
+    {
+      "rodada": 4,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 96.39841796875,
+      "media_rotacao": 0.93
+    },
+    {
+      "rodada": 5,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 24,
+        "4-4-2": 1
+      },
+      "media_pontos": 98.669609375,
+      "media_rotacao": 0.9433333333333332
+    },
+    {
+      "rodada": 6,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 20,
+        "4-4-2": 4,
+        "3-4-3": 1
+      },
+      "media_pontos": 78.83677734375,
+      "media_rotacao": 0.85
+    },
+    {
+      "rodada": 7,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 83.71998046875,
+      "media_rotacao": 0.76
+    },
+    {
+      "rodada": 8,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 24,
+        "4-4-2": 1
+      },
+      "media_pontos": 79.465185546875,
+      "media_rotacao": 0.84
+    },
+    {
+      "rodada": 9,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 23,
+        "4-4-2": 2
+      },
+      "media_pontos": 93.9528125,
+      "media_rotacao": 0.8166666666666668
+    },
+    {
+      "rodada": 10,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 63.79763671875,
+      "media_rotacao": 0.8933333333333333
+    },
+    {
+      "rodada": 11,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 23,
+        "3-4-3": 1,
+        "4-4-2": 1
+      },
+      "media_pontos": 96.90119140625,
+      "media_rotacao": 0.8033333333333332
+    },
+    {
+      "rodada": 12,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 19,
+        "4-4-2": 6
+      },
+      "media_pontos": 90.343515625,
+      "media_rotacao": 0.7266666666666667
+    },
+    {
+      "rodada": 13,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 122.7251953125,
+      "media_rotacao": 0.8433333333333333
+    },
+    {
+      "rodada": 14,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 65.74599609375,
+      "media_rotacao": 0.76
+    },
+    {
+      "rodada": 15,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 24,
+        "4-4-2": 1
+      },
+      "media_pontos": 55.59919921875,
+      "media_rotacao": 0.67
+    },
+    {
+      "rodada": 16,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 24,
+        "4-4-2": 1
+      },
+      "media_pontos": 81.80197265625,
+      "media_rotacao": 0.5466666666666666
+    },
+    {
+      "rodada": 17,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 82.38599609375,
+      "media_rotacao": 0.8933333333333333
+    },
+    {
+      "rodada": 18,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 124.5667578125,
+      "media_rotacao": 0.7533333333333333
+    },
+    {
+      "rodada": 19,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 24,
+        "3-4-3": 1
+      },
+      "media_pontos": 123.11603515625,
+      "media_rotacao": 0.74
+    },
+    {
+      "rodada": 20,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 113.85876953125,
+      "media_rotacao": 0.7666666666666667
+    },
+    {
+      "rodada": 21,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 24,
+        "4-4-2": 1
+      },
+      "media_pontos": 84.65515625,
+      "media_rotacao": 0.7533333333333333
+    },
+    {
+      "rodada": 22,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 24,
+        "4-4-2": 1
+      },
+      "media_pontos": 81.609970703125,
+      "media_rotacao": 0.5366666666666666
+    },
+    {
+      "rodada": 23,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 81.86240234375,
+      "media_rotacao": 0.74
+    },
+    {
+      "rodada": 24,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 125.3251171875,
+      "media_rotacao": 0.7066666666666667
+    },
+    {
+      "rodada": 25,
+      "times_recuperados": 25,
+      "formacoes": {
+        "4-3-3": 25
+      },
+      "media_pontos": 104.06201171875,
+      "media_rotacao": 0.7666666666666667
+    }
+  ],
+  "proximo_passo": "Consolidar as evidências do laboratório e encerrar a fase científica antes do site V3."
 }
