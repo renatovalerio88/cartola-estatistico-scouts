@@ -1,0 +1,50 @@
+name: Atualizar Site Produto V3
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/gerar_painel.py'
+      - 'site/index.html'
+      - '.github/workflows/site-produto.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: site-produto-v3
+  cancel-in-progress: true
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Gerar payload do site
+        run: python scripts/gerar_painel.py
+      - name: Validar payload de produto
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('site/dados.json').read_text(encoding='utf-8'))
+          p=d.get('produto',{})
+          assert p.get('rodada') is not None, 'rodada ausente'
+          assert len(p.get('jogadores',[])) > 100, 'jogadores insuficientes'
+          print('Rodada',p['rodada'],'jogadores',len(p['jogadores']))
+          PY
+      - name: Publicar dados gerados no main
+        run: |
+          if git diff --quiet -- site/dados.json; then
+            echo 'Sem alteracoes no payload.'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add site/dados.json
+          git commit -m 'data: atualizar payload do site v3'
+          git pull --rebase origin main
+          git push origin HEAD:main
