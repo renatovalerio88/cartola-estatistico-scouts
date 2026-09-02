@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
+import csv
 import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REPORTS = ROOT / "data" / "reports"
 ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
+RAW = ROOT / "data" / "raw"
 SITE_DATA = ROOT / "site" / "dados.json"
 
 
@@ -20,9 +22,58 @@ def load_latest_explicabilidade():
     return json.loads(arquivos[0].read_text(encoding="utf-8"))
 
 
+def latest_pre_round():
+    arquivos = sorted(
+        [p for p in ARCHIVE.glob("R??.csv") if ".catboost." not in p.name],
+        reverse=True,
+    )
+    if not arquivos:
+        return {"rodada": None, "jogadores": []}
+    p = arquivos[0]
+    rodada = int(p.stem[1:])
+    mercado_path = RAW / f"rodada-{rodada:02d}" / "jogadores.json"
+    mercado = json.loads(mercado_path.read_text(encoding="utf-8")) if mercado_path.exists() else []
+    por_id = {int(j.get("id")): j for j in mercado if j.get("id") is not None}
+    jogadores = []
+    with p.open(encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            aid = int(row["atleta_id"])
+            m = por_id.get(aid, {})
+            def num(chave, padrao=0.0):
+                try:
+                    return float(row.get(chave) or padrao)
+                except (TypeError, ValueError):
+                    return padrao
+            jogadores.append({
+                "atleta_id": aid,
+                "apelido": row.get("apelido") or m.get("apelido") or str(aid),
+                "posicao": row.get("posicao") or m.get("posicao"),
+                "clube_id": int(row.get("clube_id") or m.get("clubeId") or 0),
+                "sigla_clube": row.get("sigla_clube") or m.get("siglaClube"),
+                "status_id": int(float(row.get("status_id") or m.get("statusId") or 0)),
+                "titularidade": num("titularidade_pre_rodada", m.get("titularidade", 0)),
+                "minutos_esperados": num("minutos_esperados_pre_rodada", m.get("minutosEsperados", 0)),
+                "mando": row.get("mando") or m.get("mando"),
+                "sigla_adversario": row.get("sigla_adversario") or m.get("siglaAdversario"),
+                "data_partida": row.get("data_partida") or m.get("dataPartida"),
+                "v3s": num("v3s_expected_scouts"),
+                "direta_rf": num("direta_rf_lab"),
+                "projecao": num("v3h_hibrido"),
+                "preco": float(m.get("preco") or 0),
+                "media": float(m.get("media") or 0),
+                "jogos": int(m.get("jogos") or 0),
+                "foto": m.get("foto"),
+                "chance_sg": float(m.get("chanceSG") or 0),
+                "forca_adversario": float(m.get("forcaAdversarioIndice") or 0),
+                "pontos_cedidos_posicao": float(m.get("pontosCedidosMediaPosicao") or 0),
+            })
+    return {"rodada": rodada, "jogadores": jogadores}
+
+
 def main():
     SITE_DATA.parent.mkdir(parents=True, exist_ok=True)
     payload = {
+        "produto": latest_pre_round(),
         "auditoria": load("auditoria-scouts.json"),
         "auditoria_universo": load("auditoria-universo-jogadores.json"),
         "auditoria_vazamento": load("auditoria-vazamento-temporal.json"),
@@ -68,10 +119,8 @@ def main():
         "top50_liga_nacional_coorte": load("top50-liga-nacional-coorte.json"),
         "top50_liga_nacional_estrategias": load("top50-liga-nacional-estrategias.json"),
     }
-    SITE_DATA.write_text(
-        json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
-    print("Painel V3 atualizado com placares prospectivos imutaveis (incluindo CatBoost), explicabilidade por scouts, auditorias, clima prospectivo, campeonatos, eventos raros, gates nested, controle de multiplas comparacoes, ranking comum V2/V3/CatBoost, seletor posicional temporal, dois estagios, ablations, calibracoes, holdout posicional e estudo auditavel do Top 50 da Liga Nacional.")
+    SITE_DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    print(f"Site V3 atualizado: rodada {payload['produto']['rodada']}, {len(payload['produto']['jogadores'])} jogadores no payload de produto.")
 
 
 if __name__ == "__main__":
