@@ -41,6 +41,12 @@ jobs:
         run: python scripts/auditar_universo_jogadores.py
       - name: Bloquear qualquer vazamento temporal
         run: python scripts/auditar_vazamento_temporal.py
+      - name: Consolidar captura oficial Top 25 Nacional
+        run: python scripts/importar_capturas_top50_nacional.py
+      - name: Validar e congelar coorte Top 25 Nacional
+        run: python scripts/validar_coorte_top50.py
+      - name: Reconstruir estrategias historicas do Top 25
+        run: python scripts/analisar_top50_liga_nacional.py
       - name: Congelar previsao meteorologica antes da rodada
         run: python scripts/capturar_clima_pre_rodada.py
       - name: Auditar imutabilidade e corte temporal do clima
