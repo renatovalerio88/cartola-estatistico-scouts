@@ -5,6 +5,7 @@ on:
     paths:
       - 'scripts/gerar_painel.py'
       - 'scripts/validar_site_produto.py'
+      - 'scripts/auditar_otimizador_site.py'
       - 'site/index.html'
       - '.github/workflows/site-produto.yml'
   workflow_dispatch:
@@ -24,10 +25,14 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - name: Instalar dependências mínimas de validação
+        run: python -m pip install --disable-pip-version-check numpy scipy
       - name: Gerar payload do site
         run: python scripts/gerar_painel.py
       - name: Smoke test funcional do produto
         run: python scripts/validar_site_produto.py
+      - name: Auditar máximo global do otimizador
+        run: python scripts/auditar_otimizador_site.py
       - name: Publicar dados gerados no main
         run: |
           if git diff --quiet -- site/dados.json; then
