@@ -4,6 +4,7 @@ on:
     branches: [main]
     paths:
       - 'scripts/gerar_painel.py'
+      - 'scripts/validar_site_produto.py'
       - 'site/index.html'
       - '.github/workflows/site-produto.yml'
   workflow_dispatch:
@@ -25,17 +26,8 @@ jobs:
           python-version: '3.11'
       - name: Gerar payload do site
         run: python scripts/gerar_painel.py
-      - name: Validar payload de produto
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          d=json.loads(Path('site/dados.json').read_text(encoding='utf-8'))
-          p=d.get('produto',{})
-          assert p.get('rodada') is not None, 'rodada ausente'
-          assert len(p.get('jogadores',[])) > 100, 'jogadores insuficientes'
-          print('Rodada',p['rodada'],'jogadores',len(p['jogadores']))
-          PY
+      - name: Smoke test funcional do produto
+        run: python scripts/validar_site_produto.py
       - name: Publicar dados gerados no main
         run: |
           if git diff --quiet -- site/dados.json; then
