@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Audita o otimizador frontend do Site V3 contra uma solução MILP exata.
+"""Audita o otimizador JS real do Site V3 contra uma solução MILP exata.
 
-O objetivo é impedir que a expressão "maior força projetada" dependa apenas do
-beam search do navegador. A auditoria replica a heurística atual e compara sua
-pontuação com o ótimo matemático para orçamentos representativos.
+O teste executa o mesmo módulo carregado pelo navegador (site/optimizer.js) e
+compara seu resultado com scipy.optimize.milp em vários orçamentos e cenários
+de exclusão. Qualquer diferença positiva bloqueia a publicação do produto.
 """
 from __future__ import annotations
 
 import json
-from collections import Counter
+import subprocess
+import tempfile
 from pathlib import Path
 
 import numpy as np
@@ -17,6 +18,8 @@ from scipy.sparse import lil_matrix
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ROOT / "site" / "dados.json"
+INDEX = ROOT / "site" / "index.html"
+OPTIMIZER = ROOT / "site" / "optimizer.js"
 
 FORMACOES = {
     "3-4-3": {"GOL": 1, "ZAG": 3, "LAT": 0, "MEI": 4, "ATA": 3},
@@ -25,10 +28,7 @@ FORMACOES = {
     "4-4-2": {"GOL": 1, "ZAG": 2, "LAT": 2, "MEI": 4, "ATA": 2},
     "5-3-2": {"GOL": 1, "ZAG": 3, "LAT": 2, "MEI": 3, "ATA": 2},
 }
-ORCAMENTOS = (100.0, 120.0, 150.0, 200.0)
 CLUBE_MAX = 3
-BEAM = 700
-TOP_POS = 24
 TOL = 1e-6
 
 
@@ -38,47 +38,15 @@ def carregar():
     return [j for j in jogadores if int(j.get("status_id") or 0) == 7]
 
 
-def candidatos(jogadores, pos):
-    return sorted(
-        (j for j in jogadores if j.get("posicao") == pos),
-        key=lambda j: float(j.get("projecao") or 0),
-        reverse=True,
-    )[:TOP_POS]
-
-
-def beam_formacao(jogadores, formacao, budget):
-    slots = []
-    for pos, n in FORMACOES[formacao].items():
-        slots.extend([pos] * n)
-    if any(j.get("posicao") == "TEC" for j in jogadores):
-        slots.append("TEC")
-
-    states = [{"ids": frozenset(), "score": 0.0, "cost": 0.0, "clubs": Counter()}]
-    for pos in slots:
-        pool = candidatos(jogadores, pos)
-        nxt = []
-        for s in states:
-            for p in pool:
-                aid = int(p["atleta_id"])
-                clube = str(p.get("sigla_clube") or "")
-                if aid in s["ids"] or s["clubs"][clube] >= CLUBE_MAX:
-                    continue
-                cost = s["cost"] + float(p.get("preco") or 0)
-                if cost > budget + TOL:
-                    continue
-                clubs = s["clubs"].copy()
-                clubs[clube] += 1
-                nxt.append({
-                    "ids": s["ids"] | {aid},
-                    "score": s["score"] + float(p.get("projecao") or 0),
-                    "cost": cost,
-                    "clubs": clubs,
-                })
-        nxt.sort(key=lambda x: x["score"], reverse=True)
-        states = nxt[:BEAM]
-        if not states:
-            return None
-    return states[0]
+def filtrar(jogadores, excluir_atleta=None, excluir_clube=None):
+    out = []
+    for j in jogadores:
+        if excluir_atleta is not None and int(j.get("atleta_id") or 0) == int(excluir_atleta):
+            continue
+        if excluir_clube is not None and str(j.get("sigla_clube") or "") == str(excluir_clube):
+            continue
+        out.append(j)
+    return out
 
 
 def exato_formacao(jogadores, formacao, budget):
@@ -86,7 +54,6 @@ def exato_formacao(jogadores, formacao, budget):
     if any(j.get("posicao") == "TEC" for j in jogadores):
         req["TEC"] = 1
 
-    # Remove posições sem vaga para reduzir o MILP.
     js = [j for j in jogadores if req.get(j.get("posicao"), 0) > 0]
     if not js:
         return None
@@ -94,7 +61,6 @@ def exato_formacao(jogadores, formacao, budget):
     n = len(js)
     clubes = sorted({str(j.get("sigla_clube") or "") for j in js})
     posicoes = [p for p, q in req.items() if q > 0]
-
     linhas = len(posicoes) + 1 + len(clubes)
     A = lil_matrix((linhas, n), dtype=float)
     lb = np.full(linhas, -np.inf)
@@ -138,46 +104,93 @@ def exato_formacao(jogadores, formacao, budget):
     }
 
 
-def melhor(jogadores, budget, solver):
+def melhor_exato(jogadores, budget):
     best = None
     for formacao in FORMACOES:
-        sol = solver(jogadores, formacao, budget)
+        sol = exato_formacao(jogadores, formacao, budget)
         if sol is not None and (best is None or sol["score"] > best["score"] + TOL):
             best = {**sol, "formacao": formacao}
     return best
 
 
+def rodar_js(jogadores, budget):
+    with tempfile.NamedTemporaryFile("w", suffix=".json", encoding="utf-8", delete=False) as f:
+        json.dump(jogadores, f, ensure_ascii=False)
+        temp_path = Path(f.name)
+    try:
+        js = r"""
+const fs=require('fs');
+const opt=require(process.argv[1]);
+const players=JSON.parse(fs.readFileSync(process.argv[2],'utf8'));
+const budget=Number(process.argv[3]);
+const F=JSON.parse(process.argv[4]);
+const result=opt.optimize(players,budget,'auto',{formations:F,eligible:()=>true,maxClub:3});
+process.stdout.write(JSON.stringify(result?{score:result.score,cost:result.cost,formation:result.formation,ids:result.sel.map(x=>x.atleta_id)}:null));
+"""
+        proc = subprocess.run(
+            [
+                "node", "-e", js,
+                str(OPTIMIZER), str(temp_path), str(budget), json.dumps(FORMACOES),
+            ],
+            cwd=ROOT,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=60,
+        )
+        return json.loads(proc.stdout)
+    finally:
+        temp_path.unlink(missing_ok=True)
+
+
 def main():
+    assert OPTIMIZER.exists(), "site/optimizer.js ausente"
+    html = INDEX.read_text(encoding="utf-8")
+    assert 'src="optimizer.js"' in html, "index.html não carrega optimizer.js"
+    assert "V3ExactOptimizer.optimize" in html, "frontend não delega para o otimizador exato"
+
     jogadores = carregar()
     assert jogadores, "nenhum jogador elegível no payload do site"
+    top = max(jogadores, key=lambda j: float(j.get("projecao") or 0))
+
+    cenarios = [
+        (90.0, None, None, "base-90"),
+        (100.0, None, None, "base-100"),
+        (110.0, None, None, "base-110"),
+        (120.0, None, None, "base-120"),
+        (150.0, None, None, "base-150"),
+        (200.0, None, None, "base-200"),
+        (120.0, int(top["atleta_id"]), None, "sem-top-player"),
+        (120.0, None, str(top.get("sigla_clube") or ""), "sem-clube-top"),
+    ]
+
     falhas = []
-    print(f"Auditando {len(jogadores)} jogadores elegíveis | orçamento={ORCAMENTOS}")
-    for budget in ORCAMENTOS:
-        heur = melhor(jogadores, budget, beam_formacao)
-        exact = melhor(jogadores, budget, exato_formacao)
-        if heur is None or exact is None:
-            falhas.append((budget, "sem solução", heur, exact))
+    print(f"Auditando módulo JS exato | {len(jogadores)} jogadores elegíveis | {len(cenarios)} cenários")
+    for budget, excluir_atleta, excluir_clube, nome in cenarios:
+        pool = filtrar(jogadores, excluir_atleta, excluir_clube)
+        js_sol = rodar_js(pool, budget)
+        exact = melhor_exato(pool, budget)
+        if js_sol is None or exact is None:
+            if js_sol is None and exact is None:
+                print(f"{nome}: ambos sem solução")
+                continue
+            falhas.append((nome, "solução divergente", js_sol, exact))
             continue
-        gap = exact["score"] - heur["score"]
+        gap = float(exact["score"]) - float(js_sol["score"])
         print(
-            f"C$ {budget:.0f}: beam={heur['score']:.6f} ({heur['formacao']}) | "
-            f"exato={exact['score']:.6f} ({exact['formacao']}) | gap={gap:.6f}"
+            f"{nome}: js={js_sol['score']:.6f} ({js_sol['formation']}) | "
+            f"milp={exact['score']:.6f} ({exact['formacao']}) | gap={gap:.9f}"
         )
-        if gap > TOL:
-            falhas.append((budget, gap, heur, exact))
+        if abs(gap) > TOL:
+            falhas.append((nome, gap, js_sol, exact))
 
     if falhas:
-        linhas = ["Otimizador frontend não atingiu o ótimo global:"]
-        for budget, gap, heur, exact in falhas:
-            linhas.append(
-                f"- C$ {budget:.0f}: gap={gap}; beam={None if heur is None else heur['score']:.6f}; "
-                f"exato={None if exact is None else exact['score']:.6f}"
-                if heur is not None and exact is not None
-                else f"- C$ {budget:.0f}: solução ausente"
-            )
+        linhas = ["Otimizador JS divergiu do ótimo MILP:"]
+        for nome, gap, js_sol, exact in falhas:
+            linhas.append(f"- {nome}: gap={gap}; js={js_sol}; milp={exact}")
         raise AssertionError("\n".join(linhas))
 
-    print("OK: beam atual coincidiu com o ótimo MILP em todos os orçamentos auditados.")
+    print("OK: o módulo JS do navegador coincidiu com o ótimo MILP em todos os cenários auditados.")
 
 
 if __name__ == "__main__":
