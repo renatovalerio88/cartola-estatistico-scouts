@@ -97,6 +97,8 @@ jobs:
         run: python scripts/auditar_explicabilidade_pre_rodada.py
       - name: Gerar painel
         run: python scripts/gerar_painel.py
+      - name: Bloquear rodada desatualizada antes de publicar resultados
+        run: python scripts/validar_rodada_atual_site.py
       - name: Commit dos resultados reproduziveis com retry transacional
         shell: bash
         run: |
