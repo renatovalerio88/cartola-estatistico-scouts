@@ -252,9 +252,11 @@ def main():
 
     v3s_score = np.zeros(len(current), float)
     direct_score = np.zeros(len(current), float)
+    expected_scouts = {scout: np.zeros(len(current), float) for scout in SCOUT_WEIGHTS}
     selections = []
     for pos in POSITIONS:
         mask = current.posicao.eq(pos)
+        idx = np.flatnonzero(mask.to_numpy())
         test = current[mask]
         history = dataset[dataset.posicao.eq(pos)]
         if test.empty:
@@ -265,11 +267,12 @@ def main():
                 continue
             winner, inner_scores = choose_model(history, scout, rodada)
             try:
-                pred = fit_predict(winner, history, test, scout)
+                scout_pred = np.asarray(fit_predict(winner, history, test, scout), dtype=float)
             except Exception:
-                pred = test[f"{scout}_ewma"].fillna(0).to_numpy(float)
+                scout_pred = test[f"{scout}_ewma"].fillna(0).to_numpy(float)
                 winner = "ewma_fallback"
-            local += pred * float(weight)
+            expected_scouts[scout][idx] = scout_pred
+            local += scout_pred * float(weight)
             selections.append(
                 {
                     "posicao": pos,
@@ -278,8 +281,8 @@ def main():
                     "mae_validacao_passada": inner_scores.get(winner),
                 }
             )
-        v3s_score[np.flatnonzero(mask.to_numpy())] = local
-        direct_score[np.flatnonzero(mask.to_numpy())] = direct_rf_predict(history, test)
+        v3s_score[idx] = local
+        direct_score[idx] = direct_rf_predict(history, test)
 
     bt = load(BACKTEST)
     prior_oos = pd.DataFrame(bt.get("previsoes", []))
@@ -289,7 +292,15 @@ def main():
 
     pred = meta.copy()
     pred["rodada"] = rodada
-    pred["v3s_expected_scouts"] = v3s_score
+    for scout, weight in SCOUT_WEIGHTS.items():
+        pred[f"scout_esperado_{scout}"] = expected_scouts[scout]
+        pred[f"contrib_pontos_{scout}"] = expected_scouts[scout] * float(weight)
+    contrib_cols = [f"contrib_pontos_{s}" for s in SCOUT_WEIGHTS]
+    reconciliado = pred[contrib_cols].sum(axis=1).to_numpy(float)
+    erro_reconciliacao = float(np.max(np.abs(reconciliado - v3s_score))) if len(pred) else 0.0
+    if erro_reconciliacao > 1e-8:
+        raise SystemExit(f"Falha de reconciliação expected scouts→V3-S: erro máximo {erro_reconciliacao:.12f}")
+    pred["v3s_expected_scouts"] = reconciliado
     pred["direta_rf_lab"] = direct_score
     pred["v3h_hibrido"] = hybrid
     pred["alpha_v3s"] = alpha
@@ -311,6 +322,10 @@ def main():
         "alpha_v3s": alpha,
         "alpha_rf_direto": 1 - alpha,
         "mae_historico_alpha": alpha_scores,
+        "expected_scouts_congelados": True,
+        "colunas_expected_scouts": [f"scout_esperado_{s}" for s in SCOUT_WEIGHTS],
+        "colunas_contribuicoes": contrib_cols,
+        "erro_max_reconciliacao_v3s": erro_reconciliacao,
         "csv": str(csv_path.relative_to(ROOT)),
         "csv_sha256": sha256_bytes(csv_bytes),
         "fontes_sha256": {
@@ -321,7 +336,6 @@ def main():
     manifest_path = ARCHIVE / f"R{rodada:02d}.manifest.json"
     manifest_bytes = json.dumps(manifest_payload, ensure_ascii=False, indent=2, sort_keys=True).encode("utf-8")
     if manifest_path.exists():
-        # O timestamp não pode transformar uma rerun idêntica em mutação. Valida o CSV lockado e preserva o manifest original.
         existing = load(manifest_path)
         if existing.get("csv_sha256") != manifest_payload["csv_sha256"]:
             raise SystemExit("MANIFEST IMUTÁVEL: hash da previsão divergiu do lock existente")
@@ -331,6 +345,7 @@ def main():
 
     print(
         f"Previsão pré-rodada R{rodada:02d}: {len(pred)} jogadores; "
+        f"expected scouts congelados e reconciliados (erro={erro_reconciliacao:.3e}); "
         f"V3-H alpha V3-S={alpha:.2f}; {'LOCK CRIADO' if created else 'LOCK JÁ EXISTIA E É IDÊNTICO'}"
     )
 
