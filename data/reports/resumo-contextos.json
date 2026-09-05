@@ -1,72 +1,72 @@
 {
-  "gerado_em": "2026-09-02T21:05:02.323421+00:00",
+  "gerado_em": "2026-09-05T22:00:49.505111+00:00",
   "objetivo": "Resumo compacto e auditável das ablations de contexto; previsões linha a linha permanecem nos relatórios científicos originais.",
   "contextos": {
     "participacao_enriquecida": {
-      "gerado_em": "2026-09-02T21:01:34.503281+00:00",
+      "gerado_em": "2026-09-05T21:57:48.643090+00:00",
       "status": "APROVADA",
       "decisao": "NAO_APROVAR_FEATURES_PARTICIPACAO_ENRIQUECIDAS",
       "protocolo": "Ablation walk-forward estrita. Para cada rodada R e posição, o mesmo classificador é treinado exclusivamente em rodadas < R. BASE e ENRIQUECIDO diferem apenas pelas cinco novas features históricas de participação. Nenhuma informação da rodada R entra nas features.",
-      "modelos_com_gate_aprovado": 1,
+      "modelos_com_gate_aprovado": 0,
       "modelos_testados": 4,
       "regra_gate": "Aprovar pacote somente se pelo menos 3/4 modelos tiverem Brier menor, AUC não pior que -0.005 e bootstrap por rodada >=95% de probabilidade favorável.",
       "por_modelo": {
         "catboost": {
-          "n": 4149,
+          "n": 4459,
           "bootstrap_por_rodada": {
-            "delta_brier_enriquecido_menos_base": -7.324e-05,
+            "delta_brier_enriquecido_menos_base": -1.023e-05,
             "ic95": [
-              -0.00024384,
-              0.0001205
+              -0.00016836,
+              0.00017271
             ],
-            "probabilidade_enriquecido_melhor": 0.7857,
-            "rodadas_ganhas": 9,
+            "probabilidade_enriquecido_melhor": 0.5666,
+            "rodadas_ganhas": 10,
             "rodadas_perdidas": 5,
             "empates": 0
           },
           "gate_individual": "REPROVADO"
         },
         "extra_trees": {
-          "n": 4149,
+          "n": 4459,
           "bootstrap_por_rodada": {
-            "delta_brier_enriquecido_menos_base": -1.24e-05,
+            "delta_brier_enriquecido_menos_base": -6.38e-06,
             "ic95": [
-              -2.028e-05,
-              -5.26e-06
+              -2.113e-05,
+              1.158e-05
             ],
-            "probabilidade_enriquecido_melhor": 0.9999,
+            "probabilidade_enriquecido_melhor": 0.7823,
             "rodadas_ganhas": 12,
-            "rodadas_perdidas": 2,
+            "rodadas_perdidas": 3,
             "empates": 0
           },
-          "gate_individual": "APROVADO"
+          "gate_individual": "REPROVADO"
         },
         "hist_gb": {
-          "n": 4149,
+          "n": 4459,
           "bootstrap_por_rodada": {
-            "delta_brier_enriquecido_menos_base": -3.362e-05,
+            "delta_brier_enriquecido_menos_base": -4.134e-05,
             "ic95": [
-              -0.00010729,
-              5.38e-06
+              -0.00012098,
+              1.86e-06
             ],
-            "probabilidade_enriquecido_melhor": 0.6853,
-            "rodadas_ganhas": 5,
-            "rodadas_perdidas": 5,
-            "empates": 4
+            "probabilidade_enriquecido_melhor": 0.8841,
+            "rodadas_ganhas": 4,
+            "rodadas_perdidas": 4,
+            "empates": 7
           },
           "gate_individual": "REPROVADO"
         },
         "logistic": {
-          "n": 4149,
+          "n": 4459,
           "bootstrap_por_rodada": {
-            "delta_brier_enriquecido_menos_base": 0.00010597,
+            "delta_brier_enriquecido_menos_base": 0.00012097,
             "ic95": [
-              -9.72e-05,
-              0.00041391
+              -7.042e-05,
+              0.00043255
             ],
-            "probabilidade_enriquecido_melhor": 0.2644,
+            "probabilidade_enriquecido_melhor": 0.2453,
             "rodadas_ganhas": 5,
-            "rodadas_perdidas": 9,
+            "rodadas_perdidas": 10,
             "empates": 0
           },
           "gate_individual": "REPROVADO"
@@ -74,44 +74,44 @@
       },
       "por_posicao": {
         "ATA": {
-          "n": 4708,
-          "brier_base": 0.00264615,
-          "brier_enriquecido": 0.00262325,
-          "delta_brier": -2.29e-05
+          "n": 5076,
+          "brier_base": 0.00401305,
+          "brier_enriquecido": 0.00399126,
+          "delta_brier": -2.179e-05
         },
         "GOL": {
-          "n": 1068,
-          "brier_base": 0.01175973,
-          "brier_enriquecido": 0.01206992,
-          "delta_brier": 0.00031019
+          "n": 1144,
+          "brier_base": 0.01092145,
+          "brier_enriquecido": 0.01128358,
+          "delta_brier": 0.00036213
         },
         "LAT": {
-          "n": 2644,
-          "brier_base": 0.00170158,
-          "brier_enriquecido": 0.00160706,
-          "delta_brier": -9.452e-05
+          "n": 2840,
+          "brier_base": 0.00156894,
+          "brier_enriquecido": 0.00149605,
+          "delta_brier": -7.289e-05
         },
         "MEI": {
-          "n": 5668,
-          "brier_base": 0.00085694,
-          "brier_enriquecido": 0.00084614,
-          "delta_brier": -1.08e-05
+          "n": 6076,
+          "brier_base": 0.00080497,
+          "brier_enriquecido": 0.00080242,
+          "delta_brier": -2.55e-06
         },
         "ZAG": {
-          "n": 2508,
-          "brier_base": 0.0084228,
-          "brier_enriquecido": 0.00843409,
-          "delta_brier": 1.129e-05
+          "n": 2700,
+          "brier_base": 0.00921559,
+          "brier_enriquecido": 0.00929123,
+          "delta_brier": 7.564e-05
         }
       }
     },
     "descanso_brasileirao": {
-      "gerado_em": "2026-09-02T21:02:33.359761+00:00",
+      "gerado_em": "2026-09-05T21:58:38.506228+00:00",
       "status": "APROVADA",
       "decisao": "NAO_PROMOVER_DESCANSO_BRASILEIRAO",
       "escopo": "Screening científico de descanso entre jogos do próprio Brasileirão. NÃO representa ainda desgaste de Libertadores, Sul-Americana ou Copa do Brasil.",
       "protocolo": "Ablation walk-forward estrita por rodada e posição. A data da partida de R é tratada como informação pré-rodada; histórico de descanso considera apenas partidas de rodadas < R com data anterior à partida atual. BASE e DESCANSO usam as mesmas linhas e o mesmo modelo.",
-      "modelos_com_gate_aprovado": 1,
+      "modelos_com_gate_aprovado": 0,
       "modelos_testados": 4,
       "regra_gate": "Promover somente para teste por scout se >=3/4 modelos reduzirem MAE, mantiverem RMSE até +1% e bootstrap por rodada indicar >=90% de probabilidade favorável.",
       "features_adicionais": [
@@ -122,145 +122,145 @@
       ],
       "por_modelo": {
         "catboost": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 2.82280139,
-            "rmse": 4.0001551,
-            "bias": -0.90187974
+            "mae": 2.84060802,
+            "rmse": 4.0179065,
+            "bias": -0.91153466
           },
           "descanso": {
-            "mae": 2.81430307,
-            "rmse": 3.99316049,
-            "bias": -0.90833723
+            "mae": 2.8348327,
+            "rmse": 4.02154155,
+            "bias": -0.92351312
           },
-          "delta_mae": -0.00849832,
+          "delta_mae": -0.00577532,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_descanso_menos_base": -0.0091067,
+            "n_rodadas": 15,
+            "delta_mae_descanso_menos_base": -0.00442994,
             "ic95": [
-              -0.02014721,
-              0.00126372
+              -0.01518878,
+              0.00709868
             ],
-            "probabilidade_descanso_melhor": 0.9549,
+            "probabilidade_descanso_melhor": 0.7805,
             "rodadas_ganhas": 9,
-            "rodadas_perdidas": 5
-          },
-          "gate_individual": "APROVADO"
-        },
-        "extra_trees": {
-          "n": 4149,
-          "base": {
-            "mae": 2.99915509,
-            "rmse": 3.93552162,
-            "bias": 0.08220676
-          },
-          "descanso": {
-            "mae": 3.00860764,
-            "rmse": 3.94031305,
-            "bias": 0.0986644
-          },
-          "delta_mae": 0.00945254,
-          "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_descanso_menos_base": 0.01151666,
-            "ic95": [
-              -0.01425215,
-              0.03868093
-            ],
-            "probabilidade_descanso_melhor": 0.2002,
-            "rodadas_ganhas": 6,
-            "rodadas_perdidas": 8
-          },
-          "gate_individual": "REPROVADO"
-        },
-        "hist_gb": {
-          "n": 4149,
-          "base": {
-            "mae": 3.14774836,
-            "rmse": 4.14631632,
-            "bias": 0.11532735
-          },
-          "descanso": {
-            "mae": 3.15511572,
-            "rmse": 4.15077374,
-            "bias": 0.11336709
-          },
-          "delta_mae": 0.00736736,
-          "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_descanso_menos_base": 0.01395108,
-            "ic95": [
-              -0.0217681,
-              0.0571537
-            ],
-            "probabilidade_descanso_melhor": 0.2549,
-            "rodadas_ganhas": 8,
             "rodadas_perdidas": 6
           },
           "gate_individual": "REPROVADO"
         },
-        "ridge": {
-          "n": 4149,
+        "extra_trees": {
+          "n": 4459,
           "base": {
-            "mae": 2.92919766,
-            "rmse": 3.93614683,
-            "bias": -0.17734806
+            "mae": 3.01243637,
+            "rmse": 3.95018439,
+            "bias": 0.08704196
           },
           "descanso": {
-            "mae": 2.96426852,
-            "rmse": 3.97316232,
-            "bias": -0.09203749
+            "mae": 3.01885285,
+            "rmse": 3.95491389,
+            "bias": 0.1004692
           },
-          "delta_mae": 0.03507086,
+          "delta_mae": 0.00641647,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_descanso_menos_base": 0.03581921,
+            "n_rodadas": 15,
+            "delta_mae_descanso_menos_base": 0.00871765,
             "ic95": [
-              0.02130749,
-              0.05218153
+              -0.01334174,
+              0.03169463
+            ],
+            "probabilidade_descanso_melhor": 0.224,
+            "rodadas_ganhas": 8,
+            "rodadas_perdidas": 7
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "hist_gb": {
+          "n": 4459,
+          "base": {
+            "mae": 3.13936705,
+            "rmse": 4.14742999,
+            "bias": 0.07812117
+          },
+          "descanso": {
+            "mae": 3.13649259,
+            "rmse": 4.13577056,
+            "bias": 0.11921615
+          },
+          "delta_mae": -0.00287447,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 15,
+            "delta_mae_descanso_menos_base": 0.00341218,
+            "ic95": [
+              -0.02718207,
+              0.04103757
+            ],
+            "probabilidade_descanso_melhor": 0.4402,
+            "rodadas_ganhas": 8,
+            "rodadas_perdidas": 7
+          },
+          "gate_individual": "REPROVADO"
+        },
+        "ridge": {
+          "n": 4459,
+          "base": {
+            "mae": 2.95053785,
+            "rmse": 3.95260759,
+            "bias": -0.13601516
+          },
+          "descanso": {
+            "mae": 2.98467852,
+            "rmse": 3.98871952,
+            "bias": -0.05965403
+          },
+          "delta_mae": 0.03414067,
+          "bootstrap_por_rodada": {
+            "n_rodadas": 15,
+            "delta_mae_descanso_menos_base": 0.03486568,
+            "ic95": [
+              0.02246614,
+              0.04958266
             ],
             "probabilidade_descanso_melhor": 0.0,
             "rodadas_ganhas": 1,
-            "rodadas_perdidas": 13
+            "rodadas_perdidas": 14
           },
           "gate_individual": "REPROVADO"
         }
       },
       "por_posicao": {
         "ATA": {
-          "n": 4708,
-          "mae_base": 3.26726966,
-          "mae_descanso": 3.26184235,
-          "delta_mae": -0.00542731
+          "n": 5076,
+          "mae_base": 3.26900009,
+          "mae_descanso": 3.27836248,
+          "delta_mae": 0.00936239
         },
         "GOL": {
-          "n": 1068,
-          "mae_base": 3.44394168,
-          "mae_descanso": 3.48237185,
-          "delta_mae": 0.03843018
+          "n": 1144,
+          "mae_base": 3.43756396,
+          "mae_descanso": 3.42686574,
+          "delta_mae": -0.01069822
         },
         "LAT": {
-          "n": 2644,
-          "mae_base": 3.25248358,
-          "mae_descanso": 3.2696488,
-          "delta_mae": 0.01716522
+          "n": 2840,
+          "mae_base": 3.254124,
+          "mae_descanso": 3.27062742,
+          "delta_mae": 0.01650341
         },
         "MEI": {
-          "n": 5668,
-          "mae_base": 2.61731225,
-          "mae_descanso": 2.63057709,
-          "delta_mae": 0.01326483
+          "n": 6076,
+          "mae_base": 2.62159316,
+          "mae_descanso": 2.63239311,
+          "delta_mae": 0.01079994
         },
         "ZAG": {
-          "n": 2508,
-          "mae_base": 2.74067735,
-          "mae_descanso": 2.7582107,
-          "delta_mae": 0.01753336
+          "n": 2700,
+          "mae_base": 2.79891891,
+          "mae_descanso": 2.79688187,
+          "delta_mae": -0.00203704
         }
       }
     },
     "calendario_externo": {
-      "gerado_em": "2026-09-02T21:03:02.933992+00:00",
+      "gerado_em": "2026-09-05T21:59:08.311303+00:00",
       "status": "BLOQUEADA_FONTE",
       "decisao": "NAO_AVALIAR_CALENDARIO_EXTERNO_SEM_COBERTURA",
       "escopo": "Ablation isolada do congestionamento causado por Libertadores, Sul-Americana e Copa do Brasil.",
@@ -272,12 +272,12 @@
       "por_posicao": {}
     },
     "mudanca_tecnico": {
-      "gerado_em": "2026-09-02T21:04:02.096541+00:00",
+      "gerado_em": "2026-09-05T21:59:58.364779+00:00",
       "status": "APROVADA",
       "decisao": "NAO_PROMOVER_MUDANCA_TECNICO",
       "escopo": "Screening científico isolado do efeito de mudança de técnico durante o Brasileirão 2026.",
       "protocolo": "Ablation walk-forward estrita por rodada e posição. Evento de técnico entra somente quando sua data efetiva é anterior à data da partida-alvo; mudanças no mesmo dia são ignoradas. BASE e TÉCNICO usam as mesmas linhas, o mesmo alvo e o mesmo modelo.",
-      "modelos_com_gate_aprovado": 1,
+      "modelos_com_gate_aprovado": 0,
       "modelos_testados": 4,
       "regra_gate": "Promover somente para teste por scout se >=3/4 modelos reduzirem MAE, mantiverem RMSE até +1% e bootstrap por rodada indicar >=90% de probabilidade favorável.",
       "snapshot": {
@@ -306,150 +306,150 @@
       ],
       "por_modelo": {
         "catboost": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 2.82280139,
-            "rmse": 4.0001551,
-            "bias": -0.90187974
+            "mae": 2.84060802,
+            "rmse": 4.0179065,
+            "bias": -0.91153466
           },
           "mudanca_tecnico": {
-            "mae": 2.82884689,
-            "rmse": 4.00011332,
-            "bias": -0.88637425
+            "mae": 2.83911037,
+            "rmse": 4.02216162,
+            "bias": -0.89986297
           },
-          "delta_mae": 0.0060455,
+          "delta_mae": -0.00149765,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_tecnico_menos_base": 0.00593129,
+            "n_rodadas": 15,
+            "delta_mae_tecnico_menos_base": -0.00083187,
             "ic95": [
-              -0.00328056,
-              0.015522
+              -0.01127377,
+              0.00878512
             ],
-            "probabilidade_tecnico_melhor": 0.1038,
-            "rodadas_ganhas": 4,
-            "rodadas_perdidas": 10
+            "probabilidade_tecnico_melhor": 0.5414,
+            "rodadas_ganhas": 7,
+            "rodadas_perdidas": 8
           },
           "gate_individual": "REPROVADO"
         },
         "extra_trees": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 2.99915509,
-            "rmse": 3.93552162,
-            "bias": 0.08220676
+            "mae": 3.01243637,
+            "rmse": 3.95018439,
+            "bias": 0.08704196
           },
           "mudanca_tecnico": {
-            "mae": 3.00103032,
-            "rmse": 3.93308304,
-            "bias": 0.10475696
+            "mae": 3.01289247,
+            "rmse": 3.95323213,
+            "bias": 0.10327302
           },
-          "delta_mae": 0.00187523,
+          "delta_mae": 0.0004561,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_tecnico_menos_base": 0.00305947,
+            "n_rodadas": 15,
+            "delta_mae_tecnico_menos_base": 0.00015367,
             "ic95": [
-              -0.0047338,
-              0.01154304
+              -0.00891651,
+              0.00982234
             ],
-            "probabilidade_tecnico_melhor": 0.2296,
+            "probabilidade_tecnico_melhor": 0.4902,
             "rodadas_ganhas": 8,
-            "rodadas_perdidas": 6
+            "rodadas_perdidas": 7
           },
           "gate_individual": "REPROVADO"
         },
         "hist_gb": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 3.14774836,
-            "rmse": 4.14631632,
-            "bias": 0.11532735
+            "mae": 3.13936705,
+            "rmse": 4.14742999,
+            "bias": 0.07812117
           },
           "mudanca_tecnico": {
-            "mae": 3.13300791,
-            "rmse": 4.13945427,
-            "bias": 0.08484117
+            "mae": 3.14071571,
+            "rmse": 4.15169676,
+            "bias": 0.1076596
           },
-          "delta_mae": -0.01474045,
+          "delta_mae": 0.00134866,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_tecnico_menos_base": -0.01643859,
+            "n_rodadas": 15,
+            "delta_mae_tecnico_menos_base": 0.00096062,
             "ic95": [
-              -0.03806127,
-              0.00444004
+              -0.02066362,
+              0.02420068
             ],
-            "probabilidade_tecnico_melhor": 0.9349,
-            "rodadas_ganhas": 9,
-            "rodadas_perdidas": 5
+            "probabilidade_tecnico_melhor": 0.4774,
+            "rodadas_ganhas": 8,
+            "rodadas_perdidas": 7
           },
-          "gate_individual": "APROVADO"
+          "gate_individual": "REPROVADO"
         },
         "ridge": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 2.92919766,
-            "rmse": 3.93614683,
-            "bias": -0.17734806
+            "mae": 2.95053785,
+            "rmse": 3.95260759,
+            "bias": -0.13601516
           },
           "mudanca_tecnico": {
-            "mae": 2.95074194,
-            "rmse": 3.9560208,
-            "bias": -0.13929014
+            "mae": 2.97413637,
+            "rmse": 3.97946338,
+            "bias": -0.10645319
           },
-          "delta_mae": 0.02154428,
+          "delta_mae": 0.02359852,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_tecnico_menos_base": 0.02107123,
+            "n_rodadas": 15,
+            "delta_mae_tecnico_menos_base": 0.02288813,
             "ic95": [
-              -0.00351798,
-              0.0511394
+              0.00083265,
+              0.05029628
             ],
-            "probabilidade_tecnico_melhor": 0.0531,
-            "rodadas_ganhas": 6,
-            "rodadas_perdidas": 8
+            "probabilidade_tecnico_melhor": 0.0189,
+            "rodadas_ganhas": 5,
+            "rodadas_perdidas": 10
           },
           "gate_individual": "REPROVADO"
         }
       },
       "por_posicao": {
         "ATA": {
-          "n": 4708,
-          "mae_base": 3.26726966,
-          "mae_mudanca_tecnico": 3.27034305,
-          "delta_mae": 0.00307339
+          "n": 5076,
+          "mae_base": 3.26900009,
+          "mae_mudanca_tecnico": 3.27911648,
+          "delta_mae": 0.01011639
         },
         "GOL": {
-          "n": 1068,
-          "mae_base": 3.44394168,
-          "mae_mudanca_tecnico": 3.45283038,
-          "delta_mae": 0.0088887
+          "n": 1144,
+          "mae_base": 3.43756396,
+          "mae_mudanca_tecnico": 3.47128743,
+          "delta_mae": 0.03372347
         },
         "LAT": {
-          "n": 2644,
-          "mae_base": 3.25248358,
-          "mae_mudanca_tecnico": 3.26361373,
-          "delta_mae": 0.01113015
+          "n": 2840,
+          "mae_base": 3.254124,
+          "mae_mudanca_tecnico": 3.27994349,
+          "delta_mae": 0.02581948
         },
         "MEI": {
-          "n": 5668,
-          "mae_base": 2.61731225,
-          "mae_mudanca_tecnico": 2.6122045,
-          "delta_mae": -0.00510775
+          "n": 6076,
+          "mae_base": 2.62159316,
+          "mae_mudanca_tecnico": 2.6112427,
+          "delta_mae": -0.01035046
         },
         "ZAG": {
-          "n": 2508,
-          "mae_base": 2.74067735,
-          "mae_mudanca_tecnico": 2.75529145,
-          "delta_mae": 0.0146141
+          "n": 2700,
+          "mae_base": 2.79891891,
+          "mae_mudanca_tecnico": 2.80122514,
+          "delta_mae": 0.00230624
         }
       }
     },
     "horario_partida": {
-      "gerado_em": "2026-09-02T21:05:01.974655+00:00",
+      "gerado_em": "2026-09-05T22:00:49.197428+00:00",
       "status": "APROVADA",
       "decisao": "NAO_PROMOVER_HORARIO",
       "escopo": "Screening científico isolado do horário e dia da semana da partida no Brasileirão 2026.",
       "protocolo": "Ablation walk-forward estrita por rodada e posição. BASE e HORÁRIO usam exatamente as mesmas linhas, alvo e modelo; as features adicionais derivam apenas de partida_data do fixture, nunca de placar, scouts ou eventos ocorridos durante/depois da partida.",
-      "modelos_com_gate_aprovado": 1,
+      "modelos_com_gate_aprovado": 0,
       "modelos_testados": 4,
       "regra_gate": "Promover somente para teste por scout se >=3/4 modelos reduzirem MAE, mantiverem RMSE até +1% e bootstrap por rodada indicar >=90% de probabilidade favorável.",
       "cobertura_fixture": 1.0,
@@ -464,105 +464,105 @@
       ],
       "por_modelo": {
         "catboost": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 2.82280139,
-            "rmse": 4.0001551,
-            "bias": -0.90187974
+            "mae": 2.84060802,
+            "rmse": 4.0179065,
+            "bias": -0.91153466
           },
           "horario": {
-            "mae": 2.81761642,
-            "rmse": 3.99406565,
-            "bias": -0.90541054
+            "mae": 2.8330166,
+            "rmse": 4.02169216,
+            "bias": -0.91783208
           },
-          "delta_mae": -0.00518498,
+          "delta_mae": -0.00759142,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_horario_menos_base": -0.00426591,
+            "n_rodadas": 15,
+            "delta_mae_horario_menos_base": -0.00684823,
             "ic95": [
-              -0.01884328,
-              0.01016516
+              -0.0240447,
+              0.00908975
             ],
-            "probabilidade_horario_melhor": 0.7195,
-            "rodadas_ganhas": 8,
+            "probabilidade_horario_melhor": 0.7949,
+            "rodadas_ganhas": 9,
             "rodadas_perdidas": 6
           },
           "gate_individual": "REPROVADO"
         },
         "extra_trees": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 2.99915509,
-            "rmse": 3.93552162,
-            "bias": 0.08220676
+            "mae": 3.01243637,
+            "rmse": 3.95018439,
+            "bias": 0.08704196
           },
           "horario": {
-            "mae": 2.99770178,
-            "rmse": 3.93810553,
-            "bias": 0.0808226
+            "mae": 3.00334912,
+            "rmse": 3.94982831,
+            "bias": 0.07454965
           },
-          "delta_mae": -0.00145331,
+          "delta_mae": -0.00908726,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_horario_menos_base": -0.00051203,
+            "n_rodadas": 15,
+            "delta_mae_horario_menos_base": -0.00785171,
             "ic95": [
-              -0.02547488,
-              0.02290362
+              -0.03007577,
+              0.014611
             ],
-            "probabilidade_horario_melhor": 0.5141,
-            "rodadas_ganhas": 6,
-            "rodadas_perdidas": 8
+            "probabilidade_horario_melhor": 0.7612,
+            "rodadas_ganhas": 8,
+            "rodadas_perdidas": 7
           },
           "gate_individual": "REPROVADO"
         },
         "hist_gb": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 3.14774836,
-            "rmse": 4.14631632,
-            "bias": 0.11532735
+            "mae": 3.13936705,
+            "rmse": 4.14742999,
+            "bias": 0.07812117
           },
           "horario": {
-            "mae": 3.1286631,
-            "rmse": 4.13129314,
-            "bias": 0.09120356
+            "mae": 3.12817431,
+            "rmse": 4.13490286,
+            "bias": 0.07982945
           },
-          "delta_mae": -0.01908527,
+          "delta_mae": -0.01119274,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_horario_menos_base": -0.02268982,
+            "n_rodadas": 15,
+            "delta_mae_horario_menos_base": -0.00839578,
             "ic95": [
-              -0.05159239,
-              0.00484717
+              -0.0311648,
+              0.01667463
             ],
-            "probabilidade_horario_melhor": 0.9488,
-            "rodadas_ganhas": 10,
-            "rodadas_perdidas": 4
+            "probabilidade_horario_melhor": 0.7506,
+            "rodadas_ganhas": 9,
+            "rodadas_perdidas": 6
           },
-          "gate_individual": "APROVADO"
+          "gate_individual": "REPROVADO"
         },
         "ridge": {
-          "n": 4149,
+          "n": 4459,
           "base": {
-            "mae": 2.92919766,
-            "rmse": 3.93614683,
-            "bias": -0.17734806
+            "mae": 2.95053785,
+            "rmse": 3.95260759,
+            "bias": -0.13601516
           },
           "horario": {
-            "mae": 2.94784224,
-            "rmse": 3.95880589,
-            "bias": -0.1570579
+            "mae": 2.96451399,
+            "rmse": 3.96848961,
+            "bias": -0.12068981
           },
-          "delta_mae": 0.01864458,
+          "delta_mae": 0.01397614,
           "bootstrap_por_rodada": {
-            "n_rodadas": 14,
-            "delta_mae_horario_menos_base": 0.0194479,
+            "n_rodadas": 15,
+            "delta_mae_horario_menos_base": 0.01421692,
             "ic95": [
-              0.01290388,
-              0.0262829
+              0.00759156,
+              0.02082255
             ],
             "probabilidade_horario_melhor": 0.0,
-            "rodadas_ganhas": 0,
+            "rodadas_ganhas": 1,
             "rodadas_perdidas": 14
           },
           "gate_individual": "REPROVADO"
@@ -570,34 +570,34 @@
       },
       "por_posicao": {
         "ATA": {
-          "n": 4708,
-          "mae_base": 3.26726966,
-          "mae_horario": 3.26853351,
-          "delta_mae": 0.00126385
+          "n": 5076,
+          "mae_base": 3.26900009,
+          "mae_horario": 3.2778528,
+          "delta_mae": 0.00885271
         },
         "GOL": {
-          "n": 1068,
-          "mae_base": 3.44394168,
-          "mae_horario": 3.42368348,
-          "delta_mae": -0.0202582
+          "n": 1144,
+          "mae_base": 3.43756396,
+          "mae_horario": 3.44446006,
+          "delta_mae": 0.0068961
         },
         "LAT": {
-          "n": 2644,
-          "mae_base": 3.25248358,
-          "mae_horario": 3.24957135,
-          "delta_mae": -0.00291223
+          "n": 2840,
+          "mae_base": 3.254124,
+          "mae_horario": 3.24042168,
+          "delta_mae": -0.01370233
         },
         "MEI": {
-          "n": 5668,
-          "mae_base": 2.61731225,
-          "mae_horario": 2.61265599,
-          "delta_mae": -0.00465626
+          "n": 6076,
+          "mae_base": 2.62159316,
+          "mae_horario": 2.62052612,
+          "delta_mae": -0.00106704
         },
         "ZAG": {
-          "n": 2508,
-          "mae_base": 2.74067735,
-          "mae_horario": 2.7488139,
-          "delta_mae": 0.00813656
+          "n": 2700,
+          "mae_base": 2.79891891,
+          "mae_horario": 2.77322016,
+          "delta_mae": -0.02569875
         }
       }
     }

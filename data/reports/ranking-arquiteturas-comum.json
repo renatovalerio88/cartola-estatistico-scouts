@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-09-02T21:17:41.051641+00:00",
+  "gerado_em": "2026-09-05T22:11:53.371537+00:00",
   "objetivo": "Ranking justo das arquiteturas na mesma interseção jogador×rodada e com o mesmo resultado real.",
   "protocolo": "V2 é somente leitura. V3-S/V3-H/RF/EWMA vêm do backtest nested; CatBoost OFF calibrado vem do nested temporal próprio. Todas as arquiteturas são alinhadas por rodada+atleta_id. Linhas com divergência de resultado real entre fontes são auditadas e excluídas. A ordenação usa MAE primário e RMSE como desempate; bootstrap é em blocos por rodada contra a V2.",
   "anti_cherry_pick": "Este ranking equaliza a amostra e evita comparar MAEs calculados em universos diferentes. Não promove modelo para produção; evidência prospectiva imutável continua obrigatória.",
@@ -26,9 +26,9 @@
     {
       "arquitetura": "catboost_contexto_off_cal",
       "n": 4136,
-      "mae": 2.943046,
-      "rmse": 3.954218,
-      "bias": -0.28549,
+      "mae": 2.94732,
+      "rmse": 3.958652,
+      "bias": -0.283111,
       "posicao_ranking": 1
     },
     {
@@ -85,9 +85,9 @@
       {
         "arquitetura": "catboost_contexto_off_cal",
         "n": 1174,
-        "mae": 3.275031,
-        "rmse": 4.506076,
-        "bias": -0.302672,
+        "mae": 3.265181,
+        "rmse": 4.499066,
+        "bias": -0.316024,
         "posicao_ranking": 2
       },
       {
@@ -127,9 +127,9 @@
       {
         "arquitetura": "catboost_contexto_off_cal",
         "n": 264,
-        "mae": 3.335993,
-        "rmse": 4.056738,
-        "bias": -0.099762,
+        "mae": 3.360301,
+        "rmse": 4.067054,
+        "bias": 0.009217,
         "posicao_ranking": 1
       },
       {
@@ -177,9 +177,9 @@
       {
         "arquitetura": "catboost_contexto_off_cal",
         "n": 660,
-        "mae": 3.155332,
-        "rmse": 3.990506,
-        "bias": -0.3699,
+        "mae": 3.150415,
+        "rmse": 3.989566,
+        "bias": -0.395142,
         "posicao_ranking": 1
       },
       {
@@ -227,9 +227,9 @@
       {
         "arquitetura": "catboost_contexto_off_cal",
         "n": 1416,
-        "mae": 2.599026,
-        "rmse": 3.625395,
-        "bias": -0.240087,
+        "mae": 2.603512,
+        "rmse": 3.627048,
+        "bias": -0.239808,
         "posicao_ranking": 1
       },
       {
@@ -275,20 +275,12 @@
     ],
     "ZAG": [
       {
-        "arquitetura": "catboost_contexto_off_cal",
-        "n": 622,
-        "mae": 2.707572,
-        "rmse": 3.441353,
-        "bias": -0.345688,
-        "posicao_ranking": 1
-      },
-      {
         "arquitetura": "v3h_hibrido",
         "n": 622,
         "mae": 2.720798,
         "rmse": 3.455156,
         "bias": -0.117281,
-        "posicao_ranking": 2
+        "posicao_ranking": 1
       },
       {
         "arquitetura": "direta_rf_lab",
@@ -296,6 +288,14 @@
         "mae": 2.736135,
         "rmse": 3.440315,
         "bias": -0.051612,
+        "posicao_ranking": 2
+      },
+      {
+        "arquitetura": "catboost_contexto_off_cal",
+        "n": 622,
+        "mae": 2.739272,
+        "rmse": 3.484315,
+        "bias": -0.324766,
         "posicao_ranking": 3
       },
       {
@@ -385,30 +385,30 @@
     },
     "catboost_contexto_off_cal": {
       "n_rodadas": 14,
-      "delta_mae_menos_v2": -0.052988,
+      "delta_mae_menos_v2": -0.048462,
       "ic95": [
-        -0.113208,
-        0.007495
+        -0.105497,
+        0.010576
       ],
-      "probabilidade_melhor_v2": 0.9585,
+      "probabilidade_melhor_v2": 0.9469,
       "rodadas_ganhas": 10,
       "rodadas_perdidas": 4,
       "empates": 0,
       "por_rodada": {
-        "10": -0.284406,
-        "11": -0.073669,
-        "12": -0.071798,
-        "13": 0.027013,
-        "14": -0.12895,
-        "15": -0.227474,
-        "16": 0.091278,
-        "17": -0.047237,
-        "18": 0.193528,
-        "19": -0.070057,
-        "20": -0.049468,
-        "22": -0.066072,
-        "23": -0.085741,
-        "24": 0.051217
+        "10": -0.244903,
+        "11": -0.172416,
+        "12": -0.078463,
+        "13": 0.056638,
+        "14": -0.09571,
+        "15": -0.185262,
+        "16": 0.075232,
+        "17": -0.039996,
+        "18": 0.199367,
+        "19": -0.054565,
+        "20": -0.056871,
+        "22": -0.079892,
+        "23": -0.054589,
+        "24": 0.052966
       },
       "evidencia": "inconclusiva"
     },

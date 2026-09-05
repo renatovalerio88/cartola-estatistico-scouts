@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-09-02T21:17:47.142764+00:00",
+  "gerado_em": "2026-09-05T22:11:56.453970+00:00",
   "protocolo": "calibracao residual estritamente temporal; para cada R/posicao usa somente residuos OOS de rodadas anteriores a R; nenhuma estatistica de R participa da calibracao",
   "linhas": 4149,
   "rodadas": [
@@ -21,27 +21,27 @@
   "geral": {
     "v3s_catboost_nested": {
       "n": 4149,
-      "mae": 2.970773,
-      "rmse": 4.462504,
-      "bias": -2.055315
+      "mae": 2.96891,
+      "rmse": 4.453653,
+      "bias": -1.986162
     },
     "cal_pos_mean5": {
       "n": 4149,
-      "mae": 2.936955,
-      "rmse": 4.00556,
-      "bias": -0.505651
+      "mae": 2.948411,
+      "rmse": 4.012169,
+      "bias": -0.484091
     },
     "cal_pos_median5": {
       "n": 4149,
-      "mae": 2.840015,
-      "rmse": 4.166762,
-      "bias": -1.37061
+      "mae": 2.854091,
+      "rmse": 4.178547,
+      "bias": -1.346202
     },
     "cal_pos_mean_all": {
       "n": 4149,
-      "mae": 2.919745,
-      "rmse": 4.010081,
-      "bias": -0.589928
+      "mae": 2.924585,
+      "rmse": 4.017161,
+      "bias": -0.597751
     },
     "v3h_hibrido": {
       "n": 4149,
@@ -54,8 +54,8 @@
     "cal_pos_mean5": {
       "mae_melhor_que_v3h": true,
       "rmse_nao_piora_mais_5pct": true,
-      "bias_absoluto_ate_0_50": false,
-      "aprovado_experimentalmente": false
+      "bias_absoluto_ate_0_50": true,
+      "aprovado_experimentalmente": true
     },
     "cal_pos_median5": {
       "mae_melhor_que_v3h": true,
@@ -71,8 +71,17 @@
     }
   },
   "melhor_calibracao_descritiva": "cal_pos_median5",
-  "melhor_candidato_que_passa_guardrails": null,
-  "decisao": "SEM_CANDIDATO_APROVADO_NOS_GUARDRAILS",
+  "melhor_candidato_que_passa_guardrails": "cal_pos_mean5",
+  "decisao": "CANDIDATO_APROVADO_PARA_NESTED_SELETOR",
   "provas_temporais_ok": true,
-  "bootstrap_candidato_vs_v3h": null
+  "bootstrap_candidato_vs_v3h": {
+    "diferenca_mae_challenger_menos_baseline": -0.037637,
+    "ic95": [
+      -0.081757,
+      0.004973
+    ],
+    "probabilidade_challenger_melhor": 0.9548,
+    "rodadas_ganhas": 9,
+    "rodadas_perdidas": 5
+  }
 }

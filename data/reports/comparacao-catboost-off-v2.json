@@ -1,14 +1,16 @@
 {
-  "gerado_em": "2026-09-02T21:17:38.695161+00:00",
+  "gerado_em": "2026-09-05T22:11:52.170175+00:00",
   "objetivo": "Comparar CatBoost contexto OFF com calibracao residual online fixa contra a V2 historicamente salva.",
   "protocolo": "As previsoes CatBoost sao OOS por rodada e a calibracao de cada R usa somente residuos de ate 5 rodadas anteriores da mesma posicao. A V2 e lida diretamente dos snapshots historicos de producao. As linhas sao alinhadas por rodada+atleta_id e divergencias no real sao excluidas. Bootstrap e feito em blocos por rodada. R18+ e reportado separadamente como robustez temporal posterior, sem alegar independencia prospectiva completa.",
   "nota_anti_cherry_pick": "A janela CAL_WINDOW=5 ja havia sido explorada antes desta comparacao. Por isso o resultado total nao pode, sozinho, promover arquitetura. A decisao permanece bloqueada para V2 e exige validacao prospectiva em previsoes imutaveis futuras.",
-  "rodadas_v2_ausentes": [],
-  "linhas_comuns": 4149,
-  "linhas_consistentes": 4136,
+  "rodadas_v2_ausentes": [
+    25
+  ],
+  "linhas_comuns": 4152,
+  "linhas_consistentes": 4139,
   "linhas_real_divergente": 13,
   "periodo_total_exploratorio": {
-    "linhas": 4136,
+    "linhas": 4139,
     "rodadas": [
       10,
       11,
@@ -26,59 +28,59 @@
       24
     ],
     "v2": {
-      "n": 4136,
-      "mae": 2.99582,
-      "rmse": 4.017434,
-      "bias": -0.086376
+      "n": 4139,
+      "mae": 2.994929,
+      "rmse": 4.016362,
+      "bias": -0.087594
     },
     "catboost_off_cal": {
-      "n": 4136,
-      "mae": 2.943046,
-      "rmse": 3.954218,
-      "bias": -0.28549
+      "n": 4139,
+      "mae": 2.945679,
+      "rmse": 3.957277,
+      "bias": -0.28303
     },
     "bootstrap": {
       "n_rodadas": 14,
-      "delta_mae_challenger_menos_v2": -0.052988,
+      "delta_mae_challenger_menos_v2": -0.049129,
       "ic95": [
-        -0.113208,
-        0.007495
+        -0.105872,
+        0.009859
       ],
-      "probabilidade_challenger_melhor": 0.9585,
+      "probabilidade_challenger_melhor": 0.9494,
       "rodadas_ganhas": 10,
       "rodadas_perdidas": 4,
       "empates": 0,
       "por_rodada": {
-        "10": -0.284406,
-        "11": -0.073669,
-        "12": -0.071798,
-        "13": 0.027013,
-        "14": -0.12895,
-        "15": -0.227474,
-        "16": 0.091278,
-        "17": -0.047237,
-        "18": 0.193528,
-        "19": -0.070057,
-        "20": -0.049468,
-        "22": -0.066072,
-        "23": -0.085741,
-        "24": 0.051217
+        "10": -0.244358,
+        "11": -0.172416,
+        "12": -0.081145,
+        "13": 0.056638,
+        "14": -0.09571,
+        "15": -0.185262,
+        "16": 0.075232,
+        "17": -0.0472,
+        "18": 0.199367,
+        "19": -0.054565,
+        "20": -0.056871,
+        "22": -0.079892,
+        "23": -0.054589,
+        "24": 0.052966
       },
       "evidencia": "inconclusiva"
     },
     "por_posicao": {
       "ATA": {
         "v2": {
-          "n": 1174,
-          "mae": 3.221618,
-          "rmse": 4.457357,
-          "bias": -0.14816
+          "n": 1175,
+          "mae": 3.219132,
+          "rmse": 4.455468,
+          "bias": -0.148289
         },
         "catboost_off_cal": {
-          "n": 1174,
-          "mae": 3.275031,
-          "rmse": 4.506076,
-          "bias": -0.302672
+          "n": 1175,
+          "mae": 3.262594,
+          "rmse": 4.497156,
+          "bias": -0.315563
         }
       },
       "GOL": {
@@ -90,9 +92,9 @@
         },
         "catboost_off_cal": {
           "n": 264,
-          "mae": 3.335993,
-          "rmse": 4.056738,
-          "bias": -0.099762
+          "mae": 3.360301,
+          "rmse": 4.067054,
+          "bias": 0.009217
         }
       },
       "LAT": {
@@ -104,23 +106,23 @@
         },
         "catboost_off_cal": {
           "n": 660,
-          "mae": 3.155332,
-          "rmse": 3.990506,
-          "bias": -0.3699
+          "mae": 3.150415,
+          "rmse": 3.989566,
+          "bias": -0.395142
         }
       },
       "MEI": {
         "v2": {
-          "n": 1416,
-          "mae": 2.638298,
-          "rmse": 3.658653,
-          "bias": -0.10803
+          "n": 1418,
+          "mae": 2.638103,
+          "rmse": 3.657295,
+          "bias": -0.111403
         },
         "catboost_off_cal": {
-          "n": 1416,
-          "mae": 2.599026,
-          "rmse": 3.625395,
-          "bias": -0.240087
+          "n": 1418,
+          "mae": 2.601126,
+          "rmse": 3.624678,
+          "bias": -0.239992
         }
       },
       "ZAG": {
@@ -132,9 +134,9 @@
         },
         "catboost_off_cal": {
           "n": 622,
-          "mae": 2.707572,
-          "rmse": 3.441353,
-          "bias": -0.345688
+          "mae": 2.739272,
+          "rmse": 3.484315,
+          "bias": -0.324766
         }
       }
     }
@@ -157,28 +159,28 @@
     },
     "catboost_off_cal": {
       "n": 1677,
-      "mae": 3.005079,
-      "rmse": 4.021079,
-      "bias": -0.195902
+      "mae": 3.009926,
+      "rmse": 4.027274,
+      "bias": -0.183176
     },
     "bootstrap": {
       "n_rodadas": 6,
-      "delta_mae_challenger_menos_v2": -0.004432,
+      "delta_mae_challenger_menos_v2": 0.001069,
       "ic95": [
-        -0.070525,
-        0.081948
+        -0.063776,
+        0.089554
       ],
-      "probabilidade_challenger_melhor": 0.5997,
+      "probabilidade_challenger_melhor": 0.5042,
       "rodadas_ganhas": 4,
       "rodadas_perdidas": 2,
       "empates": 0,
       "por_rodada": {
-        "18": 0.193528,
-        "19": -0.070057,
-        "20": -0.049468,
-        "22": -0.066072,
-        "23": -0.085741,
-        "24": 0.051217
+        "18": 0.199367,
+        "19": -0.054565,
+        "20": -0.056871,
+        "22": -0.079892,
+        "23": -0.054589,
+        "24": 0.052966
       },
       "evidencia": "inconclusiva"
     },
@@ -192,9 +194,9 @@
         },
         "catboost_off_cal": {
           "n": 467,
-          "mae": 3.349706,
-          "rmse": 4.52102,
-          "bias": 0.150523
+          "mae": 3.339496,
+          "rmse": 4.51931,
+          "bias": 0.144708
         }
       },
       "GOL": {
@@ -206,9 +208,9 @@
         },
         "catboost_off_cal": {
           "n": 106,
-          "mae": 3.255841,
-          "rmse": 3.875128,
-          "bias": -0.366963
+          "mae": 3.283751,
+          "rmse": 3.874089,
+          "bias": -0.204653
         }
       },
       "LAT": {
@@ -220,9 +222,9 @@
         },
         "catboost_off_cal": {
           "n": 275,
-          "mae": 3.130658,
-          "rmse": 3.959074,
-          "bias": -0.501366
+          "mae": 3.132755,
+          "rmse": 3.956919,
+          "bias": -0.473907
         }
       },
       "MEI": {
@@ -234,9 +236,9 @@
         },
         "catboost_off_cal": {
           "n": 573,
-          "mae": 2.681142,
-          "rmse": 3.830373,
-          "bias": -0.218812
+          "mae": 2.677259,
+          "rmse": 3.826369,
+          "bias": -0.207452
         }
       },
       "ZAG": {
@@ -248,9 +250,9 @@
         },
         "catboost_off_cal": {
           "n": 256,
-          "mae": 2.862738,
-          "rmse": 3.569144,
-          "bias": -0.377612
+          "mae": 2.907995,
+          "rmse": 3.630966,
+          "bias": -0.405767
         }
       }
     }
