@@ -7,8 +7,10 @@ Regras:
 - rodada/temporada e contagem de jogadores devem ser coerentes;
 - nenhum atleta pode aparecer duplicado no snapshot;
 - colunas essenciais de previsão e contexto pré-rodada devem existir;
-- cada CSV e manifesto devem ter sido adicionados uma única vez no histórico Git,
-  nunca modificados depois do primeiro commit.
+- snapshots já versionados devem ter sido adicionados uma única vez no histórico Git,
+  nunca modificados depois do primeiro commit;
+- um snapshot recém-gerado pode ser auditado antes do primeiro commit, desde que ainda
+  não exista no HEAD e passe todas as demais validações de conteúdo e integridade.
 
 O script não altera snapshots. Gera apenas um relatório de auditoria.
 """
@@ -59,6 +61,22 @@ def git_commits_touching(path: Path) -> list[str]:
         capture_output=True,
     )
     return [line.strip() for line in proc.stdout.splitlines() if line.strip()]
+
+
+def git_file_in_head(path: Path) -> bool:
+    """Retorna True quando o caminho já existe no commit HEAD.
+
+    Isso distingue um snapshot realmente novo, criado no workspace da execução atual,
+    de um arquivo que deveria possuir histórico Git mas não possui.
+    """
+    rel = path.relative_to(ROOT).as_posix()
+    proc = subprocess.run(
+        ["git", "cat-file", "-e", f"HEAD:{rel}"],
+        cwd=ROOT,
+        text=True,
+        capture_output=True,
+    )
+    return proc.returncode == 0
 
 
 def audit_snapshot(manifest_path: Path) -> dict:
@@ -163,9 +181,15 @@ def audit_snapshot(manifest_path: Path) -> dict:
             continue
         try:
             commits = git_commits_touching(p)
-            historico_git[p.relative_to(ROOT).as_posix()] = commits
+            rel = p.relative_to(ROOT).as_posix()
+            historico_git[rel] = commits
             if not commits:
-                erros.append(f"{p.name}: arquivo não aparece no histórico Git")
+                if git_file_in_head(p):
+                    erros.append(f"{p.name}: arquivo existe no HEAD, mas não aparece no histórico Git")
+                else:
+                    avisos.append(
+                        f"{p.name}: snapshot novo, ainda não versionado; histórico será exigido após o primeiro commit"
+                    )
             elif len(commits) > 1:
                 erros.append(
                     f"{p.name}: snapshot foi alterado após criação ({len(commits)} commits tocaram o arquivo)"
