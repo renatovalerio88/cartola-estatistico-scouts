@@ -118,12 +118,13 @@ def main():
     assert isinstance(prospectivo.get("rodadas") or [], list), "avaliação prospectiva sem lista de rodadas"
     assert isinstance(prospectivo.get("times_sugeridos") or [], list), "avaliação prospectiva sem times sugeridos"
     protocolo = str(prospectivo.get("protocolo") or "").lower()
-    # Durante a primeira publicação do novo frontend, o payload ainda pode ser o
-    # relatório anterior. Assim que existir o primeiro campo times_sugeridos,
-    # o protocolo novo passa a ser obrigatório. Isso evita bloquear a transição
-    # sem afrouxar o gate depois que o histórico de times entra em produção.
+    # O protocolo pode descrever o corte temporal como "antes da rodada" ou,
+    # de forma mais forte, exigir prova de mercado aberto no congelamento.
+    # Em ambos os casos a ausência de reconstrução retroativa é obrigatória.
     if "times_sugeridos" in prospectivo:
-        assert "antes da rodada" in protocolo and "nenhuma reconstrução retroativa" in protocolo, "protocolo não protege o histórico real"
+        corte_pre_rodada = "antes da rodada" in protocolo or "mercado aberto" in protocolo
+        sem_retroatividade = "nenhuma reconstrução retroativa" in protocolo or "não são reconstru" in protocolo
+        assert corte_pre_rodada and sem_retroatividade, "protocolo não protege o histórico real"
 
     print(
         f"Site OK | R{rodada} | jogadores={len(jogadores)} | elegíveis={len(elegiveis)} | "
