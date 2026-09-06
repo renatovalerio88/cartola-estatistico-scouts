@@ -8,7 +8,8 @@ O teste executa o módulo JS real usado pelo site e valida:
 - no máximo um Reserva de Luxo;
 - Reserva de Luxo pertencente ao banco;
 - escolha determinística do Reserva de Luxo pelo maior ganho projetado sobre
-  o titular de menor projeção da mesma posição.
+  o titular de menor projeção da mesma posição;
+- frontend consumindo completeTeam(), sem voltar ao banco heurístico antigo.
 """
 from __future__ import annotations
 
@@ -18,6 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 OPTIMIZER = ROOT / "site" / "optimizer.js"
+INDEX = ROOT / "site" / "index.html"
 
 
 def run_node(script: str):
@@ -34,6 +36,7 @@ def run_node(script: str):
 
 def main():
     assert OPTIMIZER.exists(), "site/optimizer.js ausente"
+    assert INDEX.exists(), "site/index.html ausente"
 
     script = r"""
 const opt=require(process.argv[1]);
@@ -99,10 +102,18 @@ process.stdout.write(JSON.stringify({captain,b,complete}));
     assert complete["reservaLuxoAtletaId"] == 14
     assert {int(x["atleta_id"]) for x in complete["bench"]} == expected_ids
 
+    frontend = INDEX.read_text(encoding="utf-8")
+    assert "V3ExactOptimizer.completeTeam" in frontend, "frontend não usa completeTeam() auditado"
+    assert "function reserveTeam(" not in frontend, "frontend ainda contém banco heurístico antigo"
+    assert "team.captain" in frontend, "frontend não consome capitão do módulo auditado"
+    assert "team.bench" in frontend, "frontend não consome banco do módulo auditado"
+    assert "reserva_luxo" in frontend and "Reserva de Luxo" in frontend, "Reserva de Luxo não é exibido no frontend"
+    assert "customBench" in frontend, "Monte seu Time não exibe o banco completo"
+
     print(
         "Regras da escalação V3 OK | "
         f"capitão={captain['apelido']} | banco={len(bench)} | "
-        f"reserva_luxo={luxury[0]['apelido']}"
+        f"reserva_luxo={luxury[0]['apelido']} | frontend=completeTeam"
     )
 
 
