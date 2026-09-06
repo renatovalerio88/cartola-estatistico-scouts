@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-09-06T06:09:20.534245+00:00",
+  "gerado_em": "2026-09-06T07:12:03.067216+00:00",
   "objetivo": "Complementar MAE/RMSE para scouts raros. MAE pode favorecer previsões quase-zero; esta auditoria mede ocorrência, calibração e discriminação sem alterar o ranking principal.",
   "protocolo": "Mesmos folds walk-forward do campeonato; P(evento>=1)=1-exp(-lambda_prevista); nenhum dado da rodada teste entra no treino.",
   "criterio_evento_raro": {
@@ -44,10 +44,10 @@
         "bayesian_ridge",
         "ridge",
         "extra_trees",
-        "negative_binomial",
         "hist_gradient_boosting",
         "random_forest",
-        "ewma"
+        "ewma",
+        "negative_binomial"
       ],
       "ranking_average_precision": [
         "ewma",
@@ -83,10 +83,10 @@
           "calibration_bias": -0.002461
         },
         "negative_binomial": {
-          "brier_evento": 0.005916,
-          "average_precision": 0.012539,
-          "prob_media": 0.002215,
-          "calibration_bias": -0.003633
+          "brier_evento": 0.007621,
+          "average_precision": 0.021442,
+          "prob_media": 0.004976,
+          "calibration_bias": -0.000872
         },
         "ridge": {
           "brier_evento": 0.005864,
@@ -738,10 +738,10 @@
           "calibration_bias": 0.004435
         },
         "negative_binomial": {
-          "brier_evento": 0.023502,
+          "brier_evento": 0.023646,
           "average_precision": 0.004749,
-          "prob_media": 0.034351,
-          "calibration_bias": 0.028503
+          "prob_media": 0.034522,
+          "calibration_bias": 0.028674
         },
         "ridge": {
           "brier_evento": 0.006127,
@@ -1524,10 +1524,10 @@
           "calibration_bias": 0.000536
         },
         "negative_binomial": {
-          "brier_evento": 0.011362,
-          "average_precision": 0.009756,
-          "prob_media": 0.008685,
-          "calibration_bias": -0.001204
+          "brier_evento": 0.011242,
+          "average_precision": 0.009765,
+          "prob_media": 0.008308,
+          "calibration_bias": -0.001581
         },
         "ridge": {
           "brier_evento": 0.009869,
