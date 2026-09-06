@@ -1,6 +1,18 @@
 {
-  "status": "AGUARDANDO_PRIMEIRO_SIDECAR",
+  "status": "APROVADO",
   "aprovado": true,
-  "sidecars_auditados": 0,
-  "mensagem": "Locks antigos continuam válidos. A decomposição por scouts e risco/confiança OOS passam a ser exigidos nos novos snapshots quando puderem ser reproduzidos exatamente sem informação pós-lock."
+  "sidecars_auditados": 1,
+  "jogadores_auditados": 597,
+  "tolerancia_reconciliacao": 0.0001,
+  "erros": [],
+  "rodadas": [
+    {
+      "rodada": 26,
+      "manifest": "predictions/pre_round/2026/R26.explicabilidade.manifest.json",
+      "erros": [],
+      "jogadores": 597,
+      "erro_maximo_reconciliacao": 2.9999999995311555e-06
+    }
+  ],
+  "regra": "Explicação é somente decomposição matemática de scouts esperados × pesos oficiais. Risco/confiança usa exclusivamente erros OOS de rodadas anteriores à rodada-alvo; alvo real, scout real e informação pós-rodada são proibidos no sidecar."
 }

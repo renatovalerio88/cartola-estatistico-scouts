@@ -1,21 +1,34 @@
 {
-  "status": "LEGADO_SEM_DECOMPOSICAO",
+  "status": "APROVADO",
   "aprovado": true,
-  "rodada": 25,
-  "csv_sha256": "d874902ab25168eea9c5e6ff969fd8e5f9b4d138d2a3eb76e13c23393b747030",
-  "divergencias_fontes": [
-    {
-      "arquivo": "data/derived/dataset-walk-forward.csv",
-      "motivo": "hash_divergente",
-      "esperado": "cc77a4d38fda1eb06ff2ad56382ba9acef9d1aca321703b7a69c0f8bd8d3bc0c",
-      "atual": "d4d5e3ce3f75083f8dda3f3b3e6561411b37b2e9d9652e2367d3743360efac62"
-    },
-    {
-      "arquivo": "data/reports/backtest-v3s-nested.json",
-      "motivo": "hash_divergente",
-      "esperado": "a19b1cadaebf5f5c3ee0ad193b932487623f12c431374fb962a37184327b0f0e",
-      "atual": "bd411581e4a32af9feafc0f1d3495ce56236a448af768455c7b6b9644c2a16f2"
-    }
-  ],
-  "mensagem": "O lock é válido, mas as fontes já mudaram. A decomposição não será reconstruída retroativamente para evitar explicação pós-hoc."
+  "rodada": 26,
+  "jogadores": 597,
+  "csv_sha256": "f59893809b3ab3bb67aac68c3d63416b7875ab1a99cacb28a80c8a83794c932b",
+  "explicabilidade_sha256": "6880a7979b653bad2f30276b82768d230eb8f9c34f0406ba8daa3ea658e78be2",
+  "erro_maximo_recomputado_vs_lock": 4.986336445966799e-07,
+  "erro_maximo_reconciliacao": 2.9999999995311555e-06,
+  "risco_confianca": {
+    "status": "APROVADO",
+    "arquitetura": "v3s_nested",
+    "corte_temporal": "somente previsoes OOS com rodada < 26",
+    "rodadas_usadas": [
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      22,
+      23,
+      24,
+      25
+    ],
+    "linhas_oos": 4459,
+    "regra_faixa": "faixa indicativa = projeção V3-S ± erro absoluto P80 histórico OOS da posição; não é intervalo probabilístico calibrado"
+  }
 }

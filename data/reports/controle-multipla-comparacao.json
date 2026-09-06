@@ -1,11 +1,11 @@
 {
-  "gerado_em": "2026-09-04T18:34:57.528935+00:00",
+  "gerado_em": "2026-09-06T02:24:20.115796+00:00",
   "objetivo": "Controlar inflacao de falso positivo apos testar multiplos challengers contra a V2.",
   "metodo": "p-valor empirico bilateral derivado do bootstrap em blocos por rodada + correcao Holm-Bonferroni (FWER 5%)",
   "alpha": 0.05,
   "numero_comparacoes": 5,
   "amostra_base": {
-    "linhas_consistentes": 4136,
+    "linhas_consistentes": 4139,
     "rodadas_comuns": [
       10,
       11,
@@ -26,50 +26,50 @@
   "nota_amostras": "Comparacoes opcionais como CatBoost nested e dois estagios usam sua propria intersecao pareada V2/desafiante, registrada no relatorio de comparacao; entram no mesmo controle Holm apenas porque cada p-valor foi obtido contra a V2 historica salva sem olhar a rodada avaliada.",
   "comparacoes": {
     "v3s_vs_v2": {
-      "probabilidade_bootstrap_desafiante_melhor": 0.015,
-      "diferenca_mae_desafiante_menos_v2": 0.041305,
+      "probabilidade_bootstrap_desafiante_melhor": 0.0086,
+      "diferenca_mae_desafiante_menos_v2": 0.04659,
       "ic95": [
-        0.003644,
-        0.080771
+        0.006921,
+        0.086199
       ],
-      "rodadas_ganhas": 4,
-      "rodadas_perdidas": 10,
-      "p_empirico_bilateral": 0.03,
-      "p_holm": 0.15,
+      "rodadas_ganhas": 3,
+      "rodadas_perdidas": 11,
+      "p_empirico_bilateral": 0.0172,
+      "p_holm": 0.086,
       "significativo_fwer_5pct": false
     },
     "v3h_vs_v2": {
-      "probabilidade_bootstrap_desafiante_melhor": 0.6798,
-      "diferenca_mae_desafiante_menos_v2": -0.01058,
+      "probabilidade_bootstrap_desafiante_melhor": 0.6422,
+      "diferenca_mae_desafiante_menos_v2": -0.008956,
       "ic95": [
-        -0.054901,
-        0.034164
+        -0.054389,
+        0.040588
       ],
       "rodadas_ganhas": 8,
       "rodadas_perdidas": 6,
-      "p_empirico_bilateral": 0.6404,
+      "p_empirico_bilateral": 0.7156,
       "p_holm": 1.0,
       "significativo_fwer_5pct": false
     },
     "rf_lab_vs_v2": {
-      "probabilidade_bootstrap_desafiante_melhor": 0.1046,
-      "diferenca_mae_desafiante_menos_v2": 0.036313,
+      "probabilidade_bootstrap_desafiante_melhor": 0.1646,
+      "diferenca_mae_desafiante_menos_v2": 0.02758,
       "ic95": [
-        -0.022084,
-        0.092721
+        -0.027939,
+        0.087218
       ],
-      "rodadas_ganhas": 5,
-      "rodadas_perdidas": 9,
-      "p_empirico_bilateral": 0.2092,
-      "p_holm": 0.8368,
+      "rodadas_ganhas": 7,
+      "rodadas_perdidas": 7,
+      "p_empirico_bilateral": 0.3292,
+      "p_holm": 1.0,
       "significativo_fwer_5pct": false
     },
     "catboost_nested_vs_v2": {
-      "probabilidade_bootstrap_desafiante_melhor": 0.654,
-      "diferenca_mae_desafiante_menos_v2": -0.019922,
+      "probabilidade_bootstrap_desafiante_melhor": 0.658,
+      "diferenca_mae_desafiante_menos_v2": -0.020502,
       "ic95": [
-        -0.11822,
-        0.0746
+        -0.117983,
+        0.073421
       ],
       "rodadas_ganhas": 6,
       "rodadas_perdidas": 8,
@@ -92,23 +92,23 @@
           24
         ],
         "mae_v2": 2.99582,
-        "mae_desafiante": 2.974478
+        "mae_desafiante": 2.972765
       },
-      "p_empirico_bilateral": 0.692,
+      "p_empirico_bilateral": 0.684,
       "p_holm": 1.0,
       "significativo_fwer_5pct": false
     },
     "dois_estagios_vs_v2": {
-      "probabilidade_bootstrap_desafiante_melhor": 0.6064,
-      "diferenca_mae_desafiante_menos_v2": -0.014754,
+      "probabilidade_bootstrap_desafiante_melhor": 0.5086,
+      "diferenca_mae_desafiante_menos_v2": -0.001219,
       "ic95": [
-        -0.116752,
-        0.08245
+        -0.096661,
+        0.089809
       ],
       "rodadas_ganhas": 5,
       "rodadas_perdidas": 9,
       "amostra_pareada": {
-        "linhas": 4136,
+        "linhas": 4139,
         "rodadas": [
           10,
           11,
@@ -125,10 +125,10 @@
           23,
           24
         ],
-        "mae_v2": 2.99582,
-        "mae_desafiante": 2.97939
+        "mae_v2": 2.994929,
+        "mae_desafiante": 2.992173
       },
-      "p_empirico_bilateral": 0.7872,
+      "p_empirico_bilateral": 0.9828,
       "p_holm": 1.0,
       "significativo_fwer_5pct": false
     }
@@ -139,16 +139,16 @@
     "decisao": "NAO_INCORPORAR; manter como experimento ate nova evidencia",
     "incluido_no_holm_vs_v2": true,
     "resultado_holm": {
-      "probabilidade_bootstrap_desafiante_melhor": 0.6064,
-      "diferenca_mae_desafiante_menos_v2": -0.014754,
+      "probabilidade_bootstrap_desafiante_melhor": 0.5086,
+      "diferenca_mae_desafiante_menos_v2": -0.001219,
       "ic95": [
-        -0.116752,
-        0.08245
+        -0.096661,
+        0.089809
       ],
       "rodadas_ganhas": 5,
       "rodadas_perdidas": 9,
       "amostra_pareada": {
-        "linhas": 4136,
+        "linhas": 4139,
         "rodadas": [
           10,
           11,
@@ -165,10 +165,10 @@
           23,
           24
         ],
-        "mae_v2": 2.99582,
-        "mae_desafiante": 2.97939
+        "mae_v2": 2.994929,
+        "mae_desafiante": 2.992173
       },
-      "p_empirico_bilateral": 0.7872,
+      "p_empirico_bilateral": 0.9828,
       "p_holm": 1.0,
       "significativo_fwer_5pct": false
     }
