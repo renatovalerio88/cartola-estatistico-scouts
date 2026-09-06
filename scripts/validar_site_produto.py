@@ -58,6 +58,21 @@ def main():
     assert "Por quê?" in html, "explicabilidade amigável não encontrada"
     assert "expected scouts" in html.lower() or "scouts esperados" in html.lower(), "metodologia de scouts não encontrada"
 
+    # Gates de UX/mobile: impedem regressões nos ajustes responsivos já aprovados.
+    assert 'name="viewport"' in html, "viewport responsivo ausente"
+    assert "@media(max-width:700px)" in html, "breakpoint mobile principal ausente"
+    assert "@media(max-width:430px)" in html, "breakpoint para telas estreitas ausente"
+    assert "scrollbar-width:none" in html and "-webkit-overflow-scrolling:touch" in html, "navegação/rolagem touch incompleta"
+    assert ".player-ball{width:64px}" in html, "campo mobile pode voltar a estourar horizontalmente"
+    assert "grid-template-columns:1fr" in html, "controles não colapsam para uma coluna em telas estreitas"
+
+    # Gate do Histórico: o produto deve mostrar placar prospectivo real, e não
+    # apresentar backtest histórico como se fosse desempenho prospectivo.
+    assert "Placar prospectivo" in html, "rótulo prospectivo do Histórico ausente"
+    assert "function prospectiveMetric" in html, "leitura das métricas prospectivas ausente"
+    assert "avaliacao_prospectiva_imutavel" in html, "Histórico não consome avaliação prospectiva imutável"
+    assert "MAE histórico V2" not in html, "Histórico voltou a misturar backtest V2 no placar prospectivo"
+
     payload = json.loads(DATA.read_text(encoding="utf-8"))
     produto = payload.get("produto") or {}
     rodada = produto.get("rodada")
@@ -90,9 +105,16 @@ def main():
         status = str(congelamento.get("status") or congelamento.get("resultado") or "").upper()
         assert not any(x in status for x in ("FALHA", "REPROV", "INVALID")), "auditoria de imutabilidade reprovada"
 
+    prospectivo = payload.get("avaliacao_prospectiva_imutavel") or {}
+    assert isinstance(prospectivo.get("rodadas") or [], list), "placar prospectivo sem lista de rodadas"
+    protocolo = str(prospectivo.get("protocolo") or "").lower()
+    if prospectivo:
+        assert "snapshot" in protocolo and "antes da rodada" in protocolo, "protocolo prospectivo não garante corte pré-rodada"
+
     print(
         f"Site V3 OK | R{rodada} | jogadores={len(jogadores)} | "
-        f"elegíveis={len(elegiveis)} | posições={dict(sorted(pos.items()))}"
+        f"elegíveis={len(elegiveis)} | posições={dict(sorted(pos.items()))} | "
+        f"mobile=OK | histórico_prospectivo=OK"
     )
 
 
