@@ -2,10 +2,15 @@
   'use strict';
 
   const EPS = 1e-9;
+  const BENCH_POSITIONS = ['GOL', 'LAT', 'ZAG', 'MEI', 'ATA'];
 
   function num(v) {
     const n = Number(v);
     return Number.isFinite(n) ? n : 0;
+  }
+
+  function playerId(p) {
+    return String(p && p.atleta_id != null ? p.atleta_id : '');
   }
 
   function buildGroup(pool, need) {
@@ -58,7 +63,7 @@
         const next = [];
         for (const s of states) {
           for (const p of g.pool.slice(0, 24)) {
-            if (s.sel.some(x => String(x.atleta_id) === String(p.atleta_id))) continue;
+            if (s.sel.some(x => playerId(x) === playerId(p))) continue;
             const club = String(p.sigla_clube || '');
             if ((s.clubs[club] || 0) >= maxClub) continue;
             const cost = s.cost + num(p.preco);
@@ -71,7 +76,7 @@
             });
           }
         }
-        next.sort((a, b) => b.score - a.score);
+        next.sort((a, b) => b.score - a.score || a.cost - b.cost);
         states = next.slice(0, 700);
         if (!states.length) return null;
       }
@@ -96,7 +101,6 @@
     });
     if (groups.some(g => g.pool.length < g.need)) return null;
 
-    // Ataca primeiro os grupos mais restritos. Isso melhora a poda sem alterar o ótimo.
     groups.sort((a, b) => (a.pool.length / a.need) - (b.pool.length / b.need));
 
     const futureMax = new Array(groups.length + 1).fill(0);
@@ -145,7 +149,6 @@
           const nextCost = localCost + num(p.preco);
           if (nextCost > budget + EPS) continue;
 
-          // Se nem escolhendo os melhores restantes este ramo superar o incumbent, encerra.
           const optimistic = localScore + num(p.projecao) + g.maxScore(i + 1, left - 1) + futureMax[gi + 1];
           if (optimistic <= bestScore + EPS) break;
 
@@ -177,7 +180,97 @@
     return best;
   }
 
-  const api = { optimize, solveFormation };
+  function selectCaptain(starters) {
+    const candidates = (starters || []).filter(p => p && p.posicao !== 'TEC');
+    if (!candidates.length) return null;
+    return candidates.slice().sort((a, b) =>
+      num(b.projecao) - num(a.projecao) ||
+      num(b.titularidade) - num(a.titularidade) ||
+      num(a.preco) - num(b.preco) ||
+      num(a.atleta_id) - num(b.atleta_id)
+    )[0];
+  }
+
+  function selectBench(players, starters, options) {
+    const eligible = options && options.eligible ? options.eligible : (() => true);
+    const used = new Set((starters || []).map(playerId));
+    const bench = [];
+
+    for (const pos of BENCH_POSITIONS) {
+      const samePosStarters = (starters || []).filter(p => p && p.posicao === pos);
+      if (!samePosStarters.length) continue;
+
+      const priceCap = Math.min(...samePosStarters.map(p => num(p.preco)));
+      const candidates = (players || []).filter(p =>
+        p &&
+        p.posicao === pos &&
+        !used.has(playerId(p)) &&
+        eligible(p) &&
+        num(p.preco) <= priceCap + EPS
+      );
+
+      if (!candidates.length) continue;
+      candidates.sort((a, b) =>
+        num(b.projecao) - num(a.projecao) ||
+        num(a.preco) - num(b.preco) ||
+        num(a.atleta_id) - num(b.atleta_id)
+      );
+      const chosen = candidates[0];
+      bench.push({
+        ...chosen,
+        reserva_posicao: pos,
+        teto_preco_reserva: priceCap,
+        reserva_luxo: false
+      });
+      used.add(playerId(chosen));
+    }
+
+    let luxury = null;
+    let bestGain = -Infinity;
+    for (const reserve of bench) {
+      const samePosStarters = (starters || []).filter(p => p && p.posicao === reserve.posicao);
+      if (!samePosStarters.length) continue;
+      const weakestProjectedStarter = samePosStarters.slice().sort((a, b) =>
+        num(a.projecao) - num(b.projecao) || num(a.atleta_id) - num(b.atleta_id)
+      )[0];
+      const gain = num(reserve.projecao) - num(weakestProjectedStarter.projecao);
+      if (
+        luxury === null ||
+        gain > bestGain + EPS ||
+        (Math.abs(gain - bestGain) <= EPS && num(reserve.projecao) > num(luxury.projecao) + EPS) ||
+        (Math.abs(gain - bestGain) <= EPS && Math.abs(num(reserve.projecao) - num(luxury.projecao)) <= EPS && num(reserve.atleta_id) < num(luxury.atleta_id))
+      ) {
+        bestGain = gain;
+        luxury = reserve;
+      }
+    }
+
+    if (luxury) {
+      for (const reserve of bench) reserve.reserva_luxo = playerId(reserve) === playerId(luxury);
+    }
+
+    return {
+      bench,
+      reservaLuxo: luxury,
+      reservaLuxoAtletaId: luxury ? luxury.atleta_id : null
+    };
+  }
+
+  function completeTeam(players, team, options) {
+    if (!team || !Array.isArray(team.sel)) return null;
+    const captain = selectCaptain(team.sel);
+    const benchInfo = selectBench(players, team.sel, options || {});
+    return {
+      ...team,
+      captain,
+      captainAtletaId: captain ? captain.atleta_id : null,
+      bench: benchInfo.bench,
+      reservaLuxo: benchInfo.reservaLuxo,
+      reservaLuxoAtletaId: benchInfo.reservaLuxoAtletaId
+    };
+  }
+
+  const api = { optimize, solveFormation, selectCaptain, selectBench, completeTeam };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   root.V3ExactOptimizer = api;
 })(typeof window !== 'undefined' ? window : globalThis);
