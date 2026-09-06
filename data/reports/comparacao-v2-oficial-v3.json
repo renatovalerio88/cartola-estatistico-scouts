@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-09-06T02:24:20.025418+00:00",
+  "gerado_em": "2026-09-06T04:37:09.816464+00:00",
   "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; CatBoost nested e dois estágios entram somente quando possuem previsão OOS para a mesma chave; bootstrap em blocos por rodada, sem recalibrar a V2 nem qualquer desafiante olhando a rodada avaliada",
   "rotulo_v2": "V2 projeção histórica salva (produção)",
   "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada. As comparações opcionais registram explicitamente sua própria interseção pareada para evitar falsa equivalência de amostras.",
@@ -8,8 +8,8 @@
       "arquivo": "data/reports/backtest-v3s-catboost-nested.json",
       "coluna": "v3s_catboost_nested",
       "disponivel": true,
-      "linhas_arquivo": 4149,
-      "linhas_casadas": 4149
+      "linhas_arquivo": 4459,
+      "linhas_casadas": 4459
     },
     "dois_estagios": {
       "arquivo": "data/reports/backtest-v3s-dois-estagios.json",
@@ -62,7 +62,7 @@
   ],
   "amostras_comparacoes_opcionais": {
     "catboost_nested_vs_v2": {
-      "linhas": 4136,
+      "linhas": 4139,
       "rodadas": [
         10,
         11,
@@ -79,8 +79,8 @@
         23,
         24
       ],
-      "mae_v2": 2.99582,
-      "mae_desafiante": 2.972765
+      "mae_v2": 2.994929,
+      "mae_desafiante": 2.971526
     },
     "dois_estagios_vs_v2": {
       "linhas": 4139,
@@ -126,8 +126,8 @@
       "n": 4139
     },
     "v3s_catboost_nested": {
-      "mae": 2.972765,
-      "n": 4136
+      "mae": 2.971526,
+      "n": 4139
     },
     "v3s_dois_estagios": {
       "mae": 2.992173,
@@ -157,8 +157,8 @@
         "n": 1175
       },
       "v3s_catboost_nested": {
-        "mae": 3.262482,
-        "n": 1174
+        "mae": 3.260096,
+        "n": 1175
       },
       "v3s_dois_estagios": {
         "mae": 3.278948,
@@ -247,8 +247,8 @@
         "n": 1418
       },
       "v3s_catboost_nested": {
-        "mae": 2.577119,
-        "n": 1416
+        "mae": 2.575832,
+        "n": 1418
       },
       "v3s_dois_estagios": {
         "mae": 2.593376,
@@ -295,7 +295,7 @@
         "v3h_hibrido": 2.852711,
         "direta_rf_lab": 2.878169,
         "direta_ewma": 3.068871,
-        "v3s_catboost_nested": 2.642161,
+        "v3s_catboost_nested": 2.635188,
         "v3s_dois_estagios": 2.656381
       }
     },
@@ -319,7 +319,7 @@
         "v3h_hibrido": 2.986108,
         "direta_rf_lab": 3.007916,
         "direta_ewma": 3.038066,
-        "v3s_catboost_nested": 3.000084,
+        "v3s_catboost_nested": 2.998117,
         "v3s_dois_estagios": 3.024073
       }
     },
@@ -379,7 +379,7 @@
         "v3h_hibrido": 3.192594,
         "direta_rf_lab": 3.228875,
         "direta_ewma": 3.262479,
-        "v3s_catboost_nested": 3.182465,
+        "v3s_catboost_nested": 3.175201,
         "v3s_dois_estagios": 3.19476
       }
     },
@@ -542,25 +542,25 @@
       }
     },
     "catboost_nested_vs_v2": {
-      "diferenca_mae_desafiante_menos_base": -0.020502,
+      "diferenca_mae_desafiante_menos_base": -0.020782,
       "ic95": [
-        -0.117983,
-        0.073421
+        -0.118057,
+        0.072799
       ],
-      "probabilidade_bootstrap_desafiante_melhor": 0.658,
+      "probabilidade_bootstrap_desafiante_melhor": 0.6602,
       "rodadas_ganhas": 6,
       "rodadas_perdidas": 8,
       "empates": 0,
       "evidencia": "inconclusivo",
       "por_rodada": {
-        "10": -0.337647,
+        "10": -0.336058,
         "11": -0.150795,
-        "12": -0.01546,
+        "12": -0.014822,
         "13": 0.135796,
         "14": -0.165172,
         "15": -0.234128,
         "16": 0.140127,
-        "17": 0.036863,
+        "17": 0.030721,
         "18": 0.276736,
         "19": 0.067328,
         "20": -0.32553,
