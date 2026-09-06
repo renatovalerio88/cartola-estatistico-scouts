@@ -90,7 +90,9 @@ jobs:
         run: python scripts/gerenciar_lock_pre_rodada.py
       - name: Auditar locks pre-rodada imutaveis
         run: python scripts/auditar_previsoes_imutaveis.py
-      - name: Avaliar previsoes prospectivas ja resolvidas
+      - name: Congelar Time Sugerido oficial antes da rodada
+        run: python scripts/congelar_time_sugerido.py
+      - name: Avaliar previsoes e times prospectivos ja resolvidos
         run: python scripts/avaliar_previsoes_prospectivas.py
       - name: Congelar decomposicao explicavel por scouts
         run: python scripts/gerar_explicabilidade_pre_rodada.py
