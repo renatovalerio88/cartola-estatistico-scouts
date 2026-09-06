@@ -4,6 +4,10 @@
 O arquivo criado é append-only: se já existir, nunca é regravado. A seleção usa o
 mesmo objetivo do produto (maior soma de projeções), orçamento padrão de C$ 200,
 limite de três atletas por clube e somente atletas com status provável (7).
+
+Para que o snapshot seja aceito como prospectivo, o congelamento só pode nascer
+quando a coleta oficial da própria rodada registra mercado aberto (status 1). Essa
+prova fica persistida dentro do JSON e depois é exigida pelo avaliador histórico.
 """
 from __future__ import annotations
 
@@ -22,6 +26,7 @@ ARCHIVE = ROOT / "predictions" / "pre_round" / "2026"
 RAW = ROOT / "data" / "raw"
 BUDGET = 200.0
 MAX_CLUBE = 3
+MERCADO_ABERTO = 1
 FORMACOES = {
     "3-4-3": {"GOL": 1, "ZAG": 3, "LAT": 0, "MEI": 4, "ATA": 3},
     "3-5-2": {"GOL": 1, "ZAG": 3, "LAT": 0, "MEI": 5, "ATA": 2},
@@ -42,6 +47,26 @@ def latest_snapshot() -> tuple[int, Path] | tuple[None, None]:
         return None, None
     p = files[0]
     return int(p.stem[1:]), p
+
+
+def carregar_prova_mercado_aberto(rodada: int) -> dict:
+    resumo_path = RAW / f"rodada-{rodada:02d}" / "resumo.json"
+    if not resumo_path.exists():
+        raise RuntimeError(
+            f"Sem resumo oficial da R{rodada}; Time Sugerido não será congelado sem prova de mercado aberto."
+        )
+    resumo = json.loads(resumo_path.read_text(encoding="utf-8"))
+    status = int(resumo.get("statusMercado") or 0)
+    if status != MERCADO_ABERTO:
+        raise RuntimeError(
+            f"R{rodada} não está com mercado aberto (status={status}); congelamento prospectivo recusado."
+        )
+    return {
+        "status_mercado_no_congelamento": status,
+        "coleta_oficial_em": resumo.get("coletadoEm"),
+        "resumo_mercado": str(resumo_path.relative_to(ROOT)),
+        "resumo_mercado_sha256": sha256(resumo_path),
+    }
 
 
 def load_players(rodada: int, csv_path: Path) -> list[dict]:
@@ -158,6 +183,8 @@ def main() -> int:
     if out.exists():
         print(f"Time sugerido R{rodada} já congelado; arquivo preservado.")
         return 0
+
+    prova_mercado = carregar_prova_mercado_aberto(rodada)
     players = load_players(rodada, csv_path)
     solutions = [solve_formation(players, f) for f in FORMACOES]
     solutions = [s for s in solutions if s]
@@ -176,6 +203,7 @@ def main() -> int:
         "rodada": rodada,
         "gerado_em_utc": datetime.now(timezone.utc).isoformat(),
         "regra": "escalação oficial do produto congelada antes da rodada; orçamento C$ 200; máximo 3 por clube; somente status provável",
+        "prova_prospectiva": prova_mercado,
         "orcamento": BUDGET,
         "max_por_clube": MAX_CLUBE,
         "formacao": best["formacao"],
