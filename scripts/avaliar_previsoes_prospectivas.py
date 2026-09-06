@@ -5,9 +5,10 @@ Mantém duas leituras separadas:
 1) qualidade das projeções por jogador;
 2) placar do Time Sugerido realmente congelado antes da rodada.
 
-A segunda é a leitura principal do produto. Ela só nasce quando existe um arquivo
-Rxx.time-sugerido.json criado antes da rodada; não reconstruímos escalações antigas
-com informação posterior.
+A segunda é a leitura principal do produto. Ela só entra no histórico quando o próprio
+snapshot do time contém prova explícita de que nasceu com o mercado ainda aberto.
+Arquivos antigos ou criados sem essa prova são preservados, mas nunca contam como
+histórico prospectivo real.
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ PRED_ROOT = ROOT / "predictions" / "pre_round"
 RAW_ROOT = ROOT / "data" / "raw"
 OUT = ROOT / "data" / "reports" / "avaliacao-prospectiva-imutavel.json"
 MIN_PONTUADOS = 100
+MERCADO_ABERTO = 1
 PREDICTION_COLUMNS = ("v3s_expected_scouts", "direta_rf_lab", "v3h_hibrido")
 BASE_MANIFEST_RE = re.compile(r"R(\d{2})\.manifest\.json$")
 TEAM_RE = re.compile(r"R(\d{2})\.time-sugerido\.json$")
@@ -166,9 +168,24 @@ def avaliar_rodada_jogadores(csv_path: Path, temporada: int, rodada: int) -> dic
     }
 
 
+def prova_prospectiva_valida(snapshot: dict) -> tuple[bool, str]:
+    prova = snapshot.get("prova_prospectiva")
+    if not isinstance(prova, dict):
+        return False, "snapshot do time não contém prova explícita de mercado aberto no congelamento"
+    try:
+        status = int(prova.get("status_mercado_no_congelamento") or 0)
+    except (TypeError, ValueError):
+        status = 0
+    if status != MERCADO_ABERTO:
+        return False, f"status do mercado no congelamento não era aberto: {status}"
+    if not prova.get("coleta_oficial_em") or not prova.get("resumo_mercado_sha256"):
+        return False, "prova prospectiva incompleta"
+    return True, "mercado aberto comprovado no momento do congelamento"
+
+
 def avaliar_time(path: Path, temporada: int, rodada: int) -> dict:
     snapshot = json.loads(path.read_text(encoding="utf-8"))
-    pontuados = carregar_pontuados(rodada)
+    valida, motivo = prova_prospectiva_valida(snapshot)
     base = {
         "temporada": temporada,
         "rodada": rodada,
@@ -179,9 +196,24 @@ def avaliar_time(path: Path, temporada: int, rodada: int) -> dict:
         "titulares": snapshot.get("titulares") or [],
         "banco": snapshot.get("banco") or [],
         "snapshot_time": str(path.relative_to(ROOT)),
+        "prova_prospectiva": snapshot.get("prova_prospectiva"),
     }
+    if not valida:
+        return {
+            **base,
+            "status": "NAO_PROSPECTIVO",
+            "motivo": motivo,
+            "entra_no_historico_publico": False,
+        }
+
+    pontuados = carregar_pontuados(rodada)
     if len(pontuados) < MIN_PONTUADOS:
-        return {**base, "status": "AGUARDANDO_RESULTADO"}
+        return {
+            **base,
+            "status": "AGUARDANDO_RESULTADO",
+            "motivo": motivo,
+            "entra_no_historico_publico": True,
+        }
     detalhes = []
     real_base = 0.0
     captain_extra = 0.0
@@ -207,6 +239,8 @@ def avaliar_time(path: Path, temporada: int, rodada: int) -> dict:
     return {
         **base,
         "status": "AVALIADA",
+        "motivo": motivo,
+        "entra_no_historico_publico": True,
         "pontuacao_real": round(real_total, 4),
         "pontuacao_real_titulares_sem_bonus": round(real_base, 4),
         "bonus_real_capitao": round(captain_extra, 4),
@@ -263,17 +297,20 @@ def main() -> int:
         times.append(avaliar_time(team_path, temporada, rodada))
 
     avaliadas = [r for r in rodadas if r.get("status") == "AVALIADA"]
-    times_avaliados = [r for r in times if r.get("status") == "AVALIADA"]
+    times_publicos = [r for r in times if r.get("entra_no_historico_publico")]
+    times_avaliados = [r for r in times_publicos if r.get("status") == "AVALIADA"]
     payload = {
         "gerado_em": datetime.now(timezone.utc).isoformat(),
-        "objetivo": "avaliação prospectiva de previsões e do Time Sugerido congelado antes da rodada",
-        "protocolo": "somente snapshots criados antes da rodada; nenhuma reconstrução retroativa de escalação; nenhum resultado da própria rodada entra na previsão",
+        "objetivo": "avaliação prospectiva de previsões e do Time Sugerido comprovadamente congelado com mercado aberto",
+        "protocolo": "somente snapshots com prova explícita de mercado aberto no congelamento entram no histórico do Time Sugerido; nenhuma reconstrução retroativa de escalação; nenhum resultado da própria rodada entra na previsão",
         "rodadas": rodadas,
         "times_sugeridos": times,
         "consolidado": consolidar_jogadores(avaliadas),
         "consolidado_times": {
             "rodadas_avaliadas": len(times_avaliados),
             "rodadas": [r["rodada"] for r in times_avaliados],
+            "rodadas_aguardando": [r["rodada"] for r in times_publicos if r.get("status") == "AGUARDANDO_RESULTADO"],
+            "snapshots_nao_prospectivos_ignorados": [r["rodada"] for r in times if r.get("status") == "NAO_PROSPECTIVO"],
             "media_projetada": round(float(np.mean([r["projecao"] for r in times_avaliados])), 4) if times_avaliados else None,
             "media_real": round(float(np.mean([r["pontuacao_real"] for r in times_avaliados])), 4) if times_avaliados else None,
         },
@@ -283,7 +320,9 @@ def main() -> int:
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(
         f"Avaliação prospectiva | jogadores_avaliados={len(avaliadas)} | "
-        f"times_avaliados={len(times_avaliados)} | times_aguardando={sum(t.get('status') != 'AVALIADA' for t in times)}"
+        f"times_avaliados={len(times_avaliados)} | "
+        f"times_aguardando={sum(t.get('status') == 'AGUARDANDO_RESULTADO' for t in times_publicos)} | "
+        f"times_nao_prospectivos={sum(t.get('status') == 'NAO_PROSPECTIVO' for t in times)}"
     )
     return 0
 
