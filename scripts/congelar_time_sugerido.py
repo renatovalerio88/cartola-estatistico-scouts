@@ -67,11 +67,11 @@ def load_players(rodada: int, csv_path: Path) -> list[dict]:
 
 
 def solve_formation(players: list[dict], formation: str) -> dict | None:
-    # Importante: estas formações são exatamente as mesmas do optimizer.js.
-    # Técnico não faz parte do conjunto otimizado atual do produto, portanto não
-    # pode ser inserido aqui apenas no histórico, ou deixaríamos de congelar o
-    # mesmo Time Sugerido que o usuário viu na página.
+    # Exatamente como site/optimizer.js: as cotas da formação recebem um TEC
+    # quando há técnico elegível no universo do produto.
     req = dict(FORMACOES[formation])
+    if any(p["posicao"] == "TEC" and p["status_id"] == 7 for p in players):
+        req["TEC"] = 1
     eligible = [p for p in players if p["status_id"] == 7 and req.get(p["posicao"], 0) > 0]
     if not eligible:
         return None
@@ -134,6 +134,7 @@ def select_bench(players: list[dict], starters: list[dict]) -> list[dict]:
             continue
         candidates.sort(key=lambda p: (-p["projecao"], p["preco"], p["atleta_id"]))
         chosen = dict(candidates[0])
+        chosen["reserva_posicao"] = pos
         chosen["teto_preco_reserva"] = cap
         chosen["reserva_luxo"] = False
         bench.append(chosen)
@@ -165,7 +166,7 @@ def main() -> int:
     best = sorted(solutions, key=lambda s: (-s["projecao_base"], s["custo"], s["formacao"]))[0]
     starters = best["titulares"]
     captain = sorted(
-        starters,
+        [p for p in starters if p["posicao"] != "TEC"],
         key=lambda p: (-p["projecao"], -p["titularidade"], p["preco"], p["atleta_id"]),
     )[0]
     bench = select_bench(players, starters)
