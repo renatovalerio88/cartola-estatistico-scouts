@@ -67,9 +67,11 @@ def load_players(rodada: int, csv_path: Path) -> list[dict]:
 
 
 def solve_formation(players: list[dict], formation: str) -> dict | None:
+    # Importante: estas formações são exatamente as mesmas do optimizer.js.
+    # Técnico não faz parte do conjunto otimizado atual do produto, portanto não
+    # pode ser inserido aqui apenas no histórico, ou deixaríamos de congelar o
+    # mesmo Time Sugerido que o usuário viu na página.
     req = dict(FORMACOES[formation])
-    if any(p["posicao"] == "TEC" for p in players):
-        req["TEC"] = 1
     eligible = [p for p in players if p["status_id"] == 7 and req.get(p["posicao"], 0) > 0]
     if not eligible:
         return None
@@ -163,7 +165,7 @@ def main() -> int:
     best = sorted(solutions, key=lambda s: (-s["projecao_base"], s["custo"], s["formacao"]))[0]
     starters = best["titulares"]
     captain = sorted(
-        [p for p in starters if p["posicao"] != "TEC"],
+        starters,
         key=lambda p: (-p["projecao"], -p["titularidade"], p["preco"], p["atleta_id"]),
     )[0]
     bench = select_bench(players, starters)
