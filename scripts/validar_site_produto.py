@@ -15,7 +15,7 @@ REQUIRED_CONTROLS = {
     "budget", "excludeClub", "excludePlayer", "recalc", "reset",
     "customBudget", "customFormation", "buildCustom",
     "filterPos", "filterClub", "search", "projectionTable",
-    "pitch", "bench", "historyChart", "historyAudit", "modal", "modalContent",
+    "pitch", "bench", "alternatives", "historyChart", "historyAudit", "modal", "modalContent",
 }
 FORMATIONS = {
     "3-4-3": {"GOL": 1, "ZAG": 3, "MEI": 4, "ATA": 3},
@@ -51,27 +51,36 @@ def main():
     html = HTML.read_text(encoding="utf-8")
     parser = IdCollector()
     parser.feed(html)
-    missing_pages = REQUIRED_PAGES - parser.ids
-    missing_controls = REQUIRED_CONTROLS - parser.ids
-    assert not missing_pages, f"abas ausentes: {sorted(missing_pages)}"
-    assert not missing_controls, f"controles ausentes: {sorted(missing_controls)}"
-    assert "Por quê?" in html, "explicabilidade amigável não encontrada"
-    assert "expected scouts" in html.lower() or "scouts esperados" in html.lower(), "metodologia de scouts não encontrada"
+    assert not (REQUIRED_PAGES - parser.ids), f"abas ausentes: {sorted(REQUIRED_PAGES - parser.ids)}"
+    assert not (REQUIRED_CONTROLS - parser.ids), f"controles ausentes: {sorted(REQUIRED_CONTROLS - parser.ids)}"
 
-    # Gates de UX/mobile: impedem regressões nos ajustes responsivos já aprovados.
+    # Linguagem pública e explicabilidade.
+    assert "Cartola Estatístico V3" not in html, "versão técnica voltou ao título público"
+    assert "Projeção V3" not in html and "V3-S por scouts" not in html, "rótulo técnico voltou à interface pública"
+    assert "Parcela explicada por scouts" in html, "rótulo amigável da decomposição ausente"
+    assert "function scoutAllowed" in html, "filtro de scouts por posição ausente"
+    assert "s.esperado??s.valor_esperado??s.expected" in html, "campo real de expected scout não é lido corretamente"
+    assert "['GOL','LAT','ZAG'].includes(pos)" in html, "saldo de gol não está limitado às posições corretas"
+    assert "['DP','DE','GS'].includes(scout)" in html, "scouts exclusivos de goleiro não estão protegidos"
+
+    # Alternativas pós-escalação.
+    assert "Outras boas opções" in html, "seção de alternativas ausente"
+    assert "slice(0,3)" in html and "renderAlternatives" in html, "não há três alternativas por posição"
+    assert "!used.has(String(p.atleta_id))" in html, "alternativas podem repetir campo/banco"
+
+    # UX/mobile.
     assert 'name="viewport"' in html, "viewport responsivo ausente"
     assert "@media(max-width:700px)" in html, "breakpoint mobile principal ausente"
-    assert "@media(max-width:430px)" in html, "breakpoint para telas estreitas ausente"
-    assert "scrollbar-width:none" in html and "-webkit-overflow-scrolling:touch" in html, "navegação/rolagem touch incompleta"
-    assert ".player-ball{width:64px}" in html, "campo mobile pode voltar a estourar horizontalmente"
-    assert "grid-template-columns:1fr" in html, "controles não colapsam para uma coluna em telas estreitas"
+    assert "@media(max-width:430px)" in html, "breakpoint estreito ausente"
+    assert "scrollbar-width:none" in html and "-webkit-overflow-scrolling:touch" in html, "rolagem touch incompleta"
+    assert ".player-ball{width:64px}" in html, "campo mobile pode estourar horizontalmente"
+    assert "grid-template-columns:1fr" in html, "controles não colapsam em telas estreitas"
 
-    # Gate do Histórico: o produto deve mostrar placar prospectivo real, e não
-    # apresentar backtest histórico como se fosse desempenho prospectivo.
-    assert "Placar prospectivo" in html, "rótulo prospectivo do Histórico ausente"
-    assert "function prospectiveMetric" in html, "leitura das métricas prospectivas ausente"
-    assert "avaliacao_prospectiva_imutavel" in html, "Histórico não consome avaliação prospectiva imutável"
-    assert "MAE histórico V2" not in html, "Histórico voltou a misturar backtest V2 no placar prospectivo"
+    # Histórico principal = Time Sugerido projetado x real.
+    assert "Histórico do Time Sugerido" in html, "Histórico principal não é da escalação sugerida"
+    assert "times_sugeridos" in html, "Histórico não consome snapshots de times sugeridos"
+    assert "pontuacao_real" in html and "projecao" in html, "gráfico não compara projetado e real"
+    assert "Não reconstruímos times antigos" in html, "proteção contra reconstrução retroativa não está explícita"
 
     payload = json.loads(DATA.read_text(encoding="utf-8"))
     produto = payload.get("produto") or {}
@@ -106,15 +115,15 @@ def main():
         assert not any(x in status for x in ("FALHA", "REPROV", "INVALID")), "auditoria de imutabilidade reprovada"
 
     prospectivo = payload.get("avaliacao_prospectiva_imutavel") or {}
-    assert isinstance(prospectivo.get("rodadas") or [], list), "placar prospectivo sem lista de rodadas"
+    assert isinstance(prospectivo.get("rodadas") or [], list), "avaliação prospectiva sem lista de rodadas"
+    assert isinstance(prospectivo.get("times_sugeridos") or [], list), "avaliação prospectiva sem times sugeridos"
     protocolo = str(prospectivo.get("protocolo") or "").lower()
     if prospectivo:
-        assert "snapshot" in protocolo and "antes da rodada" in protocolo, "protocolo prospectivo não garante corte pré-rodada"
+        assert "antes da rodada" in protocolo and "nenhuma reconstrução retroativa" in protocolo, "protocolo não protege o histórico real"
 
     print(
-        f"Site V3 OK | R{rodada} | jogadores={len(jogadores)} | "
-        f"elegíveis={len(elegiveis)} | posições={dict(sorted(pos.items()))} | "
-        f"mobile=OK | histórico_prospectivo=OK"
+        f"Site OK | R{rodada} | jogadores={len(jogadores)} | elegíveis={len(elegiveis)} | "
+        f"posições={dict(sorted(pos.items()))} | scouts_posicionais=OK | alternativas=OK | histórico_time=OK | mobile=OK"
     )
 
 
