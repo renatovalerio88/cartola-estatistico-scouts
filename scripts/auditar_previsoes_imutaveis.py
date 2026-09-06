@@ -52,9 +52,16 @@ def sha256(path: Path) -> str:
 
 
 def git_commits_touching(path: Path) -> list[str]:
+    """Retorna somente commits que tocaram o caminho exato do snapshot.
+
+    Não usamos ``--follow``: essa opção é útil para rastrear renomeações, mas também
+    pode associar por similaridade um snapshot novo (por exemplo R26) a um snapshot de
+    outra rodada. Para a regra append-only importa exclusivamente quantas vezes o
+    caminho imutável atual foi criado/modificado.
+    """
     rel = path.relative_to(ROOT).as_posix()
     proc = subprocess.run(
-        ["git", "log", "--follow", "--format=%H", "--", rel],
+        ["git", "log", "--format=%H", "--", rel],
         cwd=ROOT,
         check=True,
         text=True,
