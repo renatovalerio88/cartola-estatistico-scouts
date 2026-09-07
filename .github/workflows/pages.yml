@@ -35,6 +35,18 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Aplicar acabamento final da interface
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('site/index.html')
+          html = p.read_text(encoding='utf-8')
+          tag = '<script src="final-polish.js"></script>'
+          if tag not in html:
+              html = html.replace('</body>', tag + '</body>')
+          p.write_text(html, encoding='utf-8')
+          PY
       - name: Enviar site
         uses: actions/upload-pages-artifact@v3
         with:
