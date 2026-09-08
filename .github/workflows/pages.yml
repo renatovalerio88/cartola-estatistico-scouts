@@ -42,9 +42,13 @@ jobs:
           from pathlib import Path
           p = Path('site/index.html')
           html = p.read_text(encoding='utf-8')
-          tag = '<script src="final-polish.js"></script>'
-          if tag not in html:
-              html = html.replace('</body>', tag + '</body>')
+          tags = [
+              '<script src="final-polish.js"></script>',
+              '<script src="time-sugerido-final.js"></script>',
+          ]
+          for tag in tags:
+              if tag not in html:
+                  html = html.replace('</body>', tag + '</body>')
           p.write_text(html, encoding='utf-8')
           PY
       - name: Enviar site
