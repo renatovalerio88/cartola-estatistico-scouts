@@ -3,12 +3,17 @@
   if (typeof document === 'undefined') return;
 
   const CSS = `
-    /* Último polimento aprovado — somente apresentação do Time Sugerido/modal. */
-    #time details.premium-adjust .field label{font-size:.68rem!important;line-height:1.2}
+    /* Polimento final aprovado — somente apresentação do Time Sugerido/modal. */
+    #time details.premium-adjust{border-radius:14px!important;box-shadow:0 5px 16px rgba(22,69,50,.035)!important}
+    #time details.premium-adjust>summary{min-height:36px!important;padding:7px 11px!important;font-size:.72rem!important}
+    #time details.premium-adjust .controls{display:grid!important;grid-template-columns:minmax(110px,.72fr) minmax(150px,1fr) minmax(170px,1.2fr) auto auto!important;align-items:end!important;gap:7px!important;padding:8px 10px 9px!important;background:linear-gradient(180deg,#fbfdfc,#fff)!important}
+    #time details.premium-adjust .field{min-width:0!important;gap:2px!important}
+    #time details.premium-adjust .field label{font-size:.62rem!important;line-height:1.15;color:#7b8d86!important;text-transform:uppercase;letter-spacing:.025em;font-weight:750!important}
     #time details.premium-adjust input,
-    #time details.premium-adjust select,
-    #time details.premium-adjust .btn{font-size:.79rem!important;font-weight:650}
-    #time details.premium-adjust .btn{font-weight:800}
+    #time details.premium-adjust select{width:100%!important;min-width:0!important;min-height:34px!important;padding:6px 8px!important;border-radius:9px!important;font-size:.76rem!important;font-weight:650;background:#fff!important}
+    #time details.premium-adjust .field:first-child input{border-color:#b9d5c9!important;background:#f4faf7!important;color:#145f44!important;font-weight:850!important}
+    #time details.premium-adjust .btn{min-height:34px!important;padding:6px 10px!important;border-radius:9px!important;font-size:.73rem!important;font-weight:820!important;white-space:nowrap}
+    #time details.premium-adjust .btn.secondary{background:transparent!important;color:#70827b!important;border:0!important;box-shadow:none!important;padding-left:5px!important;padding-right:5px!important;font-size:.67rem!important}
 
     #time .venue-badge{min-width:18px;justify-content:center;font-size:.55rem!important;padding:1px 4px!important;letter-spacing:0!important}
     #time .mando-legend{display:flex;justify-content:flex-end;gap:10px;margin:-3px 2px 6px;color:#74877f;font-size:.66rem;font-weight:700}
@@ -23,17 +28,24 @@
     #time .bench .mini small.muted{grid-column:2 / 5;margin-top:1px;font-size:.58rem!important;line-height:1.05!important;color:#83928c}
     #time .bench .mini:after{right:9px!important;font-size:1rem!important}
 
-    #time .alternatives{gap:14px!important}
-    #time .alternatives .altgroup{position:relative;padding:8px 10px 5px!important;border:1px solid #e4ece8!important;border-radius:14px!important;background:linear-gradient(180deg,#fff,#fbfdfc)!important;box-shadow:0 7px 20px rgba(22,69,50,.04)!important;overflow:hidden}
-    #time .alternatives .altgroup:before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#176b4b,#8fbaa8)}
-    #time .altgroup h3{display:flex;align-items:center;justify-content:space-between;padding:0 1px 5px!important;margin:0!important;font-size:.82rem!important}
-    #time .altplayer{padding:8px 2px!important}
-    #time .altplayer:first-of-type{background:linear-gradient(90deg,#f0f8f4,transparent);margin:0 -5px;padding-left:7px!important;padding-right:7px!important;border-radius:9px;border-top:0!important}
-    #time .altplayer .first-alt{display:inline-flex;margin-left:5px;padding:2px 5px;border-radius:999px;background:#e3f1ea;color:#176b4b;font-size:.54rem;font-weight:850;vertical-align:1px;white-space:nowrap}
-    #time .altplayer b{font-size:.82rem!important}
-    #time .altplayer small{font-size:.67rem!important}
-    #time .altpts{font-size:.91rem!important}
-    #time .alt-toggle{width:100%;text-align:left;border-top:1px dashed #dfe8e4!important;margin-top:1px;padding:7px 2px 3px!important}
+    #time .alternatives{gap:13px!important}
+    #time .alternatives .altgroup{position:relative;padding:0!important;border:1px solid #e0eae5!important;border-radius:15px!important;background:#fff!important;box-shadow:0 8px 22px rgba(22,69,50,.045)!important;overflow:hidden}
+    #time .alternatives .altgroup:before{display:none!important}
+    #time .altgroup h3{display:flex;align-items:center;justify-content:space-between;padding:9px 11px 7px!important;margin:0!important;font-size:.72rem!important;text-transform:uppercase;letter-spacing:.035em;color:#70847c!important;background:#fbfdfc;border-bottom:1px solid #edf2ef;font-weight:820!important}
+    #time .altplayer{padding:8px 11px!important;margin:0!important;position:relative!important;border-top:1px solid #edf2ef!important;background:#fff!important;grid-template-columns:minmax(0,1fr) auto!important;gap:2px 10px!important}
+    #time .altplayer:first-of-type{border-top:0!important}
+    #time .altplayer.first-choice{padding:11px 11px 10px 14px!important;background:linear-gradient(105deg,#f1f8f4 0%,#fff 72%)!important;box-shadow:inset 3px 0 0 #2b8a63!important}
+    #time .altplayer.first-choice:before{content:'RECOMENDAÇÃO DO MODELO';display:block;grid-column:1/3;margin-bottom:3px;font-size:.52rem;letter-spacing:.055em;font-weight:900;color:#44806a}
+    #time .altplayer b{font-size:.82rem!important;line-height:1.18!important;font-weight:800!important}
+    #time .altplayer.first-choice b{font-size:.91rem!important;color:#203c32!important}
+    #time .altplayer .first-alt{display:inline-flex;margin-left:5px;padding:2px 5px;border-radius:999px;background:#e1f0e9;color:#176b4b;font-size:.5rem;font-weight:900;vertical-align:1px;white-space:nowrap}
+    #time .altplayer small{font-size:.64rem!important;line-height:1.35!important;color:#778a82!important}
+    #time .altplayer small .good,#time .altplayer small .warn,#time .altplayer small .bad{font-size:.57rem!important;padding:2px 5px!important}
+    #time .altpts{align-self:center!important;font-size:.9rem!important;min-width:60px!important;padding:4px 7px!important;border-radius:9px!important;background:#f5f9f7!important;color:#176b4b!important;text-align:center!important}
+    #time .first-choice .altpts{font-size:1.02rem!important;background:#e8f4ee!important;color:#0f6948!important}
+    #time .altpts:after{display:block!important;content:'PROJEÇÃO'!important;font-size:.46rem!important;line-height:1.05!important;margin-top:2px!important;letter-spacing:.04em!important;color:#7d938a!important;font-weight:800!important}
+    #time .alt-toggle{width:100%;text-align:left;border:0!important;border-top:1px dashed #dfe8e4!important;margin:0!important;padding:7px 11px 8px!important;background:#fbfdfc!important;color:#176b4b!important;font-size:.65rem!important;font-weight:820!important}
+    #time .alt-venue{font-size:.62rem!important}
 
     .modalbox{width:min(620px,100%)!important;padding:14px 16px!important;max-height:92vh!important;border-radius:17px!important}
     .modalbox .close{width:32px!important;height:32px!important;font-size:.82rem!important}
@@ -65,14 +77,23 @@
       header .nav{gap:1px!important;padding:4px 0 1px!important}
       header .nav button{min-height:29px!important;padding:4px 3px!important;border-radius:5px!important;font-size:.67rem!important;background:transparent!important;box-shadow:none!important}
       header .nav button.active{color:#176b4b!important;box-shadow:inset 0 -2px 0 #176b4b!important}
-      #time details.premium-adjust .controls{grid-template-columns:repeat(2,minmax(0,1fr))!important}
-      #time details.premium-adjust input,#time details.premium-adjust select,#time details.premium-adjust .btn{font-size:.75rem!important;min-height:34px!important;padding:6px 7px!important}
+      #time details.premium-adjust .controls{grid-template-columns:minmax(0,.72fr) minmax(0,1fr)!important;padding:7px 8px 8px!important;gap:6px!important}
+      #time details.premium-adjust .field:nth-of-type(3){grid-column:1/3!important}
+      #time details.premium-adjust .btn{min-height:34px!important;font-size:.7rem!important}
+      #time details.premium-adjust .btn.secondary{justify-self:start!important;min-height:28px!important;padding:3px 2px!important}
+      #time details.premium-adjust input,#time details.premium-adjust select{font-size:.73rem!important;min-height:34px!important;padding:6px 7px!important}
       #time .bench .mini{min-height:38px!important;padding:4px 27px 4px 8px!important;column-gap:5px}
       #time .bench .mini .pill{font-size:.52rem!important}
       #time .bench .mini b{font-size:.73rem!important}
       #time .bench .mini .fixture-tag{font-size:.58rem!important}
       #time .bench .mini small.muted{font-size:.54rem!important}
-      #time .alternatives .altgroup{padding:7px 9px 4px!important}
+      #time .alternatives{grid-template-columns:1fr!important;gap:10px!important}
+      #time .altgroup h3{padding:8px 9px 6px!important;font-size:.68rem!important}
+      #time .altplayer{padding:7px 9px!important}
+      #time .altplayer.first-choice{padding:9px 9px 9px 12px!important}
+      #time .altplayer.first-choice b{font-size:.87rem!important}
+      #time .altpts{min-width:56px!important;font-size:.85rem!important}
+      #time .first-choice .altpts{font-size:.96rem!important}
       .modal{padding:6px!important;align-items:center!important}
       .modalbox{padding:11px 12px!important;max-height:95vh!important;border-radius:14px!important}
       #modalContent>h2{font-size:1.18rem!important;margin-top:5px!important}
@@ -85,7 +106,7 @@
       #modalContent h3{margin:8px 0 3px!important}
     }
     @media(max-width:430px){
-      #time details.premium-adjust .controls{grid-template-columns:1fr 1fr!important}
+      #time details.premium-adjust .controls{grid-template-columns:minmax(0,.7fr) minmax(0,1fr)!important}
       #time .bench .mini{grid-template-columns:auto minmax(0,1fr) auto auto}
       #time .bench .mini .fixture-tag{max-width:72px;overflow:hidden;text-overflow:ellipsis}
       #modalContent .modal-kpis .metric b{font-size:.82rem!important}
@@ -93,11 +114,13 @@
   `;
 
   function injectStyle() {
-    if (document.getElementById('time-final-polish')) return;
-    const style = document.createElement('style');
-    style.id = 'time-final-polish';
-    style.textContent = CSS;
-    document.head.appendChild(style);
+    let style = document.getElementById('time-final-polish');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'time-final-polish';
+      document.head.appendChild(style);
+    }
+    if (style.textContent !== CSS) style.textContent = CSS;
   }
 
   function ensureLegend(section) {
