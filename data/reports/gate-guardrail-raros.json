@@ -1,10 +1,10 @@
 {
-  "gerado_em": "2026-09-07T15:19:47.492859+00:00",
-  "status": "MANTER_COMO_DIAGNOSTICO",
+  "gerado_em": "2026-09-09T14:01:29.823013+00:00",
+  "status": "APROVADO_PARA_CANDIDATO",
   "objetivo": "Gate estatistico para decidir se o guardrail de scouts raros melhora a pontuacao total fora da amostra. Nao promove V2 nem altera producao.",
   "fonte": "data/reports/backtest-v3s-guardrail-raros-nested.json",
   "anti_leakage_aprovado": true,
-  "linhas": 4459,
+  "linhas": 4776,
   "rodadas": [
     10,
     11,
@@ -20,40 +20,41 @@
     22,
     23,
     24,
-    25
+    25,
+    26
   ],
-  "checagens_raras_inner": 339,
-  "trocas_modelo_inner": 111,
+  "checagens_raras_inner": 359,
+  "trocas_modelo_inner": 121,
   "geral": {
     "base": {
-      "n": 4459,
-      "mae": 3.05169,
-      "rmse": 4.109747,
-      "bias": -0.008449
+      "n": 4776,
+      "mae": 3.072087,
+      "rmse": 4.13319,
+      "bias": -0.009517
     },
     "guardrail": {
-      "n": 4459,
-      "mae": 3.037144,
-      "rmse": 4.070676,
-      "bias": 0.015762
+      "n": 4776,
+      "mae": 3.054707,
+      "rmse": 4.086426,
+      "bias": 0.012565
     },
-    "delta_mae_guardrail_menos_base": -0.014546
+    "delta_mae_guardrail_menos_base": -0.01738
   },
   "bootstrap_rodadas": {
     "metodo": "bootstrap em blocos por rodada",
     "n_boot": 20000,
     "seed": 20260901,
-    "delta_mae_guardrail_menos_base_media_boot": -0.014407,
+    "delta_mae_guardrail_menos_base_media_boot": -0.017458,
     "ic95": [
-      -0.036686,
-      0.013793
+      -0.038852,
+      0.009423
     ],
-    "prob_guardrail_melhor": 0.861,
-    "prob_guardrail_nao_pior": 0.861
+    "prob_guardrail_melhor": 0.90935,
+    "prob_guardrail_nao_pior": 0.90935
   },
   "vitorias_por_rodada": {
     "base": 3,
-    "guardrail": 12,
+    "guardrail": 13,
     "empate": 0
   },
   "por_rodada": [
@@ -161,83 +162,90 @@
       "mae_guardrail": 3.135937,
       "delta": -0.04047,
       "vencedor": "guardrail"
+    },
+    {
+      "rodada": 26,
+      "mae_base": 3.358995,
+      "mae_guardrail": 3.301764,
+      "delta": -0.057231,
+      "vencedor": "guardrail"
     }
   ],
   "por_posicao": {
     "ATA": {
       "base": {
-        "n": 1269,
-        "mae": 3.386081,
-        "rmse": 4.705571,
-        "bias": -0.00568
+        "n": 1357,
+        "mae": 3.404452,
+        "rmse": 4.735501,
+        "bias": 0.011158
       },
       "guardrail": {
-        "n": 1269,
-        "mae": 3.396216,
-        "rmse": 4.67413,
-        "bias": 0.029186
+        "n": 1357,
+        "mae": 3.408785,
+        "rmse": 4.694184,
+        "bias": 0.045499
       },
-      "delta_mae_guardrail_menos_base": 0.010135
+      "delta_mae_guardrail_menos_base": 0.004333
     },
     "GOL": {
       "base": {
-        "n": 286,
-        "mae": 3.375136,
-        "rmse": 4.065181,
-        "bias": 0.177759
+        "n": 306,
+        "mae": 3.379823,
+        "rmse": 4.090225,
+        "bias": 0.06058
       },
       "guardrail": {
-        "n": 286,
-        "mae": 3.362053,
-        "rmse": 4.06168,
-        "bias": 0.198984
+        "n": 306,
+        "mae": 3.367595,
+        "rmse": 4.086972,
+        "bias": 0.080418
       },
-      "delta_mae_guardrail_menos_base": -0.013083
+      "delta_mae_guardrail_menos_base": -0.012228
     },
     "LAT": {
       "base": {
-        "n": 710,
-        "mae": 3.295459,
-        "rmse": 4.158284,
-        "bias": 0.158712
+        "n": 762,
+        "mae": 3.322953,
+        "rmse": 4.202762,
+        "bias": 0.085036
       },
       "guardrail": {
-        "n": 710,
-        "mae": 3.254162,
-        "rmse": 4.080853,
-        "bias": 0.172752
+        "n": 762,
+        "mae": 3.281419,
+        "rmse": 4.130011,
+        "bias": 0.096105
       },
-      "delta_mae_guardrail_menos_base": -0.041297
+      "delta_mae_guardrail_menos_base": -0.041534
     },
     "MEI": {
       "base": {
-        "n": 1519,
-        "mae": 2.690289,
-        "rmse": 3.730499,
-        "bias": -0.062975
+        "n": 1630,
+        "mae": 2.725731,
+        "rmse": 3.759514,
+        "bias": -0.035268
       },
       "guardrail": {
-        "n": 1519,
-        "mae": 2.65416,
-        "rmse": 3.679626,
-        "bias": -0.032841
+        "n": 1630,
+        "mae": 2.685809,
+        "rmse": 3.690957,
+        "bias": -0.011987
       },
-      "delta_mae_guardrail_menos_base": -0.036129
+      "delta_mae_guardrail_menos_base": -0.039922
     },
     "ZAG": {
       "base": {
-        "n": 675,
-        "mae": 2.842871,
-        "rmse": 3.665928,
-        "bias": -0.145676
+        "n": 721,
+        "mae": 2.833829,
+        "rmse": 3.637895,
+        "bias": -0.119893
       },
       "guardrail": {
-        "n": 675,
-        "mae": 2.858007,
-        "rmse": 3.66245,
-        "bias": -0.142862
+        "n": 721,
+        "mae": 2.849884,
+        "rmse": 3.637042,
+        "bias": -0.111001
       },
-      "delta_mae_guardrail_menos_base": 0.015136
+      "delta_mae_guardrail_menos_base": 0.016055
     }
   },
   "regressoes_posicionais_materiais": [],
@@ -247,9 +255,9 @@
   },
   "criterios": {
     "mae_total_nao_degrada": true,
-    "probabilidade_melhoria_suficiente": false,
+    "probabilidade_melhoria_suficiente": true,
     "sem_regressao_posicional_material": true,
     "anti_leakage_origem_aprovado": true
   },
-  "decisao": "NAO_INCORPORAR_NO_MOTOR; manter guardrail como diagnostico/explicabilidade"
+  "decisao": "CANDIDATO_A_INCORPORACAO_V3"
 }

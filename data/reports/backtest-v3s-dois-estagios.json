@@ -1,7 +1,7 @@
 {
-  "gerado_em": "2026-09-07T16:19:33.292875+00:00",
+  "gerado_em": "2026-09-09T14:06:36.713031+00:00",
   "protocolo": "Nested walk-forward em dois estágios: P(entrar em campo) é selecionada por Brier usando apenas rodadas passadas; produção de scouts é treinada somente em atuações anteriores e selecionada por MAE em validação temporal anterior. A previsão final é P(entrada) x E[scout|entrada] x peso oficial do scout.",
-  "linhas": 4459,
+  "linhas": 4776,
   "rodadas": [
     10,
     11,
@@ -17,14 +17,15 @@
     22,
     23,
     24,
-    25
+    25,
+    26
   ],
   "geral": {
     "v3s_dois_estagios": {
-      "n": 4459,
-      "mae": 3.00464,
-      "rmse": 4.500899,
-      "bias": -2.055892
+      "n": 4776,
+      "mae": 3.013985,
+      "rmse": 4.506593,
+      "bias": -2.059899
     },
     "v3s_catboost_nested": {
       "n": 4459,
@@ -40,56 +41,56 @@
     }
   },
   "participacao": {
-    "brier": 0.004037,
-    "auc": 0.448374,
-    "taxa_real_entrada": 0.996412,
-    "probabilidade_media_prevista": 0.989559
+    "brier": 0.004192,
+    "auc": 0.454585,
+    "taxa_real_entrada": 0.996231,
+    "probabilidade_media_prevista": 0.989498
   },
   "por_posicao": {
     "ATA": {
       "dois_estagios": {
-        "n": 1269,
-        "mae": 3.31522,
-        "rmse": 5.352818,
-        "bias": -2.902307
+        "n": 1357,
+        "mae": 3.323446,
+        "rmse": 5.366996,
+        "bias": -2.916309
       },
-      "participacao_brier": 0.004368
+      "participacao_brier": 0.004091
     },
     "GOL": {
       "dois_estagios": {
-        "n": 286,
-        "mae": 3.260736,
-        "rmse": 4.016389,
-        "bias": -0.789454
+        "n": 306,
+        "mae": 3.284456,
+        "rmse": 4.055022,
+        "bias": -0.90885
       },
-      "participacao_brier": 0.011124
+      "participacao_brier": 0.010471
     },
     "LAT": {
       "dois_estagios": {
-        "n": 710,
-        "mae": 3.319346,
-        "rmse": 4.557498,
-        "bias": -2.265225
+        "n": 762,
+        "mae": 3.361874,
+        "rmse": 4.612299,
+        "bias": -2.300815
       },
-      "participacao_brier": 0.00208
+      "participacao_brier": 0.003231
     },
     "MEI": {
       "dois_estagios": {
-        "n": 1519,
-        "mae": 2.629421,
-        "rmse": 3.994851,
-        "bias": -1.678939
+        "n": 1630,
+        "mae": 2.629875,
+        "rmse": 3.974871,
+        "bias": -1.644581
       },
-      "participacao_brier": 0.000884
+      "participacao_brier": 0.00083
     },
     "ZAG": {
       "dois_estagios": {
-        "n": 675,
-        "mae": 2.825596,
-        "rmse": 3.91924,
-        "bias": -1.629323
+        "n": 721,
+        "mae": 2.817462,
+        "rmse": 3.890751,
+        "bias": -1.620874
       },
-      "participacao_brier": 0.009564
+      "participacao_brier": 0.010331
     }
   },
   "por_rodada": {
@@ -152,21 +153,25 @@
     "25": {
       "n": 307,
       "mae_dois_estagios": 3.225925
+    },
+    "26": {
+      "n": 317,
+      "mae_dois_estagios": 3.145442
     }
   },
   "selecoes_participacao": {
     "entrou_ewma": 26,
-    "extra_trees_cls": 19,
+    "extra_trees_cls": 21,
+    "hist_gb_cls": 15,
     "catboost_cls": 14,
-    "hist_gb_cls": 14,
-    "logistic": 2
+    "logistic": 4
   },
   "selecoes_condicionais": {
-    "catboost_cond": 1249,
-    "cond_ewma": 95,
-    "ridge_cond": 54,
+    "catboost_cond": 1334,
+    "cond_ewma": 99,
+    "ridge_cond": 58,
     "extra_trees_cond": 22,
-    "hist_gb_cond": 5
+    "hist_gb_cond": 7
   },
   "log_selecao": [
     {
@@ -30091,6 +30096,2001 @@
         "max_inner_train": 22,
         "min_validacao": 23,
         "rodada_prevista": 25,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "G",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.00111,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "A",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "cond_ewma",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.000509,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "FT",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "FD",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "FF",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "FS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.194567,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "PS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "I",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "DS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.025644,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "SG",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.219758,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "DP",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.026339,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "DE",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "hist_gb_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 1.586453,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "GC",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "CV",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "cond_ewma",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "CA",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.086979,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "GS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "ridge_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.815407,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "FC",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "cond_ewma",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.025723,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "PC",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.026477,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "GOL",
+      "scout": "PP",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.000441,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "G",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.02215,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "A",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.058006,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "FT",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.003814,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "FD",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.162088,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "FF",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.390328,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "FS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.612487,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "PS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "I",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.087272,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "DS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "ridge_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 1.363587,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "SG",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.198504,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "DP",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "DE",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "GC",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "CV",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.010535,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "CA",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.152526,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "GS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "FC",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "ridge_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.801792,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "PC",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.010526,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "LAT",
+      "scout": "PP",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "G",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.057186,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "A",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "ridge_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.051874,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "FT",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.011937,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "FD",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.139415,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "FF",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.344525,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "FS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.462165,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "PS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "I",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.023912,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "DS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 1.097208,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "SG",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.173633,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "DP",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "DE",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "GC",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.006488,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "CV",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.001054,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "CA",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.217862,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "GS",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "FC",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.677982,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "PC",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.021277,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ZAG",
+      "scout": "PP",
+      "modelo_participacao": "extra_trees_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010038,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "G",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.096464,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "A",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.097014,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "FT",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.030812,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "FD",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.215715,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "FF",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.413137,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "FS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.615854,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "PS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.001027,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "I",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.043781,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "DS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "hist_gb_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 1.156646,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "SG",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "DP",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "DE",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "GC",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.004831,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "CV",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.00499,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "CA",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.165091,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "GS",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "FC",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.78662,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "PC",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.002549,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "MEI",
+      "scout": "PP",
+      "modelo_participacao": "logistic",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.0001,
+      "mae_cond_validacao": 0.004831,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "G",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.185647,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "A",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.072626,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "FT",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.011923,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "FD",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.390242,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "FF",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.567755,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "FS",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.747044,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "PS",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.017482,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "I",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.246701,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "DS",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.628237,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "SG",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "DP",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "DE",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "GC",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "CV",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.000631,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "CA",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.084581,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "GS",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "FC",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.630064,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "PC",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "cond_ewma",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 4.5e-05,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      }
+    },
+    {
+      "rodada": 26,
+      "posicao": "ATA",
+      "scout": "PP",
+      "modelo_participacao": "hist_gb_cls",
+      "modelo_condicional": "catboost_cond",
+      "brier_validacao": 0.010929,
+      "mae_cond_validacao": 0.0,
+      "prova_participacao": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
+        "ok": true
+      },
+      "prova_condicional": {
+        "max_inner_train": 23,
+        "min_validacao": 24,
+        "rodada_prevista": 26,
         "ok": true
       }
     }
@@ -79144,6 +81144,3493 @@
       "v3s_dois_estagios": 0.007189,
       "v3s_catboost_nested": -0.089556,
       "v3h_hibrido": 1.491425
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 37656,
+      "posicao": "GOL",
+      "real": 8.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.944986,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 68928,
+      "posicao": "GOL",
+      "real": 5.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.395535,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 71631,
+      "posicao": "GOL",
+      "real": 5.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.518814,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 72018,
+      "posicao": "GOL",
+      "real": 0.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.709094,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 79066,
+      "posicao": "GOL",
+      "real": 5.5,
+      "target_entrou": 1,
+      "p_entrou": 0.927028,
+      "v3s_dois_estagios": 1.888437,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 82730,
+      "posicao": "GOL",
+      "real": 4.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.967621,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87008,
+      "posicao": "GOL",
+      "real": 3.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.91656,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 91101,
+      "posicao": "GOL",
+      "real": 9.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.18261,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 98333,
+      "posicao": "GOL",
+      "real": 11.5,
+      "target_entrou": 1,
+      "p_entrou": 0.938319,
+      "v3s_dois_estagios": 2.951558,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 99552,
+      "posicao": "GOL",
+      "real": 6.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.434842,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102906,
+      "posicao": "GOL",
+      "real": 6.0,
+      "target_entrou": 1,
+      "p_entrou": 0.982885,
+      "v3s_dois_estagios": 3.100104,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 103056,
+      "posicao": "GOL",
+      "real": 2.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.434116,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104084,
+      "posicao": "GOL",
+      "real": 10.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.188987,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104118,
+      "posicao": "GOL",
+      "real": 12.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.216844,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 110698,
+      "posicao": "GOL",
+      "real": 4.6,
+      "target_entrou": 1,
+      "p_entrou": 0.928927,
+      "v3s_dois_estagios": 2.291517,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 111690,
+      "posicao": "GOL",
+      "real": -3.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 4.431095,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 115674,
+      "posicao": "GOL",
+      "real": 2.4,
+      "target_entrou": 1,
+      "p_entrou": 0.924099,
+      "v3s_dois_estagios": 1.669204,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 117404,
+      "posicao": "GOL",
+      "real": 6.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.378742,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 121823,
+      "posicao": "GOL",
+      "real": 3.2,
+      "target_entrou": 1,
+      "p_entrou": 0.968184,
+      "v3s_dois_estagios": 2.240202,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 125803,
+      "posicao": "GOL",
+      "real": 3.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.714658,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 42500,
+      "posicao": "LAT",
+      "real": 5.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.331761,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 73318,
+      "posicao": "LAT",
+      "real": 0.0,
+      "target_entrou": 0,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.492023,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 78445,
+      "posicao": "LAT",
+      "real": 15.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.961074,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 78850,
+      "posicao": "LAT",
+      "real": 6.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.843992,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 80313,
+      "posicao": "LAT",
+      "real": 3.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.591652,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 80570,
+      "posicao": "LAT",
+      "real": 7.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.806298,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 82775,
+      "posicao": "LAT",
+      "real": 12.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.23374,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 84339,
+      "posicao": "LAT",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.135471,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 86864,
+      "posicao": "LAT",
+      "real": 5.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.560741,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87228,
+      "posicao": "LAT",
+      "real": 6.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.975901,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 88393,
+      "posicao": "LAT",
+      "real": 5.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.173296,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 93716,
+      "posicao": "LAT",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.369317,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 94968,
+      "posicao": "LAT",
+      "real": 5.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.973729,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 95466,
+      "posicao": "LAT",
+      "real": 5.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.431339,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 96591,
+      "posicao": "LAT",
+      "real": 2.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.524712,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 96870,
+      "posicao": "LAT",
+      "real": 5.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.675385,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97101,
+      "posicao": "LAT",
+      "real": -0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.497359,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97468,
+      "posicao": "LAT",
+      "real": 9.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.650851,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97795,
+      "posicao": "LAT",
+      "real": 2.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.139803,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97868,
+      "posicao": "LAT",
+      "real": 15.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.166743,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97899,
+      "posicao": "LAT",
+      "real": -4.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.095209,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 99213,
+      "posicao": "LAT",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.875626,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 100848,
+      "posicao": "LAT",
+      "real": 4.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.144716,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 100898,
+      "posicao": "LAT",
+      "real": 6.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.411383,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101319,
+      "posicao": "LAT",
+      "real": 5.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.966596,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101708,
+      "posicao": "LAT",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.01521,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101727,
+      "posicao": "LAT",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 4.149583,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102130,
+      "posicao": "LAT",
+      "real": 5.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.723229,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102318,
+      "posicao": "LAT",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.775456,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102975,
+      "posicao": "LAT",
+      "real": 3.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.725757,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104470,
+      "posicao": "LAT",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.933113,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104649,
+      "posicao": "LAT",
+      "real": 9.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.760608,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105175,
+      "posicao": "LAT",
+      "real": 5.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.703656,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105531,
+      "posicao": "LAT",
+      "real": 12.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.423101,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105584,
+      "posicao": "LAT",
+      "real": 4.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.323817,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106708,
+      "posicao": "LAT",
+      "real": 15.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.440358,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106950,
+      "posicao": "LAT",
+      "real": -0.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.176798,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 107093,
+      "posicao": "LAT",
+      "real": 11.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.5483,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 107554,
+      "posicao": "LAT",
+      "real": 3.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.042177,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 110510,
+      "posicao": "LAT",
+      "real": 9.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.353805,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 110668,
+      "posicao": "LAT",
+      "real": 1.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.926571,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 110715,
+      "posicao": "LAT",
+      "real": 3.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.967429,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 111879,
+      "posicao": "LAT",
+      "real": 13.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.258526,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 116461,
+      "posicao": "LAT",
+      "real": 11.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.287658,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 122670,
+      "posicao": "LAT",
+      "real": 2.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.478708,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 124481,
+      "posicao": "LAT",
+      "real": 9.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.219076,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 124526,
+      "posicao": "LAT",
+      "real": 6.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.946556,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 127932,
+      "posicao": "LAT",
+      "real": 6.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.417254,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 131516,
+      "posicao": "LAT",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.791593,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 132412,
+      "posicao": "LAT",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.738545,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141594,
+      "posicao": "LAT",
+      "real": 1.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.881211,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 148125,
+      "posicao": "LAT",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.95187,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 63354,
+      "posicao": "ZAG",
+      "real": 3.5,
+      "target_entrou": 1,
+      "p_entrou": 0.981039,
+      "v3s_dois_estagios": 1.802472,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 70666,
+      "posicao": "ZAG",
+      "real": 3.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.322611,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 71227,
+      "posicao": "ZAG",
+      "real": -0.1,
+      "target_entrou": 1,
+      "p_entrou": 0.986828,
+      "v3s_dois_estagios": 1.809023,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 71684,
+      "posicao": "ZAG",
+      "real": 10.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.158222,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 72605,
+      "posicao": "ZAG",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.995038,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 72951,
+      "posicao": "ZAG",
+      "real": 2.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.393692,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 78248,
+      "posicao": "ZAG",
+      "real": 4.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.563968,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 78855,
+      "posicao": "ZAG",
+      "real": 1.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.708096,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 83528,
+      "posicao": "ZAG",
+      "real": 8.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.717299,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 84847,
+      "posicao": "ZAG",
+      "real": 2.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.714307,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90768,
+      "posicao": "ZAG",
+      "real": 0.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.665109,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 91573,
+      "posicao": "ZAG",
+      "real": 6.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.330034,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 91772,
+      "posicao": "ZAG",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.583368,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97095,
+      "posicao": "ZAG",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.38324,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97460,
+      "posicao": "ZAG",
+      "real": 3.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.478309,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97642,
+      "posicao": "ZAG",
+      "real": 5.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.718989,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97867,
+      "posicao": "ZAG",
+      "real": 6.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.63745,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97878,
+      "posicao": "ZAG",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.062506,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 99274,
+      "posicao": "ZAG",
+      "real": 5.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.457144,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 100804,
+      "posicao": "ZAG",
+      "real": 5.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.781083,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101393,
+      "posicao": "ZAG",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.398687,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101908,
+      "posicao": "ZAG",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.662569,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101995,
+      "posicao": "ZAG",
+      "real": 6.5,
+      "target_entrou": 1,
+      "p_entrou": 0.98085,
+      "v3s_dois_estagios": 1.282195,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 103523,
+      "posicao": "ZAG",
+      "real": 6.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.097685,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104075,
+      "posicao": "ZAG",
+      "real": 6.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.385568,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105047,
+      "posicao": "ZAG",
+      "real": 5.3,
+      "target_entrou": 1,
+      "p_entrou": 0.989959,
+      "v3s_dois_estagios": 1.472646,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105300,
+      "posicao": "ZAG",
+      "real": 8.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.240925,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105990,
+      "posicao": "ZAG",
+      "real": -3.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.408045,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106313,
+      "posicao": "ZAG",
+      "real": 9.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.752344,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106593,
+      "posicao": "ZAG",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.971212,
+      "v3s_dois_estagios": 1.323239,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 110750,
+      "posicao": "ZAG",
+      "real": 5.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.312433,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 111246,
+      "posicao": "ZAG",
+      "real": 0.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.27496,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 111309,
+      "posicao": "ZAG",
+      "real": 3.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.253553,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 113034,
+      "posicao": "ZAG",
+      "real": 0.0,
+      "target_entrou": 0,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.564738,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 117061,
+      "posicao": "ZAG",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.962881,
+      "v3s_dois_estagios": 1.311052,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 117330,
+      "posicao": "ZAG",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.975802,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 123445,
+      "posicao": "ZAG",
+      "real": -0.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.366023,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 123869,
+      "posicao": "ZAG",
+      "real": -1.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.299938,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 124219,
+      "posicao": "ZAG",
+      "real": 5.0,
+      "target_entrou": 1,
+      "p_entrou": 0.945291,
+      "v3s_dois_estagios": 1.375878,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 124483,
+      "posicao": "ZAG",
+      "real": 4.7,
+      "target_entrou": 1,
+      "p_entrou": 0.948579,
+      "v3s_dois_estagios": 1.309343,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 125488,
+      "posicao": "ZAG",
+      "real": 1.0,
+      "target_entrou": 1,
+      "p_entrou": 0.987405,
+      "v3s_dois_estagios": 1.621043,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 130048,
+      "posicao": "ZAG",
+      "real": 0.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.577673,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 130307,
+      "posicao": "ZAG",
+      "real": 1.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.313735,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 130806,
+      "posicao": "ZAG",
+      "real": -1.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.445687,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 130843,
+      "posicao": "ZAG",
+      "real": 2.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.360821,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141131,
+      "posicao": "ZAG",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.274325,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 39656,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.479095,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 62977,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.099499,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 63289,
+      "posicao": "MEI",
+      "real": 1.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.018018,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 68685,
+      "posicao": "MEI",
+      "real": -0.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.211943,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 68708,
+      "posicao": "MEI",
+      "real": 6.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.809053,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 68938,
+      "posicao": "MEI",
+      "real": -0.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.18569,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 70592,
+      "posicao": "MEI",
+      "real": 4.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.240089,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 70944,
+      "posicao": "MEI",
+      "real": 8.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.672533,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 71123,
+      "posicao": "MEI",
+      "real": 4.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.211171,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 71536,
+      "posicao": "MEI",
+      "real": 6.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.650241,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 72460,
+      "posicao": "MEI",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.297704,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 77485,
+      "posicao": "MEI",
+      "real": 2.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.949873,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 77510,
+      "posicao": "MEI",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.486177,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 77777,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.211199,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 78478,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.113273,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 80061,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.542817,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 80129,
+      "posicao": "MEI",
+      "real": 0.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.638885,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 80196,
+      "posicao": "MEI",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.06672,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 82407,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.151225,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 83433,
+      "posicao": "MEI",
+      "real": 4.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.678407,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 84558,
+      "posicao": "MEI",
+      "real": 13.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.977152,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 84626,
+      "posicao": "MEI",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.020766,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 84674,
+      "posicao": "MEI",
+      "real": 3.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.213821,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 84735,
+      "posicao": "MEI",
+      "real": 3.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.547553,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 85403,
+      "posicao": "MEI",
+      "real": 2.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.811703,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 86686,
+      "posicao": "MEI",
+      "real": 2.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.941082,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 86777,
+      "posicao": "MEI",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.028968,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87470,
+      "posicao": "MEI",
+      "real": -0.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.9634,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87552,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.246878,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87747,
+      "posicao": "MEI",
+      "real": 3.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.476441,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87863,
+      "posicao": "MEI",
+      "real": 7.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.218011,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87999,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.481079,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 89256,
+      "posicao": "MEI",
+      "real": 12.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.779332,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 89274,
+      "posicao": "MEI",
+      "real": 7.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.882559,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 89637,
+      "posicao": "MEI",
+      "real": 7.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.844642,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 89837,
+      "posicao": "MEI",
+      "real": 9.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.469664,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90370,
+      "posicao": "MEI",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.080255,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90532,
+      "posicao": "MEI",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.03246,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90588,
+      "posicao": "MEI",
+      "real": 3.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.670854,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90703,
+      "posicao": "MEI",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.754011,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 91473,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.007636,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 92981,
+      "posicao": "MEI",
+      "real": 1.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.854456,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 93790,
+      "posicao": "MEI",
+      "real": 1.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.566792,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 94930,
+      "posicao": "MEI",
+      "real": 9.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.694997,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 95541,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.702752,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 96610,
+      "posicao": "MEI",
+      "real": 13.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.0125,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 96652,
+      "posicao": "MEI",
+      "real": 0.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.084214,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97145,
+      "posicao": "MEI",
+      "real": 0.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.691876,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97520,
+      "posicao": "MEI",
+      "real": 0.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.391108,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 98022,
+      "posicao": "MEI",
+      "real": 11.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.33766,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 98517,
+      "posicao": "MEI",
+      "real": 2.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.07033,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 99267,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.879267,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 99815,
+      "posicao": "MEI",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.105108,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 100596,
+      "posicao": "MEI",
+      "real": 0.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.418667,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 100742,
+      "posicao": "MEI",
+      "real": 3.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.331589,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 100987,
+      "posicao": "MEI",
+      "real": 5.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.255627,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101352,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.858218,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101405,
+      "posicao": "MEI",
+      "real": 10.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.898626,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101807,
+      "posicao": "MEI",
+      "real": 10.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.792577,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102255,
+      "posicao": "MEI",
+      "real": 6.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.682447,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102256,
+      "posicao": "MEI",
+      "real": 8.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.220493,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102911,
+      "posicao": "MEI",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.053442,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104519,
+      "posicao": "MEI",
+      "real": 3.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.180361,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104783,
+      "posicao": "MEI",
+      "real": 1.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.37654,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104811,
+      "posicao": "MEI",
+      "real": 5.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.925214,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105068,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.169023,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105157,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.600869,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105436,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.588885,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105647,
+      "posicao": "MEI",
+      "real": 5.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.988154,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105901,
+      "posicao": "MEI",
+      "real": -1.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.077787,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106202,
+      "posicao": "MEI",
+      "real": 7.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.47541,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106294,
+      "posicao": "MEI",
+      "real": 8.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.638759,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106323,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.351838,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106822,
+      "posicao": "MEI",
+      "real": 11.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.369263,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 107173,
+      "posicao": "MEI",
+      "real": -0.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.794519,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 107231,
+      "posicao": "MEI",
+      "real": 4.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.774949,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 107256,
+      "posicao": "MEI",
+      "real": 10.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.726573,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 108162,
+      "posicao": "MEI",
+      "real": 0.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.541781,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 108683,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.788145,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 109573,
+      "posicao": "MEI",
+      "real": 5.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.345778,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 109987,
+      "posicao": "MEI",
+      "real": 0.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.359592,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 111682,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.401471,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 111760,
+      "posicao": "MEI",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.966106,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 113125,
+      "posicao": "MEI",
+      "real": 6.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.677584,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 113359,
+      "posicao": "MEI",
+      "real": 0.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.169129,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 115025,
+      "posicao": "MEI",
+      "real": -0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.513162,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 115986,
+      "posicao": "MEI",
+      "real": -0.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.45182,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 116034,
+      "posicao": "MEI",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.218667,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 117632,
+      "posicao": "MEI",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.450914,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 117910,
+      "posicao": "MEI",
+      "real": 7.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.718934,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 118563,
+      "posicao": "MEI",
+      "real": 5.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 3.387208,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 118774,
+      "posicao": "MEI",
+      "real": 1.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.845617,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 122394,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.084302,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 124961,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.527642,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 125926,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.093525,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 126182,
+      "posicao": "MEI",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.125881,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 128431,
+      "posicao": "MEI",
+      "real": 8.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.645553,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 130620,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.075166,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 131832,
+      "posicao": "MEI",
+      "real": 5.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.363459,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 136156,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.819153,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 140438,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.323437,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141160,
+      "posicao": "MEI",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.907647,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141344,
+      "posicao": "MEI",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.438539,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141400,
+      "posicao": "MEI",
+      "real": 4.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.111505,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141754,
+      "posicao": "MEI",
+      "real": 2.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.629767,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141776,
+      "posicao": "MEI",
+      "real": 9.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.50729,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141995,
+      "posicao": "MEI",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.848159,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 142890,
+      "posicao": "MEI",
+      "real": 1.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.228978,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 148215,
+      "posicao": "MEI",
+      "real": -1.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.105946,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 150180,
+      "posicao": "MEI",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.768769,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 151600,
+      "posicao": "MEI",
+      "real": 2.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.797574,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 39148,
+      "posicao": "ATA",
+      "real": 7.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.550075,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 68952,
+      "posicao": "ATA",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.470105,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 68996,
+      "posicao": "ATA",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.570863,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 80287,
+      "posicao": "ATA",
+      "real": 11.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.578989,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 81720,
+      "posicao": "ATA",
+      "real": 1.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": -4.8e-05,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 83257,
+      "posicao": "ATA",
+      "real": 17.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.105148,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 85035,
+      "posicao": "ATA",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": -0.02885,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 85048,
+      "posicao": "ATA",
+      "real": 3.8,
+      "target_entrou": 1,
+      "p_entrou": 0.986586,
+      "v3s_dois_estagios": 0.443882,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 86292,
+      "posicao": "ATA",
+      "real": 6.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.527459,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 87258,
+      "posicao": "ATA",
+      "real": 5.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.414519,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 89368,
+      "posicao": "ATA",
+      "real": 1.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.486115,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 89840,
+      "posicao": "ATA",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.16152,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90031,
+      "posicao": "ATA",
+      "real": 0.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.638694,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90285,
+      "posicao": "ATA",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.34392,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 90302,
+      "posicao": "ATA",
+      "real": 14.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.496272,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 91130,
+      "posicao": "ATA",
+      "real": -0.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.584232,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 91908,
+      "posicao": "ATA",
+      "real": 0.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.613974,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 92171,
+      "posicao": "ATA",
+      "real": -0.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.438898,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 92696,
+      "posicao": "ATA",
+      "real": 0.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.142935,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 93988,
+      "posicao": "ATA",
+      "real": 2.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.772462,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 94583,
+      "posicao": "ATA",
+      "real": 6.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.521443,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 95131,
+      "posicao": "ATA",
+      "real": 3.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.606049,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 95332,
+      "posicao": "ATA",
+      "real": 21.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.272238,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 95362,
+      "posicao": "ATA",
+      "real": 0.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.033633,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 95799,
+      "posicao": "ATA",
+      "real": 10.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.376952,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97321,
+      "posicao": "ATA",
+      "real": 5.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.716801,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97450,
+      "posicao": "ATA",
+      "real": 10.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.385141,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 97810,
+      "posicao": "ATA",
+      "real": 0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.425247,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 98225,
+      "posicao": "ATA",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.023174,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 98873,
+      "posicao": "ATA",
+      "real": 17.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.801552,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 98909,
+      "posicao": "ATA",
+      "real": 0.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.875372,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 100695,
+      "posicao": "ATA",
+      "real": 1.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.971857,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101002,
+      "posicao": "ATA",
+      "real": -0.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.331736,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101237,
+      "posicao": "ATA",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.072122,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101254,
+      "posicao": "ATA",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.487148,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101290,
+      "posicao": "ATA",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.16725,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101314,
+      "posicao": "ATA",
+      "real": 3.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.580172,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101729,
+      "posicao": "ATA",
+      "real": 7.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.026767,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 101960,
+      "posicao": "ATA",
+      "real": 4.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.988831,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102877,
+      "posicao": "ATA",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.153449,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 102928,
+      "posicao": "ATA",
+      "real": 5.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.25424,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 103445,
+      "posicao": "ATA",
+      "real": 12.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.667193,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 103967,
+      "posicao": "ATA",
+      "real": 10.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.138833,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 104134,
+      "posicao": "ATA",
+      "real": 3.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.044404,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105048,
+      "posicao": "ATA",
+      "real": -0.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.097049,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105089,
+      "posicao": "ATA",
+      "real": 1.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.3234,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105518,
+      "posicao": "ATA",
+      "real": 1.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.065748,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 105563,
+      "posicao": "ATA",
+      "real": 1.6,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.566214,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 106104,
+      "posicao": "ATA",
+      "real": 1.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.438921,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 107989,
+      "posicao": "ATA",
+      "real": 3.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.471526,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 108131,
+      "posicao": "ATA",
+      "real": 1.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.628801,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 108713,
+      "posicao": "ATA",
+      "real": 1.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.841198,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 109401,
+      "posicao": "ATA",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.97658,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 110144,
+      "posicao": "ATA",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.296708,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 110598,
+      "posicao": "ATA",
+      "real": 1.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.176929,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 112886,
+      "posicao": "ATA",
+      "real": 14.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.610663,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 113103,
+      "posicao": "ATA",
+      "real": 3.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.58756,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 113397,
+      "posicao": "ATA",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.502938,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 114040,
+      "posicao": "ATA",
+      "real": 1.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.04556,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 114208,
+      "posicao": "ATA",
+      "real": 10.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.893291,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 114323,
+      "posicao": "ATA",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.130709,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 114801,
+      "posicao": "ATA",
+      "real": 4.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.46605,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 114802,
+      "posicao": "ATA",
+      "real": 3.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.6709,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 116706,
+      "posicao": "ATA",
+      "real": 3.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.647861,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 117909,
+      "posicao": "ATA",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": -0.069236,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 117930,
+      "posicao": "ATA",
+      "real": 2.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.525538,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 118844,
+      "posicao": "ATA",
+      "real": 3.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 2.215814,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 122121,
+      "posicao": "ATA",
+      "real": -1.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.185967,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 122573,
+      "posicao": "ATA",
+      "real": 10.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.001172,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 122781,
+      "posicao": "ATA",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.443928,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 123101,
+      "posicao": "ATA",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.410191,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 123738,
+      "posicao": "ATA",
+      "real": 6.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.124772,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 123795,
+      "posicao": "ATA",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.167477,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 124239,
+      "posicao": "ATA",
+      "real": 2.2,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.015099,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 127871,
+      "posicao": "ATA",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.670318,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 130121,
+      "posicao": "ATA",
+      "real": -0.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": -0.129002,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 130209,
+      "posicao": "ATA",
+      "real": 16.1,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.217662,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 132071,
+      "posicao": "ATA",
+      "real": 2.4,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.50847,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 132264,
+      "posicao": "ATA",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.568447,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 132580,
+      "posicao": "ATA",
+      "real": 0.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.45831,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 133543,
+      "posicao": "ATA",
+      "real": 0.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": -0.027756,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141339,
+      "posicao": "ATA",
+      "real": 1.5,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.672398,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 141382,
+      "posicao": "ATA",
+      "real": 1.3,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.380253,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 142877,
+      "posicao": "ATA",
+      "real": 3.8,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": -0.006094,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 143153,
+      "posicao": "ATA",
+      "real": 2.9,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.608947,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 143193,
+      "posicao": "ATA",
+      "real": 4.7,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 1.291825,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 146375,
+      "posicao": "ATA",
+      "real": 2.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": -0.0238,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
+    },
+    {
+      "rodada": 26,
+      "atleta_id": 149994,
+      "posicao": "ATA",
+      "real": 0.0,
+      "target_entrou": 1,
+      "p_entrou": 0.99,
+      "v3s_dois_estagios": 0.3146,
+      "v3s_catboost_nested": NaN,
+      "v3h_hibrido": NaN
     }
   ],
   "bootstrap_vs_catboost_direto": {
