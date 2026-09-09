@@ -44,6 +44,12 @@ def finite(value):
         return False
 
 
+def reject_nonstandard_json_constant(value):
+    # JSON.parse dos navegadores rejeita NaN/Infinity. O json.loads do Python
+    # aceita esses tokens por padrão, então o smoke test precisa ser estrito.
+    raise ValueError(f"constante JSON não suportada pelo navegador: {value}")
+
+
 def main():
     assert HTML.exists(), "site/index.html ausente"
     assert DATA.exists(), "site/dados.json ausente"
@@ -108,7 +114,11 @@ def main():
         assert termo in html, f"metodologia incompleta: {termo}"
     assert "methodRuntime" in html and "methodStats" in html, "métricas reais do pipeline não aparecem na metodologia"
 
-    payload = json.loads(DATA.read_text(encoding="utf-8"))
+    # Compatibilidade real com JSON.parse do navegador: rejeita NaN/Infinity.
+    payload = json.loads(
+        DATA.read_text(encoding="utf-8"),
+        parse_constant=reject_nonstandard_json_constant,
+    )
     produto = payload.get("produto") or {}
     rodada = produto.get("rodada")
     jogadores = produto.get("jogadores") or []
@@ -151,7 +161,7 @@ def main():
 
     print(
         f"Site OK | R{rodada} | jogadores={len(jogadores)} | elegíveis={len(elegiveis)} | "
-        f"posições={dict(sorted(pos.items()))} | scouts=OK | banco=OK | alternativas=OK | "
+        f"posições={dict(sorted(pos.items()))} | json_browser=OK | scouts=OK | banco=OK | alternativas=OK | "
         f"monte_time=OK | análise=OK | histórico=OK | metodologia=OK | mobile=OK"
     )
 
