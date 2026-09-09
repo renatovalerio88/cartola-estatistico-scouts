@@ -12,6 +12,7 @@ const CSS=`
 #monte .mp-budget{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border:1px solid var(--mp-line);border-radius:14px;background:#fff;overflow:hidden;margin:7px 0 12px}
 #monte .mp-budget>div{padding:9px 12px}.mp-budget>div:not(:last-child){border-right:1px solid var(--mp-line)}
 #monte .mp-budget small{display:block;color:#7b8c85;font-size:.59rem;text-transform:uppercase;letter-spacing:.035em;font-weight:800}.mp-budget b{display:block;margin-top:2px;font-size:.94rem;color:#29453b}.mp-budget .available b{color:var(--mp-green)}
+#monte .mp-budget.over .available b{color:#b84f4f}
 #monte .picker{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:8px 0 14px}
 #monte .picker-card{padding:10px 11px;border-radius:14px;box-shadow:0 5px 17px rgba(22,69,50,.04);overflow:visible}
 #monte .picker-card h3{display:flex;justify-content:space-between;align-items:center;margin:0 0 7px;font-size:.78rem;text-transform:uppercase;letter-spacing:.025em;color:#587068}
@@ -42,6 +43,7 @@ function injectStyle(){
   const s=document.createElement('style');s.id='monte-premium-style';s.textContent=CSS;document.head.appendChild(s);
 }
 function norm(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim()}
+function setText(el,text){if(el&&el.textContent!==text)el.textContent=text}
 function cardPosition(card){
   const sel=card.querySelector('select.custom-pick');
   if(sel?.dataset.pos)return sel.dataset.pos;
@@ -67,7 +69,9 @@ function budgetPanel(){
   let el=document.getElementById('mpBudget');
   if(!el){el=document.createElement('div');el.id='mpBudget';el.className='mp-budget';help.parentNode.insertBefore(el,help.nextSibling)}
   const total=Number(document.getElementById('customBudget')?.value||120),spent=pickedPlayers().reduce((a,p)=>a+Number(p.preco||0),0),available=total-spent;
-  el.innerHTML=`<div><small>Patrimônio</small><b>${money(total)}</b></div><div><small>Comprometido</small><b>${money(spent)}</b></div><div class="available"><small>Disponível</small><b>${money(Math.max(0,available))}</b></div>`;
+  const html=`<div><small>Patrimônio</small><b>${money(total)}</b></div><div><small>Comprometido</small><b>${money(spent)}</b></div><div class="available"><small>Disponível</small><b>${money(Math.max(0,available))}</b></div>`;
+  if(el.innerHTML!==html)el.innerHTML=html;
+  el.classList.toggle('over',available<0);
 }
 function decoratePicked(card,pos){
   card.querySelectorAll('.picked-chip').forEach(ch=>{
@@ -82,16 +86,28 @@ function decoratePicked(card,pos){
     ch.insertBefore(n,button||null);ch.insertBefore(m,button||null);ch.classList.add('mp-picked');ch.dataset.mpDone='1';
   });
 }
+function isEligible(p){
+  const status=p?.status_id??p?.statusId;
+  return status==null||Number(status)===7;
+}
 function searchResults(pos,q){
   const used=new Set(pickedPlayers().map(p=>String(p.atleta_id)));
-  return players.filter(p=>p.posicao===pos&&Number(p.status_id)===7&&!used.has(String(p.atleta_id))&&(!q||norm(p.apelido).includes(q)||norm(p.sigla_clube).includes(q))).sort((a,b)=>Number(b.projecao||0)-Number(a.projecao||0)||Number(a.preco||0)-Number(b.preco||0)).slice(0,8);
+  return players.filter(p=>p.posicao===pos&&isEligible(p)&&!used.has(String(p.atleta_id))&&(!q||norm(p.apelido).includes(q)||norm(p.sigla_clube).includes(q))).sort((a,b)=>Number(b.projecao||0)-Number(a.projecao||0)||Number(a.preco||0)-Number(b.preco||0)).slice(0,8);
 }
+function venue(p){const m=p?.mando;return m==='casa'||m===true||m===1?'🏠':'✈️'}
 function decorate(){
   const root=document.getElementById('customPickers');if(!root||!players.length)return;
   root.querySelectorAll('.picker-card').forEach(card=>{
     const pos=cardPosition(card),h=card.querySelector('h3'),sel=card.querySelector('select.custom-pick');if(!pos)return;
     decoratePicked(card,pos);
-    if(h){const original=h.textContent;const count=(original.match(/(\d+)\s*\/\s*(\d+)/)||[]);h.innerHTML=`<span>${labels[pos]}</span><span>${count.length?count[1]+'/'+count[2]:''}</span>`}
+    if(h){
+      const picked=card.querySelectorAll('.picked-chip').length;
+      const source=h.textContent;
+      const match=source.match(/\d+\s*\/\s*(\d+)/);
+      const cap=match?Number(match[1]):Number(sel?.dataset.max||0);
+      const target=`<span>${labels[pos]}</span><span>${cap?picked+'/'+cap:''}</span>`;
+      if(h.innerHTML!==target)h.innerHTML=target;
+    }
     if(!sel||card.querySelector('.mp-search'))return;
     const row=card.querySelector('.picker-row');if(!row)return;
     const input=document.createElement('input');input.className='mp-search';input.type='search';input.placeholder=`Buscar ${labels[pos].toLowerCase()}...`;input.autocomplete='off';input.setAttribute('aria-label',`Buscar ${labels[pos].toLowerCase()}`);
@@ -99,33 +115,44 @@ function decorate(){
     row.insertBefore(input,row.firstChild);input.after(res);
     const run=()=>{
       const q=norm(input.value),list=searchResults(pos,q);
-      res.innerHTML=list.map(p=>`<button type="button" class="mp-result" data-id="${p.atleta_id}"><b>${p.apelido}</b><small>${p.sigla_clube||'—'} · ${money(p.preco)} · ${p.mando==='casa'?'🏠':'✈️'} ${p.sigla_adversario||'—'}</small><strong>${Number(p.projecao||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})} pts</strong></button>`).join('')||'<div class="empty" style="padding:9px;font-size:.7rem">Nenhum jogador encontrado.</div>';
+      res.innerHTML=list.map(p=>`<button type="button" class="mp-result" data-id="${p.atleta_id}"><b>${p.apelido}</b><small>${p.sigla_clube||'—'} · ${money(p.preco)} · ${venue(p)} ${p.sigla_adversario||'—'}</small><strong>${Number(p.projecao||0).toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2})} pts</strong></button>`).join('')||'<div class="empty" style="padding:9px;font-size:.7rem">Nenhum jogador encontrado.</div>';
       res.classList.add('open');
-      res.querySelectorAll('.mp-result').forEach(b=>b.addEventListener('click',()=>{
-        sel.value=b.dataset.id;
-        const add=card.querySelector('.add-pick');
-        if(add)add.click();
-        input.value='';res.classList.remove('open');scheduleRefresh(20);
-      }));
+      res.querySelectorAll('.mp-result').forEach(b=>b.addEventListener('click',()=>choose(b)));
     };
-    input.addEventListener('input',run);input.addEventListener('focus',run);input.addEventListener('keydown',e=>{if(e.key==='Escape')res.classList.remove('open')});
+    const choose=b=>{
+      sel.value=b.dataset.id;
+      const add=card.querySelector('.add-pick');
+      if(add)add.click();
+      input.value='';res.classList.remove('open');scheduleRefresh(20);
+    };
+    input.addEventListener('input',run);input.addEventListener('focus',run);input.addEventListener('keydown',e=>{
+      if(e.key==='Escape')res.classList.remove('open');
+      if(e.key==='Enter'){
+        const first=res.querySelector('.mp-result');
+        if(first){e.preventDefault();choose(first)}
+      }
+    });
   });
 }
 function markUserPicked(){
   const names=new Set(pickedEntries().map(e=>norm(e.name)));
-  document.querySelectorAll('#customPitch .player-ball').forEach(n=>n.classList.toggle('user-picked',names.has(norm(n.querySelector('.name')?.textContent))));
+  document.querySelectorAll('#customPitch .player-ball').forEach(n=>{
+    const on=names.has(norm(n.querySelector('.name')?.textContent));
+    if(n.classList.contains('user-picked')!==on)n.classList.toggle('user-picked',on);
+  });
   const r=document.getElementById('customResult');
   if(r&&document.getElementById('customPitch')){
     let note=r.querySelector('.mp-selected-note');
     if(!note){note=document.createElement('div');note.className='mp-selected-note';const pitch=document.getElementById('customPitch');r.insertBefore(note,pitch)}
-    const qtd=names.size;note.textContent=qtd?`${qtd} jogador${qtd===1?'':'es'} escolhido${qtd===1?'':'s'} por você destacado${qtd===1?'':'s'} em dourado.`:'Time completado integralmente pelo modelo.';
+    const qtd=names.size,text=qtd?`${qtd} jogador${qtd===1?'':'es'} escolhido${qtd===1?'':'s'} por você destacado${qtd===1?'':'s'} em dourado.`:'Time completado integralmente pelo modelo.';
+    setText(note,text);
   }
 }
 function refresh(){
   injectStyle();
-  const f=document.getElementById('customFormation');if(f&&f.options[0])f.options[0].textContent='Melhor formação (automática)';
-  const build=document.getElementById('buildCustom');if(build)build.textContent='Completar com o modelo';
-  const help=document.querySelector('#monte .custom-help');if(help)help.textContent='Escolha os jogadores que você quer manter. O modelo monta o melhor restante do time dentro do seu patrimônio.';
+  const f=document.getElementById('customFormation');if(f&&f.options[0]&&f.options[0].textContent!=='Melhor formação (automática)')f.options[0].textContent='Melhor formação (automática)';
+  setText(document.getElementById('buildCustom'),'Completar com o modelo');
+  setText(document.querySelector('#monte .custom-help'),'Escolha os jogadores que você quer manter. O modelo monta o melhor restante do time dentro do seu patrimônio.');
   budgetPanel();decorate();markUserPicked();
 }
 function scheduleRefresh(ms=40){clearTimeout(refreshTimer);refreshTimer=setTimeout(refresh,ms)}
@@ -135,8 +162,16 @@ async function loadPlayers(){
 }
 document.addEventListener('input',e=>{if(e.target?.id==='customBudget')budgetPanel()});
 document.addEventListener('click',e=>{if(e.target?.closest('#monte'))scheduleRefresh(50);if(!e.target?.closest('.picker-card'))document.querySelectorAll('.mp-results.open').forEach(x=>x.classList.remove('open'))});
-const obs=new MutationObserver(()=>{if(document.getElementById('monte')?.classList.contains('active'))scheduleRefresh(35)});
-obs.observe(document.documentElement,{subtree:true,childList:true});
-window.addEventListener('load',()=>scheduleRefresh(150));
+window.addEventListener('load',()=>{
+  const monte=document.getElementById('monte');
+  if(monte){
+    const obs=new MutationObserver(mutations=>{
+      if(!monte.classList.contains('active'))return;
+      if(mutations.some(m=>m.type==='childList'&&(m.addedNodes.length||m.removedNodes.length)))scheduleRefresh(35);
+    });
+    obs.observe(monte,{subtree:true,childList:true});
+  }
+  scheduleRefresh(150);
+});
 injectStyle();loadPlayers();scheduleRefresh(400);
 })();
