@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import csv
 import json
+import math
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -13,6 +14,17 @@ SITE_DATA = ROOT / "site" / "dados.json"
 def load(name):
     p = REPORTS / name
     return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+def sanitize_json(value):
+    """Converte NaN/Infinity em null para manter JSON válido no navegador."""
+    if isinstance(value, float):
+        return value if math.isfinite(value) else None
+    if isinstance(value, dict):
+        return {str(k): sanitize_json(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [sanitize_json(v) for v in value]
+    return value
 
 
 def load_latest_explicabilidade():
@@ -39,11 +51,13 @@ def latest_pre_round():
         for row in csv.DictReader(f):
             aid = int(row["atleta_id"])
             m = por_id.get(aid, {})
+
             def num(chave, padrao=0.0):
                 try:
                     return float(row.get(chave) or padrao)
                 except (TypeError, ValueError):
                     return padrao
+
             jogadores.append({
                 "atleta_id": aid,
                 "apelido": row.get("apelido") or m.get("apelido") or str(aid),
@@ -119,7 +133,11 @@ def main():
         "top50_liga_nacional_coorte": load("top50-liga-nacional-coorte.json"),
         "top50_liga_nacional_estrategias": load("top50-liga-nacional-estrategias.json"),
     }
-    SITE_DATA.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+    payload = sanitize_json(payload)
+    SITE_DATA.write_text(
+        json.dumps(payload, ensure_ascii=False, indent=2, allow_nan=False),
+        encoding="utf-8",
+    )
     print(f"Site V3 atualizado: rodada {payload['produto']['rodada']}, {len(payload['produto']['jogadores'])} jogadores no payload de produto.")
 
 
