@@ -107,6 +107,7 @@ def main():
         "gate_guardrail_raros": load("gate-guardrail-raros.json"),
         "backtest_pontos": load("backtest-pontos-scouts.json"),
         "backtest_v3s_nested": load("backtest-v3s-nested.json"),
+        "backtest_time_sugerido_walk_forward": load("backtest-time-sugerido-walk-forward.json"),
         "backtest_v3s_catboost": load("backtest-v3s-catboost-nested.json"),
         "backtest_v3s_dois_estagios": load("backtest-v3s-dois-estagios.json"),
         "gate_dois_estagios": load("gate-dois-estagios.json"),
