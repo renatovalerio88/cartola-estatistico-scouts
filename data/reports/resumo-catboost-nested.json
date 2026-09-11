@@ -1,6 +1,6 @@
 {
   "protocolo": "nested walk-forward estrito: para prever R, outer train usa somente rodadas < R; a escolha CatBoost vs baselines/modelos core usa apenas inner validation em rodadas < R; nenhum resultado de R entra na seleção, treino ou hiperparametros",
-  "linhas": 4459,
+  "linhas": 4776,
   "rodadas": [
     10,
     11,
@@ -16,102 +16,103 @@
     22,
     23,
     24,
-    25
+    25,
+    26
   ],
   "geral": {
     "v3s_catboost_nested": {
-      "n": 4459,
-      "mae": 2.986861,
-      "rmse": 4.478646,
-      "bias": -2.002309
+      "n": 4776,
+      "mae": 2.997576,
+      "rmse": 4.486145,
+      "bias": -2.010573
     },
     "v3s_nested_core": {
-      "n": 4459,
-      "mae": 3.05169,
-      "rmse": 4.109747,
-      "bias": -0.008449
+      "n": 4776,
+      "mae": 3.072087,
+      "rmse": 4.13319,
+      "bias": -0.009517
     },
     "v3h_atual": {
-      "n": 4459,
-      "mae": 2.99691,
-      "rmse": 3.959089,
-      "bias": 0.085174
+      "n": 4776,
+      "mae": 3.010573,
+      "rmse": 3.972768,
+      "bias": 0.084302
     },
     "rf_lab": {
-      "n": 4459,
-      "mae": 3.035311,
-      "rmse": 3.965714,
-      "bias": 0.178796
+      "n": 4776,
+      "mae": 3.042408,
+      "rmse": 3.970194,
+      "bias": 0.178121
     }
   },
   "delta_vs_v3h": {
-    "mae": -0.010049,
-    "rmse": 0.519557
+    "mae": -0.012997,
+    "rmse": 0.513377
   },
   "bootstrap_vs_core": {
-    "diferenca_mae_challenger_menos_baseline": -0.062674,
+    "diferenca_mae_challenger_menos_baseline": -0.071926,
     "ic95": [
-      -0.158671,
-      0.022526
+      -0.161982,
+      0.01001
     ],
-    "probabilidade_challenger_melhor": 0.9194,
-    "rodadas_ganhas": 9,
+    "probabilidade_challenger_melhor": 0.953,
+    "rodadas_ganhas": 10,
     "rodadas_perdidas": 6
   },
   "bootstrap_vs_v3h": {
-    "diferenca_mae_challenger_menos_baseline": -0.007398,
+    "diferenca_mae_challenger_menos_baseline": -0.01034,
     "ic95": [
-      -0.0966,
-      0.070216
+      -0.092167,
+      0.062177
     ],
-    "probabilidade_challenger_melhor": 0.5672,
-    "rodadas_ganhas": 7,
+    "probabilidade_challenger_melhor": 0.594,
+    "rodadas_ganhas": 8,
     "rodadas_perdidas": 8
   },
   "selecoes_modelos": {
-    "catboost": 1183,
-    "media3": 107,
-    "poisson": 62,
-    "ewma": 31,
-    "ridge": 17,
+    "catboost": 1258,
+    "media3": 120,
+    "poisson": 66,
+    "ewma": 32,
+    "ridge": 18,
     "hist_gradient_boosting": 14,
-    "extra_trees": 11
+    "extra_trees": 12
   },
   "por_posicao": {
     "ATA": {
-      "catboost_mae": 3.303142,
-      "catboost_rmse": 5.358288,
-      "catboost_bias": -2.887444,
-      "v3h_mae": 3.333554,
-      "delta_mae_catboost_menos_v3h": -0.030412
+      "catboost_mae": 3.311828,
+      "catboost_rmse": 5.373887,
+      "catboost_bias": -2.905679,
+      "v3h_mae": 3.345597,
+      "delta_mae_catboost_menos_v3h": -0.033769
     },
     "GOL": {
-      "catboost_mae": 3.322997,
-      "catboost_rmse": 4.06525,
-      "catboost_bias": -0.584912,
-      "v3h_mae": 3.333958,
-      "delta_mae_catboost_menos_v3h": -0.010961
+      "catboost_mae": 3.343021,
+      "catboost_rmse": 4.099504,
+      "catboost_bias": -0.724398,
+      "v3h_mae": 3.326926,
+      "delta_mae_catboost_menos_v3h": 0.016095
     },
     "LAT": {
-      "catboost_mae": 3.284287,
-      "catboost_rmse": 4.473738,
-      "catboost_bias": -2.104614,
-      "v3h_mae": 3.213688,
-      "delta_mae_catboost_menos_v3h": 0.070599
+      "catboost_mae": 3.325204,
+      "catboost_rmse": 4.534168,
+      "catboost_bias": -2.150754,
+      "v3h_mae": 3.237494,
+      "delta_mae_catboost_menos_v3h": 0.08771
     },
     "MEI": {
-      "catboost_mae": 2.613449,
-      "catboost_rmse": 3.97926,
-      "catboost_bias": -1.678033,
-      "v3h_mae": 2.645212,
-      "delta_mae_catboost_menos_v3h": -0.031763
+      "catboost_mae": 2.6195,
+      "catboost_rmse": 3.963265,
+      "catboost_bias": -1.647845,
+      "v3h_mae": 2.668243,
+      "delta_mae_catboost_menos_v3h": -0.048743
     },
     "ZAG": {
-      "catboost_mae": 2.777297,
-      "catboost_rmse": 3.852069,
-      "catboost_bias": -1.560941,
-      "v3h_mae": 2.784642,
-      "delta_mae_catboost_menos_v3h": -0.007345
+      "catboost_mae": 2.767986,
+      "catboost_rmse": 3.819714,
+      "catboost_bias": -1.543637,
+      "v3h_mae": 2.779855,
+      "delta_mae_catboost_menos_v3h": -0.011869
     }
   },
   "guardrails": {
