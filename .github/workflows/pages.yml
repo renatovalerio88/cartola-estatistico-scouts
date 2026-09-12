@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'site/**'
+      - 'scripts/corrigir_cobertura_site.py'
       - '.github/workflows/pages.yml'
   workflow_run:
     workflows:
@@ -35,6 +36,9 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Corrigir cobertura da interface
+        shell: bash
+        run: python scripts/corrigir_cobertura_site.py
       - name: Aplicar acabamento final da interface
         shell: bash
         run: |
@@ -51,6 +55,7 @@ jobs:
               '<script src="historico-premium.js?v=20260911b"></script>',
               '<script src="historico-final.js?v=20260911b"></script>',
               '<script src="metodologia-premium.js?v=20260911a"></script>',
+              '<script src="ux-v2-bridge.js?v=20260912a"></script>',
           ]
           for tag in tags:
               if tag not in html:
