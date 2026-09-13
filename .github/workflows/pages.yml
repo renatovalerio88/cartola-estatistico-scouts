@@ -43,6 +43,28 @@ jobs:
       - name: Gerar payload leve do frontend
         shell: bash
         run: python scripts/gerar_payload_site_leve.py
+      - name: Validar payload leve
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('site/dados-lite.json')
+          if not p.exists():
+              raise SystemExit('dados-lite.json ausente')
+          size=p.stat().st_size
+          if size>5_000_000:
+              raise SystemExit(f'Payload leve acima do limite: {size} bytes')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          required=['produto','explicabilidade_pre_rodada','avaliacao_prospectiva_imutavel','backtest_time_sugerido_walk_forward']
+          missing=[k for k in required if k not in d]
+          if missing:
+              raise SystemExit('Campos obrigatorios ausentes: '+', '.join(missing))
+          jogadores=d.get('produto',{}).get('jogadores') or []
+          if not jogadores:
+              raise SystemExit('produto.jogadores vazio')
+          print(f'Payload leve validado: {size} bytes; {len(jogadores)} jogadores')
+          PY
       - name: Aplicar acabamento final da interface
         shell: bash
         run: |
@@ -50,9 +72,12 @@ jobs:
           from pathlib import Path
           p = Path('site/index.html')
           html = p.read_text(encoding='utf-8')
-          loader = '<script src="data-loader.js?v=20260913a"></script>'
-          if loader not in html:
+          loader = '<script src="data-loader.js?v=20260913b"></script>'
+          if 'data-loader.js?' not in html:
               html = html.replace('<script src="optimizer.js"></script>', loader + '<script src="optimizer.js"></script>')
+          else:
+              import re
+              html = re.sub(r'<script src="data-loader\.js\?v=[^"]+"></script>', loader, html)
           tags = [
               '<script src="final-polish.js"></script>',
               '<script src="time-sugerido-final.js"></script>',
@@ -67,6 +92,8 @@ jobs:
           for tag in tags:
               if tag not in html:
                   html = html.replace('</body>', tag + '</body>')
+          if html.index('data-loader.js') > html.index('optimizer.js'):
+              raise SystemExit('data-loader.js precisa carregar antes de optimizer.js')
           p.write_text(html, encoding='utf-8')
           PY
       - name: Remover payload pesado do artefato público
