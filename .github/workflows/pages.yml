@@ -6,6 +6,7 @@ on:
     paths:
       - 'site/**'
       - 'scripts/corrigir_cobertura_site.py'
+      - 'scripts/gerar_payload_site_leve.py'
       - '.github/workflows/pages.yml'
   workflow_run:
     workflows:
@@ -39,6 +40,9 @@ jobs:
       - name: Corrigir cobertura da interface
         shell: bash
         run: python scripts/corrigir_cobertura_site.py
+      - name: Gerar payload leve do frontend
+        shell: bash
+        run: python scripts/gerar_payload_site_leve.py
       - name: Aplicar acabamento final da interface
         shell: bash
         run: |
@@ -46,6 +50,9 @@ jobs:
           from pathlib import Path
           p = Path('site/index.html')
           html = p.read_text(encoding='utf-8')
+          loader = '<script src="data-loader.js?v=20260913a"></script>'
+          if loader not in html:
+              html = html.replace('<script src="optimizer.js"></script>', loader + '<script src="optimizer.js"></script>')
           tags = [
               '<script src="final-polish.js"></script>',
               '<script src="time-sugerido-final.js"></script>',
@@ -55,13 +62,16 @@ jobs:
               '<script src="historico-premium.js?v=20260911b"></script>',
               '<script src="historico-final.js?v=20260911b"></script>',
               '<script src="metodologia-premium.js?v=20260911a"></script>',
-              '<script src="ux-v2-bridge.js?v=20260912a"></script>',
+              '<script src="ux-v2-bridge.js?v=20260913b"></script>',
           ]
           for tag in tags:
               if tag not in html:
                   html = html.replace('</body>', tag + '</body>')
           p.write_text(html, encoding='utf-8')
           PY
+      - name: Remover payload pesado do artefato público
+        shell: bash
+        run: rm -f site/dados.json
       - name: Enviar site
         uses: actions/upload-pages-artifact@v3
         with:
