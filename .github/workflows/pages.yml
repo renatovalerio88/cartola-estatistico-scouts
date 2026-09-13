@@ -94,11 +94,28 @@ jobs:
                   html = html.replace('</body>', tag + '</body>')
           if html.index('data-loader.js') > html.index('optimizer.js'):
               raise SystemExit('data-loader.js precisa carregar antes de optimizer.js')
+          for page_id in ['time','monte','projecoes','analise','historico','metodologia']:
+              if f'id="{page_id}"' not in html:
+                  raise SystemExit(f'Aba obrigatoria ausente: {page_id}')
           p.write_text(html, encoding='utf-8')
           PY
       - name: Remover payload pesado do artefato público
         shell: bash
         run: rm -f site/dados.json
+      - name: Validar artefato antes do upload
+        shell: bash
+        run: |
+          test -f site/dados-lite.json
+          test ! -f site/dados.json
+          node --check site/data-loader.js
+          node --check site/optimizer.js
+          node --check site/time-sugerido-final.js
+          node --check site/monte-premium.js
+          node --check site/projecoes-premium.js
+          node --check site/analise-premium.js
+          node --check site/historico-final.js
+          node --check site/metodologia-premium.js
+          node --check site/ux-v2-bridge.js
       - name: Enviar site
         uses: actions/upload-pages-artifact@v3
         with:
@@ -106,3 +123,46 @@ jobs:
       - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Smoke test do site publicado
+        shell: bash
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base="${SITE_URL%/}/"
+          echo "Validando ${base}"
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -L -sS -o /tmp/index.html -w '%{http_code}' "${base}?smoke=${GITHUB_RUN_ID}-${i}" || true)
+            if [ "$code" = "200" ]; then break; fi
+            sleep 5
+          done
+          test "$code" = "200"
+          grep -q 'data-loader.js' /tmp/index.html
+          grep -q 'id="time"' /tmp/index.html
+          grep -q 'id="monte"' /tmp/index.html
+          grep -q 'id="projecoes"' /tmp/index.html
+          grep -q 'id="analise"' /tmp/index.html
+          grep -q 'id="historico"' /tmp/index.html
+          grep -q 'id="metodologia"' /tmp/index.html
+          curl -L -sS --fail -o /tmp/dados-lite.json "${base}dados-lite.json?smoke=${GITHUB_RUN_ID}"
+          python - <<'PY'
+          import json, os
+          p='/tmp/dados-lite.json'
+          size=os.path.getsize(p)
+          if size>5_000_000:
+              raise SystemExit(f'Payload publicado acima do limite: {size}')
+          d=json.load(open(p,encoding='utf-8'))
+          players=d.get('produto',{}).get('jogadores') or []
+          required=['produto','explicabilidade_pre_rodada','avaliacao_prospectiva_imutavel','backtest_time_sugerido_walk_forward']
+          missing=[k for k in required if k not in d]
+          if missing: raise SystemExit('Campos ausentes no publicado: '+', '.join(missing))
+          if not players: raise SystemExit('Sem jogadores no payload publicado')
+          print(f'Smoke publicado OK: {size} bytes; {len(players)} jogadores')
+          PY
+          heavy=$(curl -L -sS -o /dev/null -w '%{http_code}' "${base}dados.json?smoke=${GITHUB_RUN_ID}" || true)
+          if [ "$heavy" = "200" ]; then
+            echo 'ERRO: dados.json pesado ainda está público'
+            exit 1
+          fi
+          curl -L -sS -o /dev/null -w 'index: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}?perf=${GITHUB_RUN_ID}"
+          curl -L -sS -o /dev/null -w 'payload: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}dados-lite.json?perf=${GITHUB_RUN_ID}"
