@@ -94,14 +94,16 @@ jobs:
               raise SystemExit('bridge precisa carregar no head')
           p.write_text(html, encoding='utf-8')
           PY
-      - name: Remover payload pesado do artefato publico
+      - name: Remover arquivos legados do artefato publico
         shell: bash
-        run: rm -f site/dados.json
+        run: rm -f site/dados.json site/historico-premium.js site/historico-final.js
       - name: Validar artefato antes do upload
         shell: bash
         run: |
           test -f site/dados-lite.json
           test ! -f site/dados.json
+          test ! -f site/historico-premium.js
+          test ! -f site/historico-final.js
           node --check site/data-fetch-bridge.js
           node --check site/optimizer.js
           node --check site/time-sugerido-final.js
@@ -133,6 +135,9 @@ jobs:
           done
           test "$code" = "200"
           grep -q 'data-fetch-bridge.js' /tmp/index.html
+          grep -q 'historico-geral.js' /tmp/index.html
+          ! grep -q 'historico-premium.js' /tmp/index.html
+          ! grep -q 'historico-final.js' /tmp/index.html
           for page_id in time monte projecoes analise historico metodologia; do
             grep -q "id=\"${page_id}\"" /tmp/index.html
           done
@@ -149,10 +154,12 @@ jobs:
               raise SystemExit('Sem jogadores no payload publicado')
           print(f'Smoke publicado OK: {size} bytes; {len(players)} jogadores')
           PY
-          heavy=$(curl -L -sS -o /dev/null -w '%{http_code}' "${base}dados.json?smoke=${GITHUB_RUN_ID}" || true)
-          if [ "$heavy" = "200" ]; then
-            echo 'ERRO: dados.json pesado ainda esta publico'
-            exit 1
-          fi
+          for legacy in dados.json historico-premium.js historico-final.js; do
+            code_legacy=$(curl -L -sS -o /dev/null -w '%{http_code}' "${base}${legacy}?smoke=${GITHUB_RUN_ID}" || true)
+            if [ "$code_legacy" = "200" ]; then
+              echo "ERRO: ${legacy} ainda esta publico"
+              exit 1
+            fi
+          done
           curl -L -sS -o /dev/null -w 'index: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}?perf=${GITHUB_RUN_ID}"
           curl -L -sS -o /dev/null -w 'payload: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}dados-lite.json?perf=${GITHUB_RUN_ID}"
