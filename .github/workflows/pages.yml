@@ -47,6 +47,7 @@ jobs:
           p = Path('site/index.html')
           html = p.read_text(encoding='utf-8')
           tags = [
+              '<script src="data-fetch-bridge.js?v=20260914a"></script>',
               '<script src="final-polish.js"></script>',
               '<script src="time-sugerido-final.js"></script>',
               '<script src="monte-premium.js?v=20260909b"></script>',
@@ -55,7 +56,7 @@ jobs:
               '<script src="historico-premium.js?v=20260911b"></script>',
               '<script src="historico-final.js?v=20260911b"></script>',
               '<script src="metodologia-premium.js?v=20260911a"></script>',
-              '<script src="ux-v2-bridge.js?v=20260912a"></script>',
+              '<script src="ux-v2-bridge.js?v=20260914a"></script>',
           ]
           for tag in tags:
               if tag not in html:
@@ -69,4 +70,3 @@ jobs:
       - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4
-# rollback-publicacao-20260914
