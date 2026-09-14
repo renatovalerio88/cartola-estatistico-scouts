@@ -40,6 +40,24 @@ jobs:
       - name: Corrigir cobertura da interface
         shell: bash
         run: python scripts/corrigir_cobertura_site.py
+      - name: Auditar payload publico
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('site/dados.json')
+          data = json.loads(p.read_text(encoding='utf-8'))
+          print(f'PAYLOAD_TOTAL_BYTES={p.stat().st_size}')
+          print(f'PAYLOAD_TOPLEVEL_TYPE={type(data).__name__}')
+          if isinstance(data, dict):
+              rows = []
+              for key, value in data.items():
+                  size = len(json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode('utf-8'))
+                  rows.append((size, key, type(value).__name__, len(value) if hasattr(value, '__len__') else ''))
+              for size, key, typ, length in sorted(rows, reverse=True):
+                  print(f'PAYLOAD_KEY {key} bytes={size} type={typ} len={length}')
+          PY
       - name: Aplicar acabamento final da interface
         shell: bash
         run: |
