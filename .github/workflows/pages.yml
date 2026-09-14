@@ -47,6 +47,9 @@ jobs:
           from pathlib import Path
           p = Path('site/index.html')
           html = p.read_text(encoding='utf-8')
+          loader = '<script src="data-fetch-bridge.js?v=20260914b"></script>'
+          if loader not in html:
+              html = html.replace('</head>', loader + '</head>')
           tags = [
               '<script src="final-polish.js"></script>',
               '<script src="time-sugerido-final.js"></script>',
