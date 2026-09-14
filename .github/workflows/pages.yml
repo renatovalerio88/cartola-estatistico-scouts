@@ -7,6 +7,7 @@ on:
     paths:
       - 'site/**'
       - 'scripts/corrigir_cobertura_site.py'
+      - 'scripts/gerar_payload_site_leve.py'
       - '.github/workflows/pages.yml'
   workflow_run:
     workflows:
@@ -40,23 +41,30 @@ jobs:
       - name: Corrigir cobertura da interface
         shell: bash
         run: python scripts/corrigir_cobertura_site.py
-      - name: Auditar payload publico
+      - name: Gerar payload leve do frontend
+        shell: bash
+        run: python scripts/gerar_payload_site_leve.py
+      - name: Validar payload leve
         shell: bash
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p = Path('site/dados.json')
-          data = json.loads(p.read_text(encoding='utf-8'))
-          print(f'PAYLOAD_TOTAL_BYTES={p.stat().st_size}')
-          print(f'PAYLOAD_TOPLEVEL_TYPE={type(data).__name__}')
-          if isinstance(data, dict):
-              rows = []
-              for key, value in data.items():
-                  size = len(json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode('utf-8'))
-                  rows.append((size, key, type(value).__name__, len(value) if hasattr(value, '__len__') else ''))
-              for size, key, typ, length in sorted(rows, reverse=True):
-                  print(f'PAYLOAD_KEY {key} bytes={size} type={typ} len={length}')
+          p = Path('site/dados-lite.json')
+          if not p.exists():
+              raise SystemExit('dados-lite.json ausente')
+          size = p.stat().st_size
+          if size > 5_000_000:
+              raise SystemExit(f'Payload leve acima do limite: {size} bytes')
+          d = json.loads(p.read_text(encoding='utf-8'))
+          required = ['produto','explicabilidade_pre_rodada','avaliacao_prospectiva_imutavel','backtest_time_sugerido_walk_forward']
+          missing = [k for k in required if k not in d]
+          if missing:
+              raise SystemExit('Campos obrigatorios ausentes: ' + ', '.join(missing))
+          jogadores = d.get('produto', {}).get('jogadores') or []
+          if not jogadores:
+              raise SystemExit('produto.jogadores vazio')
+          print(f'Payload leve validado: {size} bytes; {len(jogadores)} jogadores')
           PY
       - name: Aplicar acabamento final da interface
         shell: bash
@@ -65,9 +73,10 @@ jobs:
           from pathlib import Path
           p = Path('site/index.html')
           html = p.read_text(encoding='utf-8')
-          loader = '<script src="data-fetch-bridge.js?v=20260914b"></script>'
-          if loader not in html:
-              html = html.replace('</head>', loader + '</head>')
+          loader = '<script src="data-fetch-bridge.js?v=20260914c"></script>'
+          import re
+          html = re.sub(r'<script src="data-fetch-bridge\.js\?v=[^"]+"></script>', '', html)
+          html = html.replace('</head>', loader + '</head>')
           tags = [
               '<script src="final-polish.js"></script>',
               '<script src="time-sugerido-final.js"></script>',
@@ -81,8 +90,27 @@ jobs:
           for tag in tags:
               if tag not in html:
                   html = html.replace('</body>', tag + '</body>')
+          if html.index('data-fetch-bridge.js') > html.index('</head>'):
+              raise SystemExit('bridge precisa carregar no head')
           p.write_text(html, encoding='utf-8')
           PY
+      - name: Remover payload pesado do artefato publico
+        shell: bash
+        run: rm -f site/dados.json
+      - name: Validar artefato antes do upload
+        shell: bash
+        run: |
+          test -f site/dados-lite.json
+          test ! -f site/dados.json
+          node --check site/data-fetch-bridge.js
+          node --check site/optimizer.js
+          node --check site/time-sugerido-final.js
+          node --check site/monte-premium.js
+          node --check site/projecoes-premium.js
+          node --check site/analise-premium.js
+          node --check site/historico-geral.js
+          node --check site/metodologia-premium.js
+          node --check site/ux-v2-bridge.js
       - name: Enviar site
         uses: actions/upload-pages-artifact@v3
         with:
@@ -90,3 +118,41 @@ jobs:
       - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Smoke test do site publicado
+        shell: bash
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          set -euo pipefail
+          base="${SITE_URL%/}/"
+          code=""
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -L -sS -o /tmp/index.html -w '%{http_code}' "${base}?smoke=${GITHUB_RUN_ID}-${i}" || true)
+            [ "$code" = "200" ] && break
+            sleep 5
+          done
+          test "$code" = "200"
+          grep -q 'data-fetch-bridge.js' /tmp/index.html
+          for page_id in time monte projecoes analise historico metodologia; do
+            grep -q "id=\"${page_id}\"" /tmp/index.html
+          done
+          curl -L -sS --fail -o /tmp/dados-lite.json "${base}dados-lite.json?smoke=${GITHUB_RUN_ID}"
+          python - <<'PY'
+          import json, os
+          p = '/tmp/dados-lite.json'
+          size = os.path.getsize(p)
+          if size > 5_000_000:
+              raise SystemExit(f'Payload publicado acima do limite: {size}')
+          d = json.load(open(p, encoding='utf-8'))
+          players = d.get('produto', {}).get('jogadores') or []
+          if not players:
+              raise SystemExit('Sem jogadores no payload publicado')
+          print(f'Smoke publicado OK: {size} bytes; {len(players)} jogadores')
+          PY
+          heavy=$(curl -L -sS -o /dev/null -w '%{http_code}' "${base}dados.json?smoke=${GITHUB_RUN_ID}" || true)
+          if [ "$heavy" = "200" ]; then
+            echo 'ERRO: dados.json pesado ainda esta publico'
+            exit 1
+          fi
+          curl -L -sS -o /dev/null -w 'index: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}?perf=${GITHUB_RUN_ID}"
+          curl -L -sS -o /dev/null -w 'payload: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}dados-lite.json?perf=${GITHUB_RUN_ID}"
