@@ -51,47 +51,46 @@ jobs:
           import json
           from pathlib import Path
           p = Path('site/dados-lite.json')
-          if not p.exists():
-              raise SystemExit('dados-lite.json ausente')
+          if not p.exists(): raise SystemExit('dados-lite.json ausente')
           size = p.stat().st_size
-          if size > 5_000_000:
-              raise SystemExit(f'Payload leve acima do limite: {size} bytes')
+          if size > 5_000_000: raise SystemExit(f'Payload leve acima do limite: {size} bytes')
           d = json.loads(p.read_text(encoding='utf-8'))
           required = ['produto','explicabilidade_pre_rodada','avaliacao_prospectiva_imutavel','backtest_time_sugerido_walk_forward']
           missing = [k for k in required if k not in d]
-          if missing:
-              raise SystemExit('Campos obrigatorios ausentes: ' + ', '.join(missing))
+          if missing: raise SystemExit('Campos obrigatorios ausentes: ' + ', '.join(missing))
           jogadores = d.get('produto', {}).get('jogadores') or []
-          if not jogadores:
-              raise SystemExit('produto.jogadores vazio')
-          print(f'Payload leve validado: {size} bytes; {len(jogadores)} jogadores')
+          if not jogadores: raise SystemExit('produto.jogadores vazio')
+          wf = d.get('backtest_time_sugerido_walk_forward') or {}
+          rodadas = wf.get('rodadas') or []
+          validas = [r for r in rodadas if r.get('rodada') is not None and r.get('projecao') is not None and (r.get('pontuacao_real') is not None or r.get('real') is not None)]
+          print(f'Payload leve validado: {size} bytes; {len(jogadores)} jogadores; {len(validas)} rodadas de historico')
           PY
       - name: Aplicar acabamento final da interface
         shell: bash
         run: |
           python - <<'PY'
           from pathlib import Path
+          import re
           p = Path('site/index.html')
           html = p.read_text(encoding='utf-8')
           loader = '<script src="data-fetch-bridge.js?v=20260914c"></script>'
-          import re
           html = re.sub(r'<script src="data-fetch-bridge\.js\?v=[^"]+"></script>', '', html)
           html = html.replace('</head>', loader + '</head>')
+          # historico-geral usa versao nova para impedir cache do JS anterior no celular/desktop.
+          html = re.sub(r'<script src="historico-geral\.js(?:\?v=[^"]+)?"></script>', '', html)
           tags = [
               '<script src="final-polish.js"></script>',
               '<script src="time-sugerido-final.js"></script>',
               '<script src="monte-premium.js?v=20260909b"></script>',
               '<script src="projecoes-premium.js?v=20260910a"></script>',
               '<script src="analise-premium.js?v=20260910a"></script>',
-              '<script src="historico-geral.js?v=20260914a"></script>',
+              '<script src="historico-geral.js?v=20260915b"></script>',
               '<script src="metodologia-premium.js?v=20260911a"></script>',
               '<script src="ux-v2-bridge.js?v=20260912a"></script>',
           ]
           for tag in tags:
-              if tag not in html:
-                  html = html.replace('</body>', tag + '</body>')
-          if html.index('data-fetch-bridge.js') > html.index('</head>'):
-              raise SystemExit('bridge precisa carregar no head')
+              if tag not in html: html = html.replace('</body>', tag + '</body>')
+          if html.index('data-fetch-bridge.js') > html.index('</head>'): raise SystemExit('bridge precisa carregar no head')
           p.write_text(html, encoding='utf-8')
           PY
       - name: Remover arquivos legados do artefato publico
@@ -104,6 +103,7 @@ jobs:
           test ! -f site/dados.json
           test ! -f site/historico-premium.js
           test ! -f site/historico-final.js
+          grep -q 'historico-geral.js?v=20260915b' site/index.html
           node --check site/data-fetch-bridge.js
           node --check site/optimizer.js
           node --check site/time-sugerido-final.js
@@ -135,31 +135,27 @@ jobs:
           done
           test "$code" = "200"
           grep -q 'data-fetch-bridge.js' /tmp/index.html
-          grep -q 'historico-geral.js' /tmp/index.html
+          grep -q 'historico-geral.js?v=20260915b' /tmp/index.html
           ! grep -q 'historico-premium.js' /tmp/index.html
           ! grep -q 'historico-final.js' /tmp/index.html
-          for page_id in time monte projecoes analise historico metodologia; do
-            grep -q "id=\"${page_id}\"" /tmp/index.html
-          done
+          for page_id in time monte projecoes analise historico metodologia; do grep -q "id=\"${page_id}\"" /tmp/index.html; done
+          curl -L -sS --fail -o /tmp/historico-geral.js "${base}historico-geral.js?v=20260915b&smoke=${GITHUB_RUN_ID}"
+          grep -q 'backtest_time_sugerido_walk_forward' /tmp/historico-geral.js
+          grep -q 'Rodada</th><th>Projetado</th><th>Real</th><th>Diferença' /tmp/historico-geral.js
           curl -L -sS --fail -o /tmp/dados-lite.json "${base}dados-lite.json?smoke=${GITHUB_RUN_ID}"
           python - <<'PY'
           import json, os
-          p = '/tmp/dados-lite.json'
-          size = os.path.getsize(p)
-          if size > 5_000_000:
-              raise SystemExit(f'Payload publicado acima do limite: {size}')
-          d = json.load(open(p, encoding='utf-8'))
-          players = d.get('produto', {}).get('jogadores') or []
-          if not players:
-              raise SystemExit('Sem jogadores no payload publicado')
-          print(f'Smoke publicado OK: {size} bytes; {len(players)} jogadores')
+          p='/tmp/dados-lite.json'; size=os.path.getsize(p); d=json.load(open(p,encoding='utf-8'))
+          if size > 5_000_000: raise SystemExit(f'Payload publicado acima do limite: {size}')
+          players=d.get('produto',{}).get('jogadores') or []
+          if not players: raise SystemExit('Sem jogadores no payload publicado')
+          wf=d.get('backtest_time_sugerido_walk_forward') or {}; rows=wf.get('rodadas') or []
+          valid=[r for r in rows if r.get('rodada') is not None and r.get('projecao') is not None and (r.get('pontuacao_real') is not None or r.get('real') is not None)]
+          print(f'Smoke publicado OK: {size} bytes; {len(players)} jogadores; {len(valid)} rodadas de historico')
           PY
           for legacy in dados.json historico-premium.js historico-final.js; do
             code_legacy=$(curl -L -sS -o /dev/null -w '%{http_code}' "${base}${legacy}?smoke=${GITHUB_RUN_ID}" || true)
-            if [ "$code_legacy" = "200" ]; then
-              echo "ERRO: ${legacy} ainda esta publico"
-              exit 1
-            fi
+            if [ "$code_legacy" = "200" ]; then echo "ERRO: ${legacy} ainda esta publico"; exit 1; fi
           done
           curl -L -sS -o /dev/null -w 'index: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}?perf=${GITHUB_RUN_ID}"
           curl -L -sS -o /dev/null -w 'payload: %{http_code} %{size_download} bytes em %{time_total}s\n' "${base}dados-lite.json?perf=${GITHUB_RUN_ID}"
