@@ -1,9 +1,9 @@
 {
-  "gerado_em": "2026-09-14T23:09:59.438234+00:00",
+  "gerado_em": "2026-09-15T14:44:15.967226+00:00",
   "status": "MANTER_EXPERIMENTAL",
   "objetivo": "Gate estrito do modelo V3-S em dois estágios; não promove V2 nem produção.",
   "fonte": "data/reports/backtest-v3s-dois-estagios.json",
-  "linhas": 4776,
+  "linhas": 5372,
   "rodadas": [
     10,
     11,
@@ -20,18 +20,19 @@
     23,
     24,
     25,
-    26
+    26,
+    27
   ],
   "mae": {
-    "dois_estagios": 3.013985,
+    "dois_estagios": 2.916168,
     "catboost_nested": 2.997576,
     "v3h": 3.010573
   },
   "participacao": {
-    "brier": 0.004192,
-    "auc": 0.454585,
-    "taxa_real_entrada": 0.996231,
-    "probabilidade_media_prevista": 0.989498
+    "brier": 0.061139,
+    "auc": 0.576588,
+    "taxa_real_entrada": 0.93764,
+    "probabilidade_media_prevista": 0.989181
   },
   "bootstrap_vs_catboost": {
     "delta_mae": 0.015623,
@@ -55,11 +56,11 @@
   },
   "criterios": {
     "mae_valido": true,
-    "supera_catboost_nested_no_mae": false,
-    "supera_v3h_no_mae": false,
+    "supera_catboost_nested_no_mae": true,
+    "supera_v3h_no_mae": true,
     "prob_melhora_vs_catboost_ge_90": false,
     "prob_melhora_vs_v3h_ge_90": false,
-    "participacao_calibrada": true
+    "participacao_calibrada": false
   },
   "decisao": "NAO_INCORPORAR; manter como experimento ate nova evidencia"
 }
