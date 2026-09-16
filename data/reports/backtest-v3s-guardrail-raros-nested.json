@@ -1,10 +1,10 @@
 {
-  "gerado_em": "2026-09-15T14:38:33.221717+00:00",
+  "gerado_em": "2026-09-16T14:30:43.308311+00:00",
   "status": "APROVADA",
   "protocolo": "Nested walk-forward estrito. Em cada rodada R, o guardrail de scouts raros e calculado apenas nas duas rodadas internas de validacao anteriores a R; nenhum resultado de R ou posterior participa da escolha. O teste compara pontuacao total reconstruida, nao apenas metricas locais do scout.",
   "anti_leakage_aprovado": true,
   "inicio_rodada": 10,
-  "linhas": 5372,
+  "linhas": 5056,
   "rodadas": [
     10,
     11,
@@ -28,88 +28,88 @@
   "trocas_modelo_inner": 133,
   "geral": {
     "v3s_mae_nested": {
-      "n": 5372,
-      "mae": 3.070922,
-      "rmse": 4.100877,
-      "bias": 0.167277
+      "n": 5056,
+      "mae": 3.068071,
+      "rmse": 4.126628,
+      "bias": -0.01692
     },
     "v3s_guardrail_raros_nested": {
-      "n": 5372,
-      "mae": 3.056126,
-      "rmse": 4.055315,
-      "bias": 0.191484
+      "n": 5056,
+      "mae": 3.049696,
+      "rmse": 4.079901,
+      "bias": 0.006114
     }
   },
-  "delta_mae_guardrail_menos_base": -0.014796,
+  "delta_mae_guardrail_menos_base": -0.018375,
   "por_posicao": {
     "ATA": {
       "v3s_mae_nested": {
-        "n": 1525,
-        "mae": 3.356131,
-        "rmse": 4.676843,
-        "bias": 0.129288
+        "n": 1433,
+        "mae": 3.391172,
+        "rmse": 4.72283,
+        "bias": -0.042837
       },
       "v3s_guardrail_raros_nested": {
-        "n": 1525,
-        "mae": 3.360944,
-        "rmse": 4.627688,
-        "bias": 0.166596
+        "n": 1433,
+        "mae": 3.393401,
+        "rmse": 4.67795,
+        "bias": -0.006027
       }
     },
     "GOL": {
       "v3s_mae_nested": {
-        "n": 348,
-        "mae": 3.39413,
-        "rmse": 4.053806,
-        "bias": 0.325881
+        "n": 323,
+        "mae": 3.365972,
+        "rmse": 4.056743,
+        "bias": 0.060242
       },
       "v3s_guardrail_raros_nested": {
-        "n": 348,
-        "mae": 3.383554,
-        "rmse": 4.051904,
-        "bias": 0.34406
+        "n": 323,
+        "mae": 3.353549,
+        "rmse": 4.052916,
+        "bias": 0.0788
       }
     },
     "LAT": {
       "v3s_mae_nested": {
-        "n": 864,
-        "mae": 3.367103,
-        "rmse": 4.184759,
-        "bias": 0.358813
+        "n": 807,
+        "mae": 3.322315,
+        "rmse": 4.189892,
+        "bias": 0.101544
       },
       "v3s_guardrail_raros_nested": {
-        "n": 864,
-        "mae": 3.33738,
-        "rmse": 4.123498,
-        "bias": 0.380464
+        "n": 807,
+        "mae": 3.282447,
+        "rmse": 4.119025,
+        "bias": 0.116679
       }
     },
     "MEI": {
       "v3s_mae_nested": {
-        "n": 1821,
-        "mae": 2.722596,
-        "rmse": 3.735558,
-        "bias": 0.08492
+        "n": 1728,
+        "mae": 2.731778,
+        "rmse": 3.771997,
+        "bias": -0.04747
       },
       "v3s_guardrail_raros_nested": {
-        "n": 1821,
-        "mae": 2.684983,
-        "rmse": 3.672633,
-        "bias": 0.108156
+        "n": 1728,
+        "mae": 2.690633,
+        "rmse": 3.706798,
+        "bias": -0.024587
       }
     },
     "ZAG": {
       "v3s_mae_nested": {
-        "n": 814,
-        "mae": 2.863279,
-        "rmse": 3.629925,
-        "bias": 0.151581
+        "n": 765,
+        "mae": 2.82848,
+        "rmse": 3.62761,
+        "bias": -0.056908
       },
       "v3s_guardrail_raros_nested": {
-        "n": 814,
-        "mae": 2.876831,
-        "rmse": 3.62911,
-        "bias": 0.158707
+        "n": 765,
+        "mae": 2.843105,
+        "rmse": 3.626454,
+        "bias": -0.049121
       }
     }
   },
@@ -195,14 +195,14 @@
       "vencedor": "v3s_guardrail_raros_nested"
     },
     "27": {
-      "mae_base": 3.061579,
-      "mae_guardrail": 3.067492,
-      "vencedor": "v3s_mae_nested"
+      "mae_base": 2.999561,
+      "mae_guardrail": 2.96422,
+      "vencedor": "v3s_guardrail_raros_nested"
     }
   },
   "vitorias_por_rodada": {
-    "v3s_mae_nested": 4,
-    "v3s_guardrail_raros_nested": 13,
+    "v3s_mae_nested": 3,
+    "v3s_guardrail_raros_nested": 14,
     "empate": 0
   },
   "regra_decisao": "Guardrail so pode ser candidato a incorporacao se nao degradar MAE total e melhorar a credibilidade probabilistica dos scouts raros. Este experimento nao altera V2 nem promove automaticamente a V3.",
@@ -56192,22 +56192,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 37715,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 1.786007,
-      "v3s_guardrail_raros_nested": 1.776438
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 39148,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 12.181304,
-      "v3s_guardrail_raros_nested": 11.188998
-    },
-    {
-      "rodada": 27,
       "atleta_id": 39656,
       "posicao": "MEI",
       "real": 1.9,
@@ -56216,35 +56200,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 42222,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.620234,
-      "v3s_guardrail_raros_nested": 0.836327
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 42234,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 3.614677,
-      "v3s_guardrail_raros_nested": 3.496251
-    },
-    {
-      "rodada": 27,
       "atleta_id": 42500,
       "posicao": "LAT",
       "real": 3.9,
       "v3s_mae_nested": 6.104828,
       "v3s_guardrail_raros_nested": 6.390888
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 51413,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 3.558434,
-      "v3s_guardrail_raros_nested": 3.637421
     },
     {
       "rodada": 27,
@@ -56272,43 +56232,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 63007,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 7.21886,
-      "v3s_guardrail_raros_nested": 6.356521
-    },
-    {
-      "rodada": 27,
       "atleta_id": 63008,
       "posicao": "ZAG",
       "real": 6.8,
       "v3s_mae_nested": 3.614123,
       "v3s_guardrail_raros_nested": 3.612977
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 63013,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.316734,
-      "v3s_guardrail_raros_nested": 3.52393
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 63289,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.607824,
-      "v3s_guardrail_raros_nested": 1.893717
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 63354,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.456545,
-      "v3s_guardrail_raros_nested": 2.506049
     },
     {
       "rodada": 27,
@@ -56328,83 +56256,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 68822,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 4.685615,
-      "v3s_guardrail_raros_nested": 4.583779
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 68872,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 6.163546,
-      "v3s_guardrail_raros_nested": 6.119194
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 68920,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.441208,
-      "v3s_guardrail_raros_nested": 1.683669
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 68928,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 3.769351,
-      "v3s_guardrail_raros_nested": 3.720125
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 68938,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 5.610287,
-      "v3s_guardrail_raros_nested": 3.492408
-    },
-    {
-      "rodada": 27,
       "atleta_id": 68952,
       "posicao": "ATA",
       "real": 1.2,
       "v3s_mae_nested": 2.017984,
       "v3s_guardrail_raros_nested": 2.542143
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 68996,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.713728,
-      "v3s_guardrail_raros_nested": 1.076529
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 69012,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 3.57908,
-      "v3s_guardrail_raros_nested": 3.508823
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 69140,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.603308,
-      "v3s_guardrail_raros_nested": 2.769282
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 69208,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.024445,
-      "v3s_guardrail_raros_nested": 3.041131
     },
     {
       "rodada": 27,
@@ -56416,35 +56272,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 70164,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.445414,
-      "v3s_guardrail_raros_nested": 1.555163
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 70360,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.613802,
-      "v3s_guardrail_raros_nested": 1.253839
-    },
-    {
-      "rodada": 27,
       "atleta_id": 70592,
       "posicao": "MEI",
       "real": 3.0,
       "v3s_mae_nested": 4.474054,
       "v3s_guardrail_raros_nested": 4.694334
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 70666,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.703903,
-      "v3s_guardrail_raros_nested": 2.614371
     },
     {
       "rodada": 27,
@@ -56456,35 +56288,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 71043,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 3.859778,
-      "v3s_guardrail_raros_nested": 3.778868
-    },
-    {
-      "rodada": 27,
       "atleta_id": 71123,
       "posicao": "MEI",
       "real": 10.0,
       "v3s_mae_nested": 3.547661,
       "v3s_guardrail_raros_nested": 3.886094
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 71227,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.274403,
-      "v3s_guardrail_raros_nested": 2.257875
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 71536,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.58769,
-      "v3s_guardrail_raros_nested": 2.757074
     },
     {
       "rodada": 27,
@@ -56509,22 +56317,6 @@
       "real": 6.8,
       "v3s_mae_nested": 4.905895,
       "v3s_guardrail_raros_nested": 4.825439
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 72279,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 2.405462,
-      "v3s_guardrail_raros_nested": 2.238297
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 72294,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 6.46544,
-      "v3s_guardrail_raros_nested": 6.46544
     },
     {
       "rodada": 27,
@@ -56560,43 +56352,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 73318,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.685229,
-      "v3s_guardrail_raros_nested": 4.903523
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 73384,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.27285,
-      "v3s_guardrail_raros_nested": 3.530027
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 77485,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.760972,
-      "v3s_guardrail_raros_nested": 2.98563
-    },
-    {
-      "rodada": 27,
       "atleta_id": 77510,
       "posicao": "MEI",
       "real": 5.8,
       "v3s_mae_nested": 2.257994,
       "v3s_guardrail_raros_nested": 2.905802
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 77656,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 2.64281,
-      "v3s_guardrail_raros_nested": 2.749973
     },
     {
       "rodada": 27,
@@ -56613,30 +56373,6 @@
       "real": 0.0,
       "v3s_mae_nested": 0.895786,
       "v3s_guardrail_raros_nested": 1.130708
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 78248,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.236322,
-      "v3s_guardrail_raros_nested": 2.289709
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 78435,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.44106,
-      "v3s_guardrail_raros_nested": 2.651458
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 78445,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.914749,
-      "v3s_guardrail_raros_nested": 5.20791
     },
     {
       "rodada": 27,
@@ -56664,27 +56400,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 78855,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.118398,
-      "v3s_guardrail_raros_nested": 3.092053
-    },
-    {
-      "rodada": 27,
       "atleta_id": 79066,
       "posicao": "GOL",
       "real": 3.2,
       "v3s_mae_nested": 5.025755,
       "v3s_guardrail_raros_nested": 4.915427
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 79631,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.438907,
-      "v3s_guardrail_raros_nested": 3.673441
     },
     {
       "rodada": 27,
@@ -56696,43 +56416,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 80061,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.698129,
-      "v3s_guardrail_raros_nested": 1.832342
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 80129,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.282936,
-      "v3s_guardrail_raros_nested": 3.468647
-    },
-    {
-      "rodada": 27,
       "atleta_id": 80196,
       "posicao": "MEI",
       "real": 0.7,
       "v3s_mae_nested": 4.104765,
       "v3s_guardrail_raros_nested": 3.086091
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 80287,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 8.311632,
-      "v3s_guardrail_raros_nested": 8.464435
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 80313,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 5.503593,
-      "v3s_guardrail_raros_nested": 5.580673
     },
     {
       "rodada": 27,
@@ -56768,14 +56456,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 81845,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.204069,
-      "v3s_guardrail_raros_nested": 1.469541
-    },
-    {
-      "rodada": 27,
       "atleta_id": 82407,
       "posicao": "MEI",
       "real": 6.2,
@@ -56792,51 +56472,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 82627,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 4.411624,
-      "v3s_guardrail_raros_nested": 4.606141
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 82628,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.230525,
-      "v3s_guardrail_raros_nested": 4.536238
-    },
-    {
-      "rodada": 27,
       "atleta_id": 82730,
       "posicao": "GOL",
       "real": 8.1,
       "v3s_mae_nested": 3.83355,
       "v3s_guardrail_raros_nested": 3.785519
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 82775,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.578905,
-      "v3s_guardrail_raros_nested": 5.061814
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 83048,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 1.89953,
-      "v3s_guardrail_raros_nested": 1.839811
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 83257,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 6.331387,
-      "v3s_guardrail_raros_nested": 6.805837
     },
     {
       "rodada": 27,
@@ -56848,14 +56488,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 83528,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 6.791766,
-      "v3s_guardrail_raros_nested": 6.797725
-    },
-    {
-      "rodada": 27,
       "atleta_id": 84042,
       "posicao": "ATA",
       "real": -0.2,
@@ -56864,27 +56496,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 84339,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.392755,
-      "v3s_guardrail_raros_nested": 4.802598
-    },
-    {
-      "rodada": 27,
       "atleta_id": 84558,
       "posicao": "MEI",
       "real": 3.0,
       "v3s_mae_nested": 7.292018,
       "v3s_guardrail_raros_nested": 7.541038
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 84626,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 4.166423,
-      "v3s_guardrail_raros_nested": 2.978991
     },
     {
       "rodada": 27,
@@ -56928,14 +56544,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 85048,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.661379,
-      "v3s_guardrail_raros_nested": 1.899749
-    },
-    {
-      "rodada": 27,
       "atleta_id": 85403,
       "posicao": "MEI",
       "real": 2.0,
@@ -56944,51 +56552,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 85425,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 1.977325,
-      "v3s_guardrail_raros_nested": 1.84938
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 85465,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.246706,
-      "v3s_guardrail_raros_nested": 1.340908
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 85626,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.867471,
-      "v3s_guardrail_raros_nested": 4.919931
-    },
-    {
-      "rodada": 27,
       "atleta_id": 86292,
       "posicao": "ATA",
       "real": -1.6,
       "v3s_mae_nested": 4.108601,
       "v3s_guardrail_raros_nested": 2.627126
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 86410,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.078443,
-      "v3s_guardrail_raros_nested": 4.460571
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 86485,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.882474,
-      "v3s_guardrail_raros_nested": 1.132599
     },
     {
       "rodada": 27,
@@ -57005,14 +56573,6 @@
       "real": 5.0,
       "v3s_mae_nested": 2.878792,
       "v3s_guardrail_raros_nested": 1.322673
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 86777,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.63105,
-      "v3s_guardrail_raros_nested": 1.749758
     },
     {
       "rodada": 27,
@@ -57048,14 +56608,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 87258,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 4.377925,
-      "v3s_guardrail_raros_nested": 1.615598
-    },
-    {
-      "rodada": 27,
       "atleta_id": 87342,
       "posicao": "ZAG",
       "real": 4.5,
@@ -57080,14 +56632,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 87742,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.48097,
-      "v3s_guardrail_raros_nested": 3.481984
-    },
-    {
-      "rodada": 27,
       "atleta_id": 87747,
       "posicao": "MEI",
       "real": 1.0,
@@ -57104,27 +56648,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 87887,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.087477,
-      "v3s_guardrail_raros_nested": 4.101293
-    },
-    {
-      "rodada": 27,
       "atleta_id": 87999,
       "posicao": "MEI",
       "real": 2.7,
       "v3s_mae_nested": 2.323304,
       "v3s_guardrail_raros_nested": 2.495031
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 88136,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 6.995787,
-      "v3s_guardrail_raros_nested": 6.941138
     },
     {
       "rodada": 27,
@@ -57136,27 +56664,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 88479,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.520207,
-      "v3s_guardrail_raros_nested": 1.63041
-    },
-    {
-      "rodada": 27,
       "atleta_id": 89256,
       "posicao": "MEI",
       "real": 10.4,
       "v3s_mae_nested": 5.112925,
       "v3s_guardrail_raros_nested": 3.847201
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 89273,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.237216,
-      "v3s_guardrail_raros_nested": 3.494325
     },
     {
       "rodada": 27,
@@ -57168,22 +56680,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 89275,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.145358,
-      "v3s_guardrail_raros_nested": 4.272168
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 89368,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.466031,
-      "v3s_guardrail_raros_nested": 1.678799
-    },
-    {
-      "rodada": 27,
       "atleta_id": 89493,
       "posicao": "ZAG",
       "real": 3.0,
@@ -57192,43 +56688,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 89637,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 5.128567,
-      "v3s_guardrail_raros_nested": 2.274594
-    },
-    {
-      "rodada": 27,
       "atleta_id": 89837,
       "posicao": "MEI",
       "real": 1.0,
       "v3s_mae_nested": 5.308934,
       "v3s_guardrail_raros_nested": 5.617166
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 89840,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.658624,
-      "v3s_guardrail_raros_nested": 1.883989
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 89883,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.654185,
-      "v3s_guardrail_raros_nested": 1.863861
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 90031,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.488203,
-      "v3s_guardrail_raros_nested": 2.110699
     },
     {
       "rodada": 27,
@@ -57245,22 +56709,6 @@
       "real": 10.2,
       "v3s_mae_nested": 4.468965,
       "v3s_guardrail_raros_nested": 4.877484
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 90302,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 12.802259,
-      "v3s_guardrail_raros_nested": 12.989937
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 90309,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.237313,
-      "v3s_guardrail_raros_nested": 3.538708
     },
     {
       "rodada": 27,
@@ -57288,27 +56736,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 90703,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.56073,
-      "v3s_guardrail_raros_nested": 2.865502
-    },
-    {
-      "rodada": 27,
       "atleta_id": 90768,
       "posicao": "ZAG",
       "real": -2.8,
       "v3s_mae_nested": 2.449198,
       "v3s_guardrail_raros_nested": 2.390678
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 90917,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.473705,
-      "v3s_guardrail_raros_nested": 1.789416
     },
     {
       "rodada": 27,
@@ -57325,14 +56757,6 @@
       "real": -0.1,
       "v3s_mae_nested": 1.10651,
       "v3s_guardrail_raros_nested": 1.352412
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 91204,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 4.291543,
-      "v3s_guardrail_raros_nested": 4.535967
     },
     {
       "rodada": 27,
@@ -57368,14 +56792,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 91706,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.879976,
-      "v3s_guardrail_raros_nested": 4.215851
-    },
-    {
-      "rodada": 27,
       "atleta_id": 91772,
       "posicao": "ZAG",
       "real": 0.6,
@@ -57392,43 +56808,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 91908,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 6.767087,
-      "v3s_guardrail_raros_nested": 5.544447
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 92087,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.988243,
-      "v3s_guardrail_raros_nested": 2.912712
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 92171,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.284758,
-      "v3s_guardrail_raros_nested": 1.877526
-    },
-    {
-      "rodada": 27,
       "atleta_id": 92182,
       "posicao": "ZAG",
       "real": 0.0,
       "v3s_mae_nested": 4.143912,
       "v3s_guardrail_raros_nested": 4.137058
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 92440,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.373779,
-      "v3s_guardrail_raros_nested": 2.376338
     },
     {
       "rodada": 27,
@@ -57440,14 +56824,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 92811,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 6.808414,
-      "v3s_guardrail_raros_nested": 5.343556
-    },
-    {
-      "rodada": 27,
       "atleta_id": 92981,
       "posicao": "MEI",
       "real": 0.0,
@@ -57456,67 +56832,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 93368,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.73238,
-      "v3s_guardrail_raros_nested": 4.714632
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 93478,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 4.838461,
-      "v3s_guardrail_raros_nested": 5.134142
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 93637,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.483612,
-      "v3s_guardrail_raros_nested": 3.695513
-    },
-    {
-      "rodada": 27,
       "atleta_id": 93716,
       "posicao": "LAT",
       "real": 1.7,
       "v3s_mae_nested": 3.294835,
       "v3s_guardrail_raros_nested": 3.449505
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 93790,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.237484,
-      "v3s_guardrail_raros_nested": 3.164411
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 93882,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 2.363776,
-      "v3s_guardrail_raros_nested": 2.284944
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 93988,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.646259,
-      "v3s_guardrail_raros_nested": 2.945705
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 94034,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 5.074426,
-      "v3s_guardrail_raros_nested": 3.575667
     },
     {
       "rodada": 27,
@@ -57600,14 +56920,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 95541,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.424314,
-      "v3s_guardrail_raros_nested": 2.637012
-    },
-    {
-      "rodada": 27,
       "atleta_id": 95556,
       "posicao": "MEI",
       "real": 7.0,
@@ -57621,14 +56933,6 @@
       "real": 2.0,
       "v3s_mae_nested": 5.01488,
       "v3s_guardrail_raros_nested": 3.547097
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 95936,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 2.894868,
-      "v3s_guardrail_raros_nested": 2.734951
     },
     {
       "rodada": 27,
@@ -57648,43 +56952,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 96591,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.912031,
-      "v3s_guardrail_raros_nested": 5.220824
-    },
-    {
-      "rodada": 27,
       "atleta_id": 96610,
       "posicao": "MEI",
       "real": 14.7,
       "v3s_mae_nested": 11.521619,
       "v3s_guardrail_raros_nested": 7.647122
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 96652,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 4.535715,
-      "v3s_guardrail_raros_nested": 3.167847
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 96793,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.076457,
-      "v3s_guardrail_raros_nested": 3.044143
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 96870,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.457188,
-      "v3s_guardrail_raros_nested": 4.733517
     },
     {
       "rodada": 27,
@@ -57720,35 +56992,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 97432,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.044913,
-      "v3s_guardrail_raros_nested": 1.999513
-    },
-    {
-      "rodada": 27,
       "atleta_id": 97450,
       "posicao": "ATA",
       "real": 2.7,
       "v3s_mae_nested": 3.871471,
       "v3s_guardrail_raros_nested": 4.095044
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97460,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.810114,
-      "v3s_guardrail_raros_nested": 2.813035
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97468,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.545845,
-      "v3s_guardrail_raros_nested": 4.947946
     },
     {
       "rodada": 27,
@@ -57760,27 +57008,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 97642,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.336328,
-      "v3s_guardrail_raros_nested": 3.390829
-    },
-    {
-      "rodada": 27,
       "atleta_id": 97653,
       "posicao": "ZAG",
       "real": 12.9,
       "v3s_mae_nested": 3.054155,
       "v3s_guardrail_raros_nested": 3.00668
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97795,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 5.379797,
-      "v3s_guardrail_raros_nested": 5.605612
     },
     {
       "rodada": 27,
@@ -57808,91 +57040,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 97878,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.002128,
-      "v3s_guardrail_raros_nested": 2.985091
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97899,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.507005,
-      "v3s_guardrail_raros_nested": 4.533293
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97900,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.079706,
-      "v3s_guardrail_raros_nested": 4.034865
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97905,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 2.842372,
-      "v3s_guardrail_raros_nested": 3.205889
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97906,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.377967,
-      "v3s_guardrail_raros_nested": 4.409818
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 97911,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.065663,
-      "v3s_guardrail_raros_nested": 0.645354
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 98022,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 7.774547,
-      "v3s_guardrail_raros_nested": 8.757365
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 98224,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.350774,
-      "v3s_guardrail_raros_nested": 1.467175
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 98225,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.96742,
-      "v3s_guardrail_raros_nested": 2.213043
-    },
-    {
-      "rodada": 27,
       "atleta_id": 98333,
       "posicao": "GOL",
       "real": 8.1,
       "v3s_mae_nested": 4.960044,
       "v3s_guardrail_raros_nested": 4.900639
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 98384,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.187889,
-      "v3s_guardrail_raros_nested": 4.119176
     },
     {
       "rodada": 27,
@@ -57952,27 +57104,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 99034,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 2.961118,
-      "v3s_guardrail_raros_nested": 3.204808
-    },
-    {
-      "rodada": 27,
       "atleta_id": 99213,
       "posicao": "LAT",
       "real": 0.0,
       "v3s_mae_nested": 3.291277,
       "v3s_guardrail_raros_nested": 3.461059
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 99228,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.055019,
-      "v3s_guardrail_raros_nested": 1.631527
     },
     {
       "rodada": 27,
@@ -57984,35 +57120,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 99274,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 5.110241,
-      "v3s_guardrail_raros_nested": 5.091085
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 99440,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.464266,
-      "v3s_guardrail_raros_nested": 2.642144
-    },
-    {
-      "rodada": 27,
       "atleta_id": 99552,
       "posicao": "GOL",
       "real": -1.0,
       "v3s_mae_nested": 4.945322,
       "v3s_guardrail_raros_nested": 4.940959
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 99789,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.928555,
-      "v3s_guardrail_raros_nested": 2.185144
     },
     {
       "rodada": 27,
@@ -58024,14 +57136,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 99818,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 6.717292,
-      "v3s_guardrail_raros_nested": 7.244978
-    },
-    {
-      "rodada": 27,
       "atleta_id": 100084,
       "posicao": "MEI",
       "real": 1.1,
@@ -58040,27 +57144,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 100342,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.280004,
-      "v3s_guardrail_raros_nested": 2.287084
-    },
-    {
-      "rodada": 27,
       "atleta_id": 100596,
       "posicao": "MEI",
       "real": 2.8,
       "v3s_mae_nested": 1.555615,
       "v3s_guardrail_raros_nested": 1.68713
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 100652,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 11.077775,
-      "v3s_guardrail_raros_nested": 7.823813
     },
     {
       "rodada": 27,
@@ -58085,14 +57173,6 @@
       "real": 1.5,
       "v3s_mae_nested": 2.914739,
       "v3s_guardrail_raros_nested": 2.977776
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 100842,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 5.938224,
-      "v3s_guardrail_raros_nested": 5.972296
     },
     {
       "rodada": 27,
@@ -58160,14 +57240,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 101319,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.27888,
-      "v3s_guardrail_raros_nested": 3.515156
-    },
-    {
-      "rodada": 27,
       "atleta_id": 101352,
       "posicao": "MEI",
       "real": 1.2,
@@ -58200,30 +57272,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 101597,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.922334,
-      "v3s_guardrail_raros_nested": 4.128565
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 101708,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.165522,
-      "v3s_guardrail_raros_nested": 4.561048
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 101715,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.552157,
-      "v3s_guardrail_raros_nested": 1.786912
-    },
-    {
-      "rodada": 27,
       "atleta_id": 101727,
       "posicao": "LAT",
       "real": 3.8,
@@ -58232,27 +57280,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 101729,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 5.761555,
-      "v3s_guardrail_raros_nested": 4.325187
-    },
-    {
-      "rodada": 27,
       "atleta_id": 101807,
       "posicao": "MEI",
       "real": 0.8,
       "v3s_mae_nested": 7.130056,
       "v3s_guardrail_raros_nested": 7.345909
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 101820,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.125818,
-      "v3s_guardrail_raros_nested": 4.210996
     },
     {
       "rodada": 27,
@@ -58312,14 +57344,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 102318,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.35209,
-      "v3s_guardrail_raros_nested": 4.721085
-    },
-    {
-      "rodada": 27,
       "atleta_id": 102340,
       "posicao": "ZAG",
       "real": -0.3,
@@ -58344,14 +57368,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 102909,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.668852,
-      "v3s_guardrail_raros_nested": 2.014419
-    },
-    {
-      "rodada": 27,
       "atleta_id": 102911,
       "posicao": "MEI",
       "real": -0.1,
@@ -58365,14 +57381,6 @@
       "real": 4.7,
       "v3s_mae_nested": 8.031619,
       "v3s_guardrail_raros_nested": 8.149793
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 102975,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.870859,
-      "v3s_guardrail_raros_nested": 5.027734
     },
     {
       "rodada": 27,
@@ -58392,22 +57400,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 103347,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.077019,
-      "v3s_guardrail_raros_nested": 3.2344
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 103388,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.279753,
-      "v3s_guardrail_raros_nested": 2.601402
-    },
-    {
-      "rodada": 27,
       "atleta_id": 103445,
       "posicao": "ATA",
       "real": 0.5,
@@ -58416,51 +57408,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 103523,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.926264,
-      "v3s_guardrail_raros_nested": 4.997273
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 103626,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.516968,
-      "v3s_guardrail_raros_nested": 1.76928
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 103767,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 4.773864,
-      "v3s_guardrail_raros_nested": 5.090972
-    },
-    {
-      "rodada": 27,
       "atleta_id": 103967,
       "posicao": "ATA",
       "real": 15.5,
       "v3s_mae_nested": 4.339412,
       "v3s_guardrail_raros_nested": 4.51158
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 104036,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.537122,
-      "v3s_guardrail_raros_nested": 2.139682
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 104075,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.4913,
-      "v3s_guardrail_raros_nested": 4.4861
     },
     {
       "rodada": 27,
@@ -58488,35 +57440,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 104134,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.288317,
-      "v3s_guardrail_raros_nested": 2.555314
-    },
-    {
-      "rodada": 27,
       "atleta_id": 104204,
       "posicao": "ATA",
       "real": 15.8,
       "v3s_mae_nested": 2.113031,
       "v3s_guardrail_raros_nested": 2.361256
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 104257,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.469369,
-      "v3s_guardrail_raros_nested": 3.436187
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 104330,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 4.961193,
-      "v3s_guardrail_raros_nested": 5.085983
     },
     {
       "rodada": 27,
@@ -58536,22 +57464,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 104649,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 5.126222,
-      "v3s_guardrail_raros_nested": 5.447444
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 104666,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.320618,
-      "v3s_guardrail_raros_nested": 1.5016
-    },
-    {
-      "rodada": 27,
       "atleta_id": 104693,
       "posicao": "MEI",
       "real": 3.2,
@@ -58560,35 +57472,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 104758,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.110006,
-      "v3s_guardrail_raros_nested": 4.403937
-    },
-    {
-      "rodada": 27,
       "atleta_id": 104783,
       "posicao": "MEI",
       "real": 4.1,
       "v3s_mae_nested": 5.603298,
       "v3s_guardrail_raros_nested": 4.774671
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 104811,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 4.740545,
-      "v3s_guardrail_raros_nested": 3.529789
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 104994,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.216922,
-      "v3s_guardrail_raros_nested": 2.185842
     },
     {
       "rodada": 27,
@@ -58664,14 +57552,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 105518,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.896565,
-      "v3s_guardrail_raros_nested": 1.181464
-    },
-    {
-      "rodada": 27,
       "atleta_id": 105531,
       "posicao": "LAT",
       "real": 1.0,
@@ -58696,46 +57576,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 105647,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 5.226705,
-      "v3s_guardrail_raros_nested": 6.086897
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 105842,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 1.923123,
-      "v3s_guardrail_raros_nested": 1.917778
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 105901,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": -0.333016,
-      "v3s_guardrail_raros_nested": -0.251511
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 105903,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.998691,
-      "v3s_guardrail_raros_nested": 2.24095
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 105949,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 4.262007,
-      "v3s_guardrail_raros_nested": 4.635296
-    },
-    {
-      "rodada": 27,
       "atleta_id": 106104,
       "posicao": "ATA",
       "real": 0.7,
@@ -58744,43 +57584,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 106199,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.398254,
-      "v3s_guardrail_raros_nested": 3.63091
-    },
-    {
-      "rodada": 27,
       "atleta_id": 106202,
       "posicao": "MEI",
       "real": 3.4,
       "v3s_mae_nested": 4.388498,
       "v3s_guardrail_raros_nested": 4.827383
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 106294,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.220535,
-      "v3s_guardrail_raros_nested": 3.411298
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 106302,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.452127,
-      "v3s_guardrail_raros_nested": 4.68351
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 106313,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.222455,
-      "v3s_guardrail_raros_nested": 4.297558
     },
     {
       "rodada": 27,
@@ -58797,14 +57605,6 @@
       "real": 0.0,
       "v3s_mae_nested": 2.809955,
       "v3s_guardrail_raros_nested": 2.811532
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 106593,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.595712,
-      "v3s_guardrail_raros_nested": 2.531986
     },
     {
       "rodada": 27,
@@ -58848,22 +57648,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 107173,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.708164,
-      "v3s_guardrail_raros_nested": 1.525
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 107203,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.687403,
-      "v3s_guardrail_raros_nested": 1.814433
-    },
-    {
-      "rodada": 27,
       "atleta_id": 107231,
       "posicao": "MEI",
       "real": 2.9,
@@ -58872,27 +57656,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 107236,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 2.372832,
-      "v3s_guardrail_raros_nested": 2.439544
-    },
-    {
-      "rodada": 27,
       "atleta_id": 107256,
       "posicao": "MEI",
       "real": 2.8,
       "v3s_mae_nested": 3.954041,
       "v3s_guardrail_raros_nested": 4.248679
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 107300,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.769891,
-      "v3s_guardrail_raros_nested": 1.02184
     },
     {
       "rodada": 27,
@@ -58909,30 +57677,6 @@
       "real": 9.5,
       "v3s_mae_nested": 4.949102,
       "v3s_guardrail_raros_nested": 5.357119
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 107700,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.927395,
-      "v3s_guardrail_raros_nested": 2.160155
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 107873,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.551038,
-      "v3s_guardrail_raros_nested": 2.923612
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 107985,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 5.168713,
-      "v3s_guardrail_raros_nested": 5.219913
     },
     {
       "rodada": 27,
@@ -58968,22 +57712,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 108602,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.957004,
-      "v3s_guardrail_raros_nested": 2.207334
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 108683,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.525257,
-      "v3s_guardrail_raros_nested": 2.679193
-    },
-    {
-      "rodada": 27,
       "atleta_id": 108713,
       "posicao": "ATA",
       "real": 1.5,
@@ -59016,22 +57744,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 109127,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.902246,
-      "v3s_guardrail_raros_nested": 2.863853
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 109336,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.185664,
-      "v3s_guardrail_raros_nested": 3.606848
-    },
-    {
-      "rodada": 27,
       "atleta_id": 109401,
       "posicao": "ATA",
       "real": 8.6,
@@ -59040,99 +57752,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 109461,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.783,
-      "v3s_guardrail_raros_nested": 1.881231
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 109573,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.14637,
-      "v3s_guardrail_raros_nested": 3.451163
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 109987,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.042608,
-      "v3s_guardrail_raros_nested": 2.226412
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110144,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.511873,
-      "v3s_guardrail_raros_nested": 2.729196
-    },
-    {
-      "rodada": 27,
       "atleta_id": 110426,
       "posicao": "LAT",
       "real": 1.9,
       "v3s_mae_nested": 4.818469,
       "v3s_guardrail_raros_nested": 5.226765
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110510,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 6.496223,
-      "v3s_guardrail_raros_nested": 4.54302
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110598,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.491682,
-      "v3s_guardrail_raros_nested": 0.632925
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110605,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.599028,
-      "v3s_guardrail_raros_nested": 1.731928
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110633,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.147533,
-      "v3s_guardrail_raros_nested": 1.271039
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110668,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.154315,
-      "v3s_guardrail_raros_nested": 4.334324
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110698,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 2.291822,
-      "v3s_guardrail_raros_nested": 2.671721
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 110708,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 5.379813,
-      "v3s_guardrail_raros_nested": 5.363729
     },
     {
       "rodada": 27,
@@ -59152,51 +57776,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 110759,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 8.15537,
-      "v3s_guardrail_raros_nested": 8.243533
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 111246,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.96612,
-      "v3s_guardrail_raros_nested": 2.949423
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 111309,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.529346,
-      "v3s_guardrail_raros_nested": 2.491975
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 111466,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 1.49423,
-      "v3s_guardrail_raros_nested": 1.470503
-    },
-    {
-      "rodada": 27,
       "atleta_id": 111682,
       "posicao": "MEI",
       "real": 3.6,
       "v3s_mae_nested": 2.765458,
       "v3s_guardrail_raros_nested": 3.146305
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 111683,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 4.97786,
-      "v3s_guardrail_raros_nested": 4.880843
     },
     {
       "rodada": 27,
@@ -59216,30 +57800,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 111829,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.116044,
-      "v3s_guardrail_raros_nested": 1.354184
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 111831,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.45677,
-      "v3s_guardrail_raros_nested": 1.758809
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 111832,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.49019,
-      "v3s_guardrail_raros_nested": 3.852908
-    },
-    {
-      "rodada": 27,
       "atleta_id": 111879,
       "posicao": "LAT",
       "real": 8.0,
@@ -59248,51 +57808,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 112017,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.313394,
-      "v3s_guardrail_raros_nested": 2.638386
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 112576,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.797786,
-      "v3s_guardrail_raros_nested": 3.345321
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 112616,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 2.0515,
-      "v3s_guardrail_raros_nested": 1.918393
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 112863,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 5.391292,
-      "v3s_guardrail_raros_nested": 4.376363
-    },
-    {
-      "rodada": 27,
       "atleta_id": 112886,
       "posicao": "ATA",
       "real": 5.0,
       "v3s_mae_nested": 5.998132,
       "v3s_guardrail_raros_nested": 6.206751
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 112939,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.54776,
-      "v3s_guardrail_raros_nested": 1.642807
     },
     {
       "rodada": 27,
@@ -59312,35 +57832,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 113113,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 7.043628,
-      "v3s_guardrail_raros_nested": 5.146834
-    },
-    {
-      "rodada": 27,
       "atleta_id": 113125,
       "posicao": "MEI",
       "real": 2.0,
       "v3s_mae_nested": 3.013056,
       "v3s_guardrail_raros_nested": 3.183981
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 113157,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.775143,
-      "v3s_guardrail_raros_nested": 5.061888
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 113158,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.027665,
-      "v3s_guardrail_raros_nested": 1.260854
     },
     {
       "rodada": 27,
@@ -59360,22 +57856,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 113690,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 4.37862,
-      "v3s_guardrail_raros_nested": 4.890952
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 114040,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.332755,
-      "v3s_guardrail_raros_nested": 1.530748
-    },
-    {
-      "rodada": 27,
       "atleta_id": 114208,
       "posicao": "ATA",
       "real": 3.5,
@@ -59389,14 +57869,6 @@
       "real": 12.5,
       "v3s_mae_nested": 6.035613,
       "v3s_guardrail_raros_nested": 6.644137
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 114405,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.502429,
-      "v3s_guardrail_raros_nested": 3.751577
     },
     {
       "rodada": 27,
@@ -59424,14 +57896,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 115141,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.928591,
-      "v3s_guardrail_raros_nested": 2.991529
-    },
-    {
-      "rodada": 27,
       "atleta_id": 115537,
       "posicao": "ZAG",
       "real": 3.2,
@@ -59448,30 +57912,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 115914,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.167848,
-      "v3s_guardrail_raros_nested": 1.34918
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 115986,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.104022,
-      "v3s_guardrail_raros_nested": 3.063625
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 116034,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.73629,
-      "v3s_guardrail_raros_nested": 3.231689
-    },
-    {
-      "rodada": 27,
       "atleta_id": 116065,
       "posicao": "LAT",
       "real": 5.2,
@@ -59485,14 +57925,6 @@
       "real": 0.0,
       "v3s_mae_nested": 1.112688,
       "v3s_guardrail_raros_nested": 1.594619
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 116067,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 1.367854,
-      "v3s_guardrail_raros_nested": 1.238875
     },
     {
       "rodada": 27,
@@ -59528,27 +57960,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 117314,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.982914,
-      "v3s_guardrail_raros_nested": 4.215063
-    },
-    {
-      "rodada": 27,
       "atleta_id": 117330,
       "posicao": "ZAG",
       "real": 5.2,
       "v3s_mae_nested": 3.042512,
       "v3s_guardrail_raros_nested": 3.072703
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 117403,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.577956,
-      "v3s_guardrail_raros_nested": 0.80652
     },
     {
       "rodada": 27,
@@ -59584,83 +58000,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 117930,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.006737,
-      "v3s_guardrail_raros_nested": 2.314112
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 118563,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.957638,
-      "v3s_guardrail_raros_nested": 3.144037
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 118655,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.387412,
-      "v3s_guardrail_raros_nested": 4.402224
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 118774,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.24749,
-      "v3s_guardrail_raros_nested": 3.427983
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 118775,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.058368,
-      "v3s_guardrail_raros_nested": 1.360557
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 118806,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.762265,
-      "v3s_guardrail_raros_nested": 3.876183
-    },
-    {
-      "rodada": 27,
       "atleta_id": 118844,
       "posicao": "ATA",
       "real": 7.7,
       "v3s_mae_nested": 3.82973,
       "v3s_guardrail_raros_nested": 4.051587
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 120433,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.647383,
-      "v3s_guardrail_raros_nested": 3.719145
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 121823,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 3.370062,
-      "v3s_guardrail_raros_nested": 3.339053
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 121824,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.324429,
-      "v3s_guardrail_raros_nested": 2.534948
     },
     {
       "rodada": 27,
@@ -59672,43 +58016,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 122321,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 4.781355,
-      "v3s_guardrail_raros_nested": 4.954314
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 122394,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.023061,
-      "v3s_guardrail_raros_nested": 1.582707
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 122485,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.283975,
-      "v3s_guardrail_raros_nested": 2.967555
-    },
-    {
-      "rodada": 27,
       "atleta_id": 122573,
       "posicao": "ATA",
       "real": 0.0,
       "v3s_mae_nested": 4.032647,
       "v3s_guardrail_raros_nested": 2.580401
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 122660,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.123039,
-      "v3s_guardrail_raros_nested": 2.26741
     },
     {
       "rodada": 27,
@@ -59720,35 +58032,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 122781,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.399304,
-      "v3s_guardrail_raros_nested": 1.662994
-    },
-    {
-      "rodada": 27,
       "atleta_id": 122897,
       "posicao": "ZAG",
       "real": 3.0,
       "v3s_mae_nested": 1.945822,
       "v3s_guardrail_raros_nested": 1.914363
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 123016,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.113305,
-      "v3s_guardrail_raros_nested": 1.265476
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 123101,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 4.837216,
-      "v3s_guardrail_raros_nested": 5.075775
     },
     {
       "rodada": 27,
@@ -59760,35 +58048,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 123445,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.011669,
-      "v3s_guardrail_raros_nested": 1.997613
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 123648,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.288315,
-      "v3s_guardrail_raros_nested": 3.86418
-    },
-    {
-      "rodada": 27,
       "atleta_id": 123689,
       "posicao": "LAT",
       "real": 0.7,
       "v3s_mae_nested": 3.741088,
       "v3s_guardrail_raros_nested": 3.836461
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 123717,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.1567,
-      "v3s_guardrail_raros_nested": 4.449917
     },
     {
       "rodada": 27,
@@ -59805,38 +58069,6 @@
       "real": 4.7,
       "v3s_mae_nested": 2.282451,
       "v3s_guardrail_raros_nested": 1.027205
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 123869,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.559607,
-      "v3s_guardrail_raros_nested": 2.520492
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 124219,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.88605,
-      "v3s_guardrail_raros_nested": 3.895768
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 124239,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.149605,
-      "v3s_guardrail_raros_nested": 2.035753
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 124270,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.336051,
-      "v3s_guardrail_raros_nested": 1.457948
     },
     {
       "rodada": 27,
@@ -59872,14 +58104,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 124912,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.528517,
-      "v3s_guardrail_raros_nested": 2.517217
-    },
-    {
-      "rodada": 27,
       "atleta_id": 124961,
       "posicao": "MEI",
       "real": 2.7,
@@ -59896,38 +58120,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 125746,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.728887,
-      "v3s_guardrail_raros_nested": 1.854347
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 125803,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 3.652615,
-      "v3s_guardrail_raros_nested": 3.628239
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 125926,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.796415,
-      "v3s_guardrail_raros_nested": 1.974297
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 126120,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.481182,
-      "v3s_guardrail_raros_nested": 1.63229
-    },
-    {
-      "rodada": 27,
       "atleta_id": 126182,
       "posicao": "MEI",
       "real": 1.4,
@@ -59936,67 +58128,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 126189,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.953784,
-      "v3s_guardrail_raros_nested": 3.129837
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 126471,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 4.960869,
-      "v3s_guardrail_raros_nested": 5.95067
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 127871,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 3.176033,
-      "v3s_guardrail_raros_nested": 1.688017
-    },
-    {
-      "rodada": 27,
       "atleta_id": 127932,
       "posicao": "LAT",
       "real": 10.2,
       "v3s_mae_nested": 2.973114,
       "v3s_guardrail_raros_nested": 3.057485
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 127970,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.543084,
-      "v3s_guardrail_raros_nested": 1.681719
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 128431,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 7.258529,
-      "v3s_guardrail_raros_nested": 7.54414
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 128433,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.5087,
-      "v3s_guardrail_raros_nested": 1.739087
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 129663,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.356385,
-      "v3s_guardrail_raros_nested": 0.598697
     },
     {
       "rodada": 27,
@@ -60024,27 +58160,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 130279,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.527097,
-      "v3s_guardrail_raros_nested": 1.625577
-    },
-    {
-      "rodada": 27,
       "atleta_id": 130307,
       "posicao": "ZAG",
       "real": 3.2,
       "v3s_mae_nested": 2.018727,
       "v3s_guardrail_raros_nested": 2.021032
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 130414,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.492869,
-      "v3s_guardrail_raros_nested": 2.628858
     },
     {
       "rodada": 27,
@@ -60064,67 +58184,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 130843,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.756054,
-      "v3s_guardrail_raros_nested": 2.744143
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 130889,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 0.0836,
-      "v3s_guardrail_raros_nested": 0.18042
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 130906,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.196545,
-      "v3s_guardrail_raros_nested": 2.431185
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 131516,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.034057,
-      "v3s_guardrail_raros_nested": 4.147022
-    },
-    {
-      "rodada": 27,
       "atleta_id": 131617,
       "posicao": "ATA",
       "real": 3.3,
       "v3s_mae_nested": 0.303022,
       "v3s_guardrail_raros_nested": 1.206431
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 131832,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.847532,
-      "v3s_guardrail_raros_nested": 2.073482
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 131964,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.072006,
-      "v3s_guardrail_raros_nested": 3.294973
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 131967,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.973027,
-      "v3s_guardrail_raros_nested": 2.210535
     },
     {
       "rodada": 27,
@@ -60144,14 +58208,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 132274,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.918137,
-      "v3s_guardrail_raros_nested": 2.498247
-    },
-    {
-      "rodada": 27,
       "atleta_id": 132412,
       "posicao": "LAT",
       "real": 0.0,
@@ -60168,43 +58224,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 132580,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.479371,
-      "v3s_guardrail_raros_nested": 1.741487
-    },
-    {
-      "rodada": 27,
       "atleta_id": 133543,
       "posicao": "ATA",
       "real": 10.5,
       "v3s_mae_nested": 0.839676,
       "v3s_guardrail_raros_nested": 1.125761
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 133673,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.856667,
-      "v3s_guardrail_raros_nested": 2.121313
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 133679,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 6.553739,
-      "v3s_guardrail_raros_nested": 6.582174
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 133690,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.654513,
-      "v3s_guardrail_raros_nested": 1.888527
     },
     {
       "rodada": 27,
@@ -60216,22 +58240,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 136955,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.974723,
-      "v3s_guardrail_raros_nested": 1.575972
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 137542,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.596975,
-      "v3s_guardrail_raros_nested": 2.176637
-    },
-    {
-      "rodada": 27,
       "atleta_id": 138941,
       "posicao": "ATA",
       "real": 6.2,
@@ -60240,59 +58248,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 140438,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.297758,
-      "v3s_guardrail_raros_nested": 1.426366
-    },
-    {
-      "rodada": 27,
       "atleta_id": 140484,
       "posicao": "ATA",
       "real": 1.3,
       "v3s_mae_nested": 2.319824,
       "v3s_guardrail_raros_nested": 1.083863
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 140492,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 6.796754,
-      "v3s_guardrail_raros_nested": 6.857257
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 140496,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.163216,
-      "v3s_guardrail_raros_nested": 1.270091
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 140542,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.41214,
-      "v3s_guardrail_raros_nested": 0.676616
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 140726,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.226039,
-      "v3s_guardrail_raros_nested": 1.333822
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 140906,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.49074,
-      "v3s_guardrail_raros_nested": 2.725704
     },
     {
       "rodada": 27,
@@ -60312,67 +58272,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 141337,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.064558,
-      "v3s_guardrail_raros_nested": 4.378607
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141339,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 6.735654,
-      "v3s_guardrail_raros_nested": 5.216356
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141344,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.599183,
-      "v3s_guardrail_raros_nested": 1.849837
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141382,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 4.060322,
-      "v3s_guardrail_raros_nested": 4.28867
-    },
-    {
-      "rodada": 27,
       "atleta_id": 141400,
       "posicao": "MEI",
       "real": 1.8,
       "v3s_mae_nested": 3.59128,
       "v3s_guardrail_raros_nested": 3.87062
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141405,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.693656,
-      "v3s_guardrail_raros_nested": 3.778007
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141406,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.740233,
-      "v3s_guardrail_raros_nested": 1.974247
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141536,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.507475,
-      "v3s_guardrail_raros_nested": 1.610239
     },
     {
       "rodada": 27,
@@ -60384,35 +58288,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 141609,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.569155,
-      "v3s_guardrail_raros_nested": 0.853115
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141615,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.774475,
-      "v3s_guardrail_raros_nested": 1.873204
-    },
-    {
-      "rodada": 27,
       "atleta_id": 141754,
       "posicao": "MEI",
       "real": 4.8,
       "v3s_mae_nested": 3.441577,
       "v3s_guardrail_raros_nested": 3.671664
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141763,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 2.985334,
-      "v3s_guardrail_raros_nested": 3.069925
     },
     {
       "rodada": 27,
@@ -60424,22 +58304,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 141868,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.951115,
-      "v3s_guardrail_raros_nested": 4.232456
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 141991,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.627636,
-      "v3s_guardrail_raros_nested": 0.839888
-    },
-    {
-      "rodada": 27,
       "atleta_id": 141995,
       "posicao": "MEI",
       "real": 1.5,
@@ -60448,75 +58312,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 142004,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.633299,
-      "v3s_guardrail_raros_nested": 1.97341
-    },
-    {
-      "rodada": 27,
       "atleta_id": 142086,
       "posicao": "ATA",
       "real": 0.5,
       "v3s_mae_nested": 2.948751,
       "v3s_guardrail_raros_nested": 3.514976
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 142257,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 1.67195,
-      "v3s_guardrail_raros_nested": 1.610557
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 142260,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.76777,
-      "v3s_guardrail_raros_nested": 1.895309
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 142265,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.398522,
-      "v3s_guardrail_raros_nested": 0.677647
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 142279,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.769377,
-      "v3s_guardrail_raros_nested": 2.073477
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 142484,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 3.737516,
-      "v3s_guardrail_raros_nested": 3.905884
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 142764,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 2.554229,
-      "v3s_guardrail_raros_nested": 2.759009
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 142868,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.072006,
-      "v3s_guardrail_raros_nested": 3.294973
     },
     {
       "rodada": 27,
@@ -60544,123 +58344,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 143193,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 11.226996,
-      "v3s_guardrail_raros_nested": 11.776598
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 143295,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.491314,
-      "v3s_guardrail_raros_nested": 1.595547
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 143463,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.41214,
-      "v3s_guardrail_raros_nested": 0.676616
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 143488,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.627636,
-      "v3s_guardrail_raros_nested": 0.839888
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 143600,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 6.404636,
-      "v3s_guardrail_raros_nested": 4.191269
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 144976,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.344069,
-      "v3s_guardrail_raros_nested": 1.46487
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 145036,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.40577,
-      "v3s_guardrail_raros_nested": 0.671267
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 145379,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.799665,
-      "v3s_guardrail_raros_nested": 2.003859
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 145400,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.316013,
-      "v3s_guardrail_raros_nested": 3.377699
-    },
-    {
-      "rodada": 27,
       "atleta_id": 145404,
       "posicao": "LAT",
       "real": 11.9,
       "v3s_mae_nested": 3.518666,
       "v3s_guardrail_raros_nested": 4.905913
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 145563,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 4.429908,
-      "v3s_guardrail_raros_nested": 4.409787
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 145659,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 2.755607,
-      "v3s_guardrail_raros_nested": 2.883384
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 145660,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 2.796165,
-      "v3s_guardrail_raros_nested": 2.913578
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 145744,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 6.818898,
-      "v3s_guardrail_raros_nested": 4.061648
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 146374,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.896633,
-      "v3s_guardrail_raros_nested": 3.991501
     },
     {
       "rodada": 27,
@@ -60672,51 +58360,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 146410,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.163216,
-      "v3s_guardrail_raros_nested": 1.270091
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 146430,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.598172,
-      "v3s_guardrail_raros_nested": 3.617854
-    },
-    {
-      "rodada": 27,
       "atleta_id": 146623,
       "posicao": "MEI",
       "real": -0.3,
       "v3s_mae_nested": 0.768852,
       "v3s_guardrail_raros_nested": 1.549669
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 146624,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.804011,
-      "v3s_guardrail_raros_nested": 0.982553
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 146701,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.309677,
-      "v3s_guardrail_raros_nested": 1.3949
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 146991,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.469759,
-      "v3s_guardrail_raros_nested": 2.567374
     },
     {
       "rodada": 27,
@@ -60728,99 +58376,11 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 147089,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.247065,
-      "v3s_guardrail_raros_nested": 1.429976
-    },
-    {
-      "rodada": 27,
       "atleta_id": 147090,
       "posicao": "LAT",
       "real": 3.0,
       "v3s_mae_nested": 4.214551,
       "v3s_guardrail_raros_nested": 4.521703
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 147192,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.447232,
-      "v3s_guardrail_raros_nested": 3.489126
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 147202,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.11416,
-      "v3s_guardrail_raros_nested": 1.383489
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 147268,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.670208,
-      "v3s_guardrail_raros_nested": 2.278035
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 147544,
-      "posicao": "GOL",
-      "real": 0.0,
-      "v3s_mae_nested": 2.74909,
-      "v3s_guardrail_raros_nested": 2.612886
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 147545,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.344069,
-      "v3s_guardrail_raros_nested": 1.46487
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 147546,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.388547,
-      "v3s_guardrail_raros_nested": 1.508831
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 147883,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 5.4965,
-      "v3s_guardrail_raros_nested": 5.715776
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 148092,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 2.440528,
-      "v3s_guardrail_raros_nested": 2.666269
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 148124,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 2.081582,
-      "v3s_guardrail_raros_nested": 2.023451
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 148125,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 4.005542,
-      "v3s_guardrail_raros_nested": 4.033875
     },
     {
       "rodada": 27,
@@ -60840,38 +58400,6 @@
     },
     {
       "rodada": 27,
-      "atleta_id": 149715,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.734203,
-      "v3s_guardrail_raros_nested": 3.993711
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 149991,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.40577,
-      "v3s_guardrail_raros_nested": 0.671267
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 149994,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.613392,
-      "v3s_guardrail_raros_nested": 1.86648
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 150180,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 2.530351,
-      "v3s_guardrail_raros_nested": 1.0747
-    },
-    {
-      "rodada": 27,
       "atleta_id": 150197,
       "posicao": "ZAG",
       "real": -3.6,
@@ -60885,62 +58413,6 @@
       "real": 5.5,
       "v3s_mae_nested": 0.491019,
       "v3s_guardrail_raros_nested": 0.771816
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 150757,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 1.172789,
-      "v3s_guardrail_raros_nested": 1.28588
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 150825,
-      "posicao": "ZAG",
-      "real": 0.0,
-      "v3s_mae_nested": 3.89844,
-      "v3s_guardrail_raros_nested": 3.915029
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 150959,
-      "posicao": "LAT",
-      "real": 0.0,
-      "v3s_mae_nested": 3.424467,
-      "v3s_guardrail_raros_nested": 3.750144
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 151120,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 0.844964,
-      "v3s_guardrail_raros_nested": 1.061315
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 151292,
-      "posicao": "MEI",
-      "real": 0.0,
-      "v3s_mae_nested": 5.262671,
-      "v3s_guardrail_raros_nested": 5.932844
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 151404,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.719451,
-      "v3s_guardrail_raros_nested": 1.96537
-    },
-    {
-      "rodada": 27,
-      "atleta_id": 151412,
-      "posicao": "ATA",
-      "real": 0.0,
-      "v3s_mae_nested": 1.957004,
-      "v3s_guardrail_raros_nested": 2.207334
     },
     {
       "rodada": 27,
