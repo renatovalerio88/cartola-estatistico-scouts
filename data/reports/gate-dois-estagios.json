@@ -1,9 +1,9 @@
 {
-  "gerado_em": "2026-09-21T16:20:53.458673+00:00",
+  "gerado_em": "2026-09-22T14:27:59.968110+00:00",
   "status": "MANTER_EXPERIMENTAL",
   "objetivo": "Gate estrito do modelo V3-S em dois estágios; não promove V2 nem produção.",
   "fonte": "data/reports/backtest-v3s-dois-estagios.json",
-  "linhas": 5656,
+  "linhas": 5365,
   "rodadas": [
     10,
     11,
@@ -25,40 +25,40 @@
     28
   ],
   "mae": {
-    "dois_estagios": 2.951231,
-    "catboost_nested": 2.997576,
-    "v3h": 3.010573
+    "dois_estagios": 3.036327,
+    "catboost_nested": 3.021414,
+    "v3h": 3.013091
   },
   "participacao": {
-    "brier": 0.053664,
-    "auc": 0.588325,
-    "taxa_real_entrada": 0.945191,
-    "probabilidade_media_prevista": 0.989043
+    "brier": 0.00395,
+    "auc": 0.450952,
+    "taxa_real_entrada": 0.996459,
+    "probabilidade_media_prevista": 0.989273
   },
   "bootstrap_vs_catboost": {
-    "delta_mae": 0.015623,
+    "delta_mae": 0.014006,
     "ic95": [
-      0.000842,
-      0.031116
+      -0.000303,
+      0.028687
     ],
-    "probabilidade_dois_estagios_melhor": 0.02,
-    "rodadas_ganhas": 6,
-    "rodadas_perdidas": 10
+    "probabilidade_dois_estagios_melhor": 0.0284,
+    "rodadas_ganhas": 7,
+    "rodadas_perdidas": 11
   },
   "bootstrap_vs_v3h": {
-    "delta_mae": 0.005283,
+    "delta_mae": 0.025198,
     "ic95": [
-      -0.075572,
-      0.080178
+      -0.051187,
+      0.095773
     ],
-    "probabilidade_dois_estagios_melhor": 0.45,
+    "probabilidade_dois_estagios_melhor": 0.2394,
     "rodadas_ganhas": 6,
-    "rodadas_perdidas": 10
+    "rodadas_perdidas": 12
   },
   "criterios": {
     "mae_valido": true,
-    "supera_catboost_nested_no_mae": true,
-    "supera_v3h_no_mae": true,
+    "supera_catboost_nested_no_mae": false,
+    "supera_v3h_no_mae": false,
     "prob_melhora_vs_catboost_ge_90": false,
     "prob_melhora_vs_v3h_ge_90": false,
     "participacao_calibrada": true
