@@ -1,7 +1,7 @@
 {
-  "gerado_em": "2026-10-05T19:46:36.193135+00:00",
+  "gerado_em": "2026-10-12T20:14:33.790780+00:00",
   "protocolo": "calibracao residual estritamente temporal; para cada R/posicao usa somente residuos OOS de rodadas anteriores a R; nenhuma estatistica de R participa da calibracao",
-  "linhas": 5365,
+  "linhas": 5673,
   "rodadas": [
     10,
     11,
@@ -20,38 +20,39 @@
     25,
     26,
     27,
-    28
+    28,
+    29
   ],
   "geral": {
     "v3s_catboost_nested": {
-      "n": 5365,
-      "mae": 3.021414,
-      "rmse": 4.512416,
-      "bias": -2.036271
+      "n": 5673,
+      "mae": 3.034477,
+      "rmse": 4.537528,
+      "bias": -2.035004
     },
     "cal_pos_mean5": {
-      "n": 5365,
-      "mae": 2.994392,
-      "rmse": 4.039114,
-      "bias": -0.374136
+      "n": 5673,
+      "mae": 3.021934,
+      "rmse": 4.069216,
+      "bias": -0.340518
     },
     "cal_pos_median5": {
-      "n": 5365,
-      "mae": 2.893082,
-      "rmse": 4.2052,
-      "bias": -1.283177
+      "n": 5673,
+      "mae": 2.912324,
+      "rmse": 4.227243,
+      "bias": -1.254279
     },
     "cal_pos_mean_all": {
-      "n": 5365,
-      "mae": 2.966456,
-      "rmse": 4.040829,
-      "bias": -0.509274
+      "n": 5673,
+      "mae": 2.993326,
+      "rmse": 4.071082,
+      "bias": -0.479909
     },
     "v3h_hibrido": {
-      "n": 5365,
-      "mae": 3.013091,
-      "rmse": 3.980693,
-      "bias": 0.055884
+      "n": 5673,
+      "mae": 3.026714,
+      "rmse": 4.00522,
+      "bias": 0.055594
     }
   },
   "guardrails_por_candidato": {
@@ -70,22 +71,22 @@
     "cal_pos_mean_all": {
       "mae_melhor_que_v3h": true,
       "rmse_nao_piora_mais_5pct": true,
-      "bias_absoluto_ate_0_50": false,
-      "aprovado_experimentalmente": false
+      "bias_absoluto_ate_0_50": true,
+      "aprovado_experimentalmente": true
     }
   },
   "melhor_calibracao_descritiva": "cal_pos_median5",
-  "melhor_candidato_que_passa_guardrails": "cal_pos_mean5",
+  "melhor_candidato_que_passa_guardrails": "cal_pos_mean_all",
   "decisao": "CANDIDATO_APROVADO_PARA_NESTED_SELETOR",
   "provas_temporais_ok": true,
   "bootstrap_candidato_vs_v3h": {
-    "diferenca_mae_challenger_menos_baseline": -0.017667,
+    "diferenca_mae_challenger_menos_baseline": -0.033629,
     "ic95": [
-      -0.064853,
-      0.027409
+      -0.081842,
+      0.014656
     ],
-    "probabilidade_challenger_melhor": 0.7674,
-    "rodadas_ganhas": 9,
+    "probabilidade_challenger_melhor": 0.9152,
+    "rodadas_ganhas": 10,
     "rodadas_perdidas": 9
   }
 }
