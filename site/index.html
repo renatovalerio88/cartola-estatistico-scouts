@@ -52,6 +52,20 @@ body{background:#f4f6f8;color:var(--text);font-feature-settings:"tnum" 1}header{
   .picker-search{font-size:16px}
 }
 
+/* DESIGN QA 2026-10-26: readable pitch labels on narrow screens; no model changes */
+@media(max-width:700px){
+  .pitch{padding:16px 4px}
+  .pitch .line{min-height:104px}
+  .pitch .player-ball .name{
+    font-size:12px;line-height:1.15;white-space:normal;overflow-wrap:anywhere;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+    overflow:hidden;min-height:28px
+  }
+  .pitch .player-ball .pts{font-size:11px;line-height:1.2}
+  .pitch .player-ball .fixture{font-size:10px;line-height:1.2;overflow:hidden;text-overflow:ellipsis}
+  .pitch .ball{width:40px;height:40px}
+}
+
 </style>
 </head>
 <body>
