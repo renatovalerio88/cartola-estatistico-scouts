@@ -66,6 +66,30 @@ body{background:#f4f6f8;color:var(--text);font-feature-settings:"tnum" 1}header{
   .pitch .ball{width:40px;height:40px}
 }
 
+/* DESIGN/PRODUTO 2026-10-26: projection ranking as readable mobile cards; desktop table unchanged. */
+@media (max-width:700px){
+  #projectionTable.scroll{overflow:visible;border:0;border-radius:0;background:transparent}
+  #projectionTable table{display:block;width:100%;min-width:0;background:transparent}
+  #projectionTable thead{display:none}
+  #projectionTable tbody{display:grid;gap:11px}
+  #projectionTable tbody tr{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"player rank" "position club" "score price" "confidence action";align-items:center;gap:8px 12px;min-width:0;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--card);box-shadow:0 6px 18px rgba(22,69,50,.06)}
+  #projectionTable tbody td{display:block;min-width:0;margin:0;padding:0;border:0;white-space:normal;overflow-wrap:anywhere}
+  #projectionTable tbody td:nth-child(1){grid-area:rank;justify-self:end;align-self:start;color:var(--muted);font-size:.72rem;font-weight:700}
+  #projectionTable tbody td:nth-child(1)::before{content:'#'}
+  #projectionTable tbody td:nth-child(2){grid-area:player;align-self:start}
+  #projectionTable tbody td:nth-child(2) b{font-size:1rem;line-height:1.25}
+  #projectionTable tbody td:nth-child(2) .fixture-tag{margin-top:5px}
+  #projectionTable tbody td:nth-child(3){grid-area:position;justify-self:start;font-size:.75rem;font-weight:750;color:var(--brand)}
+  #projectionTable tbody td:nth-child(4){grid-area:club;justify-self:end;font-size:.75rem;font-weight:750;color:var(--muted)}
+  #projectionTable tbody td:nth-child(5){grid-area:price;justify-self:end;font-size:.82rem;font-weight:650;color:var(--text)}
+  #projectionTable tbody td:nth-child(6){grid-area:score;min-width:0;font-size:1.05rem;font-weight:900;line-height:1.35}
+  #projectionTable tbody td:nth-child(6)::before{content:'PROJEÇÃO';display:block;margin-bottom:2px;font-size:.63rem;letter-spacing:.07em;font-weight:750;color:var(--muted)}
+  #projectionTable tbody td:nth-child(7){grid-area:confidence;font-size:.78rem;font-weight:750}
+  #projectionTable tbody td:nth-child(7)::before{content:'Confiança: ';font-weight:500;color:var(--muted)}
+  #projectionTable tbody td:nth-child(8){grid-area:action;justify-self:end}
+  #projectionTable tbody td:nth-child(8) .why{min-width:106px;min-height:44px;padding:10px 12px;font-size:.79rem}
+}
+
 </style>
 </head>
 <body>
