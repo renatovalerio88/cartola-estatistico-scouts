@@ -70,6 +70,40 @@
       #projecoes .projection-actions{margin-top:6px;gap:6px}
       #projecoes .projection-actions button{min-height:31px;padding:5px 8px;font-size:.62rem}
     }
+
+    /* DESIGN/PRODUTO V31: cards legíveis, ações com alvo de toque e reset integrado. */
+    #projecoes .projection-card{padding:15px 16px;border-color:#dbe6e9;box-shadow:0 7px 22px rgba(11,42,53,.055)}
+    #projecoes .projection-card.top3{border-color:#9dcfba;border-left:4px solid #0c8b65}
+    #projecoes .projection-name{font-size:1.02rem;line-height:1.22;color:#183340}
+    #projecoes .projection-fixture{font-size:.76rem;color:#17664f;margin:7px 0 10px}
+    #projecoes .projection-kpi{padding:10px 11px}
+    #projecoes .projection-kpi small{font-size:.61rem;color:#647b82}
+    #projecoes .projection-kpi b{font-size:.88rem}
+    #projecoes .projection-kpi .score{font-size:1.13rem;color:#087957}
+    #projecoes .signal{font-size:.65rem;padding:5px 8px;background:#edf5f2;color:#3d5b57}
+    #projecoes .projection-actions{margin-top:11px;gap:9px}
+    #projecoes .projection-actions button{min-height:44px;font-size:.79rem;border-radius:10px}
+    #projecoes .view-analysis{background:#0c7356;color:#fff}
+    #projecoes .view-analysis:hover,#projecoes .view-analysis:focus-visible{background:#09543f}
+    #projecoes .add-monte{border-color:#8dbca9!important;background:#f5faf7}
+    #projecoes .pos-chip{min-height:40px;font-size:.76rem;padding:8px 12px}
+    #projecoes .premium-proj-reset{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:6px 11px;border:1px solid #b8d8cb;border-radius:9px;background:#eef8f2;color:#0b674b;font-size:.72rem;font-weight:850;cursor:pointer;white-space:nowrap}
+    #projecoes .premium-proj-reset:hover,#projecoes .premium-proj-reset:focus-visible{background:#d9f0e4}
+    #projecoes .confidence-audit{background:#f4faf7;border-color:#d5e8de}
+    @media(max-width:700px){
+      #projecoes .projection-card{padding:13px 12px;border-radius:14px}
+      #projecoes .projection-name{font-size:.95rem;line-height:1.2}
+      #projecoes .projection-fixture{font-size:.71rem;margin:5px 0 8px}
+      #projecoes .projection-kpi{padding:8px 7px}
+      #projecoes .projection-kpi small{font-size:.55rem}
+      #projecoes .projection-kpi b{font-size:.79rem}
+      #projecoes .projection-kpi .score{font-size:1rem}
+      #projecoes .signal{font-size:.61rem;padding:4px 7px}
+      #projecoes .projection-actions button{min-height:44px;font-size:.74rem;padding:9px 10px}
+      #projecoes .pos-chip{min-height:43px;padding:9px 12px;font-size:.74rem}
+      #projecoes .confidence-audit{gap:8px;padding:9px 10px;font-size:.67rem}
+      #projecoes .premium-proj-reset{min-height:40px;font-size:.72rem}
+    }
   `;
 
   let sortMode = 'projection';
@@ -197,6 +231,26 @@
     const n = Math.max(1,list.length);
     const lowPct = Math.round((dist.Baixa||0)*100/n);
     box.innerHTML = `<span><b>${list.length}</b> jogadores · Confiança: <b>${dist.Alta||0}</b> alta · <b>${dist['Média']||0}</b> média · <b>${dist.Baixa||0}</b> baixa</span>${lowPct>=70?`<span class="audit-warning">⚠ ${lowPct}% com confiança baixa — régua mantida, sem recalibração artificial.</span>`:''}`;
+    const reset = document.createElement('button');
+    reset.type = 'button';
+    reset.className = 'premium-proj-reset';
+    reset.textContent = 'Limpar filtros';
+    reset.addEventListener('click',()=>{
+      const search = document.getElementById('premiumProjSearch');
+      const club = document.getElementById('premiumProjClub');
+      const sort = document.getElementById('premiumProjSort');
+      const price = document.getElementById('premiumProjPrice');
+      if(search) search.value = '';
+      if(club) club.value = '';
+      if(sort) sort.value = 'projection';
+      if(price) price.value = '';
+      sortMode = 'projection';
+      maxPrice = '';
+      document.querySelectorAll('#projecoes .pos-chip').forEach(chip=>chip.classList.toggle('active',chip.dataset.pos === ''));
+      renderPremium();
+      search?.focus();
+    });
+    box.appendChild(reset);
   }
 
   function cardHtml(p, i) {
