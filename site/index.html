@@ -26,6 +26,7 @@ body{background:#f4f6f8;color:var(--text);font-feature-settings:"tnum" 1}header{
 @media(max-width:430px){.brandrow{align-items:flex-start}.roundbadge{flex-shrink:0}.metric b{font-size:1.1rem}.card{border-radius:11px}.controls .btn{width:100%}}
 
 /* INVESTOR UX: compact mobile navigation and searchable player selection */
+.picker-find{min-width:0;position:relative}.picker-find .picker-search{margin:12px 0 6px}.picker-results{display:grid;gap:4px;margin:0 0 9px;padding:6px;border:1px solid #bfd9ce;border-radius:12px;background:#fff;max-height:290px;overflow:auto}.picker-results[hidden]{display:none}.picker-result{display:block;width:100%;padding:11px 12px;min-height:44px;text-align:left;border:0;border-radius:9px;background:#eff8f3;color:#183128;font-size:.85rem;font-weight:650;cursor:pointer}.picker-result:hover,.picker-result:focus-visible{background:#d4f1df;outline:2px solid #176b4b;outline-offset:-2px}.picker-result-empty{padding:10px;color:#6d7e77;font-size:.82rem}
 .picker-search{display:block;width:100%;min-width:0;margin:12px 0 8px;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:#f8fafb;color:var(--text)}
 .picker-search:focus-visible{outline:2px solid var(--brand);outline-offset:1px}
 #navMore,#navMoreMenu{display:none}
@@ -91,20 +92,50 @@ const $=s=>document.querySelector(s);let D={},players=[],currentTeam=null,exclud
     previousRenderCustomPickers();
     document.querySelectorAll('.custom-pick').forEach(select=>{
       const row=select.closest('.picker-row');
-      if(!row)return;
+      if(!row||select.options.length<=1)return;
+      const wrap=document.createElement('div');
+      wrap.className='picker-find';
       const search=document.createElement('input');
       search.type='search';search.className='picker-search';
-      search.placeholder='Buscar jogador, clube ou confronto';
+      search.placeholder='Nome, clube ou confronto';
       search.setAttribute('aria-label','Buscar jogadores da posição '+(select.dataset.pos||''));
-      const allOptions=Array.from(select.options,option=>option.cloneNode(true));
+      const results=document.createElement('div');
+      results.className='picker-results';results.hidden=true;
+      results.setAttribute('aria-live','polite');
+      const options=Array.from(select.options).filter(option=>option.value).map(option=>({value:option.value,label:option.textContent}));
       const normalized=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
-      search.addEventListener('input',()=>{
-        const term=normalized(search.value.trim()),selected=select.value;
-        const matching=allOptions.filter(option=>!option.value||normalized(option.textContent).includes(term));
-        select.replaceChildren(...matching.map(option=>option.cloneNode(true)));
-        if(matching.some(option=>option.value===selected))select.value=selected;
+      const renderResults=()=>{
+        const term=normalized(search.value.trim());
+        results.replaceChildren();
+        if(!term){results.hidden=true;return;}
+        const matches=options.filter(option=>normalized(option.label).includes(term)).slice(0,6);
+        if(!matches.length){
+          const empty=document.createElement('div');
+          empty.className='picker-result-empty';empty.textContent='Nenhum jogador encontrado nesta posição.';
+          results.appendChild(empty);
+        }
+        matches.forEach(option=>{
+          const item=document.createElement('button');
+          item.type='button';item.className='picker-result';
+          item.textContent=option.label;
+          item.addEventListener('click',()=>{
+            select.value=option.value;
+            row.querySelector('.add-pick')?.click();
+          });
+          results.appendChild(item);
+        });
+        results.hidden=false;
+      };
+      search.addEventListener('input',renderResults);
+      search.addEventListener('keydown',event=>{
+        if(event.key==='Escape'){results.hidden=true;search.value='';}
+        if(event.key==='Enter'){
+          const first=results.querySelector('button.picker-result');
+          if(first){event.preventDefault();first.click();}
+        }
       });
-      row.parentElement.insertBefore(search,row);
+      wrap.append(search,results);
+      row.before(wrap);
     });
   };
 })();
