@@ -82,7 +82,7 @@ jobs:
               '<script src="final-polish.js"></script>',
               '<script src="time-sugerido-final.js"></script>',
               '<script src="monte-premium.js?v=20260909b"></script>',
-              '<script src="projecoes-premium.js?v=20260910a"></script>',
+              '<script src="projecoes-premium.js?v=20261026v32"></script>',
               '<script src="analise-premium.js?v=20260910a"></script>',
               '<script src="historico-geral.js?v=20260915b"></script>',
               '<script src="metodologia-premium.js?v=20260911a"></script>',
@@ -104,6 +104,7 @@ jobs:
           test ! -f site/historico-premium.js
           test ! -f site/historico-final.js
           grep -q 'historico-geral.js?v=20260915b' site/index.html
+          grep -q 'projecoes-premium.js?v=20261026v32' site/index.html
           node --check site/data-fetch-bridge.js
           node --check site/optimizer.js
           node --check site/time-sugerido-final.js
@@ -136,9 +137,13 @@ jobs:
           test "$code" = "200"
           grep -q 'data-fetch-bridge.js' /tmp/index.html
           grep -q 'historico-geral.js?v=20260915b' /tmp/index.html
+          grep -q 'projecoes-premium.js?v=20261026v32' /tmp/index.html
           ! grep -q 'historico-premium.js' /tmp/index.html
           ! grep -q 'historico-final.js' /tmp/index.html
           for page_id in time monte projecoes analise historico metodologia; do grep -q "id=\"${page_id}\"" /tmp/index.html; done
+          curl -L -sS --fail -o /tmp/projecoes-premium.js "${base}projecoes-premium.js?v=20261026v32&smoke=${GITHUB_RUN_ID}"
+          grep -q 'premium-proj-reset' /tmp/projecoes-premium.js
+          grep -q 'aria-pressed' /tmp/projecoes-premium.js
           curl -L -sS --fail -o /tmp/historico-geral.js "${base}historico-geral.js?v=20260915b&smoke=${GITHUB_RUN_ID}"
           grep -q 'backtest_time_sugerido_walk_forward' /tmp/historico-geral.js
           grep -q 'Rodada</th><th>Projetado</th><th>Real</th><th>Diferença' /tmp/historico-geral.js
