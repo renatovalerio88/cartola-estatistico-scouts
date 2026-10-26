@@ -4,6 +4,8 @@
 
   const CSS = `
     #projecoes .hero{margin-bottom:12px}
+    /* Um único conjunto de filtros em desktop e celular. */
+    #projecoes>.controls{display:none!important}
     #projecoes .projection-toolbar{display:grid;grid-template-columns:minmax(180px,1.3fr) repeat(3,minmax(125px,.7fr));gap:8px;align-items:end;margin:10px 0 8px}
     #projecoes .projection-toolbar .field{min-width:0}
     #projecoes .projection-toolbar input,#projecoes .projection-toolbar select{width:100%;min-width:0;min-height:38px;padding:8px 10px;border-radius:10px;font-size:.8rem}
@@ -173,14 +175,14 @@
     const toolbar = document.createElement('div');
     toolbar.className = 'projection-toolbar';
     toolbar.innerHTML = `
-      <div class="field search-field"><label>Buscar jogador</label><input id="premiumProjSearch" placeholder="Nome do jogador"></div>
-      <div class="field sort-field"><label>Ordenar por</label><select id="premiumProjSort"><option value="projection">Projeção</option><option value="value">Custo-benefício</option><option value="confidence">Confiança</option></select></div>
-      <div class="field club-field"><label>Clube</label><select id="premiumProjClub"><option value="">Todos</option></select></div>
-      <div class="field price-field"><label>Preço máximo</label><input id="premiumProjPrice" type="number" min="0" step="1" placeholder="Sem limite"></div>`;
+      <div class="field search-field"><label for="premiumProjSearch">Buscar jogador</label><input id="premiumProjSearch" placeholder="Nome do jogador"></div>
+      <div class="field sort-field"><label for="premiumProjSort">Ordenar por</label><select id="premiumProjSort"><option value="projection">Projeção</option><option value="value">Custo-benefício</option><option value="confidence">Confiança</option></select></div>
+      <div class="field club-field"><label for="premiumProjClub">Clube</label><select id="premiumProjClub"><option value="">Todos</option></select></div>
+      <div class="field price-field"><label for="premiumProjPrice">Preço máximo</label><input id="premiumProjPrice" type="number" min="0" step="1" placeholder="Sem limite"></div>`;
     const chips = document.createElement('div');
     chips.className = 'pos-chips';
     chips.setAttribute('aria-label','Filtrar por posição');
-    chips.innerHTML = ['', 'GOL','LAT','ZAG','MEI','ATA','TEC'].map((p,i)=>`<button class="pos-chip ${i===0?'active':''}" type="button" data-pos="${p}">${p||'Todos'}</button>`).join('');
+    chips.innerHTML = ['', 'GOL','LAT','ZAG','MEI','ATA','TEC'].map((p,i)=>`<button class="pos-chip ${i===0?'active':''}" type="button" aria-pressed="${i===0?'true':'false'}" data-pos="${p}">${p||'Todos'}</button>`).join('');
     const audit = document.createElement('div');
     audit.className = 'confidence-audit';
     audit.id = 'confidenceAudit';
@@ -197,7 +199,7 @@
     document.getElementById('premiumProjSort').addEventListener('change', e=>{ sortMode=e.target.value; renderPremium(); });
     document.getElementById('premiumProjPrice').addEventListener('input', e=>{ maxPrice=e.target.value; renderPremium(); });
     chips.querySelectorAll('.pos-chip').forEach(btn=>btn.addEventListener('click',()=>{
-      chips.querySelectorAll('.pos-chip').forEach(x=>x.classList.toggle('active',x===btn));
+      chips.querySelectorAll('.pos-chip').forEach(x=>{ x.classList.toggle('active',x===btn); x.setAttribute('aria-pressed',String(x===btn)); });
       renderPremium();
     }));
   }
@@ -246,7 +248,7 @@
       if(price) price.value = '';
       sortMode = 'projection';
       maxPrice = '';
-      document.querySelectorAll('#projecoes .pos-chip').forEach(chip=>chip.classList.toggle('active',chip.dataset.pos === ''));
+      document.querySelectorAll('#projecoes .pos-chip').forEach(chip=>{ const active=chip.dataset.pos === ''; chip.classList.toggle('active',active); chip.setAttribute('aria-pressed',String(active)); });
       renderPremium();
       search?.focus();
     });
