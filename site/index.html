@@ -132,9 +132,31 @@ const $=s=>document.querySelector(s);let D={},players=[],currentTeam=null,exclud
     document.addEventListener('click',event=>{if(!nav.contains(event.target))close();});
     document.addEventListener('keydown',event=>{if(event.key==='Escape')close();});
   }
+  // Investor UX: a previously built lineup must never remain visible after edits.
+  const customResult=document.getElementById('customResult');
+  const invalidateCustomResult=()=>{
+    if(!customResult||customResult.dataset.built!=='true')return;
+    customResult.dataset.built='false';
+    const notice=document.createElement('div');
+    notice.className='notice';
+    notice.setAttribute('role','status');
+    notice.append(document.createTextNode('As escolhas ou o orçamento mudaram. A escalação anterior foi ocultada para evitar informações desatualizadas. '));
+    const update=document.createElement('button');
+    update.type='button';
+    update.className='btn tiny';
+    update.textContent='Atualizar escalação';
+    update.addEventListener('click',()=>document.getElementById('buildCustom')?.click());
+    notice.append(update);
+    customResult.replaceChildren(notice);
+  };
+  document.getElementById('buildCustom')?.addEventListener('click',()=>{
+    if(customResult)customResult.dataset.built='true';
+  });
+  document.getElementById('customBudget')?.addEventListener('input',invalidateCustomResult);
   const previousRenderCustomPickers=renderCustomPickers;
   renderCustomPickers=function(){
     previousRenderCustomPickers();
+    invalidateCustomResult();
     document.querySelectorAll('.custom-pick').forEach(select=>{
       const row=select.closest('.picker-row');
       if(!row||select.options.length<=1)return;
