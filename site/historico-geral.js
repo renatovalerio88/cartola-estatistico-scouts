@@ -18,7 +18,40 @@
     #historico .hg-table th{font-size:.68rem;text-transform:uppercase;color:var(--muted)}
     #historico .hg-table td{font-size:.82rem}.hg-pos{color:var(--brand);font-weight:850}.hg-neg{color:var(--danger);font-weight:850}
     #historico .hg-empty{padding:20px;text-align:center;color:var(--muted);font-size:.82rem}
-    @media(max-width:700px){#historico .hg-card{padding:13px}#historico .hg-head{display:block}#historico .hg-badge{display:inline-block;margin-top:7px}#historico .hg-chart svg{min-height:190px}}
+    /* V34 — histórico geral responsivo: KPIs, gráfico explorável e cards no celular. */
+    #historico .hg-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+    #historico .hg-kpi{background:#f7fbf9;border:1px solid #dbeae3;border-radius:14px;padding:14px 15px;min-width:0}
+    #historico .hg-kpi small{display:block;font-size:.7rem;font-weight:750;color:#668077;margin-bottom:7px}
+    #historico .hg-kpi b{display:block;color:#173d37;font-size:1.22rem;font-weight:900;line-height:1.15;overflow-wrap:anywhere}
+    #historico .hg-kpi .hg-pos{color:#08704c}
+    #historico .hg-kpi .hg-neg{color:#aa4040}
+    #historico .hg-mobile-tip{display:none;color:#627b79;font-size:.74rem;line-height:1.4;margin:9px 0 0}
+    @media(max-width:700px){
+      #historico .hg-card{padding:13px}
+      #historico .hg-head{display:block}
+      #historico .hg-badge{display:inline-block;margin-top:7px}
+      #historico .hg-kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      #historico .hg-kpi{padding:12px}
+      #historico .hg-kpi:first-child{grid-column:1/-1}
+      #historico .hg-kpi b{font-size:1.08rem}
+      #historico .hg-chart{overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;scrollbar-color:#a8c8ba transparent;border-radius:10px}
+      #historico .hg-chart svg{width:800px;min-width:800px;max-width:none;min-height:220px}
+      #historico .hg-mobile-tip{display:block}
+      #historico .hg-table{overflow:visible;border:0}
+      #historico .hg-table table,#historico .hg-table tbody{display:block;min-width:0;width:100%}
+      #historico .hg-table thead{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+      #historico .hg-table tbody{display:grid;gap:9px}
+      #historico .hg-table tr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 12px;border:1px solid #e0eae6;border-radius:13px;padding:13px;background:#fff;box-shadow:0 4px 14px rgba(11,39,49,.035)}
+      #historico .hg-table td{display:flex;flex-direction:column;gap:3px;padding:0;border:0;min-width:0;font-size:.91rem;font-weight:800;line-height:1.3;overflow-wrap:anywhere}
+      #historico .hg-table td::before{display:block;color:#718781;font-size:.66rem;font-weight:750;letter-spacing:.045em;text-transform:uppercase}
+      #historico .hg-table td:nth-child(1){grid-column:1/-1;padding-bottom:8px;border-bottom:1px solid #e5eeee;color:#0d7050;font-size:1.05rem}
+      #historico .hg-table td:nth-child(1)::before{content:"Rodada"}
+      #historico .hg-table td:nth-child(2)::before{content:"Projetado"}
+      #historico .hg-table td:nth-child(3)::before{content:"Real"}
+      #historico .hg-table td:nth-child(4){grid-column:1/-1;display:inline-flex;align-items:center;justify-self:start;gap:4px;border-radius:8px;padding:7px 9px;background:#e9f5ee}
+      #historico .hg-table td:nth-child(4).hg-neg{background:#fff0f0}
+      #historico .hg-table td:nth-child(4)::before{content:"Diferença:";font-size:.68rem}
+    }
   `;
 
   function injectStyle(){
@@ -86,7 +119,16 @@
     let root=section.querySelector('.hg-wrap');
     if(!root){root=document.createElement('div');root.className='hg-wrap';section.appendChild(root)}
     const body=rows.map(r=>{const d=r.real-r.projecao;return `<tr><td><b>R${r.rodada}</b></td><td>${fmt(r.projecao)} pts</td><td>${fmt(r.real)} pts</td><td class="${d>=0?'hg-pos':'hg-neg'}">${d>=0?'+':''}${fmt(d)} pts</td></tr>`}).join('');
-    root.innerHTML=`<div class="hg-card"><div class="hg-head"><div><h2>Projetado × Real</h2><p>Comparação histórica walk-forward, sem usar informação futura.</p></div><span class="hg-badge">Backtest auditável</span></div><div class="hg-chart">${chart(rows)}</div><div class="hg-legend"><span><i class="hg-dot proj"></i>Projetado</span><span><i class="hg-dot real"></i>Real</span></div></div><div class="hg-card"><div class="hg-head"><div><h2>Resultado por rodada</h2><p>Projetado, pontuação real e diferença.</p></div></div>${body?`<div class="hg-table"><table><thead><tr><th>Rodada</th><th>Projetado</th><th>Real</th><th>Diferença</th></tr></thead><tbody>${body}</tbody></table></div>`:'<div class="hg-empty">Ainda não há rodadas auditáveis disponíveis.</div>'}</div>`;
+    const latest=rows.length?rows[rows.length-1]:null;
+    const latestDiff=latest?latest.real-latest.projecao:null;
+    const diffClass=latestDiff==null?'':(latestDiff>=0?'hg-pos':'hg-neg');
+    const diffText=latestDiff==null?'—':`${latestDiff>=0?'+':''}${fmt(latestDiff)} pts`;
+    const summary=`<div class="hg-kpis" aria-label="Resumo do histórico geral">
+      <div class="hg-kpi"><small>Rodadas avaliadas</small><b>${rows.length}</b></div>
+      <div class="hg-kpi"><small>Última rodada</small><b>${latest?'R'+latest.rodada:'—'}</b></div>
+      <div class="hg-kpi"><small>Diferença na última rodada</small><b class="${diffClass}">${diffText}</b></div>
+    </div>`;
+    root.innerHTML=`${summary}<div class="hg-card"><div class="hg-head"><div><h2>Projetado × Real</h2><p>Comparação histórica walk-forward, sem usar informação futura.</p></div><span class="hg-badge">Backtest auditável</span></div><div class="hg-chart" role="region" tabindex="0" aria-label="Gráfico de projeção e resultado real por rodada, com rolagem horizontal no celular">${chart(rows)}</div><p class="hg-mobile-tip">Deslize o gráfico para os lados para explorar as rodadas.</p><div class="hg-legend"><span><i class="hg-dot proj"></i>Projetado</span><span><i class="hg-dot real"></i>Real</span></div></div><div class="hg-card"><div class="hg-head"><div><h2>Resultado por rodada</h2><p>Projetado, pontuação real e diferença.</p></div></div>${body?`<div class="hg-table"><table><thead><tr><th>Rodada</th><th>Projetado</th><th>Real</th><th>Diferença</th></tr></thead><tbody>${body}</tbody></table></div>`:'<div class="hg-empty">Ainda não há rodadas auditáveis disponíveis.</div>'}</div>`;
   }
 
   window.renderHistory=render;
