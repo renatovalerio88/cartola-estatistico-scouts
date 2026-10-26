@@ -321,6 +321,31 @@ button:focus-visible,summary:focus-visible{outline:3px solid #57c9a3;outline-off
 #monte .hero-action{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
 #monte #customPickers{scroll-margin-top:118px}
 @media(max-width:700px){#monte .hero-actions{margin-top:12px}#monte .hero-action{width:100%;min-height:46px}#monte #customPickers{scroll-margin-top:78px}}
+
+/* DESIGN/PRODUTO V30 — descoberta de atletas com filtros rápidos e feedback visível. */
+.projection-discovery{display:flex;flex-direction:column;gap:12px;margin:13px 0 15px;padding:17px 18px;background:#fff;border:1px solid #dce7ea;border-radius:16px;box-shadow:0 5px 20px rgba(12,40,48,.04)}
+.projection-discovery-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.projection-discovery-title{display:flex;align-items:center;gap:9px;color:#193742;font-size:.87rem;font-weight:850;letter-spacing:-.015em}
+.projection-discovery-title::before{content:"";width:7px;height:20px;border-radius:8px;background:#0d996d}
+.projection-count{display:inline-flex;align-items:center;min-height:28px;padding:5px 10px;border-radius:999px;background:#eaf7f0;color:#0b674b;font-size:.75rem;font-weight:800}
+.projection-chip-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.projection-chip{border:1px solid #d7e4e7;background:#f6f9fa;color:#49616c;border-radius:999px;padding:9px 14px;min-height:40px;font-size:.79rem;font-weight:800;cursor:pointer;transition:background .15s,border-color .15s,color .15s}
+.projection-chip:hover,.projection-chip:focus-visible{border-color:#82c7ad;background:#edf9f3;color:#0b674b}
+.projection-chip[aria-pressed="true"]{background:#0b7456;border-color:#0b7456;color:#fff;box-shadow:0 3px 9px rgba(11,116,86,.14)}
+.projection-reset{align-self:flex-start;border:0;background:none;color:#0b7052;padding:6px 2px;min-height:36px;font-size:.78rem;font-weight:850;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.projection-reset:hover,.projection-reset:focus-visible{color:#094e3b}
+.projection-empty{padding:24px 18px;margin-top:12px;border:1px dashed #a9cfc0;border-radius:15px;background:#f6fbf8;text-align:center;color:#4b6770;font-size:.87rem;line-height:1.6}
+.projection-empty strong{display:block;color:#153c36;font-size:1rem;margin-bottom:4px}
+@media(max-width:700px){
+  .projection-discovery{padding:13px 12px;gap:9px;margin:10px 0 13px;border-radius:14px}
+  .projection-discovery-title{font-size:.83rem}
+  .projection-count{font-size:.69rem}
+  .projection-chip-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;scroll-snap-type:x proximity;margin:0 -12px;padding:3px 12px 7px;-webkit-overflow-scrolling:touch}
+  .projection-chip-row::-webkit-scrollbar{display:none}
+  .projection-chip{flex:0 0 auto;white-space:nowrap;scroll-snap-align:start;min-height:43px;padding:9px 13px;font-size:.78rem}
+  .projection-reset{min-height:35px}
+}
+
 </style>
 </head>
 <body>
@@ -336,7 +361,7 @@ button:focus-visible,summary:focus-visible{outline:3px solid #57c9a3;outline-off
 <h2>Banco</h2><div id="bench" class="bench"></div><h2>Outras boas opções</h2><p class="lead">Três alternativas por posição, fora do campo e do banco. Toque em qualquer nome para ver os scouts que sustentam a projeção.</p><div id="alternatives" class="alternatives"></div>
 </section>
 <section id="monte" class="page"><div class="hero"><h1>Monte seu Time</h1><p class="lead">Escolha quantos jogadores quiser dentro das vagas da formação e deixe o modelo completar automaticamente o restante.</p><div class="hero-actions"><a class="hero-action" href="#customPickers">Escolher jogadores ↓</a></div></div><div class="controls"><div class="field"><label>Patrimônio</label><input id="customBudget" type="number" value="120" min="50" max="500"></div><div class="field"><label>Formação</label><select id="customFormation"><option value="auto">Automática</option><option>3-4-3</option><option>3-5-2</option><option>4-3-3</option><option>4-4-2</option><option>5-3-2</option></select></div><button class="btn" id="buildCustom">Completar meu time</button><button class="btn alt" id="clearCustom">Limpar escolhidos</button></div><div class="notice custom-help">Você pode travar vários jogadores da mesma posição. O otimizador respeita patrimônio, formação, limite por clube e completa as vagas restantes pelo maior valor projetado.</div><div id="customPickers" class="picker"></div><div class="builder-bottom"><div><b>Pronto para completar a escalação?</b><p>O sistema preenche as vagas restantes com as melhores projeções.</p></div><button type="button" class="btn" onclick="document.getElementById('buildCustom').click()">Completar meu time →</button></div><div id="customResult"></div></section>
-<section id="projecoes" class="page"><div class="hero"><h1>Projeções</h1><p class="lead">Ranking da rodada. Toque em “Por quê?” para ver os scouts que mais sustentam cada projeção.</p></div><div class="controls"><div class="field"><label>Posição</label><select id="filterPos"><option value="">Todas</option><option>GOL</option><option>LAT</option><option>ZAG</option><option>MEI</option><option>ATA</option><option>TEC</option></select></div><div class="field"><label>Clube</label><select id="filterClub"><option value="">Todos</option></select></div><div class="field"><label>Buscar</label><input id="search" placeholder="Nome do jogador"></div></div><div id="projectionTable" class="scroll"></div></section>
+<section id="projecoes" class="page"><div class="hero"><h1>Projeções</h1><p class="lead">Ranking da rodada. Toque em “Por quê?” para ver os scouts que mais sustentam cada projeção.</p></div><div class="controls"><div class="field"><label>Posição</label><select id="filterPos"><option value="">Todas</option><option>GOL</option><option>LAT</option><option>ZAG</option><option>MEI</option><option>ATA</option><option>TEC</option></select></div><div class="field"><label>Clube</label><select id="filterClub"><option value="">Todos</option></select></div><div class="field"><label>Buscar</label><input id="search" placeholder="Nome do jogador"></div></div><div class="projection-discovery" aria-label="Explore as projeções por posição"><div class="projection-discovery-top"><span class="projection-discovery-title">Explore por posição</span><output id="projectionCount" class="projection-count" aria-live="polite">Carregando ranking…</output></div><div class="projection-chip-row" role="group" aria-label="Filtro rápido de posição"><button class="projection-chip" type="button" data-projection-pos="" aria-pressed="true">Todos</button><button class="projection-chip" type="button" data-projection-pos="GOL" aria-pressed="false">Goleiros</button><button class="projection-chip" type="button" data-projection-pos="LAT" aria-pressed="false">Laterais</button><button class="projection-chip" type="button" data-projection-pos="ZAG" aria-pressed="false">Zagueiros</button><button class="projection-chip" type="button" data-projection-pos="MEI" aria-pressed="false">Meias</button><button class="projection-chip" type="button" data-projection-pos="ATA" aria-pressed="false">Atacantes</button><button class="projection-chip" type="button" data-projection-pos="TEC" aria-pressed="false">Técnicos</button></div><button class="projection-reset" id="projectionReset" type="button">Limpar filtros</button></div><div id="projectionEmpty" class="projection-empty" hidden><strong>Nenhum jogador encontrado</strong>Tente outra posição, clube ou nome. Use “Limpar filtros” para voltar ao ranking completo.</div><div id="projectionTable" class="scroll"></div></section>
 <section id="analise" class="page"><div class="hero"><h1>Raio-X da Rodada</h1><p class="lead">Confrontos, força ofensiva/defensiva e um destaque por posição de cada equipe.</p></div><h2>Confrontos</h2><div id="matches" class="match-grid"></div></section>
 <section id="historico" class="page"><div class="hero"><h1>Histórico do Time Sugerido</h1><p class="lead">A escalação só entra aqui quando há prova de que foi congelada antes da rodada, com mercado aberto. Depois comparamos projeção e pontuação real do mesmo time.</p></div><div class="legend"><span><i class="dot projdot"></i>Projetado</span><span><i class="dot realdot"></i>Real</span></div><canvas id="historyChart" width="1000" height="300"></canvas><div id="historyAudit" style="margin-top:12px"></div></section>
 <section id="metodologia" class="page method"><div class="hero"><h1>Metodologia</h1><p class="lead">Uma visão técnica do sistema: dados, corte temporal, modelos, scouts, contexto, validação, otimização e auditorias.</p></div><section><h2>1. Problema estatístico</h2><p>O objetivo não é adivinhar a pontuação final por média simples. O sistema estima o desempenho futuro usando apenas informação disponível antes do fechamento da rodada e transforma essas estimativas em uma escalação ótima sob restrições reais do Cartola.</p><div class="formula">Projeção = f(histórico até R-1, titularidade, minutos, adversário, mando, contexto, scouts esperados)</div></section><section><h2>2. Corte temporal e anti-vazamento</h2><p>Para projetar a rodada <b>R</b>, nenhum dado da própria rodada R ou posterior participa de features, calibração, hiperparâmetros ou validação. Auditorias automáticas interrompem a publicação quando encontram vazamento temporal.</p></section><section><h2>3. Universo e elegibilidade</h2><p>O universo é reconstruído a cada rodada. Status, posição, clube, preço, adversário, mando, média, jogos, titularidade e minutos esperados são tratados antes da projeção.</p><div id="methodStats" class="method-grid"></div></section><section><h2>4. Scouts esperados e explicabilidade</h2><p>O sistema estima scouts compatíveis com a posição e multiplica cada expectativa pelo peso oficial. Scouts sem sentido para a posição são bloqueados.</p><div class="formula">Pontos por scouts = Σ [ E(scoutᵢ | dados pré-rodada) × pesoCartola(scoutᵢ) ]</div></section><section><h2>5. Modelos candidatos</h2><p>O laboratório compara modelos baseados em scouts esperados, modelos diretos e combinações híbridas. Mando, adversário, descanso, calendário de copas, mudança de técnico, horário e clima entram por ablation e só ganham peso quando provam ganho fora da amostra.</p></section><section><h2>6. Validação walk-forward</h2><p>Em cada rodada de teste, o modelo só enxerga rodadas anteriores. As métricas incluem MAE, RMSE, viés e correlação, por posição e no conjunto, além de significância e controle de múltiplas comparações.</p><div class="formula">Treino: R1…R(k-1) → previsão: Rk → compara com real → avança</div></section><section><h2>7. Titularidade, minutos e risco</h2><p>Uma projeção alta sem expectativa de jogar não é útil. Titularidade e minutos esperados entram antes da rodada e a incerteza é traduzida em confiança.</p></section><section><h2>8. Contexto da rodada</h2><p>O mesmo atleta pode ser ótimo numa rodada e mediano em outra. O pipeline testa mando, força do adversário, pontos cedidos por posição, descanso, copas, técnico, horário e clima, sempre respeitando o corte temporal.</p></section><section><h2>9. Otimização da escalação</h2><p>O otimizador procura a maior soma projetada respeitando formação, patrimônio, elegibilidade e limite por clube. A solução exata é auditada contra MILP.</p><div class="formula">max Σ projeção(jogador) sujeito a formação + orçamento + elegibilidade + limite por clube</div></section><section><h2>10. Capitão, banco e Reserva de Luxo</h2><p>Capitão, reservas e Reserva de Luxo seguem regras determinísticas e passam por auditoria própria. Preço é restrição, nunca bônus de pontuação.</p></section><section><h2>11. Histórico prospectivo</h2><p>O Time Sugerido só entra no histórico quando existe prova explícita de que foi congelado com o mercado aberto. Sem prova, a rodada é rejeitada do histórico público; nunca refazemos o passado.</p></section><section><h2>12. Escala de processamento por rodada</h2><p>O volume varia conforme jogadores, scouts, modelos e ablations ativos. O painel abaixo usa números reais do payload atual.</p><div id="methodRuntime" class="method-grid"></div></section><section><h2>13. Exemplo didático</h2><p>Considere um lateral com boa chance de SG, histórico de desarmes e adversário que cede pontos à posição. Antes da rodada, o sistema estima cada scout, aplica pesos, combina as camadas validadas e produz projeção e confiança. O otimizador compara esse atleta com todas as alternativas elegíveis. Depois da rodada, o resultado real serve para auditoria e para as próximas rodadas — nunca para reescrever aquela previsão.</p></section></section>
@@ -453,6 +478,36 @@ const $=s=>document.querySelector(s);let D={},players=[],currentTeam=null,exclud
       wrap.append(search,results,advanced);
     });
   };
+})();
+
+
+/* DESIGN/PRODUTO V30: atalhos da interface; ranking, projeções e otimizador inalterados. */
+(function(){
+  const filter=document.getElementById('filterPos');
+  const club=document.getElementById('filterClub');
+  const search=document.getElementById('search');
+  const table=document.getElementById('projectionTable');
+  const count=document.getElementById('projectionCount');
+  const empty=document.getElementById('projectionEmpty');
+  const chips=Array.from(document.querySelectorAll('[data-projection-pos]'));
+  const syncChips=()=>chips.forEach(chip=>chip.setAttribute('aria-pressed',String(chip.dataset.projectionPos===filter.value)));
+  const syncResults=()=>{
+    const total=table.querySelectorAll('tbody tr').length;
+    count.textContent=total===1?'1 jogador exibido':total+' jogadores exibidos';
+    empty.hidden=total!==0;
+  };
+  chips.forEach(chip=>chip.addEventListener('click',()=>{
+    filter.value=chip.dataset.projectionPos;
+    filter.dispatchEvent(new Event('change',{bubbles:true}));
+  }));
+  filter.addEventListener('change',syncChips);
+  document.getElementById('projectionReset').addEventListener('click',()=>{
+    filter.value='';club.value='';search.value='';
+    filter.dispatchEvent(new Event('change',{bubbles:true}));
+    search.focus();
+  });
+  new MutationObserver(syncResults).observe(table,{childList:true});
+  syncChips();
 })();
 
 init();
