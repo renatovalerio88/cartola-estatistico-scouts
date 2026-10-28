@@ -29,6 +29,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          # Jobs enfileirados devem usar a main mais recente, não o SHA antigo do disparo.
+          ref: main
           fetch-depth: 0
 
       - uses: actions/setup-python@v5
