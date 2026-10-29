@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-10-28T16:28:08.913664+00:00",
+  "gerado_em": "2026-10-29T16:32:26.620362+00:00",
   "objetivo": "placar prospectivo puro do challenger CatBoost nested congelado antes da rodada",
   "protocolo": "cada sidecar e imutavel por SHA-256; previsao usa apenas informacao disponivel antes da rodada; resultado so entra depois de pontuados.json plausivelmente completo; nenhuma recalibracao retroativa",
   "modelo": "v3s_catboost_nested",
@@ -1039,13 +1039,135 @@
     {
       "temporada": 2026,
       "rodada": 33,
-      "status": "AGUARDANDO_RESULTADO",
-      "pontuados_disponiveis": 0,
-      "hash_validado": true
+      "status": "AVALIADA",
+      "hash_validado": true,
+      "jogadores_snapshot": 620,
+      "geral": {
+        "todos_snapshot": {
+          "n": 620,
+          "mae": 1.884702,
+          "rmse": 2.762094,
+          "bias_previsto_menos_real": 0.469546,
+          "correlacao_pearson": 0.129952,
+          "media_prevista": 1.477933,
+          "media_real": 1.008387
+        },
+        "somente_entrou_em_campo": {
+          "n": 159,
+          "mae": 3.222856,
+          "rmse": 4.551366,
+          "bias_previsto_menos_real": -2.246756,
+          "correlacao_pearson": 0.14599,
+          "media_prevista": 1.68532,
+          "media_real": 3.932075
+        }
+      },
+      "por_posicao": {
+        "ATA": {
+          "todos_snapshot": {
+            "n": 172,
+            "mae": 1.098492,
+            "rmse": 2.446876,
+            "bias_previsto_menos_real": -0.355661,
+            "correlacao_pearson": 0.219619,
+            "media_prevista": 0.489107,
+            "media_real": 0.844767
+          },
+          "somente_entrou_em_campo": {
+            "n": 41,
+            "mae": 3.128049,
+            "rmse": 4.857868,
+            "bias_previsto_menos_real": -2.785375,
+            "correlacao_pearson": 0.159077,
+            "media_prevista": 0.758528,
+            "media_real": 3.543902
+          }
+        },
+        "GOL": {
+          "todos_snapshot": {
+            "n": 43,
+            "mae": 3.375862,
+            "rmse": 3.677171,
+            "bias_previsto_menos_real": 2.482265,
+            "correlacao_pearson": 0.219275,
+            "media_prevista": 3.556684,
+            "media_real": 1.074419
+          },
+          "somente_entrou_em_campo": {
+            "n": 10,
+            "mae": 2.984166,
+            "rmse": 3.785197,
+            "bias_previsto_menos_real": -0.8583,
+            "correlacao_pearson": 0.432174,
+            "media_prevista": 3.7617,
+            "media_real": 4.62
+          }
+        },
+        "LAT": {
+          "todos_snapshot": {
+            "n": 107,
+            "mae": 2.462434,
+            "rmse": 2.757664,
+            "bias_previsto_menos_real": 1.238056,
+            "correlacao_pearson": 0.180798,
+            "media_prevista": 2.322168,
+            "media_real": 1.084112
+          },
+          "somente_entrou_em_campo": {
+            "n": 28,
+            "mae": 3.050825,
+            "rmse": 3.667847,
+            "bias_previsto_menos_real": -1.628047,
+            "correlacao_pearson": 0.164524,
+            "media_prevista": 2.51481,
+            "media_real": 4.142857
+          }
+        },
+        "MEI": {
+          "todos_snapshot": {
+            "n": 197,
+            "mae": 1.795662,
+            "rmse": 2.825409,
+            "bias_previsto_menos_real": 0.086983,
+            "correlacao_pearson": 0.118959,
+            "media_prevista": 1.224547,
+            "media_real": 1.137563
+          },
+          "somente_entrou_em_campo": {
+            "n": 58,
+            "mae": 3.340422,
+            "rmse": 4.811051,
+            "bias_previsto_menos_real": -2.46208,
+            "correlacao_pearson": -0.024874,
+            "media_prevista": 1.401713,
+            "media_real": 3.863793
+          }
+        },
+        "ZAG": {
+          "todos_snapshot": {
+            "n": 101,
+            "mae": 2.150361,
+            "rmse": 2.693063,
+            "bias_previsto_menos_real": 0.949968,
+            "correlacao_pearson": 0.310308,
+            "media_prevista": 1.876701,
+            "media_real": 0.926733
+          },
+          "somente_entrou_em_campo": {
+            "n": 22,
+            "mae": 3.417038,
+            "rmse": 4.590882,
+            "bias_previsto_menos_real": -2.093857,
+            "correlacao_pearson": 0.241473,
+            "media_prevista": 2.160689,
+            "media_real": 4.254545
+          }
+        }
+      }
     }
   ],
   "consolidado": {
-    "rodadas_avaliadas": 8,
+    "rodadas_avaliadas": 9,
     "rodadas": [
       25,
       26,
@@ -1054,19 +1176,20 @@
       29,
       30,
       31,
-      32
+      32,
+      33
     ],
     "todos_snapshot": {
-      "mae_medio_por_rodada": 2.188058,
-      "mae_ponderado_por_jogadores": 2.187318,
-      "rodadas": 8,
-      "jogadores_avaliados_soma": 4844
+      "mae_medio_por_rodada": 2.154352,
+      "mae_ponderado_por_jogadores": 2.152981,
+      "rodadas": 9,
+      "jogadores_avaliados_soma": 5464
     },
     "somente_entrou_em_campo": {
-      "mae_medio_por_rodada": 3.242422,
-      "mae_ponderado_por_jogadores": 3.241479,
-      "rodadas": 8,
-      "jogadores_avaliados_soma": 2397
+      "mae_medio_por_rodada": 3.240248,
+      "mae_ponderado_por_jogadores": 3.240321,
+      "rodadas": 9,
+      "jogadores_avaliados_soma": 2556
     },
     "status": "EVIDENCIA_PROSPECTIVA_EM_ACUMULO"
   },
