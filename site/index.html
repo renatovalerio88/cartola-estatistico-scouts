@@ -389,6 +389,10 @@ button:focus-visible,summary:focus-visible{outline:3px solid #57c9a3;outline-off
   .roundbadge{font-size:.61rem}
 }
 
+
+/* INTERACTIVE LINEUP BUILDER */
+.builder-pitch-wrap{margin:12px 0 16px}.builder-pitch-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 9px}.builder-pitch-title strong{font-size:1rem}.builder-pitch-title small{color:var(--muted)}.builder-pitch{background:linear-gradient(155deg,#217c56,#11603f);border-radius:17px;padding:18px 9px;position:relative;overflow:hidden;display:grid;gap:10px;box-shadow:0 10px 24px rgba(12,77,50,.16)}.builder-pitch:before{content:"";position:absolute;inset:10px;border:1px solid #ffffff50;pointer-events:none}.builder-pitch-row{position:relative;z-index:1;display:flex;justify-content:space-around;gap:4px}.builder-slot{flex:1;max-width:112px;min-width:0;background:transparent;border:0;color:#fff;cursor:pointer;display:grid;justify-items:center;gap:3px;padding:4px 1px;border-radius:9px}.builder-slot:hover,.builder-slot:focus-visible{background:#ffffff20;outline:2px solid #fff9}.builder-slot-ball{display:grid;place-items:center;width:43px;height:43px;border:2px dashed #ffffffb0;border-radius:50%;font-size:1.15rem;background:#ffffff24;font-weight:850}.builder-slot.filled .builder-slot-ball{background:#fff;border-style:solid;color:#11603f;font-size:.67rem}.builder-slot-name{font-size:.7rem;font-weight:750;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.builder-slot-score{font-size:.64rem;color:#d7ffdf}.builder-pitch-hint{font-size:.78rem;color:var(--muted);margin:7px 2px}.picker-card.is-target{border:2px solid var(--brand);box-shadow:0 0 0 3px #087b531c}@media(max-width:700px){.builder-pitch{gap:6px;padding:11px 5px}.builder-slot-ball{width:35px;height:35px}.builder-slot-name{font-size:.59rem}.builder-slot-score{font-size:.56rem}.builder-pitch-title{align-items:flex-start;flex-direction:column;gap:2px}}
+
 </style>
 </head>
 <body>
@@ -521,6 +525,53 @@ const $=s=>document.querySelector(s);let D={},players=[],currentTeam=null,exclud
       wrap.append(search,results,advanced);
     });
   };
+})();
+
+
+/* Interactive formation slots: reuse existing picker and optimizer without altering predictions. */
+(function(){
+ const host=document.getElementById('customPickers');
+ if(!host)return;
+ const wrap=document.createElement('section');wrap.className='builder-pitch-wrap';wrap.id='builderPitchWrap';
+ wrap.innerHTML='<div class="builder-pitch-title"><strong>Seu campo interativo</strong><small>Toque em uma posição para escolher o atleta</small></div><div id="builderPitch" class="builder-pitch" aria-label="Campo interativo de montagem do time"></div><p class="builder-pitch-hint">Jogadores selecionados ficam travados. Complete o restante com o otimizador.</p>';
+ host.before(wrap);
+ function paint(){
+  const pitch=document.getElementById('builderPitch');if(!pitch)return;
+  const formation=document.getElementById('customFormation')?.value||'auto';
+  const shape=formation==='auto'?'4-3-3':formation;
+  const parts=shape.split('-').map(Number);
+  const rows=[['ATA',parts[2]],['MEI',parts[1]],['LAT',Math.min(2,parts[0])],['ZAG',Math.max(0,parts[0]-Math.min(2,parts[0]))],['GOL',1],['TEC',1]];
+  pitch.replaceChildren();
+  for(const [pos,count] of rows){
+   if(!count)continue;
+   const row=document.createElement('div');row.className='builder-pitch-row';
+   for(let i=0;i<count;i++){
+    const id=(customForced[pos]||[])[i];
+    const p=players.find(x=>String(x.atleta_id)===String(id));
+    const button=document.createElement('button');button.type='button';button.className='builder-slot'+(p?' filled':'');
+    button.setAttribute('aria-label',p?'Alterar '+p.apelido+' em '+pos:'Escolher '+pos);
+    const ball=document.createElement('span');ball.className='builder-slot-ball';ball.textContent=p?pos:'+';
+    const name=document.createElement('span');name.className='builder-slot-name';name.textContent=p?.apelido||pos;
+    const score=document.createElement('span');score.className='builder-slot-score';score.textContent=p?fmt(p.projecao)+' pts':'Escolher';
+    button.append(ball,name,score);
+    button.onclick=()=>{
+      const card=[...host.querySelectorAll('.picker-card')].find(c=>c.querySelector('.custom-pick')?.dataset.pos===pos||c.querySelector('[data-remove-pos]')?.dataset.removePos===pos||c.querySelector('h3')?.textContent?.startsWith(({GOL:'Goleiros',LAT:'Laterais',ZAG:'Zagueiros',MEI:'Meias',ATA:'Atacantes',TEC:'Técnico'})[pos]));
+      if(!card)return;
+      host.querySelectorAll('.picker-card').forEach(c=>c.classList.remove('is-target'));
+      card.classList.add('is-target');card.scrollIntoView({behavior:'smooth',block:'center'});
+      const search=card.querySelector('.picker-search');
+      if(search)search.focus({preventScroll:true});
+      else card.querySelector('summary')?.click();
+    };
+    row.append(button);
+   }
+   pitch.append(row);
+  }
+ }
+ const old=renderCustomPickers;
+ renderCustomPickers=function(){old();paint();};
+ document.getElementById('customFormation')?.addEventListener('change',()=>requestAnimationFrame(paint));
+ paint();
 })();
 
 init();
