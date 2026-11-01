@@ -120,6 +120,27 @@
       #projecoes .projection-actions{margin-top:7px;gap:7px}
       #projecoes .projection-actions button{min-height:44px;padding:7px 10px;font-size:.73rem}
     }
+
+    /* V36: lista densa e legível: nome + confronto + KPIs + ações, sem card gigante. */
+    @media(max-width:700px){
+      #projecoes .projection-list{gap:5px!important}
+      #projecoes .projection-card{padding:9px 10px!important;border-radius:12px!important}
+      #projecoes .projection-head{align-items:center!important;gap:7px!important}
+      #projecoes .projection-name{font-size:.9rem!important;line-height:1.16!important}
+      #projecoes .projection-fixture{font-size:.65rem!important;margin:2px 0 6px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+      #projecoes .projection-kpis{display:grid!important;grid-template-columns:1.15fr 1fr .9fr!important;gap:0!important;border:0!important;background:transparent!important;border-radius:0!important;overflow:visible!important}
+      #projecoes .projection-kpi{padding:0 6px!important;min-width:0!important}
+      #projecoes .projection-kpi:first-child{padding-left:0!important}
+      #projecoes .projection-kpi:not(:last-child){border-right:1px solid #e5ece8!important}
+      #projecoes .projection-kpi small{font-size:.5rem!important;line-height:1.15!important}
+      #projecoes .projection-kpi b{font-size:.74rem!important;margin-top:2px!important;line-height:1.15!important}
+      #projecoes .projection-kpi .score{font-size:.92rem!important}
+      #projecoes .projection-signals{display:none!important}
+      #projecoes .projection-actions{display:flex!important;justify-content:flex-end!important;gap:6px!important;margin-top:7px!important}
+      #projecoes .projection-actions button{flex:0 0 auto!important;min-height:42px!important;padding:6px 12px!important;font-size:.72rem!important;border-radius:9px!important}
+      #projecoes .projection-actions .view-analysis{background:#e6f2ec!important;color:#126747!important}
+      #projecoes .projection-actions .add-monte{background:#0c7356!important;color:#fff!important;border-color:#0c7356!important}
+    }
   `;
 
   let sortMode = 'projection';
