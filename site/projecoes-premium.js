@@ -106,6 +106,20 @@
       #projecoes .confidence-audit{gap:8px;padding:9px 10px;font-size:.67rem}
       #projecoes .premium-proj-reset{min-height:40px;font-size:.72rem}
     }
+    /* V35: ranking compacto no celular; detalhes continuam em Ver análise. */
+    @media(max-width:700px){
+      #projecoes .projection-list{gap:6px}
+      #projecoes .projection-card{padding:10px 11px;border-radius:12px}
+      #projecoes .projection-name{font-size:.9rem;line-height:1.14}
+      #projecoes .projection-fixture{font-size:.67rem;margin:3px 0 6px}
+      #projecoes .projection-kpi{padding:6px 7px}
+      #projecoes .projection-kpi small{font-size:.52rem}
+      #projecoes .projection-kpi b{font-size:.77rem}
+      #projecoes .projection-kpi .score{font-size:.98rem}
+      #projecoes .projection-signals{display:none}
+      #projecoes .projection-actions{margin-top:7px;gap:7px}
+      #projecoes .projection-actions button{min-height:44px;padding:7px 10px;font-size:.73rem}
+    }
   `;
 
   let sortMode = 'projection';
