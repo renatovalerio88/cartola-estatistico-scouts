@@ -192,7 +192,7 @@ function refresh(){
   const f=document.getElementById('customFormation');if(f&&f.options[0])f.options[0].textContent='Melhor formação (automática)';
   setText(document.getElementById('buildCustom'),'Completar meu time');
   setText(document.querySelector('#monte .custom-help'),'Escolha quem você quer manter. Toque na busca e selecione o jogador; o modelo completa o restante dentro do patrimônio.');
-  budgetPanel();decorate();markUserPicked();compactBench();
+  budgetPanel();decorate();markUserPicked();compactBench();oneFieldRefresh();
 }
 function scheduleRefresh(ms=40){clearTimeout(refreshTimer);refreshTimer=setTimeout(refresh,ms)}
 async function loadPlayers(){
@@ -203,5 +203,200 @@ document.addEventListener('input',e=>{if(e.target&&e.target.id==='customBudget')
 document.addEventListener('change',e=>{if(e.target&&e.target.id==='customFormation')scheduleRefresh(30)});
 document.addEventListener('click',e=>{if(e.target&&e.target.closest&&e.target.closest('#monte'))scheduleRefresh(60);if(!(e.target&&e.target.closest&&e.target.closest('.picker-card')))document.querySelectorAll('.mp-results.open').forEach(x=>x.classList.remove('open'))});
 window.addEventListener('load',()=>{scheduleRefresh(120);setTimeout(refresh,500);setTimeout(refresh,1200)});
-injectStyle();loadPlayers();setTimeout(refresh,350);
+
+/* Single-field builder: UI only. The existing forced-selection and exact optimizer remain authoritative. */
+const ONE_FIELD_CSS = [
+'#monte>.hero,#monte .builder-bottom,#monte #customPickers,#monte .custom-help,#monte #mpBudget{display:none!important}',
+'#monte>.controls{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important;padding:11px!important;margin:8px 0 10px!important}',
+'#monte>.controls>.field{min-width:0}',
+'#monte .mp-actions{display:flex;gap:9px;margin:10px 0 6px}',
+'#monte .mp-actions .btn{flex:2;min-height:44px;font-size:.82rem}',
+'#monte .mp-actions .btn.alt{flex:1}',
+'#monte #builderPitchWrap{margin:5px 0 8px}',
+'#monte #builderPitchWrap .builder-pitch-title strong{font-size:1.15rem}',
+'#monte #builderPitchWrap .builder-pitch-title small{font-size:.73rem}',
+'#monte #builderPitchWrap .builder-pitch-hint{font-size:.68rem;margin:6px 2px}',
+'#monte .mp-legend{display:flex;gap:13px;align-items:center;flex-wrap:wrap;font-size:.66rem;color:#667b72;margin:0 0 8px}',
+'#monte .mp-legend span{display:inline-flex;align-items:center;gap:5px}',
+'#monte .mp-legend i{width:11px;height:11px;border-radius:50%;display:inline-block;border:2px solid #fff;box-shadow:0 0 0 1px #a8c1b5;background:#fff}',
+'#monte .mp-legend .mp-you i{border-color:#d7a83d;box-shadow:0 0 0 1px #d7a83d}',
+'#monte .builder-slot.user-picked .builder-slot-ball{border:3px solid #e4b64e!important;box-shadow:0 0 0 2px rgba(255,255,255,.22)}',
+'#monte .builder-slot.filled .builder-slot-name{white-space:normal;line-height:1.1;overflow:visible}',
+'#monte #builderPitch.mp-completed{display:block;min-height:455px;padding:18px 12px;box-shadow:0 12px 28px rgba(12,77,50,.15)}',
+'#monte #builderPitch.mp-completed .line{min-height:84px}',
+'#monte #builderPitch.mp-completed .player-ball.user-picked .ball{outline:3px solid #e4b64e!important;box-shadow:0 0 0 5px rgba(255,255,255,.18)}',
+'#monte #builderPitch.mp-completed .player-ball.model-picked .ball{outline:2px solid rgba(255,255,255,.65)}',
+'#monte #builderPitch.mp-completed .player-ball{cursor:pointer}',
+'#monte #customResult #customPitch,#monte #customResult .mp-selected-note{display:none!important}',
+'#monte .mp-sheet-overlay{position:fixed;inset:0;z-index:1001;background:rgba(9,31,25,.55)}',
+'#monte .mp-sheet{position:fixed;left:0;right:0;bottom:0;z-index:1002;max-width:620px;margin:auto;max-height:82dvh;display:flex;flex-direction:column;background:#fff;border-radius:22px 22px 0 0;padding:16px;box-shadow:0 -10px 45px rgba(0,0,0,.18)}',
+'#monte .mp-sheet-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}',
+'#monte .mp-sheet-head strong{font-size:1rem;color:#163d2d}',
+'#monte .mp-sheet-head button{border:0;background:#eff5f1;border-radius:50%;width:36px;height:36px;font-size:1.25rem;cursor:pointer}',
+'#monte .mp-sheet input{width:100%;min-height:44px;margin-bottom:8px;font-size:.9rem}',
+'#monte .mp-sheet-list{overflow-y:auto;min-height:60px;overscroll-behavior:contain}',
+'#monte .mp-sheet-option{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 8px;padding:11px 4px;border:0;border-bottom:1px solid #e8efeb;background:#fff;text-align:left;color:#173e2d;cursor:pointer}',
+'#monte .mp-sheet-option b{font-size:.85rem}',
+'#monte .mp-sheet-option small{font-size:.68rem;color:#6a7f75;grid-column:1}',
+'#monte .mp-sheet-option strong{grid-column:2;grid-row:1/3;align-self:center;font-size:.8rem;color:#126747}',
+'#monte .mp-sheet-remove{border:0;border-radius:10px;background:#fff0eb;color:#9d493a;padding:10px;font-weight:750;margin-top:8px;cursor:pointer}',
+'@media(max-width:520px){#monte>.controls{padding:8px!important}#monte .mp-actions .btn{font-size:.74rem!important;padding:9px 8px!important}#monte #builderPitch.mp-completed{min-height:420px;padding:13px 6px}#monte #builderPitch.mp-completed .line{min-height:78px}#monte .mp-sheet{padding:14px 13px 20px}}'
+].join('\n');
+let mpSheet = null;
+let mpTarget = null;
+function slotPos(node){
+  const ball=node.querySelector('.builder-slot-ball');
+  const name=node.querySelector('.builder-slot-name');
+  const value=(ball&&ball.textContent!=='+'?ball.textContent:name&&name.textContent)||'';
+  return ['ATA','MEI','LAT','ZAG','GOL','TEC'].find(p=>value.trim()===p)||null;
+}
+function clearOldResult(){
+  const result=document.getElementById('customResult');
+  if(result&&result.innerHTML)result.innerHTML='';
+  const pitch=document.getElementById('builderPitch');
+  if(pitch){pitch.classList.remove('pitch','mp-completed');delete pitch.dataset.mpSource;}
+}
+function oneFieldRefresh(){
+  const pitch=document.getElementById('builderPitch');
+  if(!pitch)return;
+  const source=document.getElementById('customPitch');
+  const hint=document.querySelector('#builderPitchWrap .builder-pitch-hint');
+  if(source&&source.querySelector('.player-ball')){
+    const html=source.innerHTML;
+    if(pitch.dataset.mpSource!==html||!pitch.classList.contains('mp-completed')){
+      pitch.innerHTML=html;
+      pitch.dataset.mpSource=html;
+    }
+    pitch.classList.add('pitch','mp-completed');
+    const chosen=new Set(pickedPlayers().map(p=>String(p.atleta_id)));
+    pitch.querySelectorAll('.player-ball').forEach(el=>{
+      const yours=chosen.has(String(el.dataset.id));
+      el.classList.toggle('user-picked',yours);
+      el.classList.toggle('model-picked',!yours);
+      el.setAttribute('title',yours?'Escolhido por você · toque para alterar':'Escolhido pelo modelo · toque para alterar');
+      el.setAttribute('role','button');el.setAttribute('tabindex','0');
+    });
+    if(hint)setText(hint,'Toque em um jogador para alterar sua escolha. Borda dourada: você; branca: modelo.');
+  }else{
+    pitch.classList.remove('pitch','mp-completed');delete pitch.dataset.mpSource;
+    pitch.querySelectorAll('.builder-slot').forEach(el=>el.classList.toggle('user-picked',el.classList.contains('filled')));
+    if(hint)setText(hint,'Toque em uma posição, escolha o atleta e complete as vagas restantes.');
+  }
+}
+function closeOneFieldPicker(){
+  if(mpSheet){mpSheet.overlay.remove();mpSheet.panel.remove();mpSheet=null;mpTarget=null;}
+}
+function cardForPosition(pos){
+  return [...document.querySelectorAll('#customPickers .picker-card')].find(c=>cardPosition(c)===pos);
+}
+function chooseOneFieldPlayer(p){
+  if(!mpTarget)return;
+  const pos=mpTarget.pos, oldId=mpTarget.oldId;
+  let card=cardForPosition(pos);
+  if(!card)return;
+  const chosen=pickedPlayers().filter(x=>x.posicao===pos);
+  let removeId=oldId&&chosen.some(x=>String(x.atleta_id)===String(oldId))?oldId:null;
+  if(!removeId&&mpTarget.fromSlot&&chosen[mpTarget.index])removeId=chosen[mpTarget.index].atleta_id;
+  if(removeId){
+    const remove=[...card.querySelectorAll('[data-remove-id]')].find(x=>String(x.dataset.removeId)===String(removeId));
+    if(remove)remove.click();
+  }
+  card=cardForPosition(pos);
+  const select=card&&card.querySelector('select.custom-pick');
+  const add=card&&card.querySelector('.add-pick');
+  if(!select||!add){console.warn('Monte: vaga indisponível para',pos);return;}
+  select.value=String(p.atleta_id);
+  if(select.value!==String(p.atleta_id)){console.warn('Monte: jogador indisponível',p.atleta_id);return;}
+  add.click();
+  clearOldResult();
+  closeOneFieldPicker();
+  scheduleRefresh(70);
+}
+function openOneFieldPicker(pos,index,oldId,fromSlot){
+  if(!pos)return;
+  closeOneFieldPicker();
+  mpTarget={pos,index,oldId,fromSlot};
+  const overlay=document.createElement('div');overlay.className='mp-sheet-overlay';
+  const panel=document.createElement('div');panel.className='mp-sheet';panel.setAttribute('role','dialog');panel.setAttribute('aria-modal','true');panel.setAttribute('aria-label','Escolher jogador '+pos);
+  const head=document.createElement('div');head.className='mp-sheet-head';
+  const title=document.createElement('strong');title.textContent='Escolher '+(labels[pos]||pos);
+  const close=document.createElement('button');close.type='button';close.textContent='×';close.setAttribute('aria-label','Fechar');close.onclick=closeOneFieldPicker;
+  head.append(title,close);
+  const input=document.createElement('input');input.type='search';input.placeholder='Buscar nome ou clube';input.setAttribute('aria-label','Buscar jogador');
+  const list=document.createElement('div');list.className='mp-sheet-list';
+  const render=()=>{
+    list.replaceChildren();
+    const found=searchResults(pos,norm(input.value)).slice(0,15);
+    if(!found.length){const empty=document.createElement('p');empty.textContent=players.length?'Nenhum jogador disponível.':'Carregando jogadores...';list.append(empty);}
+    found.forEach(p=>{
+      const button=document.createElement('button');button.type='button';button.className='mp-sheet-option';
+      const name=document.createElement('b');name.textContent=p.apelido;
+      const detail=document.createElement('small');detail.textContent=(p.sigla_clube||'—')+' · '+money(p.preco)+' · '+statusText(p);
+      const projection=document.createElement('strong');projection.textContent=pts(p.projecao);
+      button.append(name,detail,projection);button.onclick=()=>chooseOneFieldPlayer(p);list.append(button);
+    });
+  };
+  input.addEventListener('input',render);
+  panel.append(head,input,list);
+  const selected=oldId&&pickedPlayers().some(p=>String(p.atleta_id)===String(oldId));
+  if(selected){
+    const remove=document.createElement('button');remove.className='mp-sheet-remove';remove.type='button';remove.textContent='Remover minha escolha';
+    remove.onclick=()=>{
+      const card=cardForPosition(pos);
+      const button=card&&[...card.querySelectorAll('[data-remove-id]')].find(b=>String(b.dataset.removeId)===String(oldId));
+      if(button)button.click();
+      clearOldResult();closeOneFieldPicker();scheduleRefresh(60);
+    };
+    panel.append(remove);
+  }
+  document.getElementById('monte').append(overlay,panel);
+  overlay.onclick=closeOneFieldPicker;
+  panel.addEventListener('keydown',e=>{if(e.key==='Escape'){e.preventDefault();closeOneFieldPicker();}});
+  mpSheet={overlay,panel};
+  render();input.focus({preventScroll:true});
+}
+function initOneField(){
+  const root=document.getElementById('monte');
+  const wrap=document.getElementById('builderPitchWrap');
+  const pitch=document.getElementById('builderPitch');
+  if(!root||!wrap||!pitch||document.getElementById('mpOneFieldStyle'))return;
+  const style=document.createElement('style');style.id='mpOneFieldStyle';style.textContent=ONE_FIELD_CSS;document.head.append(style);
+  const heading=wrap.querySelector('.builder-pitch-title strong');
+  if(heading)heading.textContent='Monte seu Time';
+  const subtitle=wrap.querySelector('.builder-pitch-title small');
+  if(subtitle)subtitle.textContent='Toque em uma posição para escolher';
+  const legend=document.createElement('div');legend.className='mp-legend';legend.innerHTML='<span class="mp-you"><i></i>Escolhido por você</span><span><i></i>Escolhido pelo modelo</span>';
+  const title=wrap.querySelector('.builder-pitch-title');if(title)title.after(legend);
+  const actions=document.createElement('div');actions.className='mp-actions';
+  wrap.after(actions);
+  ['buildCustom','clearCustom'].forEach(id=>{const el=document.getElementById(id);if(el)actions.append(el);});
+  wrap.addEventListener('click',e=>{
+    const el=e.target.closest('.builder-slot,.player-ball');
+    if(!el||!pitch.contains(el))return;
+    e.preventDefault();e.stopImmediatePropagation();
+    if(el.classList.contains('builder-slot')){
+      const pos=slotPos(el);if(!pos)return;
+      const same=[...pitch.querySelectorAll('.builder-slot')].filter(n=>slotPos(n)===pos);
+      const index=same.indexOf(el);
+      const chosen=pickedPlayers().filter(p=>p.posicao===pos);
+      const old=el.classList.contains('filled')?chosen[index]:null;
+      openOneFieldPicker(pos,index,old&&old.atleta_id,true);
+    }else{
+      const player=players.find(p=>String(p.atleta_id)===String(el.dataset.id));
+      const pos=player&&player.posicao;if(!pos)return;
+      const old=pickedPlayers().some(p=>String(p.atleta_id)===String(player.atleta_id))?player.atleta_id:null;
+      openOneFieldPicker(pos,0,old,false);
+    }
+  },true);
+  wrap.addEventListener('keydown',e=>{
+    if((e.key==='Enter'||e.key===' ')&&e.target.classList.contains('player-ball')){e.preventDefault();e.target.click();}
+  });
+  document.getElementById('customFormation')?.addEventListener('change',()=>{clearOldResult();scheduleRefresh(70);},true);
+  document.getElementById('customBudget')?.addEventListener('input',()=>{clearOldResult();scheduleRefresh(70);},true);
+  document.getElementById('clearCustom')?.addEventListener('click',()=>scheduleRefresh(70));
+  document.getElementById('buildCustom')?.addEventListener('click',()=>scheduleRefresh(70));
+  oneFieldRefresh();
+}
+
+injectStyle();initOneField();loadPlayers();setTimeout(refresh,350);
 })();
