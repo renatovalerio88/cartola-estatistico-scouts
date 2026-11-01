@@ -56,7 +56,7 @@ window.fetch=function(input,init){
 function loadEligibilityFix(){
   if(document.querySelector('script[data-eligibilidade-ui]'))return;
   const s=document.createElement('script');
-  s.src='eligibilidade-ui.js?v=20260919a';
+  s.src='eligibilidade-ui.js?v=20261101a';
   s.defer=true;
   s.dataset.eligibilidadeUi='1';
   document.head.appendChild(s);
