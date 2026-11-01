@@ -105,10 +105,12 @@ jobs:
           test ! -f site/historico-final.js
           grep -q 'historico-geral.js?v=20261026v34' site/index.html
           grep -q 'projecoes-premium.js?v=20261026v32' site/index.html
+          grep -q 'monte-premium.js?v=20261101a' site/index.html
           node --check site/data-fetch-bridge.js
           node --check site/optimizer.js
           node --check site/time-sugerido-final.js
           node --check site/monte-premium.js
+          node --check site/eligibilidade-ui.js
           node --check site/projecoes-premium.js
           node --check site/analise-premium.js
           node --check site/historico-geral.js
@@ -138,9 +140,15 @@ jobs:
           grep -q 'data-fetch-bridge.js' /tmp/index.html
           grep -q 'historico-geral.js?v=20261026v34' /tmp/index.html
           grep -q 'projecoes-premium.js?v=20261026v32' /tmp/index.html
+          grep -q 'monte-premium.js?v=20261101a' /tmp/index.html
           ! grep -q 'historico-premium.js' /tmp/index.html
           ! grep -q 'historico-final.js' /tmp/index.html
           for page_id in time monte projecoes analise historico metodologia; do grep -q "id=\"${page_id}\"" /tmp/index.html; done
+          curl -L -sS --fail -o /tmp/monte-premium.js "${base}monte-premium.js?v=20261101a&smoke=${GITHUB_RUN_ID}"
+          grep -q 'mpOneFieldStyle' /tmp/monte-premium.js
+          grep -q 'mp-completed' /tmp/monte-premium.js
+          curl -L -sS --fail -o /tmp/eligibilidade-ui.js "${base}eligibilidade-ui.js?v=20261101a&smoke=${GITHUB_RUN_ID}"
+          grep -Fq 'jogadores(?:\s+disponíveis)*' /tmp/eligibilidade-ui.js
           curl -L -sS --fail -o /tmp/projecoes-premium.js "${base}projecoes-premium.js?v=20261026v32&smoke=${GITHUB_RUN_ID}"
           grep -q 'premium-proj-reset' /tmp/projecoes-premium.js
           grep -q 'aria-pressed' /tmp/projecoes-premium.js
