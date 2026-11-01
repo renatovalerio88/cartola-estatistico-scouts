@@ -52,7 +52,7 @@ function cleanProjections(){
   const audit=document.getElementById('confidenceAudit');
   if(audit&&cards.length){
     const first=audit.querySelector('span');
-    if(first)first.innerHTML=first.innerHTML.replace(/^<b>\d+<\/b> jogadores/,`<b>${cards.length}</b> jogadores disponíveis`);
+    if(first)first.innerHTML=first.innerHTML.replace(/^<b>\d+<\/b>\s*jogadores(?:\s+disponíveis)*/i,`<b>${cards.length}</b> jogadores disponíveis`);
   }
 }
 
