@@ -241,6 +241,13 @@ const ONE_FIELD_CSS = [
 '#monte .mp-sheet-option strong{grid-column:2;grid-row:1/3;align-self:center;font-size:.8rem;color:#126747}',
 '#monte .mp-sheet-remove{border:0;border-radius:10px;background:#fff0eb;color:#9d493a;padding:10px;font-weight:750;margin-top:8px;cursor:pointer}',
 '@media(max-width:520px){#monte>.controls{padding:8px!important}#monte .mp-actions .btn{font-size:.74rem!important;padding:9px 8px!important}#monte #builderPitch.mp-completed{min-height:420px;padding:13px 6px}#monte #builderPitch.mp-completed .line{min-height:78px}#monte .mp-sheet{padding:14px 13px 20px}}'
+,
+'#monte #builderPitch .mp-defense-row{justify-content:space-between;gap:0}',
+'#monte #builderPitch .mp-defense-row>.builder-slot{flex:1;max-width:none}',
+'#monte #builderPitch .mp-keeper-row{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));align-items:start;justify-items:center}',
+'#monte #builderPitch .mp-keeper-row>.builder-slot:first-child,#monte #builderPitch .mp-keeper-row>.player-ball:first-child{grid-column:1}',
+'#monte #builderPitch .mp-keeper-row>.builder-slot:last-child,#monte #builderPitch .mp-keeper-row>.player-ball:last-child{grid-column:2}',
+'#monte #builderPitch.mp-completed .mp-keeper-row{min-height:98px}'
 ].join('\n');
 let mpSheet = null;
 let mpTarget = null;
@@ -255,6 +262,36 @@ function clearOldResult(){
   if(result&&result.innerHTML)result.innerHTML='';
   const pitch=document.getElementById('builderPitch');
   if(pitch){pitch.classList.remove('pitch','mp-completed');delete pitch.dataset.mpSource;}
+}
+function alignLineup(pitch,completed){
+  if(completed){
+    const lines=[...pitch.querySelectorAll(':scope > .line')];
+    const hasPos=(node,pos)=>[...node.querySelectorAll('.player-ball .ball')].some(el=>new RegExp('\\b'+pos+'\\b').test(el.textContent||''));
+    const defense=lines.find(row=>hasPos(row,'LAT')&&hasPos(row,'ZAG'));
+    if(defense){
+      const nodes=[...defense.children];const lat=nodes.filter(n=>hasPos(n,'LAT'));const zag=nodes.filter(n=>hasPos(n,'ZAG'));
+      if(lat.length===2)defense.replaceChildren(lat[0],...zag,lat[1]);
+      defense.classList.add('mp-defense-row');
+    }
+    const keeper=lines.find(row=>hasPos(row,'GOL'));
+    const coach=lines.find(row=>hasPos(row,'TEC'));
+    if(keeper&&coach&&keeper!==coach){keeper.prepend(...coach.children);coach.remove();}
+    if(keeper)keeper.classList.add('mp-keeper-row');
+    return;
+  }
+  const rows=[...pitch.querySelectorAll(':scope > .builder-pitch-row')];
+  const position=row=>slotPos(row.querySelector('.builder-slot')||row);
+  const lateral=rows.find(row=>position(row)==='LAT');
+  const zagueiro=rows.find(row=>position(row)==='ZAG');
+  if(lateral&&zagueiro&&lateral!==zagueiro){
+    const lat=[...lateral.children];const zag=[...zagueiro.children];
+    if(lat.length===2)lateral.replaceChildren(lat[0],...zag,lat[1]);
+    else lateral.append(...zag);
+    zagueiro.remove();lateral.classList.add('mp-defense-row');
+  }
+  const keeper=rows.find(row=>position(row)==='GOL');
+  const coach=rows.find(row=>position(row)==='TEC');
+  if(keeper&&coach&&keeper!==coach){keeper.prepend(...coach.children);coach.remove();keeper.classList.add('mp-keeper-row');}
 }
 function oneFieldRefresh(){
   const pitch=document.getElementById('builderPitch');
@@ -276,9 +313,11 @@ function oneFieldRefresh(){
       el.setAttribute('title',yours?'Escolhido por você · toque para alterar':'Escolhido pelo modelo · toque para alterar');
       el.setAttribute('role','button');el.setAttribute('tabindex','0');
     });
+    alignLineup(pitch,true);
     if(hint)setText(hint,'Toque em um jogador para alterar sua escolha. Borda dourada: você; branca: modelo.');
   }else{
     pitch.classList.remove('pitch','mp-completed');delete pitch.dataset.mpSource;
+    alignLineup(pitch,false);
     pitch.querySelectorAll('.builder-slot').forEach(el=>el.classList.toggle('user-picked',el.classList.contains('filled')));
     if(hint)setText(hint,'Toque em uma posição, escolha o atleta e complete as vagas restantes.');
   }
