@@ -158,6 +158,27 @@
       #projecoes .projection-actions button{min-height:36px!important;padding:5px 10px!important;font-size:.68rem!important}
     }
 
+    /* V38: cards mobile com acoes em coluna lateral, sem linha extra. */
+    @media(max-width:700px){
+      #projecoes .projection-list{gap:5px!important}
+      #projecoes .projection-card{display:grid!important;grid-template-columns:minmax(0,1fr) 96px!important;grid-template-rows:auto auto auto!important;column-gap:9px!important;row-gap:2px!important;padding:9px 10px!important;min-height:0!important}
+      #projecoes .projection-head{grid-column:1!important;grid-row:1!important;padding-right:0!important;min-width:0!important}
+      #projecoes .projection-name{font-size:.85rem!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+      #projecoes .projection-fixture{grid-column:1!important;grid-row:2!important;margin:0!important;font-size:.62rem!important}
+      #projecoes .projection-kpis{grid-column:1!important;grid-row:3!important;grid-template-columns:1.15fr 1fr .9fr!important;margin-top:3px!important}
+      #projecoes .projection-kpi{padding:0 3px!important}
+      #projecoes .projection-kpi:first-child{padding-left:0!important}
+      #projecoes .projection-kpi small{font-size:.43rem!important}
+      #projecoes .projection-kpi b{font-size:.67rem!important}
+      #projecoes .projection-kpi .score{font-size:.78rem!important}
+      #projecoes .projection-actions{grid-column:2!important;grid-row:1 / 4!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;justify-content:flex-end!important;gap:5px!important;margin:17px 0 0!important}
+      #projecoes .projection-actions button{width:100%!important;min-height:31px!important;padding:5px 3px!important;font-size:.61rem!important;white-space:nowrap!important}
+      #projecoes .projection-rank{top:7px!important;right:10px!important}
+      #projecoes .pos-chip{min-height:34px!important;padding:6px 10px!important;font-size:.68rem!important}
+      #projecoes .confidence-audit{padding:6px 8px!important;gap:5px!important}
+      #projecoes .premium-proj-reset{min-height:30px!important;padding:4px 8px!important;font-size:.64rem!important}
+    }
+
   `;
 
   let sortMode = 'projection';
