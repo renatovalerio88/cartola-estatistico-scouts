@@ -141,6 +141,23 @@
       #projecoes .projection-actions .view-analysis{background:#e6f2ec!important;color:#126747!important}
       #projecoes .projection-actions .add-monte{background:#0c7356!important;color:#fff!important;border-color:#0c7356!important}
     }
+
+    /* V37: último ajuste de densidade mobile; mantém ações e dados essenciais. */
+    @media(max-width:700px){
+      #projecoes .projection-list{gap:4px!important}
+      #projecoes .projection-card{padding:7px 10px!important;border-radius:10px!important}
+      #projecoes .projection-rank{top:7px!important;right:8px!important;height:20px!important;min-width:20px!important}
+      #projecoes .projection-head{gap:6px!important}
+      #projecoes .projection-name{font-size:.86rem!important;line-height:1.12!important}
+      #projecoes .projection-fixture{margin:1px 0 4px!important;font-size:.62rem!important}
+      #projecoes .projection-kpi{padding:0 6px!important}
+      #projecoes .projection-kpi small{font-size:.46rem!important}
+      #projecoes .projection-kpi b{font-size:.72rem!important}
+      #projecoes .projection-kpi .score{font-size:.87rem!important}
+      #projecoes .projection-actions{margin-top:4px!important;gap:5px!important}
+      #projecoes .projection-actions button{min-height:36px!important;padding:5px 10px!important;font-size:.68rem!important}
+    }
+
   `;
 
   let sortMode = 'projection';
