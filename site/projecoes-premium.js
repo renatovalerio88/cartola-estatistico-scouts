@@ -179,6 +179,30 @@
       #projecoes .premium-proj-reset{min-height:30px!important;padding:4px 8px!important;font-size:.64rem!important}
     }
 
+    /* V39: lista realmente compacta; cabe mais ranking na primeira dobra. */
+    @media(max-width:700px){
+      #projecoes .hero{display:none!important}
+      #projecoes .projection-toolbar{margin:5px 0 3px!important;gap:4px!important}
+      #projecoes .projection-toolbar .field label{font-size:.58rem!important;margin-bottom:2px!important}
+      #projecoes .projection-toolbar input,#projecoes .projection-toolbar select{min-height:32px!important;padding:4px 8px!important}
+      #projecoes .pos-chips{padding:0 0 3px!important;gap:5px!important}
+      #projecoes .pos-chip{min-height:31px!important;padding:4px 9px!important}
+      #projecoes .confidence-audit{display:flex!important;flex-wrap:nowrap!important;gap:4px!important;margin:0 0 5px!important;padding:5px 7px!important;font-size:.58rem!important}
+      #projecoes .confidence-audit .audit-warning{display:none!important}
+      #projecoes .premium-proj-reset{min-height:27px!important;padding:3px 6px!important;font-size:.58rem!important}
+      #projecoes .projection-card{grid-template-columns:minmax(0,1fr) 88px!important;padding:7px 9px!important;column-gap:6px!important;row-gap:0!important}
+      #projecoes .projection-list{gap:4px!important}
+      #projecoes .projection-head{gap:5px!important}
+      #projecoes .projection-name{font-size:.82rem!important}
+      #projecoes .projection-fixture{font-size:.59rem!important;line-height:1.1!important}
+      #projecoes .projection-kpis{margin-top:1px!important}
+      #projecoes .projection-kpi small{font-size:.41rem!important}
+      #projecoes .projection-kpi b{font-size:.64rem!important;margin-top:1px!important}
+      #projecoes .projection-kpi .score{font-size:.74rem!important}
+      #projecoes .projection-actions{gap:3px!important;margin:14px 0 0!important}
+      #projecoes .projection-actions button{min-height:29px!important;padding:4px 2px!important;font-size:.58rem!important}
+    }
+
   `;
 
   let sortMode = 'projection';
@@ -305,7 +329,7 @@
     list.forEach(p=>{ const k=getConfidence(p).label; dist[k]=(dist[k]||0)+1; });
     const n = Math.max(1,list.length);
     const lowPct = Math.round((dist.Baixa||0)*100/n);
-    box.innerHTML = `<span><b>${list.length}</b> jogadores · Confiança: <b>${dist.Alta||0}</b> alta · <b>${dist['Média']||0}</b> média · <b>${dist.Baixa||0}</b> baixa</span>${lowPct>=70?`<span class="audit-warning">⚠ ${lowPct}% com confiança baixa — régua mantida, sem recalibração artificial.</span>`:''}`;
+    box.innerHTML = `<span><b>${list.length}</b> no ranking · Confiança: ${dist.Alta||0} alta · ${dist['Média']||0} média · ${dist.Baixa||0} baixa</span>${lowPct>=70?`<span class="audit-warning" title="A confiança não foi recalibrada artificialmente.">⚠ Predomina confiança baixa</span>`:''}`;
     const reset = document.createElement('button');
     reset.type = 'button';
     reset.className = 'premium-proj-reset';
