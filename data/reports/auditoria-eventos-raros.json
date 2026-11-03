@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-02T19:40:14.843806+00:00",
+  "gerado_em": "2026-11-03T17:15:22.906555+00:00",
   "objetivo": "Complementar MAE/RMSE para scouts raros. MAE pode favorecer previsões quase-zero; esta auditoria mede ocorrência, calibração e discriminação sem alterar o ranking principal.",
   "protocolo": "Mesmos folds walk-forward do campeonato; P(evento>=1)=1-exp(-lambda_prevista); nenhum dado da rodada teste entra no treino.",
   "criterio_evento_raro": {
@@ -19,14 +19,14 @@
   "vitorias_average_precision": {
     "ewma": 7,
     "ridge": 7,
-    "random_forest": 5,
+    "gradient_boosting": 5,
     "bayesian_ridge": 4,
     "extra_trees": 4,
-    "gradient_boosting": 4,
     "hist_gradient_boosting": 4,
     "poisson": 4,
-    "negative_binomial": 2,
-    "elastic_net": 1
+    "negative_binomial": 3,
+    "elastic_net": 2,
+    "random_forest": 2
   },
   "resultados": [
     {
@@ -113,10 +113,10 @@
           "calibration_bias": -0.002203
         },
         "random_forest": {
-          "brier_evento": 0.004306,
+          "brier_evento": 0.004243,
           "average_precision": 0.004057,
-          "prob_media": 0.002512,
-          "calibration_bias": -0.001545
+          "prob_media": 0.002225,
+          "calibration_bias": -0.001831
         },
         "extra_trees": {
           "brier_evento": 0.00414,
@@ -244,10 +244,10 @@
           "calibration_bias": 0.007124
         },
         "random_forest": {
-          "brier_evento": 0.043555,
-          "average_precision": 0.111119,
-          "prob_media": 0.067276,
-          "calibration_bias": 0.023657
+          "brier_evento": 0.043203,
+          "average_precision": 0.120837,
+          "prob_media": 0.064835,
+          "calibration_bias": 0.021216
         },
         "extra_trees": {
           "brier_evento": 0.041594,
@@ -305,8 +305,8 @@
         "gradient_boosting",
         "shrinkage_eb",
         "extra_trees",
-        "random_forest",
         "hist_gradient_boosting",
+        "random_forest",
         "ewma",
         "media3",
         "negative_binomial"
@@ -375,10 +375,10 @@
           "calibration_bias": -0.001471
         },
         "random_forest": {
-          "brier_evento": 0.050697,
-          "average_precision": 0.042947,
-          "prob_media": 0.079139,
-          "calibration_bias": 0.032211
+          "brier_evento": 0.051487,
+          "average_precision": 0.042897,
+          "prob_media": 0.082301,
+          "calibration_bias": 0.035373
         },
         "extra_trees": {
           "brier_evento": 0.04798,
@@ -435,8 +435,8 @@
         "negative_binomial",
         "ridge",
         "shrinkage_eb",
-        "extra_trees",
         "random_forest",
+        "extra_trees",
         "hist_gradient_boosting",
         "gradient_boosting",
         "ewma",
@@ -450,8 +450,8 @@
         "bayesian_ridge",
         "negative_binomial",
         "ridge",
-        "media3",
         "random_forest",
+        "media3",
         "extra_trees",
         "hist_gradient_boosting",
         "gradient_boosting"
@@ -506,10 +506,10 @@
           "calibration_bias": 0.000199
         },
         "random_forest": {
-          "brier_evento": 0.063521,
-          "average_precision": 0.085054,
-          "prob_media": 0.078163,
-          "calibration_bias": 0.012196
+          "brier_evento": 0.063191,
+          "average_precision": 0.087804,
+          "prob_media": 0.076866,
+          "calibration_bias": 0.010899
         },
         "extra_trees": {
           "brier_evento": 0.063398,
@@ -637,10 +637,10 @@
           "calibration_bias": 0.020094
         },
         "random_forest": {
-          "brier_evento": 0.125411,
-          "average_precision": 0.171494,
-          "prob_media": 0.185437,
-          "calibration_bias": 0.048074
+          "brier_evento": 0.125419,
+          "average_precision": 0.169187,
+          "prob_media": 0.183228,
+          "calibration_bias": 0.045866
         },
         "extra_trees": {
           "brier_evento": 0.12126,
@@ -649,10 +649,10 @@
           "calibration_bias": 0.022972
         },
         "gradient_boosting": {
-          "brier_evento": 0.117992,
-          "average_precision": 0.171745,
-          "prob_media": 0.139976,
-          "calibration_bias": 0.002613
+          "brier_evento": 0.117991,
+          "average_precision": 0.171773,
+          "prob_media": 0.139973,
+          "calibration_bias": 0.00261
         },
         "hist_gradient_boosting": {
           "brier_evento": 0.129979,
@@ -768,10 +768,10 @@
           "calibration_bias": 0.004356
         },
         "random_forest": {
-          "brier_evento": 0.006892,
-          "average_precision": 0.014056,
-          "prob_media": 0.012568,
-          "calibration_bias": 0.006483
+          "brier_evento": 0.007023,
+          "average_precision": 0.012767,
+          "prob_media": 0.013209,
+          "calibration_bias": 0.007124
         },
         "extra_trees": {
           "brier_evento": 0.006371,
@@ -899,10 +899,10 @@
           "calibration_bias": 0.018312
         },
         "random_forest": {
-          "brier_evento": 0.073941,
-          "average_precision": 0.076538,
-          "prob_media": 0.099189,
-          "calibration_bias": 0.024876
+          "brier_evento": 0.073409,
+          "average_precision": 0.08128,
+          "prob_media": 0.098494,
+          "calibration_bias": 0.024181
         },
         "extra_trees": {
           "brier_evento": 0.072732,
@@ -1030,10 +1030,10 @@
           "calibration_bias": -0.001771
         },
         "random_forest": {
-          "brier_evento": 0.019766,
-          "average_precision": 0.024527,
-          "prob_media": 0.026654,
-          "calibration_bias": 0.007883
+          "brier_evento": 0.019943,
+          "average_precision": 0.023016,
+          "prob_media": 0.026784,
+          "calibration_bias": 0.008013
         },
         "extra_trees": {
           "brier_evento": 0.018892,
@@ -1161,10 +1161,10 @@
           "calibration_bias": 0.003965
         },
         "random_forest": {
-          "brier_evento": 0.057098,
-          "average_precision": 0.078841,
-          "prob_media": 0.078175,
-          "calibration_bias": 0.021204
+          "brier_evento": 0.057492,
+          "average_precision": 0.076503,
+          "prob_media": 0.079127,
+          "calibration_bias": 0.022155
         },
         "extra_trees": {
           "brier_evento": 0.055503,
@@ -1236,9 +1236,9 @@
         "elastic_net",
         "extra_trees",
         "ewma",
-        "random_forest",
         "gradient_boosting",
         "media3",
+        "random_forest",
         "shrinkage_eb",
         "hist_gradient_boosting"
       ],
@@ -1292,10 +1292,10 @@
           "calibration_bias": -0.00512
         },
         "random_forest": {
-          "brier_evento": 0.069537,
-          "average_precision": 0.071191,
-          "prob_media": 0.08348,
-          "calibration_bias": 0.012967
+          "brier_evento": 0.069849,
+          "average_precision": 0.069866,
+          "prob_media": 0.0819,
+          "calibration_bias": 0.011387
         },
         "extra_trees": {
           "brier_evento": 0.068202,
@@ -1367,9 +1367,9 @@
         "media3",
         "shrinkage_eb",
         "gradient_boosting",
+        "random_forest",
         "bayesian_ridge",
         "poisson",
-        "random_forest",
         "extra_trees",
         "elastic_net"
       ],
@@ -1423,10 +1423,10 @@
           "calibration_bias": -0.004725
         },
         "random_forest": {
-          "brier_evento": 0.018714,
-          "average_precision": 0.017049,
-          "prob_media": 0.019287,
-          "calibration_bias": 0.001516
+          "brier_evento": 0.018553,
+          "average_precision": 0.017756,
+          "prob_media": 0.018843,
+          "calibration_bias": 0.001073
         },
         "extra_trees": {
           "brier_evento": 0.018084,
@@ -1554,10 +1554,10 @@
           "calibration_bias": -0.002676
         },
         "random_forest": {
-          "brier_evento": 0.013221,
-          "average_precision": 0.01771,
-          "prob_media": 0.011756,
-          "calibration_bias": -0.001043
+          "brier_evento": 0.013247,
+          "average_precision": 0.018652,
+          "prob_media": 0.012726,
+          "calibration_bias": -7.3e-05
         },
         "extra_trees": {
           "brier_evento": 0.012941,
@@ -1624,8 +1624,8 @@
       "ranking_average_precision": [
         "poisson",
         "bayesian_ridge",
-        "random_forest",
         "extra_trees",
+        "random_forest",
         "ridge",
         "ewma",
         "hist_gradient_boosting",
@@ -1685,10 +1685,10 @@
           "calibration_bias": 0.000373
         },
         "random_forest": {
-          "brier_evento": 0.022593,
-          "average_precision": 0.03545,
-          "prob_media": 0.04187,
-          "calibration_bias": 0.02088
+          "brier_evento": 0.022791,
+          "average_precision": 0.0343,
+          "prob_media": 0.04256,
+          "calibration_bias": 0.021571
         },
         "extra_trees": {
           "brier_evento": 0.021525,
@@ -1816,10 +1816,10 @@
           "calibration_bias": 0.00714
         },
         "random_forest": {
-          "brier_evento": 0.034443,
-          "average_precision": 0.0309,
-          "prob_media": 0.048225,
-          "calibration_bias": 0.015716
+          "brier_evento": 0.034465,
+          "average_precision": 0.03098,
+          "prob_media": 0.047258,
+          "calibration_bias": 0.014749
         },
         "extra_trees": {
           "brier_evento": 0.032956,
@@ -1884,9 +1884,9 @@
         "media3"
       ],
       "ranking_average_precision": [
-        "random_forest",
-        "ewma",
         "gradient_boosting",
+        "ewma",
+        "random_forest",
         "extra_trees",
         "hist_gradient_boosting",
         "shrinkage_eb",
@@ -1947,10 +1947,10 @@
           "calibration_bias": 0.017069
         },
         "random_forest": {
-          "brier_evento": 0.12343,
-          "average_precision": 0.182774,
-          "prob_media": 0.15609,
-          "calibration_bias": 0.014733
+          "brier_evento": 0.123628,
+          "average_precision": 0.173929,
+          "prob_media": 0.156155,
+          "calibration_bias": 0.014797
         },
         "extra_trees": {
           "brier_evento": 0.124003,
@@ -1959,10 +1959,10 @@
           "calibration_bias": 0.001698
         },
         "gradient_boosting": {
-          "brier_evento": 0.123987,
-          "average_precision": 0.177048,
-          "prob_media": 0.09818,
-          "calibration_bias": -0.043177
+          "brier_evento": 0.123919,
+          "average_precision": 0.177794,
+          "prob_media": 0.098137,
+          "calibration_bias": -0.04322
         },
         "hist_gradient_boosting": {
           "brier_evento": 0.129375,
@@ -2015,8 +2015,8 @@
         "negative_binomial"
       ],
       "ranking_average_precision": [
-        "random_forest",
         "elastic_net",
+        "random_forest",
         "poisson",
         "ridge",
         "bayesian_ridge",
@@ -2078,10 +2078,10 @@
           "calibration_bias": -0.021821
         },
         "random_forest": {
-          "brier_evento": 0.086717,
-          "average_precision": 0.158599,
-          "prob_media": 0.089967,
-          "calibration_bias": -0.005596
+          "brier_evento": 0.08722,
+          "average_precision": 0.141216,
+          "prob_media": 0.09306,
+          "calibration_bias": -0.002503
         },
         "extra_trees": {
           "brier_evento": 0.088095,
@@ -2179,10 +2179,10 @@
           "calibration_bias": 0.001308
         },
         "negative_binomial": {
-          "brier_evento": 0.009329,
+          "brier_evento": 0.01006,
           "average_precision": 0.001616,
-          "prob_media": 0.00953,
-          "calibration_bias": 0.007914
+          "prob_media": 0.010385,
+          "calibration_bias": 0.008769
         },
         "ridge": {
           "brier_evento": 0.001629,
@@ -2209,10 +2209,10 @@
           "calibration_bias": 0.001798
         },
         "random_forest": {
-          "brier_evento": 0.002312,
+          "brier_evento": 0.002259,
           "average_precision": 0.001616,
-          "prob_media": 0.008907,
-          "calibration_bias": 0.007292
+          "prob_media": 0.008218,
+          "calibration_bias": 0.006602
         },
         "extra_trees": {
           "brier_evento": 0.001718,
@@ -2279,10 +2279,10 @@
       "ranking_average_precision": [
         "extra_trees",
         "ewma",
+        "random_forest",
         "elastic_net",
         "bayesian_ridge",
         "shrinkage_eb",
-        "random_forest",
         "poisson",
         "hist_gradient_boosting",
         "gradient_boosting",
@@ -2340,10 +2340,10 @@
           "calibration_bias": 1e-05
         },
         "random_forest": {
-          "brier_evento": 0.005256,
-          "average_precision": 0.00534,
-          "prob_media": 0.00642,
-          "calibration_bias": 0.001548
+          "brier_evento": 0.005275,
+          "average_precision": 0.005749,
+          "prob_media": 0.007188,
+          "calibration_bias": 0.002316
         },
         "extra_trees": {
           "brier_evento": 0.004915,
@@ -2471,10 +2471,10 @@
           "calibration_bias": 0.003216
         },
         "random_forest": {
-          "brier_evento": 0.01528,
-          "average_precision": 0.026125,
-          "prob_media": 0.02703,
-          "calibration_bias": 0.013294
+          "brier_evento": 0.015556,
+          "average_precision": 0.025477,
+          "prob_media": 0.029406,
+          "calibration_bias": 0.01567
         },
         "extra_trees": {
           "brier_evento": 0.014248,
@@ -2530,8 +2530,8 @@
         "elastic_net",
         "bayesian_ridge",
         "ridge",
-        "negative_binomial",
         "random_forest",
+        "negative_binomial",
         "extra_trees",
         "hist_gradient_boosting",
         "gradient_boosting",
@@ -2545,8 +2545,8 @@
         "shrinkage_eb",
         "poisson",
         "elastic_net",
-        "bayesian_ridge",
         "random_forest",
+        "bayesian_ridge",
         "hist_gradient_boosting",
         "media3",
         "extra_trees",
@@ -2602,10 +2602,10 @@
           "calibration_bias": -0.022559
         },
         "random_forest": {
-          "brier_evento": 0.07164,
-          "average_precision": 0.09575,
-          "prob_media": 0.073887,
-          "calibration_bias": -0.001234
+          "brier_evento": 0.071442,
+          "average_precision": 0.10575,
+          "prob_media": 0.077614,
+          "calibration_bias": 0.002493
         },
         "extra_trees": {
           "brier_evento": 0.073322,
@@ -2733,10 +2733,10 @@
           "calibration_bias": -0.001691
         },
         "random_forest": {
-          "brier_evento": 0.043333,
-          "average_precision": 0.049398,
-          "prob_media": 0.07322,
-          "calibration_bias": 0.033971
+          "brier_evento": 0.042955,
+          "average_precision": 0.048842,
+          "prob_media": 0.06615,
+          "calibration_bias": 0.026901
         },
         "extra_trees": {
           "brier_evento": 0.040115,
@@ -2864,10 +2864,10 @@
           "calibration_bias": 0.002818
         },
         "random_forest": {
-          "brier_evento": 0.041983,
-          "average_precision": 0.05743,
-          "prob_media": 0.060901,
-          "calibration_bias": 0.021171
+          "brier_evento": 0.041515,
+          "average_precision": 0.054925,
+          "prob_media": 0.058089,
+          "calibration_bias": 0.018359
         },
         "extra_trees": {
           "brier_evento": 0.03999,
@@ -2926,8 +2926,8 @@
         "elastic_net",
         "ridge",
         "bayesian_ridge",
-        "random_forest",
         "ewma",
+        "random_forest",
         "media3",
         "negative_binomial"
       ],
@@ -2995,10 +2995,10 @@
           "calibration_bias": -0.002283
         },
         "random_forest": {
-          "brier_evento": 0.016094,
-          "average_precision": 0.016523,
-          "prob_media": 0.02855,
-          "calibration_bias": 0.014351
+          "brier_evento": 0.016603,
+          "average_precision": 0.017427,
+          "prob_media": 0.03173,
+          "calibration_bias": 0.017531
         },
         "extra_trees": {
           "brier_evento": 0.01466,
@@ -3073,8 +3073,8 @@
         "bayesian_ridge",
         "poisson",
         "elastic_net",
-        "random_forest",
-        "gradient_boosting"
+        "gradient_boosting",
+        "random_forest"
       ],
       "metricas": {
         "media3": {
@@ -3126,10 +3126,10 @@
           "calibration_bias": 0.000849
         },
         "random_forest": {
-          "brier_evento": 0.014935,
-          "average_precision": 0.014551,
-          "prob_media": 0.013441,
-          "calibration_bias": -0.000758
+          "brier_evento": 0.014986,
+          "average_precision": 0.013871,
+          "prob_media": 0.012631,
+          "calibration_bias": -0.001568
         },
         "extra_trees": {
           "brier_evento": 0.014595,
@@ -3257,10 +3257,10 @@
           "calibration_bias": -0.002728
         },
         "random_forest": {
-          "brier_evento": 0.003316,
+          "brier_evento": 0.003308,
           "average_precision": 0.003231,
-          "prob_media": 0.000834,
-          "calibration_bias": -0.002397
+          "prob_media": 0.000853,
+          "calibration_bias": -0.002378
         },
         "extra_trees": {
           "brier_evento": 0.00325,
@@ -3329,10 +3329,10 @@
         "shrinkage_eb",
         "gradient_boosting",
         "media3",
-        "random_forest",
         "ewma",
         "poisson",
         "hist_gradient_boosting",
+        "random_forest",
         "bayesian_ridge",
         "negative_binomial",
         "ridge",
@@ -3388,10 +3388,10 @@
           "calibration_bias": -0.003967
         },
         "random_forest": {
-          "brier_evento": 0.014243,
-          "average_precision": 0.013636,
-          "prob_media": 0.011803,
-          "calibration_bias": -0.001849
+          "brier_evento": 0.014253,
+          "average_precision": 0.012381,
+          "prob_media": 0.010469,
+          "calibration_bias": -0.003182
         },
         "extra_trees": {
           "brier_evento": 0.01376,
@@ -3457,13 +3457,13 @@
       ],
       "ranking_average_precision": [
         "poisson",
-        "random_forest",
         "gradient_boosting",
         "ewma",
         "media3",
         "extra_trees",
         "hist_gradient_boosting",
         "ridge",
+        "random_forest",
         "bayesian_ridge",
         "negative_binomial",
         "elastic_net",
@@ -3490,9 +3490,9 @@
         },
         "negative_binomial": {
           "brier_evento": 0.025385,
-          "average_precision": 0.00674,
+          "average_precision": 0.006736,
           "prob_media": 0.052657,
-          "calibration_bias": 0.044579
+          "calibration_bias": 0.04458
         },
         "ridge": {
           "brier_evento": 0.009,
@@ -3519,10 +3519,10 @@
           "calibration_bias": 0.002785
         },
         "random_forest": {
-          "brier_evento": 0.013881,
-          "average_precision": 0.009287,
-          "prob_media": 0.037437,
-          "calibration_bias": 0.029359
+          "brier_evento": 0.014425,
+          "average_precision": 0.007382,
+          "prob_media": 0.039044,
+          "calibration_bias": 0.030966
         },
         "extra_trees": {
           "brier_evento": 0.013029,
@@ -3597,8 +3597,8 @@
         "gradient_boosting",
         "media3",
         "ewma",
-        "random_forest",
-        "extra_trees"
+        "extra_trees",
+        "random_forest"
       ],
       "metricas": {
         "media3": {
@@ -3620,10 +3620,10 @@
           "calibration_bias": 0.004009
         },
         "negative_binomial": {
-          "brier_evento": 0.033982,
+          "brier_evento": 0.033983,
           "average_precision": 0.02684,
-          "prob_media": 0.069004,
-          "calibration_bias": 0.057059
+          "prob_media": 0.069006,
+          "calibration_bias": 0.057061
         },
         "ridge": {
           "brier_evento": 0.012729,
@@ -3650,10 +3650,10 @@
           "calibration_bias": 0.008169
         },
         "random_forest": {
-          "brier_evento": 0.015635,
-          "average_precision": 0.011088,
-          "prob_media": 0.041676,
-          "calibration_bias": 0.029731
+          "brier_evento": 0.017234,
+          "average_precision": 0.009974,
+          "prob_media": 0.045181,
+          "calibration_bias": 0.033235
         },
         "extra_trees": {
           "brier_evento": 0.013894,
@@ -3711,8 +3711,8 @@
         "ridge",
         "extra_trees",
         "shrinkage_eb",
-        "random_forest",
         "hist_gradient_boosting",
+        "random_forest",
         "ewma",
         "media3",
         "negative_binomial"
@@ -3781,10 +3781,10 @@
           "calibration_bias": 0.001893
         },
         "random_forest": {
-          "brier_evento": 0.008552,
-          "average_precision": 0.016079,
-          "prob_media": 0.014086,
-          "calibration_bias": 0.00584
+          "brier_evento": 0.008641,
+          "average_precision": 0.016514,
+          "prob_media": 0.015083,
+          "calibration_bias": 0.006837
         },
         "extra_trees": {
           "brier_evento": 0.008431,
@@ -3843,15 +3843,15 @@
         "shrinkage_eb",
         "extra_trees",
         "hist_gradient_boosting",
+        "random_forest",
         "ewma",
         "media3",
-        "random_forest",
         "negative_binomial"
       ],
       "ranking_average_precision": [
         "poisson",
-        "extra_trees",
         "random_forest",
+        "extra_trees",
         "negative_binomial",
         "ridge",
         "hist_gradient_boosting",
@@ -3912,10 +3912,10 @@
           "calibration_bias": 0.000825
         },
         "random_forest": {
-          "brier_evento": 0.005195,
-          "average_precision": 0.007608,
-          "prob_media": 0.013805,
-          "calibration_bias": 0.009684
+          "brier_evento": 0.004764,
+          "average_precision": 0.007868,
+          "prob_media": 0.01125,
+          "calibration_bias": 0.007129
         },
         "extra_trees": {
           "brier_evento": 0.004293,
@@ -3971,8 +3971,8 @@
         "shrinkage_eb",
         "elastic_net",
         "extra_trees",
-        "random_forest",
         "ridge",
+        "random_forest",
         "hist_gradient_boosting",
         "gradient_boosting",
         "ewma",
@@ -3985,10 +3985,10 @@
         "elastic_net",
         "poisson",
         "bayesian_ridge",
-        "random_forest",
         "media3",
         "shrinkage_eb",
         "gradient_boosting",
+        "random_forest",
         "ewma",
         "extra_trees",
         "hist_gradient_boosting"
@@ -4043,10 +4043,10 @@
           "calibration_bias": 0.034445
         },
         "random_forest": {
-          "brier_evento": 0.065447,
-          "average_precision": 0.062369,
-          "prob_media": 0.087707,
-          "calibration_bias": 0.024826
+          "brier_evento": 0.066335,
+          "average_precision": 0.059917,
+          "prob_media": 0.089347,
+          "calibration_bias": 0.026467
         },
         "extra_trees": {
           "brier_evento": 0.063967,
@@ -4055,10 +4055,10 @@
           "calibration_bias": 0.013671
         },
         "gradient_boosting": {
-          "brier_evento": 0.069582,
+          "brier_evento": 0.069583,
           "average_precision": 0.060354,
-          "prob_media": 0.026792,
-          "calibration_bias": -0.036089
+          "prob_media": 0.026802,
+          "calibration_bias": -0.036078
         },
         "hist_gradient_boosting": {
           "brier_evento": 0.067655,
@@ -4174,10 +4174,10 @@
           "calibration_bias": -0.006504
         },
         "random_forest": {
-          "brier_evento": 0.130521,
-          "average_precision": 0.165466,
-          "prob_media": 0.158227,
-          "calibration_bias": 0.010926
+          "brier_evento": 0.130385,
+          "average_precision": 0.164319,
+          "prob_media": 0.158298,
+          "calibration_bias": 0.010997
         },
         "extra_trees": {
           "brier_evento": 0.132661,
@@ -4186,10 +4186,10 @@
           "calibration_bias": -0.00836
         },
         "gradient_boosting": {
-          "brier_evento": 0.126193,
-          "average_precision": 0.174355,
-          "prob_media": 0.12754,
-          "calibration_bias": -0.019761
+          "brier_evento": 0.126199,
+          "average_precision": 0.174222,
+          "prob_media": 0.127557,
+          "calibration_bias": -0.019744
         },
         "hist_gradient_boosting": {
           "brier_evento": 0.134233,
@@ -4248,11 +4248,11 @@
         "bayesian_ridge",
         "elastic_net",
         "ewma",
-        "random_forest",
         "ridge",
         "extra_trees",
         "media3",
         "negative_binomial",
+        "random_forest",
         "hist_gradient_boosting"
       ],
       "metricas": {
@@ -4288,7 +4288,7 @@
         },
         "elastic_net": {
           "brier_evento": 0.105201,
-          "average_precision": 0.114326,
+          "average_precision": 0.114317,
           "prob_media": 0.137022,
           "calibration_bias": 0.024843
         },
@@ -4305,10 +4305,10 @@
           "calibration_bias": 0.01208
         },
         "random_forest": {
-          "brier_evento": 0.106777,
-          "average_precision": 0.11218,
-          "prob_media": 0.131798,
-          "calibration_bias": 0.019619
+          "brier_evento": 0.106848,
+          "average_precision": 0.110006,
+          "prob_media": 0.128083,
+          "calibration_bias": 0.015904
         },
         "extra_trees": {
           "brier_evento": 0.104696,
@@ -4367,18 +4367,18 @@
         "ridge",
         "extra_trees",
         "hist_gradient_boosting",
-        "random_forest",
         "ewma",
         "media3",
+        "random_forest",
         "negative_binomial"
       ],
       "ranking_average_precision": [
         "gradient_boosting",
         "extra_trees",
         "hist_gradient_boosting",
-        "random_forest",
         "ewma",
         "media3",
+        "random_forest",
         "negative_binomial",
         "ridge",
         "bayesian_ridge",
@@ -4406,10 +4406,10 @@
           "calibration_bias": -0.001881
         },
         "negative_binomial": {
-          "brier_evento": 0.053705,
+          "brier_evento": 0.05399,
           "average_precision": 0.004057,
-          "prob_media": 0.061519,
-          "calibration_bias": 0.057462
+          "prob_media": 0.062006,
+          "calibration_bias": 0.057949
         },
         "ridge": {
           "brier_evento": 0.0042,
@@ -4436,10 +4436,10 @@
           "calibration_bias": -0.001654
         },
         "random_forest": {
-          "brier_evento": 0.004468,
+          "brier_evento": 0.004751,
           "average_precision": 0.004057,
-          "prob_media": 0.007849,
-          "calibration_bias": 0.003792
+          "prob_media": 0.010866,
+          "calibration_bias": 0.006809
         },
         "extra_trees": {
           "brier_evento": 0.004275,
@@ -4497,8 +4497,8 @@
         "ridge",
         "shrinkage_eb",
         "extra_trees",
-        "random_forest",
         "hist_gradient_boosting",
+        "random_forest",
         "ewma",
         "media3",
         "negative_binomial"
@@ -4512,9 +4512,9 @@
         "extra_trees",
         "ewma",
         "gradient_boosting",
+        "random_forest",
         "media3",
         "shrinkage_eb",
-        "random_forest",
         "hist_gradient_boosting"
       ],
       "metricas": {
@@ -4567,10 +4567,10 @@
           "calibration_bias": 0.013993
         },
         "random_forest": {
-          "brier_evento": 0.007598,
-          "average_precision": 0.005888,
-          "prob_media": 0.017306,
-          "calibration_bias": 0.011221
+          "brier_evento": 0.007714,
+          "average_precision": 0.006085,
+          "prob_media": 0.017755,
+          "calibration_bias": 0.01167
         },
         "extra_trees": {
           "brier_evento": 0.006894,
@@ -4635,8 +4635,8 @@
         "media3"
       ],
       "ranking_average_precision": [
-        "random_forest",
         "negative_binomial",
+        "random_forest",
         "extra_trees",
         "hist_gradient_boosting",
         "gradient_boosting",
@@ -4698,10 +4698,10 @@
           "calibration_bias": -0.000488
         },
         "random_forest": {
-          "brier_evento": 0.012294,
-          "average_precision": 0.014112,
-          "prob_media": 0.023951,
-          "calibration_bias": 0.01345
+          "brier_evento": 0.012321,
+          "average_precision": 0.011339,
+          "prob_media": 0.024124,
+          "calibration_bias": 0.013623
         },
         "extra_trees": {
           "brier_evento": 0.011127,
@@ -4768,12 +4768,12 @@
       "ranking_average_precision": [
         "extra_trees",
         "negative_binomial",
-        "random_forest",
         "gradient_boosting",
         "ewma",
         "media3",
         "hist_gradient_boosting",
         "ridge",
+        "random_forest",
         "shrinkage_eb",
         "elastic_net",
         "bayesian_ridge",
@@ -4829,10 +4829,10 @@
           "calibration_bias": 0.002424
         },
         "random_forest": {
-          "brier_evento": 0.015399,
-          "average_precision": 0.012936,
-          "prob_media": 0.030373,
-          "calibration_bias": 0.017574
+          "brier_evento": 0.01506,
+          "average_precision": 0.01248,
+          "prob_media": 0.02913,
+          "calibration_bias": 0.016332
         },
         "extra_trees": {
           "brier_evento": 0.01379,
@@ -4889,8 +4889,8 @@
         "ridge",
         "gradient_boosting",
         "extra_trees",
-        "hist_gradient_boosting",
         "random_forest",
+        "hist_gradient_boosting",
         "shrinkage_eb",
         "negative_binomial",
         "ewma",
@@ -4905,8 +4905,8 @@
         "elastic_net",
         "hist_gradient_boosting",
         "shrinkage_eb",
-        "extra_trees",
         "random_forest",
+        "extra_trees",
         "bayesian_ridge",
         "poisson"
       ],
@@ -4960,10 +4960,10 @@
           "calibration_bias": -0.0042
         },
         "random_forest": {
-          "brier_evento": 0.0085,
-          "average_precision": 0.007778,
-          "prob_media": 0.004649,
-          "calibration_bias": -0.003597
+          "brier_evento": 0.008435,
+          "average_precision": 0.007865,
+          "prob_media": 0.00416,
+          "calibration_bias": -0.004086
         },
         "extra_trees": {
           "brier_evento": 0.008311,
@@ -5091,10 +5091,10 @@
           "calibration_bias": -0.000225
         },
         "random_forest": {
-          "brier_evento": 0.002108,
+          "brier_evento": 0.002128,
           "average_precision": 0.001832,
-          "prob_media": 0.004981,
-          "calibration_bias": 0.003149
+          "prob_media": 0.004612,
+          "calibration_bias": 0.00278
         },
         "extra_trees": {
           "brier_evento": 0.001945,
@@ -5222,10 +5222,10 @@
           "calibration_bias": -0.000611
         },
         "random_forest": {
-          "brier_evento": 0.001705,
+          "brier_evento": 0.001711,
           "average_precision": 0.001616,
-          "prob_media": 0.001144,
-          "calibration_bias": -0.000472
+          "prob_media": 0.001154,
+          "calibration_bias": -0.000462
         },
         "extra_trees": {
           "brier_evento": 0.00165,
@@ -5353,10 +5353,10 @@
           "calibration_bias": -0.000725
         },
         "random_forest": {
-          "brier_evento": 0.000765,
+          "brier_evento": 0.000761,
           "average_precision": 0.00075,
-          "prob_media": 0.000181,
-          "calibration_bias": -0.000569
+          "prob_media": 0.000158,
+          "calibration_bias": -0.000592
         },
         "extra_trees": {
           "brier_evento": 0.000756,
@@ -5423,8 +5423,8 @@
       "ranking_average_precision": [
         "ewma",
         "media3",
-        "shrinkage_eb",
         "random_forest",
+        "shrinkage_eb",
         "extra_trees",
         "hist_gradient_boosting",
         "ridge",
@@ -5484,10 +5484,10 @@
           "calibration_bias": 0.002507
         },
         "random_forest": {
-          "brier_evento": 0.003456,
-          "average_precision": 0.006808,
-          "prob_media": 0.006868,
-          "calibration_bias": 0.003663
+          "brier_evento": 0.003416,
+          "average_precision": 0.009899,
+          "prob_media": 0.006856,
+          "calibration_bias": 0.003651
         },
         "extra_trees": {
           "brier_evento": 0.003324,
