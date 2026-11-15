@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-14T16:16:54.253410+00:00",
+  "gerado_em": "2026-11-15T16:55:29.902592+00:00",
   "protocolo": "comparação somente leitura: usa as projeções historicamente salvas pela V2 em data/historico/rodada-XX.json, alinha por rodada+atleta_id com previsões OOS nested da V3; remove linhas cujo resultado real difere entre as fontes; CatBoost nested e dois estágios entram somente quando possuem previsão OOS para a mesma chave; bootstrap em blocos por rodada, sem recalibrar a V2 nem qualquer desafiante olhando a rodada avaliada",
   "rotulo_v2": "V2 projeção histórica salva (produção)",
   "nota": "Esta é a comparação mais fiel disponível porque usa o valor de projeção efetivamente arquivado pela V2 para cada rodada. As comparações opcionais registram explicitamente sua própria interseção pareada para evitar falsa equivalência de amostras.",
@@ -15,8 +15,8 @@
       "arquivo": "data/reports/backtest-v3s-dois-estagios.json",
       "coluna": "v3s_dois_estagios",
       "disponivel": true,
-      "linhas_arquivo": 7128,
-      "linhas_casadas": 7128
+      "linhas_arquivo": 7320,
+      "linhas_casadas": 7320
     }
   },
   "rodadas_v3": [
@@ -31,6 +31,7 @@
     18,
     19,
     20,
+    21,
     22,
     23,
     24,
@@ -57,10 +58,10 @@
     33,
     34
   ],
-  "linhas_v3": 7128,
-  "linhas_v2": 4579,
-  "linhas_comuns": 4152,
-  "linhas_consistentes": 4139,
+  "linhas_v3": 7320,
+  "linhas_v2": 4783,
+  "linhas_comuns": 4343,
+  "linhas_consistentes": 4330,
   "linhas_descartadas_real_divergente": 13,
   "rodadas_comuns": [
     10,
@@ -74,6 +75,7 @@
     18,
     19,
     20,
+    21,
     22,
     23,
     24
@@ -101,7 +103,7 @@
       "mae_desafiante": 2.971526
     },
     "dois_estagios_vs_v2": {
-      "linhas": 4139,
+      "linhas": 4330,
       "rodadas": [
         10,
         11,
@@ -114,193 +116,194 @@
         18,
         19,
         20,
+        21,
         22,
         23,
         24
       ],
-      "mae_v2": 2.994929,
-      "mae_desafiante": 2.992173
+      "mae_v2": 2.997018,
+      "mae_desafiante": 2.993283
     }
   },
   "geral": {
     "v2_projecao_salva": {
-      "mae": 2.994929,
-      "n": 4139
+      "mae": 2.997018,
+      "n": 4330
     },
     "v3s_nested": {
-      "mae": 3.041336,
-      "n": 4139
+      "mae": 3.054104,
+      "n": 4330
     },
     "v3h_hibrido": {
-      "mae": 2.986381,
-      "n": 4139
+      "mae": 2.996303,
+      "n": 4330
     },
     "direta_rf_lab": {
-      "mae": 3.022253,
-      "n": 4139
+      "mae": 3.025031,
+      "n": 4330
     },
     "direta_ewma": {
-      "mae": 3.14685,
-      "n": 4139
+      "mae": 3.149286,
+      "n": 4330
     },
     "v3s_catboost_nested": {
       "mae": 2.971526,
       "n": 4139
     },
     "v3s_dois_estagios": {
-      "mae": 2.992173,
-      "n": 4139
+      "mae": 2.993283,
+      "n": 4330
     }
   },
   "por_posicao": {
     "ATA": {
       "v2_projecao_salva": {
-        "mae": 3.219132,
-        "n": 1175
+        "mae": 3.209352,
+        "n": 1220
       },
       "v3s_nested": {
-        "mae": 3.37075,
-        "n": 1175
+        "mae": 3.354115,
+        "n": 1220
       },
       "v3h_hibrido": {
-        "mae": 3.316497,
-        "n": 1175
+        "mae": 3.296486,
+        "n": 1220
       },
       "direta_rf_lab": {
-        "mae": 3.376767,
-        "n": 1175
+        "mae": 3.348634,
+        "n": 1220
       },
       "direta_ewma": {
-        "mae": 3.388552,
-        "n": 1175
+        "mae": 3.358801,
+        "n": 1220
       },
       "v3s_catboost_nested": {
         "mae": 3.260096,
         "n": 1175
       },
       "v3s_dois_estagios": {
-        "mae": 3.278948,
-        "n": 1175
+        "mae": 3.249789,
+        "n": 1220
       }
     },
     "GOL": {
       "v2_projecao_salva": {
-        "mae": 3.439848,
-        "n": 264
+        "mae": 3.46837,
+        "n": 276
       },
       "v3s_nested": {
-        "mae": 3.397066,
-        "n": 264
+        "mae": 3.440769,
+        "n": 276
       },
       "v3h_hibrido": {
-        "mae": 3.352436,
-        "n": 264
+        "mae": 3.386621,
+        "n": 276
       },
       "direta_rf_lab": {
-        "mae": 3.380338,
-        "n": 264
+        "mae": 3.393746,
+        "n": 276
       },
       "direta_ewma": {
-        "mae": 3.672179,
-        "n": 264
+        "mae": 3.690373,
+        "n": 276
       },
       "v3s_catboost_nested": {
         "mae": 3.3578,
         "n": 264
       },
       "v3s_dois_estagios": {
-        "mae": 3.297294,
-        "n": 264
+        "mae": 3.333289,
+        "n": 276
       }
     },
     "LAT": {
       "v2_projecao_salva": {
-        "mae": 3.3145,
-        "n": 660
+        "mae": 3.33563,
+        "n": 691
       },
       "v3s_nested": {
-        "mae": 3.339216,
-        "n": 660
+        "mae": 3.39112,
+        "n": 691
       },
       "v3h_hibrido": {
-        "mae": 3.245104,
-        "n": 660
+        "mae": 3.296432,
+        "n": 691
       },
       "direta_rf_lab": {
-        "mae": 3.26832,
-        "n": 660
+        "mae": 3.307214,
+        "n": 691
       },
       "direta_ewma": {
-        "mae": 3.462262,
-        "n": 660
+        "mae": 3.486201,
+        "n": 691
       },
       "v3s_catboost_nested": {
         "mae": 3.333472,
         "n": 660
       },
       "v3s_dois_estagios": {
-        "mae": 3.37191,
-        "n": 660
+        "mae": 3.399406,
+        "n": 691
       }
     },
     "MEI": {
       "v2_projecao_salva": {
-        "mae": 2.638103,
-        "n": 1418
+        "mae": 2.62748,
+        "n": 1488
       },
       "v3s_nested": {
-        "mae": 2.660569,
-        "n": 1418
+        "mae": 2.673379,
+        "n": 1488
       },
       "v3h_hibrido": {
-        "mae": 2.631957,
-        "n": 1418
+        "mae": 2.649213,
+        "n": 1488
       },
       "direta_rf_lab": {
-        "mae": 2.676883,
-        "n": 1418
+        "mae": 2.698325,
+        "n": 1488
       },
       "direta_ewma": {
-        "mae": 2.745711,
-        "n": 1418
+        "mae": 2.753424,
+        "n": 1488
       },
       "v3s_catboost_nested": {
         "mae": 2.575832,
         "n": 1418
       },
       "v3s_dois_estagios": {
-        "mae": 2.593376,
-        "n": 1418
+        "mae": 2.59834,
+        "n": 1488
       }
     },
     "ZAG": {
       "v2_projecao_salva": {
-        "mae": 2.856929,
-        "n": 622
+        "mae": 2.885191,
+        "n": 655
       },
       "v3s_nested": {
-        "mae": 2.820039,
-        "n": 622
+        "mae": 2.84175,
+        "n": 655
       },
       "v3h_hibrido": {
-        "mae": 2.740868,
-        "n": 622
+        "mae": 2.744592,
+        "n": 655
       },
       "direta_rf_lab": {
-        "mae": 2.72682,
-        "n": 622
+        "mae": 2.711426,
+        "n": 655
       },
       "direta_ewma": {
-        "mae": 3.047101,
-        "n": 622
+        "mae": 3.074915,
+        "n": 655
       },
       "v3s_catboost_nested": {
         "mae": 2.780466,
         "n": 622
       },
       "v3s_dois_estagios": {
-        "mae": 2.827148,
-        "n": 622
+        "mae": 2.841016,
+        "n": 655
       }
     }
   },
@@ -437,53 +440,64 @@
         "v3s_dois_estagios": 2.680976
       }
     },
-    "22": {
-      "n": 295,
+    "21": {
+      "n": 184,
       "mae": {
-        "v2_projecao_salva": 2.879288,
-        "v3s_nested": 2.914302,
-        "v3h_hibrido": 2.792115,
-        "direta_rf_lab": 2.779445,
-        "direta_ewma": 3.106752,
+        "v2_projecao_salva": 3.067283,
+        "v3s_nested": 3.143282,
+        "v3h_hibrido": 3.060834,
+        "direta_rf_lab": 3.005767,
+        "direta_ewma": 3.185487,
+        "v3s_dois_estagios": 3.105379
+      }
+    },
+    "22": {
+      "n": 298,
+      "mae": {
+        "v2_projecao_salva": 2.88453,
+        "v3s_nested": 2.923968,
+        "v3h_hibrido": 2.831469,
+        "direta_rf_lab": 2.803066,
+        "direta_ewma": 3.08994,
         "v3s_catboost_nested": 2.900169,
-        "v3s_dois_estagios": 2.918707
+        "v3s_dois_estagios": 2.885524
       }
     },
     "23": {
-      "n": 299,
+      "n": 303,
       "mae": {
-        "v2_projecao_salva": 3.007057,
-        "v3s_nested": 3.044545,
-        "v3h_hibrido": 2.932976,
-        "direta_rf_lab": 2.938996,
-        "direta_ewma": 3.295675,
+        "v2_projecao_salva": 2.988812,
+        "v3s_nested": 3.107505,
+        "v3h_hibrido": 2.968743,
+        "direta_rf_lab": 2.972473,
+        "direta_ewma": 3.300324,
         "v3s_catboost_nested": 3.157624,
-        "v3s_dois_estagios": 3.188283
+        "v3s_dois_estagios": 3.163683
       }
     },
     "24": {
       "n": 310,
       "mae": {
         "v2_projecao_salva": 3.130032,
-        "v3s_nested": 3.07504,
-        "v3h_hibrido": 3.063903,
-        "direta_rf_lab": 3.128694,
-        "direta_ewma": 3.24752,
+        "v3s_nested": 3.123226,
+        "v3h_hibrido": 3.088077,
+        "direta_rf_lab": 3.125282,
+        "direta_ewma": 3.268701,
         "v3s_catboost_nested": 3.243434,
-        "v3s_dois_estagios": 3.317853
+        "v3s_dois_estagios": 3.320287
       }
     }
   },
   "comparacoes_bootstrap": {
     "v3s_vs_v2": {
-      "diferenca_mae_desafiante_menos_base": 0.04659,
+      "diferenca_mae_desafiante_menos_base": 0.057471,
       "ic95": [
-        0.006921,
-        0.086199
+        0.020186,
+        0.094827
       ],
-      "probabilidade_bootstrap_desafiante_melhor": 0.0086,
+      "probabilidade_bootstrap_desafiante_melhor": 0.0002,
       "rodadas_ganhas": 3,
-      "rodadas_perdidas": 11,
+      "rodadas_perdidas": 12,
       "empates": 0,
       "evidencia": "evidencia_forte_a_pior",
       "por_rodada": {
@@ -498,19 +512,20 @@
         "18": 0.166616,
         "19": 0.031777,
         "20": 0.127327,
-        "22": 0.035014,
-        "23": 0.037489,
-        "24": -0.054993
+        "21": 0.076,
+        "22": 0.039438,
+        "23": 0.118693,
+        "24": -0.006806
       }
     },
     "v3h_vs_v2": {
-      "diferenca_mae_desafiante_menos_base": -0.008956,
+      "diferenca_mae_desafiante_menos_base": -0.001302,
       "ic95": [
-        -0.054389,
-        0.040588
+        -0.04304,
+        0.042009
       ],
-      "probabilidade_bootstrap_desafiante_melhor": 0.6422,
-      "rodadas_ganhas": 8,
+      "probabilidade_bootstrap_desafiante_melhor": 0.5226,
+      "rodadas_ganhas": 9,
       "rodadas_perdidas": 6,
       "empates": 0,
       "evidencia": "inconclusivo",
@@ -526,19 +541,20 @@
         "18": 0.110881,
         "19": -0.034944,
         "20": 0.065524,
-        "22": -0.087173,
-        "23": -0.074081,
-        "24": -0.066129
+        "21": -0.006449,
+        "22": -0.053061,
+        "23": -0.020069,
+        "24": -0.041955
       }
     },
     "rf_lab_vs_v2": {
-      "diferenca_mae_desafiante_menos_base": 0.02758,
+      "diferenca_mae_desafiante_menos_base": 0.026087,
       "ic95": [
-        -0.027939,
-        0.087218
+        -0.025662,
+        0.081537
       ],
-      "probabilidade_bootstrap_desafiante_melhor": 0.1646,
-      "rodadas_ganhas": 7,
+      "probabilidade_bootstrap_desafiante_melhor": 0.159,
+      "rodadas_ganhas": 8,
       "rodadas_perdidas": 7,
       "empates": 0,
       "evidencia": "inconclusivo",
@@ -554,9 +570,10 @@
         "18": 0.115886,
         "19": 0.024205,
         "20": 0.134832,
-        "22": -0.099843,
-        "23": -0.068061,
-        "24": -0.001338
+        "21": -0.061516,
+        "22": -0.081464,
+        "23": -0.016339,
+        "24": -0.00475
       }
     },
     "catboost_nested_vs_v2": {
@@ -588,14 +605,14 @@
       }
     },
     "dois_estagios_vs_v2": {
-      "diferenca_mae_desafiante_menos_base": -0.001219,
+      "diferenca_mae_desafiante_menos_base": -0.001421,
       "ic95": [
-        -0.096661,
-        0.089809
+        -0.092922,
+        0.082722
       ],
-      "probabilidade_bootstrap_desafiante_melhor": 0.5086,
+      "probabilidade_bootstrap_desafiante_melhor": 0.5124,
       "rodadas_ganhas": 5,
-      "rodadas_perdidas": 9,
+      "rodadas_perdidas": 10,
       "empates": 0,
       "evidencia": "inconclusivo",
       "por_rodada": {
@@ -610,9 +627,10 @@
         "18": 0.276189,
         "19": 0.052961,
         "20": -0.273698,
-        "22": 0.039419,
-        "23": 0.181226,
-        "24": 0.18782
+        "21": 0.038096,
+        "22": 0.000994,
+        "23": 0.174871,
+        "24": 0.190255
       }
     }
   }

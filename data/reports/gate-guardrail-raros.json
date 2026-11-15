@@ -1,10 +1,10 @@
 {
-  "gerado_em": "2026-11-14T16:09:53.872552+00:00",
+  "gerado_em": "2026-11-15T16:46:34.788621+00:00",
   "status": "APROVADO_PARA_CANDIDATO",
   "objetivo": "Gate estatistico para decidir se o guardrail de scouts raros melhora a pontuacao total fora da amostra. Nao promove V2 nem altera producao.",
   "fonte": "data/reports/backtest-v3s-guardrail-raros-nested.json",
   "anti_leakage_aprovado": true,
-  "linhas": 7128,
+  "linhas": 7320,
   "rodadas": [
     10,
     11,
@@ -17,6 +17,7 @@
     18,
     19,
     20,
+    21,
     22,
     23,
     24,
@@ -31,38 +32,38 @@
     33,
     34
   ],
-  "checagens_raras_inner": 537,
-  "trocas_modelo_inner": 196,
+  "checagens_raras_inner": 555,
+  "trocas_modelo_inner": 208,
   "geral": {
     "base": {
-      "n": 7128,
-      "mae": 3.102494,
-      "rmse": 4.165622,
-      "bias": -0.017555
+      "n": 7320,
+      "mae": 3.099417,
+      "rmse": 4.163016,
+      "bias": -0.011198
     },
     "guardrail": {
-      "n": 7128,
-      "mae": 3.081309,
-      "rmse": 4.109349,
-      "bias": 0.005411
+      "n": 7320,
+      "mae": 3.077089,
+      "rmse": 4.105181,
+      "bias": 0.019231
     },
-    "delta_mae_guardrail_menos_base": -0.021185
+    "delta_mae_guardrail_menos_base": -0.022328
   },
   "bootstrap_rodadas": {
     "metodo": "bootstrap em blocos por rodada",
     "n_boot": 20000,
     "seed": 20260901,
-    "delta_mae_guardrail_menos_base_media_boot": -0.021166,
+    "delta_mae_guardrail_menos_base_media_boot": -0.022259,
     "ic95": [
-      -0.038865,
-      -0.00028
+      -0.037914,
+      -0.00527
     ],
-    "prob_guardrail_melhor": 0.97615,
-    "prob_guardrail_nao_pior": 0.97615
+    "prob_guardrail_melhor": 0.9937,
+    "prob_guardrail_nao_pior": 0.9937
   },
   "vitorias_por_rodada": {
-    "base": 6,
-    "guardrail": 18,
+    "base": 4,
+    "guardrail": 21,
     "empate": 0
   },
   "por_rodada": [
@@ -144,172 +145,179 @@
       "vencedor": "guardrail"
     },
     {
+      "rodada": 21,
+      "mae_base": 3.143282,
+      "mae_guardrail": 3.09299,
+      "delta": -0.050293,
+      "vencedor": "guardrail"
+    },
+    {
       "rodada": 22,
-      "mae_base": 2.924659,
-      "mae_guardrail": 2.923224,
-      "delta": -0.001434,
+      "mae_base": 2.932131,
+      "mae_guardrail": 2.900442,
+      "delta": -0.031689,
       "vencedor": "guardrail"
     },
     {
       "rodada": 23,
-      "mae_base": 3.046506,
-      "mae_guardrail": 3.054588,
-      "delta": 0.008082,
-      "vencedor": "base"
+      "mae_base": 3.104887,
+      "mae_guardrail": 3.065124,
+      "delta": -0.039763,
+      "vencedor": "guardrail"
     },
     {
       "rodada": 24,
-      "mae_base": 3.07504,
-      "mae_guardrail": 3.215522,
-      "delta": 0.140483,
+      "mae_base": 3.123226,
+      "mae_guardrail": 3.218171,
+      "delta": 0.094945,
       "vencedor": "base"
     },
     {
       "rodada": 25,
-      "mae_base": 3.176407,
-      "mae_guardrail": 3.135937,
-      "delta": -0.04047,
+      "mae_base": 3.163716,
+      "mae_guardrail": 3.148735,
+      "delta": -0.014981,
       "vencedor": "guardrail"
     },
     {
       "rodada": 26,
-      "mae_base": 3.358995,
-      "mae_guardrail": 3.301764,
-      "delta": -0.057231,
+      "mae_base": 3.30447,
+      "mae_guardrail": 3.25314,
+      "delta": -0.05133,
       "vencedor": "guardrail"
     },
     {
       "rodada": 27,
-      "mae_base": 2.999561,
-      "mae_guardrail": 2.96422,
-      "delta": -0.035342,
+      "mae_base": 2.958964,
+      "mae_guardrail": 2.953,
+      "delta": -0.005965,
       "vencedor": "guardrail"
     },
     {
       "rodada": 28,
-      "mae_base": 3.134298,
-      "mae_guardrail": 3.124833,
-      "delta": -0.009465,
+      "mae_base": 3.095606,
+      "mae_guardrail": 3.091068,
+      "delta": -0.004538,
       "vencedor": "guardrail"
     },
     {
       "rodada": 29,
-      "mae_base": 3.369607,
-      "mae_guardrail": 3.377917,
-      "delta": 0.008311,
-      "vencedor": "base"
+      "mae_base": 3.372035,
+      "mae_guardrail": 3.370003,
+      "delta": -0.002032,
+      "vencedor": "guardrail"
     },
     {
       "rodada": 30,
-      "mae_base": 3.219649,
-      "mae_guardrail": 3.133392,
-      "delta": -0.086257,
+      "mae_base": 3.256502,
+      "mae_guardrail": 3.160392,
+      "delta": -0.096109,
       "vencedor": "guardrail"
     },
     {
       "rodada": 31,
-      "mae_base": 3.063764,
-      "mae_guardrail": 3.086844,
-      "delta": 0.02308,
+      "mae_base": 3.032207,
+      "mae_guardrail": 3.079414,
+      "delta": 0.047207,
       "vencedor": "base"
     },
     {
       "rodada": 32,
-      "mae_base": 3.01235,
-      "mae_guardrail": 3.030854,
-      "delta": 0.018504,
+      "mae_base": 3.020509,
+      "mae_guardrail": 3.050936,
+      "delta": 0.030427,
       "vencedor": "base"
     },
     {
       "rodada": 33,
-      "mae_base": 3.382892,
-      "mae_guardrail": 3.302342,
-      "delta": -0.08055,
+      "mae_base": 3.353234,
+      "mae_guardrail": 3.285053,
+      "delta": -0.068181,
       "vencedor": "guardrail"
     },
     {
       "rodada": 34,
-      "mae_base": 3.106605,
-      "mae_guardrail": 3.039438,
-      "delta": -0.067167,
+      "mae_base": 3.046915,
+      "mae_guardrail": 3.006537,
+      "delta": -0.040377,
       "vencedor": "guardrail"
     }
   ],
   "por_posicao": {
     "ATA": {
       "base": {
-        "n": 2010,
-        "mae": 3.395263,
-        "rmse": 4.697717,
-        "bias": 0.014064
+        "n": 2056,
+        "mae": 3.377219,
+        "rmse": 4.680686,
+        "bias": 0.023813
       },
       "guardrail": {
-        "n": 2010,
-        "mae": 3.396001,
-        "rmse": 4.645166,
-        "bias": 0.06834
+        "n": 2056,
+        "mae": 3.368728,
+        "rmse": 4.618422,
+        "bias": 0.075921
       },
-      "delta_mae_guardrail_menos_base": 0.000738
+      "delta_mae_guardrail_menos_base": -0.008491
     },
     "GOL": {
       "base": {
-        "n": 455,
-        "mae": 3.466029,
-        "rmse": 4.222944,
-        "bias": -0.135547
+        "n": 467,
+        "mae": 3.471997,
+        "rmse": 4.254763,
+        "bias": -0.102085
       },
       "guardrail": {
-        "n": 455,
-        "mae": 3.458839,
-        "rmse": 4.222063,
-        "bias": -0.124382
+        "n": 467,
+        "mae": 3.466638,
+        "rmse": 4.253841,
+        "bias": -0.090766
       },
-      "delta_mae_guardrail_menos_base": -0.00719
+      "delta_mae_guardrail_menos_base": -0.005359
     },
     "LAT": {
       "base": {
-        "n": 1153,
-        "mae": 3.352653,
-        "rmse": 4.229016,
-        "bias": 0.088341
+        "n": 1184,
+        "mae": 3.370364,
+        "rmse": 4.255139,
+        "bias": 0.081482
       },
       "guardrail": {
-        "n": 1153,
-        "mae": 3.309243,
-        "rmse": 4.162424,
-        "bias": 0.11392
+        "n": 1184,
+        "mae": 3.336491,
+        "rmse": 4.198592,
+        "bias": 0.118914
       },
-      "delta_mae_guardrail_menos_base": -0.04341
+      "delta_mae_guardrail_menos_base": -0.033873
     },
     "MEI": {
       "base": {
-        "n": 2424,
-        "mae": 2.751214,
-        "rmse": 3.813083,
-        "bias": -0.008969
+        "n": 2494,
+        "mae": 2.753815,
+        "rmse": 3.82082,
+        "bias": -0.004685
       },
       "guardrail": {
-        "n": 2424,
-        "mae": 2.708014,
-        "rmse": 3.7297,
-        "bias": -0.001112
+        "n": 2494,
+        "mae": 2.707822,
+        "rmse": 3.732343,
+        "bias": 0.010431
       },
-      "delta_mae_guardrail_menos_base": -0.0432
+      "delta_mae_guardrail_menos_base": -0.045993
     },
     "ZAG": {
       "base": {
-        "n": 1086,
-        "mae": 2.926796,
-        "rmse": 3.759717,
-        "bias": -0.158237
+        "n": 1119,
+        "mae": 2.917091,
+        "rmse": 3.723612,
+        "bias": -0.150172
       },
       "guardrail": {
-        "n": 1086,
-        "mae": 2.931909,
-        "rmse": 3.740061,
-        "bias": -0.157323
+        "n": 1119,
+        "mae": 2.927212,
+        "rmse": 3.714776,
+        "bias": -0.124881
       },
-      "delta_mae_guardrail_menos_base": 0.005113
+      "delta_mae_guardrail_menos_base": 0.010121
     }
   },
   "regressoes_posicionais_materiais": [],
