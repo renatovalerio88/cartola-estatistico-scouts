@@ -1,5 +1,5 @@
 {
-  "gerado_em": "2026-11-09T21:33:49.016650+00:00",
+  "gerado_em": "2026-11-16T21:13:40.716523+00:00",
   "objetivo": "Testar arquitetura posicional congelada sem escolher modelos usando o periodo de holdout.",
   "protocolo": "R10-R17 e usado apenas como discovery. Para cada posicao, CatBoost OFF calibrado e escolhido somente se no discovery melhora MAE, nao piora RMSE em mais de 2% e mantem |bias| <= 0.50; caso contrario fica V2. A escolha por posicao e congelada antes do holdout. O holdout usa somente rodadas com resultado historico disponivel simultaneamente na V2 e na V3; rodadas ainda nao fechadas/publicadas pela V2 sao excluidas, nunca imputadas. Nenhum resultado do holdout participa da escolha. Bootstrap e feito em blocos de rodada.",
   "anti_leakage": {
@@ -17,6 +17,7 @@
       18,
       19,
       20,
+      21,
       22,
       23,
       24
@@ -36,6 +37,7 @@
       18,
       19,
       20,
+      21,
       22,
       23,
       24,
@@ -62,6 +64,7 @@
       18,
       19,
       20,
+      21,
       22,
       23,
       24
@@ -182,51 +185,53 @@
     }
   },
   "holdout": {
-    "linhas": 1677,
+    "linhas": 1868,
     "rodadas": [
       18,
       19,
       20,
+      21,
       22,
       23,
       24
     ],
     "v2": {
-      "n": 1677,
-      "mae": 3.002987,
-      "rmse": 4.067465,
-      "bias": -0.21006
+      "n": 1868,
+      "mae": 3.007007,
+      "rmse": 4.056575,
+      "bias": -0.193249
     },
     "catboost": {
-      "n": 1677,
-      "mae": 3.009926,
-      "rmse": 4.027274,
-      "bias": -0.183176
+      "n": 1868,
+      "mae": 3.008821,
+      "rmse": 4.01931,
+      "bias": -0.166711
     },
     "hibrido_congelado": {
-      "n": 1677,
-      "mae": 2.990675,
-      "rmse": 4.021996,
-      "bias": -0.205345
+      "n": 1868,
+      "mae": 3.003506,
+      "rmse": 4.023939,
+      "bias": -0.154737
     },
     "bootstrap_hibrido_vs_v2": {
-      "n_rodadas": 6,
-      "delta_mae_menos_v2": -0.014879,
+      "n_rodadas": 7,
+      "delta_mae_menos_v2": -0.009023,
       "ic95": [
-        -0.061627,
-        0.033307
+        -0.050828,
+        0.034264
       ],
-      "probabilidade_melhor_v2": 0.727,
+      "probabilidade_melhor_v2": 0.6602,
       "rodadas_ganhas": 4,
-      "rodadas_perdidas": 2,
+      "rodadas_perdidas": 3,
       "empates": 0,
       "por_rodada": {
         "18": 0.068815,
         "19": -0.031681,
         "20": -0.077381,
-        "22": -0.0808,
-        "23": -0.024991,
-        "24": 0.056761
+        "21": -0.054899,
+        "22": -0.064541,
+        "23": 0.027468,
+        "24": 0.069056
       },
       "evidencia": "inconclusiva"
     },
@@ -234,106 +239,106 @@
       "ATA": {
         "modelo_congelado": "V2",
         "v2": {
-          "n": 467,
-          "mae": 3.270364,
-          "rmse": 4.502398,
-          "bias": 0.065096
+          "n": 512,
+          "mae": 3.242559,
+          "rmse": 4.448321,
+          "bias": 0.17666
         },
         "catboost": {
-          "n": 467,
-          "mae": 3.339496,
-          "rmse": 4.51931,
-          "bias": 0.144708
+          "n": 512,
+          "mae": 3.261948,
+          "rmse": 4.433028,
+          "bias": 0.132975
         },
         "hibrido": {
-          "n": 467,
-          "mae": 3.270364,
-          "rmse": 4.502398,
-          "bias": 0.065096
+          "n": 512,
+          "mae": 3.242559,
+          "rmse": 4.448321,
+          "bias": 0.17666
         }
       },
       "GOL": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 106,
-          "mae": 3.273113,
-          "rmse": 3.978981,
-          "bias": 0.176698
+          "n": 118,
+          "mae": 3.35678,
+          "rmse": 4.12861,
+          "bias": -0.01322
         },
         "catboost": {
-          "n": 106,
-          "mae": 3.283751,
-          "rmse": 3.874089,
-          "bias": -0.204653
+          "n": 118,
+          "mae": 3.418257,
+          "rmse": 4.117481,
+          "bias": -0.168476
         },
         "hibrido": {
-          "n": 106,
-          "mae": 3.283751,
-          "rmse": 3.874089,
-          "bias": -0.204653
+          "n": 118,
+          "mae": 3.418257,
+          "rmse": 4.117481,
+          "bias": -0.168476
         }
       },
       "LAT": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 275,
-          "mae": 3.193745,
-          "rmse": 3.994639,
-          "bias": -0.321309
+          "n": 306,
+          "mae": 3.253693,
+          "rmse": 4.040771,
+          "bias": -0.341144
         },
         "catboost": {
-          "n": 275,
-          "mae": 3.132755,
-          "rmse": 3.956919,
-          "bias": -0.473907
+          "n": 306,
+          "mae": 3.212093,
+          "rmse": 4.001635,
+          "bias": -0.446261
         },
         "hibrido": {
-          "n": 275,
-          "mae": 3.132755,
-          "rmse": 3.956919,
-          "bias": -0.473907
+          "n": 306,
+          "mae": 3.212093,
+          "rmse": 4.001635,
+          "bias": -0.446261
         }
       },
       "MEI": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 573,
-          "mae": 2.671344,
-          "rmse": 3.84953,
-          "bias": -0.262688
+          "n": 643,
+          "mae": 2.643142,
+          "rmse": 3.809932,
+          "bias": -0.24846
         },
         "catboost": {
-          "n": 573,
-          "mae": 2.677259,
-          "rmse": 3.826369,
-          "bias": -0.207452
+          "n": 643,
+          "mae": 2.670689,
+          "rmse": 3.819166,
+          "bias": -0.174944
         },
         "hibrido": {
-          "n": 573,
-          "mae": 2.677259,
-          "rmse": 3.826369,
-          "bias": -0.207452
+          "n": 643,
+          "mae": 2.670689,
+          "rmse": 3.819166,
+          "bias": -0.174944
         }
       },
       "ZAG": {
         "modelo_congelado": "CATBOOST_OFF_CAL",
         "v2": {
-          "n": 256,
-          "mae": 2.940781,
-          "rmse": 3.812121,
-          "bias": -0.634844
+          "n": 289,
+          "mae": 2.99526,
+          "rmse": 3.842491,
+          "bias": -0.642664
         },
         "catboost": {
-          "n": 256,
-          "mae": 2.907995,
-          "rmse": 3.630966,
-          "bias": -0.405767
+          "n": 289,
+          "mae": 2.930285,
+          "rmse": 3.643373,
+          "bias": -0.382609
         },
         "hibrido": {
-          "n": 256,
-          "mae": 2.907995,
-          "rmse": 3.630966,
-          "bias": -0.405767
+          "n": 289,
+          "mae": 2.930285,
+          "rmse": 3.643373,
+          "bias": -0.382609
         }
       }
     }
