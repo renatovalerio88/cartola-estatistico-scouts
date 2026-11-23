@@ -1,7 +1,7 @@
 {
-  "gerado_em": "2026-11-16T21:13:42.171009+00:00",
+  "gerado_em": "2026-11-23T22:33:34.613654+00:00",
   "protocolo": "calibracao residual estritamente temporal; para cada R/posicao usa somente residuos OOS de rodadas anteriores a R; nenhuma estatistica de R participa da calibracao",
-  "linhas": 7320,
+  "linhas": 7600,
   "rodadas": [
     10,
     11,
@@ -27,46 +27,47 @@
     31,
     32,
     33,
-    34
+    34,
+    35
   ],
   "geral": {
     "v3s_catboost_nested": {
-      "n": 7320,
-      "mae": 3.063819,
-      "rmse": 4.558716,
-      "bias": -2.078312
+      "n": 7600,
+      "mae": 3.058584,
+      "rmse": 4.552512,
+      "bias": -2.079553
     },
     "cal_pos_mean5": {
-      "n": 7320,
-      "mae": 3.03524,
-      "rmse": 4.064352,
-      "bias": -0.286623
+      "n": 7600,
+      "mae": 3.028735,
+      "rmse": 4.054603,
+      "bias": -0.270068
     },
     "cal_pos_median5": {
-      "n": 7320,
-      "mae": 2.928088,
-      "rmse": 4.226873,
-      "bias": -1.238169
+      "n": 7600,
+      "mae": 2.920178,
+      "rmse": 4.215406,
+      "bias": -1.223515
     },
     "cal_pos_mean_all": {
-      "n": 7320,
-      "mae": 3.009002,
-      "rmse": 4.062991,
-      "bias": -0.417124
+      "n": 7600,
+      "mae": 3.003219,
+      "rmse": 4.053578,
+      "bias": -0.403253
     },
     "v3h_hibrido": {
-      "n": 7320,
-      "mae": 3.037781,
-      "rmse": 4.009025,
-      "bias": 0.06741
+      "n": 7600,
+      "mae": 3.028539,
+      "rmse": 4.000554,
+      "bias": 0.082511
     }
   },
   "guardrails_por_candidato": {
     "cal_pos_mean5": {
-      "mae_melhor_que_v3h": true,
+      "mae_melhor_que_v3h": false,
       "rmse_nao_piora_mais_5pct": true,
       "bias_absoluto_ate_0_50": true,
-      "aprovado_experimentalmente": true
+      "aprovado_experimentalmente": false
     },
     "cal_pos_median5": {
       "mae_melhor_que_v3h": true,
@@ -86,13 +87,13 @@
   "decisao": "CANDIDATO_APROVADO_PARA_NESTED_SELETOR",
   "provas_temporais_ok": true,
   "bootstrap_candidato_vs_v3h": {
-    "diferenca_mae_challenger_menos_baseline": -0.030089,
+    "diferenca_mae_challenger_menos_baseline": -0.026428,
     "ic95": [
-      -0.072602,
-      0.0144
+      -0.067584,
+      0.015143
     ],
-    "probabilidade_challenger_melhor": 0.9078,
+    "probabilidade_challenger_melhor": 0.8872,
     "rodadas_ganhas": 14,
-    "rodadas_perdidas": 11
+    "rodadas_perdidas": 12
   }
 }
